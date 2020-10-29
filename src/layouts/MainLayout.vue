@@ -18,11 +18,11 @@
           shrink
           class="text-bold logo-text-primary"
         >
-          管理系统
+          5G管理系统
           <span
             class="q-ml-xs"
             style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
-          >Quasar v1.14.1</span>
+          >v1.14.1</span>
         </q-toolbar-title>
 
       </q-toolbar>
@@ -33,28 +33,199 @@
       <q-drawer class="main-page-sidebar full-height"
         v-model="leftDrawerOpen"
         show-if-above
+        :width="240"
+        :mini-width="55"
         :mini="miniCheck"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
         bordered
-        mini-to-overlay
+        :mini-to-overlay="miniToOverlay"
         content-class="bg-grey-1"
       >
         <div class="sidebar-body">
           <q-scroll-area class="fit">
-            <q-list>
-              <EssentialLink
-                v-for="link in essentialLinks"
-                :key="link.title"
-                v-bind="link"
-              />
-            </q-list>
-            <q-list>
-              <EssentialLink
-                v-for="link in essentialLinks"
-                :key="link.title"
-                v-bind="link"
-              />
+            <q-list class="rounded-borders">
+              <q-expansion-item
+                :content-inset-level="contentInsetLevel"
+                group="topmenu"
+                expand-separator
+                default-opened
+              >
+                <template v-slot:header>
+                  <q-item-section avatar>
+                    <q-icon color="purple" name="signal_wifi_off" />
+                  </q-item-section>
+
+                  <q-item-section>
+                    <q-item-label>系统管理</q-item-label>
+                    <q-item-label caption>5 unread emails</q-item-label>
+                  </q-item-section>
+                </template>
+
+                <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+
+                <q-expansion-item dense dense-toggle
+                  :header-inset-level="headerInsetLevel"
+                  :content-inset-level="contentInsetLevel" >
+                  <template v-slot:header>
+
+                    <q-item-section>
+                      <q-item-label>今天管理</q-item-label>
+                    </q-item-section>
+                  </template>
+
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                </q-expansion-item>
+
+                <q-expansion-item dense dense-toggle :header-inset-level="headerInsetLevel" :content-inset-level="contentInsetLevel" >
+                  <template v-slot:header>
+                    <q-item-section side>
+                      <q-icon color="purple" name="signal_wifi_off" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>昨天</q-item-label>
+                    </q-item-section>
+                  </template>
+
+                  <q-item dense clickable tag="div"
+                    active-class="left-side-menu-active"
+                    :active="leftSideMenuActive==='baiduTest1'"
+                    @click="leftSideMenuActive='baiduTest1'"
+                  >
+                    <q-item-section>百度测试1</q-item-section>
+                  </q-item>
+                  <q-item dense clickable tag="div"
+                    active-class="left-side-menu-active"
+                    :active="leftSideMenuActive==='baiduTest2'"
+                    @click="leftSideMenuActive='baiduTest2'"
+                  >
+                    <q-item-section>百度测试2</q-item-section>
+                  </q-item>
+                </q-expansion-item>
+
+                <q-expansion-item dense dense-toggle
+                  :header-inset-level="headerInsetLevel"
+                  :content-inset-level="contentInsetLevel" >
+                  <template v-slot:header>
+                    <q-item-section side>
+                      <q-icon color="purple" name="signal_wifi_off" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>其他链接</q-item-label>
+                    </q-item-section>
+                  </template>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
+                </q-expansion-item>
+
+              </q-expansion-item>
+
+              <q-expansion-item group="topmenu"
+                 :content-inset-level="0.5" expand-separator>
+                <template v-slot:header>
+                  <q-item-section avatar>
+                    <q-icon color="purple" name="mail" />
+                  </q-item-section>
+
+                  <q-item-section>
+                    <q-item-label>收件管理</q-item-label>
+                    <q-item-label caption>5 unread emails</q-item-label>
+                  </q-item-section>
+                </template>
+
+                <q-expansion-item dense expand-separator :content-inset-level="0.5" icon="receipt" label="Receipts">
+
+                  <q-expansion-item dense label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item dense label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Today" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
+                  </q-expansion-item>
+
+                </q-expansion-item>
+
+                <q-expansion-item :content-inset-level="0.5" expand-separator icon="schedule" label="Postponed">
+                </q-expansion-item>
+
+              </q-expansion-item>
             </q-list>
           </q-scroll-area>
         </div>
@@ -82,7 +253,7 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
+// import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
@@ -203,12 +374,15 @@ const linksData = [
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: { },
   data () {
     return {
       miniState: true,
-      leftDrawerMini: true,
-      leftDrawerOpen: false,
+      leftDrawerMini: false,
+      leftDrawerOpen: true,
+      leftSideMenuActive: '',
+      contentInsetLevel: 1,
+      headerInsetLevel: 0,
       essentialLinks: linksData
     }
   },
@@ -219,10 +393,24 @@ export default {
       } else {
         return false
       }
+    },
+    miniToOverlay: function () {
+      if (this.leftDrawerMini) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .left-side-menu-active {
+    background-color: #d7d7d7;
+    color: black;
+  }
+</style>
 
 <style lang="sass" scoped>
 .main-page-container
