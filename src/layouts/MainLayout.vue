@@ -32,19 +32,22 @@
 
       <q-drawer class="main-page-sidebar full-height"
         v-model="leftDrawerOpen"
+        side="left"
         show-if-above
         :width="240"
         :mini-width="55"
         :mini="miniCheck"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
-        bordered
+        :bordered="false"
+        :breakpoint="500"
         :mini-to-overlay="miniToOverlay"
-        content-class="bg-grey-1"
+        content-class="bg-grey-3"
       >
         <div class="sidebar-body">
           <q-scroll-area class="fit">
-            <q-list class="rounded-borders">
+            <q-list padding class="rounded-borders">
+              <side-menu :menuList="leftSideMenus" :level="1"/>
               <q-expansion-item
                 :content-inset-level="contentInsetLevel"
                 group="topmenu"
@@ -53,7 +56,7 @@
               >
                 <template v-slot:header>
                   <q-item-section avatar>
-                    <q-icon color="purple" name="signal_wifi_off" />
+                    <q-icon color="purple" name="signal_wifi_off"/>
                   </q-item-section>
 
                   <q-item-section>
@@ -81,7 +84,7 @@
 
                 <q-expansion-item dense dense-toggle :header-inset-level="headerInsetLevel" :content-inset-level="contentInsetLevel" >
                   <template v-slot:header>
-                    <q-item-section side>
+                    <q-item-section avatar>
                       <q-icon color="purple" name="signal_wifi_off" />
                     </q-item-section>
 
@@ -110,7 +113,7 @@
                   :header-inset-level="headerInsetLevel"
                   :content-inset-level="contentInsetLevel" >
                   <template v-slot:header>
-                    <q-item-section side>
+                    <q-item-section avatar>
                       <q-icon color="purple" name="signal_wifi_off" />
                     </q-item-section>
 
@@ -134,15 +137,16 @@
               </q-expansion-item>
 
               <q-expansion-item group="topmenu"
-                 :content-inset-level="0.5" expand-separator>
+                 :content-inset-level="contentInsetLevel" expand-separator>
                 <template v-slot:header>
                   <q-item-section avatar>
-                    <q-icon color="purple" name="mail" />
+                    <q-icon color="purple" :name="mdiCallMade" />
+                    <!-- <q-icon color="purple" :name="mdiCallMade" /> -->
+                    <!-- <q-icon color="purple" name="img:img/logo.svg" /> -->
                   </q-item-section>
 
                   <q-item-section>
                     <q-item-label>收件管理</q-item-label>
-                    <q-item-label caption>5 unread emails</q-item-label>
                   </q-item-section>
                 </template>
 
@@ -226,6 +230,7 @@
                 </q-expansion-item>
 
               </q-expansion-item>
+
             </q-list>
           </q-scroll-area>
         </div>
@@ -254,18 +259,44 @@
 
 <script>
 // import EssentialLink from 'components/EssentialLink.vue'
+import SideMenu from 'components/SideMenu.vue'
+// 演示引入其他图标
+import { mdiCallMade } from '@quasar/extras/mdi-v5'
 
-const linksData = [
+/*
+ * title: 标题
+ * caption: 副标题
+ * icon: icon_name | img:image/path/image.png
+ * icon_color: Color name for component from the Quasar Color Palette
+ * link: 组件路径 | http://xxx.com/image.png
+ * children: [{},{}]
+ */
+const menusData = [
   {
     title: 'Docs23',
     caption: 'quasar.dev',
     icon: 'school',
-    link: 'https://quasar.dev'
+    icon_color: 'teal-10',
+    children: [
+      {
+        title: 'Discord Chat Channel1',
+        caption: 'chat.quasar.dev',
+        icon: 'chat',
+        link: 'https://chat.quasar.dev'
+      },
+      {
+        title: 'Discord Chat Channel2',
+        caption: 'chat.quasar.dev',
+        icon: 'chat',
+        link: 'https://chat.quasar.dev'
+      }
+    ]
   },
   {
     title: 'Github',
     caption: 'github.com/quasarframework',
     icon: 'code',
+    icon_color: 'primary',
     link: 'https://github.com/quasarframework'
   },
   {
@@ -374,17 +405,21 @@ const linksData = [
 
 export default {
   name: 'MainLayout',
-  components: { },
+  components: { SideMenu },
   data () {
     return {
       miniState: true,
       leftDrawerMini: false,
       leftDrawerOpen: true,
       leftSideMenuActive: '',
-      contentInsetLevel: 1,
+      contentInsetLevel: 0.7,
       headerInsetLevel: 0,
-      essentialLinks: linksData
+      leftSideMenus: menusData,
+      mdiCallMade: mdiCallMade
     }
+  },
+  created () {
+    // this.mdiCallMade = mdiCallMade
   },
   computed: {
     miniCheck: function () {
