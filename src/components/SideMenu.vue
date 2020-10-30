@@ -6,6 +6,8 @@
     :expand-separator="level===1"
     :dense="level!==1"
     :default-opened="false"
+    :duration="200"
+    @input="expansionItemInput"
   >
     <template v-slot:header>
       <q-item-section avatar v-if="item.icon">
@@ -18,13 +20,14 @@
       </q-item-section>
     </template>
 
-    <side-menu v-for="(item2) in item.children" :key="item2.title"
+    <side-menu ref="menu" v-for="(item2) in item.children" :key="item2.title"
       :item="item2" :level="level+1">
     </side-menu>
   </q-expansion-item>
 
   <q-item v-else-if="item.link.startsWith('http')"
       :dense="!item.caption"
+      :ref="'route-'+item.link"
       clickable tag="a" target="_blank"
       :href="item.link">
     <q-item-section avatar v-if="item.icon">
@@ -38,7 +41,10 @@
 
   <q-item v-else
     :dense="!item.caption"
-    clickable
+    :ref="'route-'+item.link"
+    :to="item.link"
+    exact
+    active-class="left-side-menu-active"
   >
     <q-item-section avatar v-if="item.icon">
       <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
@@ -67,15 +73,19 @@ export default {
   },
   computed: {
   },
-  created () {
+  mounted () {
+    // console.log('"refs"', this.$refs)
   },
   methods: {
     iconColor (color) {
       if (color) {
         return color
       } else {
-        return 'purple'
+        return 'primary'
       }
+    },
+    expansionItemInput (value) {
+      console.log(value)
     }
   }
 }

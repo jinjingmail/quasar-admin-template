@@ -37,17 +37,17 @@
         :width="240"
         :mini-width="50"
         :mini="miniCheck"
-        @mouseover="miniState = false"
-        @mouseout="miniState = true"
+        @mouseover="leftDrawerMouseOver"
+        @mouseout="leftDrawerMouseOut"
         :bordered="false"
         :breakpoint="500"
         :mini-to-overlay="miniToOverlay"
-        content-class="bg-grey-3"
+        content-class="#fff"
       >
         <div class="sidebar-body">
           <q-scroll-area class="fit">
             <q-list padding class="rounded-borders">
-              <side-menu v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
+              <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
             </q-list>
           </q-scroll-area>
         </div>
@@ -59,7 +59,7 @@
             flat
             dense
             round
-            @click="leftDrawerMini = !leftDrawerMini"
+            @click="leftDrawerMiniClick"
             :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
             aria-label="Menu"
             color="primary"
@@ -75,7 +75,6 @@
 </template>
 
 <script>
-// import EssentialLink from 'components/EssentialLink.vue'
 import SideMenu from 'components/SideMenu.vue'
 // 演示引入其他图标
 import { mdiCallMade } from '@quasar/extras/mdi-v5'
@@ -94,7 +93,7 @@ const menusData = [
     caption: null,
     icon: 'code',
     icon_color: 'primary',
-    link: 'xhttps://github.com/quasarframework',
+    link: '/',
     children: ''
   },
   {
@@ -130,7 +129,7 @@ const menusData = [
           {
             title: '子菜单211',
             icon: 'chat',
-            link: 'report_1'
+            link: '/page1'
           }
         ]
       },
@@ -141,18 +140,18 @@ const menusData = [
           {
             title: '子菜单221',
             icon: 'chat',
-            link: 'report_2'
+            link: '/page2'
           },
           {
             title: '子菜单222',
-            link: 'report_3'
+            link: '/page3'
           }
         ]
       },
       {
         title: '子菜单23',
         icon: 'chat',
-        link: 'https://chat.quasar.dev'
+        link: '/page_not_exist'
       },
       {
         title: '子菜单24',
@@ -272,7 +271,6 @@ export default {
       miniState: true,
       leftDrawerMini: false,
       leftDrawerOpen: true,
-      leftSideMenuActive: '',
       contentInsetLevel: 0.7,
       headerInsetLevel: 0,
       leftSideMenus: menusData,
@@ -280,7 +278,10 @@ export default {
     }
   },
   created () {
-    // this.mdiCallMade = mdiCallMade
+  },
+  mounted () {
+    console.log('route:', this.$route.path)
+    this.menuOpen(this.menuFind(this.$refs.menu, this.$route.path))
   },
   computed: {
     miniCheck: function () {
@@ -295,6 +296,45 @@ export default {
         return true
       } else {
         return false
+      }
+    }
+  },
+  methods: {
+    menuFind (array, path) {
+      if (array === undefined || array.length === 0) {
+        return undefined
+      }
+      for (const a of array) {
+        if (a.$refs['route-' + path]) {
+          return a
+        }
+        const ret = this.menuFind(a.$refs.menu, path)
+        if (ret !== undefined) {
+          return ret
+        }
+      }
+      return undefined
+    },
+    menuOpen (menu) {
+      if (menu !== undefined && menu !== this) {
+        this.menuOpen(menu.$parent)
+        if (menu.show) {
+          menu.show()
+        }
+      }
+    },
+    leftDrawerMouseOver (evt) {
+      this.miniState = false
+    },
+    leftDrawerMouseOut (evt) {
+      this.miniState = true
+    },
+    leftDrawerMiniClick () {
+      this.leftDrawerMini = !this.leftDrawerMini
+      if (this.leftDrawerMini) {
+        this.miniState = true
+      } else {
+        this.miniState = false
       }
     }
   }
