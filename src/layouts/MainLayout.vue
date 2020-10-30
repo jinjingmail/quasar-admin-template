@@ -35,7 +35,7 @@
         side="left"
         show-if-above
         :width="240"
-        :mini-width="55"
+        :mini-width="50"
         :mini="miniCheck"
         @mouseover="miniState = false"
         @mouseout="miniState = true"
@@ -47,190 +47,7 @@
         <div class="sidebar-body">
           <q-scroll-area class="fit">
             <q-list padding class="rounded-borders">
-              <side-menu :menuList="leftSideMenus" :level="1"/>
-              <q-expansion-item
-                :content-inset-level="contentInsetLevel"
-                group="topmenu"
-                expand-separator
-                default-opened
-              >
-                <template v-slot:header>
-                  <q-item-section avatar>
-                    <q-icon color="purple" name="signal_wifi_off"/>
-                  </q-item-section>
-
-                  <q-item-section>
-                    <q-item-label>系统管理</q-item-label>
-                    <q-item-label caption>5 unread emails</q-item-label>
-                  </q-item-section>
-                </template>
-
-                <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-
-                <q-expansion-item dense dense-toggle
-                  :header-inset-level="headerInsetLevel"
-                  :content-inset-level="contentInsetLevel" >
-                  <template v-slot:header>
-
-                    <q-item-section>
-                      <q-item-label>今天管理</q-item-label>
-                    </q-item-section>
-                  </template>
-
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                </q-expansion-item>
-
-                <q-expansion-item dense dense-toggle :header-inset-level="headerInsetLevel" :content-inset-level="contentInsetLevel" >
-                  <template v-slot:header>
-                    <q-item-section avatar>
-                      <q-icon color="purple" name="signal_wifi_off" />
-                    </q-item-section>
-
-                    <q-item-section>
-                      <q-item-label>昨天</q-item-label>
-                    </q-item-section>
-                  </template>
-
-                  <q-item dense clickable tag="div"
-                    active-class="left-side-menu-active"
-                    :active="leftSideMenuActive==='baiduTest1'"
-                    @click="leftSideMenuActive='baiduTest1'"
-                  >
-                    <q-item-section>百度测试1</q-item-section>
-                  </q-item>
-                  <q-item dense clickable tag="div"
-                    active-class="left-side-menu-active"
-                    :active="leftSideMenuActive==='baiduTest2'"
-                    @click="leftSideMenuActive='baiduTest2'"
-                  >
-                    <q-item-section>百度测试2</q-item-section>
-                  </q-item>
-                </q-expansion-item>
-
-                <q-expansion-item dense dense-toggle
-                  :header-inset-level="headerInsetLevel"
-                  :content-inset-level="contentInsetLevel" >
-                  <template v-slot:header>
-                    <q-item-section avatar>
-                      <q-icon color="purple" name="signal_wifi_off" />
-                    </q-item-section>
-
-                    <q-item-section>
-                      <q-item-label>其他链接</q-item-label>
-                    </q-item-section>
-                  </template>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                  <q-item dense clickable tag="a" target="_blank" href="http://baidu.com">百度测试</q-item>
-                </q-expansion-item>
-
-              </q-expansion-item>
-
-              <q-expansion-item group="topmenu"
-                 :content-inset-level="contentInsetLevel" expand-separator>
-                <template v-slot:header>
-                  <q-item-section avatar>
-                    <q-icon color="purple" :name="mdiCallMade" />
-                    <!-- <q-icon color="purple" :name="mdiCallMade" /> -->
-                    <!-- <q-icon color="purple" name="img:img/logo.svg" /> -->
-                  </q-item-section>
-
-                  <q-item-section>
-                    <q-item-label>收件管理</q-item-label>
-                  </q-item-section>
-                </template>
-
-                <q-expansion-item dense expand-separator :content-inset-level="0.5" icon="receipt" label="Receipts">
-
-                  <q-expansion-item dense label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item dense label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Today" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                  <q-expansion-item label="Yesterday" :content-inset-level="0.5">
-                  </q-expansion-item>
-
-                </q-expansion-item>
-
-                <q-expansion-item :content-inset-level="0.5" expand-separator icon="schedule" label="Postponed">
-                </q-expansion-item>
-
-              </q-expansion-item>
-
+              <side-menu v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
             </q-list>
           </q-scroll-area>
         </div>
@@ -273,22 +90,119 @@ import { mdiCallMade } from '@quasar/extras/mdi-v5'
  */
 const menusData = [
   {
-    title: 'Docs23',
+    title: '首页',
+    caption: null,
+    icon: 'code',
+    icon_color: 'primary',
+    link: 'xhttps://github.com/quasarframework',
+    children: ''
+  },
+  {
+    title: '子菜单1',
     caption: 'quasar.dev',
-    icon: 'school',
+    icon: 'img:img/logo.svg',
     icon_color: 'teal-10',
     children: [
       {
-        title: 'Discord Chat Channel1',
+        title: '子菜单11',
         caption: 'chat.quasar.dev',
         icon: 'chat',
         link: 'https://chat.quasar.dev'
       },
       {
-        title: 'Discord Chat Channel2',
+        title: '子菜单12',
         caption: 'chat.quasar.dev',
         icon: 'chat',
         link: 'https://chat.quasar.dev'
+      }
+    ]
+  },
+  {
+    title: '子菜单2',
+    caption: 'quasar.dev',
+    icon: 'menu',
+    icon_color: 'teal-10',
+    children: [
+      {
+        title: '子菜单21',
+        icon: 'chat',
+        children: [
+          {
+            title: '子菜单211',
+            icon: 'chat',
+            link: 'report_1'
+          }
+        ]
+      },
+      {
+        title: '子菜单22',
+        icon: 'chat',
+        children: [
+          {
+            title: '子菜单221',
+            icon: 'chat',
+            link: 'report_2'
+          },
+          {
+            title: '子菜单222',
+            link: 'report_3'
+          }
+        ]
+      },
+      {
+        title: '子菜单23',
+        icon: 'chat',
+        link: 'https://chat.quasar.dev'
+      },
+      {
+        title: '子菜单24',
+        icon: 'chat',
+        link: 'https://chat.quasar.dev'
+      }
+    ]
+  },
+  {
+    title: '子菜单3',
+    icon: 'school',
+    icon_color: 'teal-10',
+    children: [
+      {
+        title: '子菜单31',
+        icon: 'chat',
+        link: 'https://chat.quasar.dev'
+      },
+      {
+        title: '子菜单32',
+        link: 'https://chat.quasar.dev'
+      },
+      {
+        title: '子菜单33',
+        icon: 'chat',
+        children: [
+          {
+            title: '子子菜单331',
+            link: 'https://chat.quasar.dev'
+          },
+          {
+            title: '子子菜单332',
+            link: 'https://chat.quasar.dev'
+          }
+        ]
+      },
+      {
+        title: '子菜单34',
+        caption: 'chat.quasar.dev',
+        icon: 'chat',
+        children: [
+          {
+            title: '子子菜单341',
+            link: 'https://chat.quasar.dev'
+          },
+          {
+            title: '子子菜单342',
+            link: 'https://chat.quasar.dev'
+          }
+        ]
       }
     ]
   },
@@ -324,80 +238,27 @@ const menusData = [
     link: 'https://facebook.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: '其他菜单1',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: '其他菜单2',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: '其他菜单3',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: '其他菜单4',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: '其他菜单5',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   }
@@ -441,10 +302,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .left-side-menu-active {
-    background-color: #d7d7d7;
-    color: black;
-  }
 </style>
 
 <style lang="sass" scoped>

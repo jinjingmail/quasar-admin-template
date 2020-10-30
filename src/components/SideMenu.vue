@@ -1,5 +1,54 @@
 <template>
-  <p>&nbsp;</p>
+  <q-expansion-item v-if="item.children"
+    :dense-toggle="level!==1"
+    :content-inset-level="0.7"
+    :group="'topmenu'+level"
+    :expand-separator="level===1"
+    :dense="level!==1"
+    :default-opened="false"
+  >
+    <template v-slot:header>
+      <q-item-section avatar v-if="item.icon">
+        <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>{{item.title}}</q-item-label>
+        <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+      </q-item-section>
+    </template>
+
+    <side-menu v-for="(item2) in item.children" :key="item2.title"
+      :item="item2" :level="level+1">
+    </side-menu>
+  </q-expansion-item>
+
+  <q-item v-else-if="item.link.startsWith('http')"
+      :dense="!item.caption"
+      clickable tag="a" target="_blank"
+      :href="item.link">
+    <q-item-section avatar v-if="item.icon">
+      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+    </q-item-section>
+    <q-item-section>
+      <q-item-label>{{item.title}}</q-item-label>
+      <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+    </q-item-section>
+  </q-item>
+
+  <q-item v-else
+    :dense="!item.caption"
+    clickable
+  >
+    <q-item-section avatar v-if="item.icon">
+      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+    </q-item-section>
+    <q-item-section>
+      <q-item-label>{{item.title}}</q-item-label>
+      <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+    </q-item-section>
+  </q-item>
+
 </template>
 
 <script>
@@ -11,12 +60,23 @@ export default {
       type: Number,
       required: true
     },
-    menuList: {
+    item: {
       type: Object,
       required: true
     }
   },
+  computed: {
+  },
   created () {
+  },
+  methods: {
+    iconColor (color) {
+      if (color) {
+        return color
+      } else {
+        return 'purple'
+      }
+    }
   }
 }
 </script>
