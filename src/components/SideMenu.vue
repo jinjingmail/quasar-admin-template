@@ -1,17 +1,17 @@
 <template>
   <q-expansion-item v-if="item.children"
     :dense-toggle="level!==1"
-    :content-inset-level="0.7"
+    :content-inset-level="0.4"
     :group="'topmenu'+level"
     :expand-separator="level===1"
-    :dense="level!==1"
+    :dense="false"
     :default-opened="false"
     :duration="200"
     @input="expansionItemInput"
   >
     <template v-slot:header>
       <q-item-section avatar v-if="item.icon">
-        <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+        <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
       </q-item-section>
 
       <q-item-section>
@@ -26,12 +26,12 @@
   </q-expansion-item>
 
   <q-item v-else-if="item.link.startsWith('http')"
-      :dense="!item.caption"
+      :dense="false"
       :ref="'route-'+item.link"
       clickable tag="a" target="_blank"
       :href="item.link">
     <q-item-section avatar v-if="item.icon">
-      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
       <q-item-label>{{item.title}}</q-item-label>
@@ -40,14 +40,14 @@
   </q-item>
 
   <q-item v-else
-    :dense="!item.caption"
+    :dense="false"
     :ref="'route-'+item.link"
     :to="item.link"
     exact
     active-class="left-side-menu-active"
   >
     <q-item-section avatar v-if="item.icon">
-      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'xs'"/>
+      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
       <q-item-label>{{item.title}}</q-item-label>

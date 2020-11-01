@@ -15,3 +15,71 @@
   background-color: $blue-1;
   color: $blue;
 }
+
+.q-tab__content {
+  min-width: auto !important;
+}
+
+// 隐藏工具栏头像右侧的下箭头
+#toolbar-user.q-btn-dropdown--simple .q-btn-dropdown__arrow {
+  display: none;
+}
+
+.coadmin-table {
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {/* bg color is important for th; just specify one */
+    background-color: #fff;
+  }
+  thead tr th {
+    position: sticky;
+    z-index: 1;
+  }
+  thead tr:first-child th {
+    top: 0;
+  }
+
+  /* this is when the loading indicator appears */
+  &.q-table--loading thead tr:last-child th {
+    /* height of all previous header rows */
+    // top: 48px;
+  }
+}
+.coadmin-dialog {
+  /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
+  & .q-dialog__inner--minimized {
+    margin: 10px;
+  }
+}
+
+.coadmin-form {
+  /* 验证失败样式 */
+  & .q-field {
+    &__bottom--animated {
+      left: -5px;
+      bottom: 16px !important;
+      z-index: 10;
+      & .q-field__messages {
+        & div {
+          width: max-content;
+          border-radius: 5px;
+          background: $negative;
+          color: #fff;
+          padding: 5px;
+        }
+      }
+    }
+  }
+  &.gutter {
+    & .q-field {
+      &--with-bottom {
+        padding-bottom: 0;
+      }
+    }
+  }
+  & .q-field {
+    &--with-bottom {
+      padding-bottom: 0;
+    }
+  }
+}

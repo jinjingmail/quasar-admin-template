@@ -25,6 +25,137 @@
           >v1.14.1</span>
         </q-toolbar-title>
 
+        <!-- 右侧工具栏 -->
+        <q-space ></q-space>
+        <q-btn flat round dense icon="search" class="q-mr-xs" />
+        <q-tabs
+          :breakpoint="0"
+          align="justify"
+          indicator-color="transparent"
+          outside-arrows
+        >
+          <q-tab
+            name="notifications"
+            icon="notifications"
+            v-if="$q.screen.gt.sm"
+          >
+            <q-badge
+              color="red"
+              floating
+            >{{itemsMenu.length}}</q-badge>
+            <q-tooltip class="bg-blue">通知</q-tooltip>
+            <q-menu
+              fit
+              anchor="bottom left"
+              self="top middle"
+              :offset="[93, 0]"
+              @show="scrollTarget = $refs.scrollTargetRef"
+            >
+              <q-item-label header>
+                我的消息
+              </q-item-label>
+              <q-list
+                ref="scrollTargetRef"
+                class="scroll"
+                style="max-height: 250px; width:300px;"
+              >
+                <q-infinite-scroll
+                  @load="onLoadMenu"
+                  :offset="250"
+                  :scroll-target="scrollTarget"
+                >
+
+                  <q-item
+                    clickable
+                    v-ripple
+                    v-for="(item, index) in itemsMenu"
+                    :key="index"
+                  >
+                    <!-- <q-item-section>
+                        <q-item-label>Content filtering {{ index + 1 }}</q-item-label>
+                        <q-item-label caption>
+                          Set the content filtering level to restrict
+                          apps that can be downloaded
+                        </q-item-label>
+                      </q-item-section> -->
+                    <q-item-section avatar>
+                      <q-avatar
+                        color="primary"
+                        text-color="white"
+                      >
+                        R{{ index + 1 }}
+                      </q-avatar>
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>Ruddy Jedrzej {{ index + 1 }}</q-item-label>
+                      <q-item-label
+                        caption
+                        lines="1"
+                      >rjedrzej0@discuz{{ index + 1 }}.net</q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side>
+                      <q-icon
+                        name="chat_bubble"
+                        color="green"
+                      />
+                    </q-item-section>
+                  </q-item>
+
+                  <template v-slot:loading>
+                    <div class="text-center q-my-md">
+                      <q-spinner-dots
+                        color="primary"
+                        size="40px"
+                      />
+                    </div>
+                  </template>
+                </q-infinite-scroll>
+              </q-list>
+            </q-menu>
+          </q-tab>
+        </q-tabs>
+        <q-btn-dropdown
+          id="toolbar-user"
+          flat
+          dense
+          no-caps
+          stretch
+          no-icon-animation
+        >
+          <template v-slot:label>
+            <div class='text-center'>系统管理员</div>
+            &nbsp;
+            <q-avatar size="md">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+          </template>
+
+          <div class="row no-wrap q-pa-md">
+            <div class="column">
+              <div class="text-h6 q-mb-md">Settings</div>
+            </div>
+
+            <q-separator vertical inset class="q-mx-lg" />
+
+            <div class="column items-center">
+              <q-avatar size="72px">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+              </q-avatar>
+
+              <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
+
+              <q-btn
+                color="primary"
+                label="Logout"
+                push
+                size="sm"
+                v-close-popup
+              />
+            </div>
+          </div>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
@@ -39,7 +170,7 @@
         :mini="miniCheck"
         @mouseover="leftDrawerMouseOver"
         @mouseout="leftDrawerMouseOut"
-        :bordered="false"
+        :bordered="true"
         :breakpoint="500"
         :mini-to-overlay="miniToOverlay"
         content-class="#fff"
@@ -98,19 +229,16 @@ const menusData = [
   },
   {
     title: '子菜单1',
-    caption: 'quasar.dev',
     icon: 'img:img/logo.svg',
     icon_color: 'teal-10',
     children: [
       {
         title: '子菜单11',
-        caption: 'chat.quasar.dev',
         icon: 'chat',
         link: 'https://chat.quasar.dev'
       },
       {
         title: '子菜单12',
-        caption: 'chat.quasar.dev',
         icon: 'chat',
         link: 'https://chat.quasar.dev'
       }
@@ -127,7 +255,7 @@ const menusData = [
         icon: 'chat',
         children: [
           {
-            title: '子菜单211',
+            title: 'Page1',
             icon: 'chat',
             link: '/page1'
           }
@@ -138,25 +266,25 @@ const menusData = [
         icon: 'chat',
         children: [
           {
-            title: '子菜单221',
+            title: 'Page2',
             icon: 'chat',
             link: '/page2'
           },
           {
-            title: '子菜单222',
+            title: 'Page3',
             link: '/page3'
           }
         ]
       },
       {
-        title: '子菜单23',
+        title: 'PageNotExist',
         icon: 'chat',
         link: '/page_not_exist'
       },
       {
-        title: '子菜单24',
-        icon: 'chat',
-        link: 'https://chat.quasar.dev'
+        title: 'pageTableNormal',
+        icon: 'star',
+        link: '/pageTableNormal'
       }
     ]
   },
@@ -207,14 +335,12 @@ const menusData = [
   },
   {
     title: 'Github',
-    caption: 'github.com/quasarframework',
     icon: 'code',
     icon_color: 'primary',
     link: 'https://github.com/quasarframework'
   },
   {
     title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
     icon: 'chat',
     link: 'https://chat.quasar.dev'
   },
@@ -232,7 +358,6 @@ const menusData = [
   },
   {
     title: 'Facebook',
-    caption: '@QuasarFramework',
     icon: 'public',
     link: 'https://facebook.quasar.dev'
   },
@@ -242,7 +367,32 @@ const menusData = [
     link: 'https://awesome.quasar.dev'
   },
   {
-    title: '其他菜单2',
+    title: '其他菜单12',
+    icon: 'favorite',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: '其他菜单13',
+    icon: 'favorite',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: '其他菜单14',
+    icon: 'favorite',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: '其他菜单15',
+    icon: 'favorite',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: '其他菜单16',
+    icon: 'favorite',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: '其他菜单17',
     icon: 'favorite',
     link: 'https://awesome.quasar.dev'
   },
@@ -268,13 +418,14 @@ export default {
   components: { SideMenu },
   data () {
     return {
-      miniState: true,
+      miniState: false,
       leftDrawerMini: false,
-      leftDrawerOpen: true,
-      contentInsetLevel: 0.7,
-      headerInsetLevel: 0,
+      leftDrawerOpen: false,
       leftSideMenus: menusData,
-      mdiCallMade: mdiCallMade
+      mdiCallMade: mdiCallMade,
+
+      scrollTarget: undefined,
+      itemsMenu: [{}, {}, {}, {}, {}, {}, {}]
     }
   },
   created () {
@@ -282,6 +433,12 @@ export default {
   mounted () {
     console.log('route:', this.$route.path)
     this.menuOpen(this.menuFind(this.$refs.menu, this.$route.path))
+  },
+  watch: {
+    $route (route) {
+      console.log('watch.route change:', route.path)
+      this.menuOpen(this.menuFind(this.$refs.menu, route.path))
+    }
   },
   computed: {
     miniCheck: function () {
@@ -336,6 +493,20 @@ export default {
       } else {
         this.miniState = false
       }
+    },
+    onLoadMenu (index, done) {
+      if (index > 1) {
+        setTimeout(() => {
+          if (this.itemsMenu) {
+            this.itemsMenu.push({}, {}, {}, {}, {}, {}, {})
+            done()
+          }
+        }, 2000)
+      } else {
+        setTimeout(() => {
+          done()
+        }, 200)
+      }
     }
   }
 }
@@ -345,18 +516,7 @@ export default {
 </style>
 
 <style lang="sass" scoped>
-.main-page-container
-  position: absolute
-  left: 0
-  top: 50px
-  right: 0
-  bottom: 0
-  overflow: hidden
-  padding-top: 0px !important
 .main-page-sidebar
-  position: absolute
-  border-right: 1px solid #eaebec
-  background-color: #fff
   & .sidebar-body
     position: absolute
     top: 0
@@ -370,11 +530,4 @@ export default {
     bottom: 0
     height: 45px
     padding-left: 13.5px
-.main-page-body
-  position: absolute
-  top: 0
-  right: 0
-  bottom: 0
-  overflow-y: auto
-  overflow-x: hidden
 </style>
