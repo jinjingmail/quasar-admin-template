@@ -128,7 +128,7 @@
             <div class='text-center'>系统管理员</div>
             &nbsp;
             <q-avatar size="md">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+              <img src="../assets/boy-avatar.jpg">
             </q-avatar>
           </template>
 
@@ -141,7 +141,7 @@
 
             <div class="column items-center">
               <q-avatar size="72px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <img src="../assets/boy-avatar.jpg">
               </q-avatar>
 
               <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>

@@ -55,20 +55,20 @@
       :style="{height:($q.screen.gt.xs?'calc(91.5vh)':'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
       dense flat
-      :wrap-cells="true"
+      :wrap-cells="false"
       :data="data"
       :columns="columns"
       row-key="id"
       :visible-columns="visibleColumns"
       separator="horizontal"
-      :hide-pagination="true"
+      :hide-pagination="false"
       :rows-per-page-options="[0]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
       :loading="loading"
     >
-      <template v-slot:top>
+      <template v-slot:top="props">
         <div class='row q-col-gutter-md' style="width:100%;">
           <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
           <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
@@ -79,7 +79,7 @@
           </template>
           <q-btn-group outline class="col-xs-6 col-sm-4 col-md-3">
             <q-btn dense outline color="primary" label="查询"/>
-            <q-separator dark vertical />
+            <q-separator vertical />
             <q-btn dense outline color="primary" label="Reset"/>
           </q-btn-group>
         </div>
@@ -94,26 +94,20 @@
 
           <q-btn-group outline>
             <q-btn dense outline color="primary" icon="search" @click="searchToggle = !searchToggle"/>
-            <q-separator dark vertical />
+            <q-separator vertical />
             <q-btn dense outline color="primary" icon="autorenew" />
-            <q-separator dark vertical />
-            <q-btn dense outline color="primary" icon="apps" />
+            <q-separator vertical/>
+            <q-btn dense outline color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click="props.toggleFullscreen"/>
+            <q-separator vertical/>
+            <q-btn-dropdown auto-close outline dense no-icon-animation :class="'table-column-selector'" color="primary" icon="apps">
+              <div class="row no-wrap q-pa-sm">
+                <div class="column">
+                  <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
+                </div>
+              </div>
+            </q-btn-dropdown>
           </q-btn-group>
 
-          <q-select
-            v-model="visibleColumns"
-            multiple
-            outlined
-            dense
-            options-dense
-            :display-value="$q.lang.table.columns"
-            emit-value
-            map-options
-            :options="columns"
-            option-value="name"
-            :options-cover="false"
-            style="min-width: 150px"
-          />
         </q-toolbar>
       </template>
 
@@ -159,6 +153,26 @@
           </q-btn-dropdown>
         </q-td>
       </template>
+
+      <template v-slot:pagination>
+        <q-pagination
+          v-model="currentPage"
+          :max="50000"
+          :direction-links="true"
+          :boundary-links="false"
+          input
+          input-class="text-orange-10"
+        />
+        <q-select
+          dense options-dense outlined
+          v-model="numberPerPage"
+          :options="numberPerPageOptions"
+          emit-value
+          map-options
+        />
+
+      </template>
+
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
       </template>
@@ -179,6 +193,9 @@ export default {
     return {
       text: '',
       textSearch: '',
+      currentPage: 0,
+      numberPerPage: 10,
+      numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
       searchToggle: false,
       loading: false,
       dialogData: false,

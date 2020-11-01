@@ -44,6 +44,13 @@
     /* height of all previous header rows */
     // top: 48px;
   }
+  .table-column-selector {
+    &.q-btn-dropdown--simple {
+      .q-btn-dropdown__arrow {
+        display: none !important;
+      }
+    }
+  } 
 }
 .coadmin-dialog {
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
