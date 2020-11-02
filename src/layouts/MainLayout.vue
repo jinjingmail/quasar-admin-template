@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+    <q-header reveal elevated>
+      <q-toolbar class="glossy">
         <q-btn
           flat
           dense
@@ -135,6 +135,8 @@
           <div class="row no-wrap q-pa-md">
             <div class="column">
               <div class="text-h6 q-mb-md">Settings</div>
+              <!-- <q-toggle v-model="$q.dark.isActive" label="Dark模式"/> -->
+              <q-btn @click="$q.dark.toggle()" label="Dark"/>
             </div>
 
             <q-separator vertical inset class="q-mx-lg" />
@@ -161,7 +163,7 @@
 
     <q-page-container class="main-page-container">
 
-      <q-drawer class="main-page-sidebar full-height"
+      <q-drawer class="main-page-sidebar full-height non-selectable hide-scrollbar"
         v-model="leftDrawerOpen"
         side="left"
         show-if-above
@@ -171,7 +173,7 @@
         @mouseover="leftDrawerMouseOver"
         @mouseout="leftDrawerMouseOut"
         :bordered="true"
-        :breakpoint="500"
+        :breakpoint="599"
         :mini-to-overlay="miniToOverlay"
         content-class="#fff"
       >
@@ -282,9 +284,14 @@ const menusData = [
         link: '/page_not_exist'
       },
       {
-        title: 'pageTableNormal',
+        title: '表格Demo',
         icon: 'star',
-        link: '/pageTableNormal'
+        link: '/pageTable'
+      },
+      {
+        title: '树表Demo',
+        icon: 'add',
+        link: '/pageTree'
       }
     ]
   },

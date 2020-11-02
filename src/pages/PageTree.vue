@@ -85,7 +85,7 @@
         </div>
         <q-toolbar class="no-padding">
           <div class='q-gutter-sm'>
-            <q-btn dense color="primary" icon="add" @click="loading = !loading"/>
+            <q-btn dense color="primary" icon="add"/>
             <q-btn dense color="primary" icon="edit"/>
             <q-btn dense color="primary" icon="delete"/>
           </div>
@@ -93,9 +93,9 @@
           <q-space />
 
           <q-btn-group outline>
-            <q-btn dense outline color="primary" icon="search" @click="searchToggle = !searchToggle"/>
+            <q-btn dense :outline="!searchToggle" color="primary" icon="search" @click="searchToggle = !searchToggle"/>
             <q-separator vertical />
-            <q-btn dense outline color="primary" icon="autorenew" />
+            <q-btn dense outline color="primary" icon="autorenew" @click="loading = !loading"/>
             <q-separator vertical/>
             <q-btn dense outline color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click="props.toggleFullscreen"/>
             <q-separator vertical/>
@@ -154,6 +154,15 @@
         </q-td>
       </template>
 
+      <template v-slot:no-data="{ icon, message, filter }">
+        <div class="full-width row flex-center text-accent q-gutter-sm">
+          <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
+          <span style="font-size:2em">
+            {{ message }}
+          </span>
+        </div>
+      </template>
+
       <template v-slot:pagination>
         <q-pagination
           v-model="currentPage"
@@ -188,7 +197,7 @@
 
 <script>
 export default {
-  name: 'PageTableNormal',
+  name: 'PageTree',
   data () {
     return {
       text: '',
@@ -225,179 +234,6 @@ export default {
         { name: 'action', label: '操作', align: 'center' }
       ],
       data: [
-        {
-          id: 1,
-          name: '冰棍',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          sodium: 87,
-          calcium: '14%',
-          iron: '1%'
-        },
-        {
-          id: 2,
-          name: '冰淇淋',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          sodium: 129,
-          calcium: '8%',
-          iron: '1%'
-        },
-        {
-          id: 3,
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          sodium: 337,
-          calcium: '6%',
-          iron: '7%'
-        },
-        {
-          id: 4,
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          sodium: 413,
-          calcium: '3%',
-          iron: '8%'
-        },
-        {
-          id: 5,
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          sodium: 327,
-          calcium: '7%',
-          iron: '16%'
-        },
-        {
-          id: 6,
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          sodium: 50,
-          calcium: '0%',
-          iron: '0%'
-        },
-        {
-          id: 10,
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          sodium: 38,
-          calcium: '0%',
-          iron: '2%'
-        },
-        {
-          id: 20,
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          sodium: 562,
-          calcium: '0%',
-          iron: '45%'
-        },
-        {
-          id: 30,
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          sodium: 326,
-          calcium: '2%',
-          iron: '22%'
-        },
-        {
-          id: 40,
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          sodium: 54,
-          calcium: '12%',
-          iron: '6%'
-        },
-        {
-          id: 1000, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1001, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1002, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1003, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1004, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1005, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1006, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1007, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1008, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1009, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1010, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1011, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1012, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1013, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1014, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1015, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1016, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1017, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1018, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1019, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        },
-        {
-          id: 1020, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
-        }
       ]
     }
   },
