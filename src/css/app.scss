@@ -1,29 +1,48 @@
 // app global css in SCSS form
-
-/* 左侧导航菜单滚动条 */
-.q-scrollarea__bar--v,
-.q-scrollarea__thumb--v {
-  width: 6px;
-  opacity: 0.35;
-  border-radius: 5px;
-}
-
-.q-item__section--avatar {
-  min-width:40px;
-}
-
 .left-side-menu-active {
   background-color: $blue-1;
   color: $blue;
 }
 
-.q-tab__content {
-  min-width: auto !important;
+.coadmin-header {
+  // background: linear-gradient(145deg, var(--q-color-primary) 11%, var(--q-color-secondary) 75%) !important;
+  .q-tab__content {
+    min-width: auto !important;
+  }
 }
 
-// 隐藏工具栏头像右侧的下箭头
-#toolbar-user.q-btn-dropdown--simple .q-btn-dropdown__arrow {
-  display: none;
+.coadmin-sidebar {
+  .q-item__section--avatar {
+    min-width:40px;
+  }
+
+  /* 左侧导航菜单滚动条 */
+  .q-scrollarea__bar--v,
+  .q-scrollarea__thumb--v {
+    width: 6px;
+    opacity: 0.35;
+    border-radius: 5px;
+  }
+}
+
+// 修改一些全局css
+.coadmin-page {
+  // 按钮高度缩小
+  .q-field--dense .q-field__control, 
+  .q-field--dense .q-field__marginal {
+    height: 35px;
+  }
+  .q-field__control {
+    height: 45px;
+  }
+    
+}
+
+// 隐藏DropDown按钮右侧的下箭头
+.btn-dropdown-hide-droparrow {
+  &.q-btn-dropdown--simple .q-btn-dropdown__arrow {
+    display: none;
+  }
 }
 
 .coadmin-table-sticky-header {
@@ -88,10 +107,12 @@
   th:last-child,
   td:last-child {
     padding-right: 6px !important;
-    // box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
     position: sticky;
     right: 0;
     z-index: 1;
+  }
+  td:last-child {
+    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
   }
 }
 
@@ -135,7 +156,9 @@
   td:last-child,
   th:last-child {
     padding-right: 6px !important;
-    // box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
+  }
+  td:last-child {
+    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
   }
 
   &.q-dark td:last-child,
@@ -180,24 +203,18 @@
   }
 }
 
-
 .coadmin-table {
-  .q-field--dense .q-field__control, 
-  .q-field--dense .q-field__marginal {
-    height: 35px;
-  }
-  .q-field__control {
-    height: 45px;
-  }
 
-  /* 去掉列选择组件最后的下拉按钮的下拉箭头 */
-  .table-column-selector {
-    &.q-btn-dropdown--simple {
-      .q-btn-dropdown__arrow {
-        display: none !important;
+  // 表格slot：top 里面
+  .q-table__top {
+    padding: 4px 4px 8px 0px;
+    .q-col-gutter-x-md, .q-col-gutter-md {
+      margin-left: 0;
+      & > * {
+        padding-left: 7px;
       }
     }
-  } 
+  }
 }
 
 .coadmin-dialog {

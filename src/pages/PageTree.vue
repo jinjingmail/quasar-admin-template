@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-sm q-gutter-sm">
+  <q-page class="coadmin-page q-pa-sm q-gutter-sm">
 
     <q-dialog v-model="dialogData"
       content-class="coadmin-dialog"
@@ -85,7 +85,7 @@
         </div>
         <q-toolbar class="no-padding">
           <div class='q-gutter-sm'>
-            <q-btn dense color="primary" icon="add"/>
+            <q-btn dense color="primary" icon="add" @click="rowViewClick"/>
             <q-btn dense color="primary" icon="edit"/>
             <q-btn dense color="primary" icon="delete"/>
           </div>

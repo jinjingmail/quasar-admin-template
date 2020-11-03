@@ -1,6 +1,5 @@
 <template>
-  <q-page class="q-pa-sm q-gutter-sm">
-
+  <q-page class="coadmin-page q-pa-sm">
     <q-dialog v-model="dialogShow"
       content-class="coadmin-dialog"
       :maximized="dialogFullscreen"
@@ -8,14 +7,16 @@
       persistent
     >
       <!-- style="max-width:none;" -->
-      <q-card id="dragableDialog" v-drag="{dragOutY:40}"
+      <q-card id="dragableDialog"
         style=""
       >
         <q-toolbar>
-          <q-avatar>
-            <q-icon name="edit"/>
-          </q-avatar>
-          <q-toolbar-title><div>标题栏</div></q-toolbar-title>
+          <q-toolbar v-drag="{moveElId:'dragableDialog', dragOutY:40}">
+            <q-avatar>
+              <q-icon name="edit"/>
+            </q-avatar>
+            <q-toolbar-title><div>标题栏</div></q-toolbar-title>
+          </q-toolbar>
           <q-btn flat round dense :icon="dialogFullscreen?'fullscreen_exit':'fullscreen'" @click="dialogFullscreen = !dialogFullscreen"/>
           <q-btn flat round dense icon="close" v-close-popup />
         </q-toolbar>
@@ -23,45 +24,24 @@
         <q-card-section class="q-pt-none">
           <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
             <div class="row q-col-gutter-md">
-              <div class="col-12 col-sm-6">
-                <label>名称</label>
-                <q-input v-if="dialogFormReadonly" outlined :value="dialogForm.name" disable dense/>
-                <q-input v-else outlined v-model="dialogForm.name" dense lazy-rules no-error-icon :rules="[val => !!val || 'Field is required']" placeholder="place" />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>calories</label>
-                <q-input outlined v-model="dialogForm.calories" dense no-error-icon />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>fat</label>
-                <q-input outlined v-model="dialogForm.fat" dense no-error-icon lazy-rules :rules="[
+              <coadmin-input form-class="col-12 col-sm-6" label="ID" v-model="dialogForm.id" disable></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="名称" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
                   ]" />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>protein</label>
-                <q-input outlined v-model="dialogForm.protein" dense no-error-icon />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>sodium</label>
-                <q-input outlined v-model="dialogForm.sodium" dense no-error-icon />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>calcium</label>
-                <q-input outlined v-model="dialogForm.calcium" dense no-error-icon />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label>iron</label>
-                <q-input outlined v-model="dialogForm.iron" dense no-error-icon />
-              </div>
+              <coadmin-input form-class="col-12 col-sm-6" label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input form-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
             </div>
           </q-form>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Decline" color="primary" v-close-popup />
-          <q-btn flat label="Accept" color="primary" v-close-popup />
+          <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
+          <q-btn label="Cancel" flat v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -79,14 +59,15 @@
       :columns="columns"
       :visible-columns="visibleColumns"
       :hide-pagination="false"
-      :rows-per-page-options="[0]"
+      :rows-per-page-options="[3, 5, 7, 10, 15, 20, 25, 50, 0 ]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
       :loading="loading"
+      loading-label="正在。。。"
     >
       <template v-slot:top="props">
-        <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
+        <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <q-btn-group flat class="col-auto">
             <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
             <q-separator vertical dark />
@@ -94,15 +75,16 @@
             <q-separator vertical dark />
             <q-btn dense color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
             <q-separator vertical dark />
-            <q-btn-dropdown auto-close dense color="primary">
+            <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
+                  无数据
                 </div>
               </div>
             </q-btn-dropdown>
           </q-btn-group>
 
+          <q-space />
           <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <template v-if="searchToggle" >
@@ -111,20 +93,17 @@
             <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           </template>
 
+          <q-space />
           <q-btn-group outline class="col-auto">
+            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'expand_less':'expand_more'" @click="searchToggle = !searchToggle"/>
+            <q-separator vertical />
             <q-btn dense outline color="primary" icon="search"/>
             <q-separator vertical />
-            <q-btn dense outline color="primary" icon="autorenew" @click="loading = !loading"/>
+            <q-btn dense outline color="primary" icon="replay" @click="loading = !loading"/>
             <q-separator vertical />
-            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'unfold_less':'unfold_more'" @click="searchToggle = !searchToggle"/>
-          </q-btn-group>
-
-          <q-space/>
-
-          <q-btn-group outline class="col-auto">
             <q-btn dense :outline="!props.inFullscreen" color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
             <q-separator vertical/>
-            <q-btn-dropdown auto-close outline dense no-icon-animation class="table-column-selector" color="primary" icon="apps">
+            <q-btn-dropdown auto-close outline dense no-icon-animation class="btn-dropdown-hide-droparrow" color="primary" icon="apps">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
                   <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
@@ -208,7 +187,9 @@
       </template>
 
       <template v-slot:loading>
-        <q-inner-loading showing color="primary" class="" style="z-index:5"/>
+        <q-inner-loading showing color="primary" style="z-index:5">
+          <q-spinner-gears size="50px" color="primary" />
+        </q-inner-loading>
       </template>
     </q-table>
 
@@ -221,10 +202,15 @@
 </template>
 
 <script>
+import CoadminInput from 'components/CoadminInput.vue'
+
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
 
 export default {
   name: 'PageTable',
+  components: {
+    CoadminInput
+  },
   data () {
     return {
       text: '',
@@ -457,6 +443,10 @@ export default {
   methods: {
     // this.$refs.dialogForm.resetValidation()
     onDialogFormSubmit () {
+      console.log('this.dialogForm:', this.dialogForm)
+      if (this.dialogFormReadonly) {
+        return
+      }
       this.$refs.dialogForm.validate().then(success => {
         if (success) {
           // yay, models are correct

@@ -5,6 +5,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
+import drag from './utils/vue-dragdrag'
+Vue.directive('drag', drag)
+
 export default {
   name: 'App'
 }

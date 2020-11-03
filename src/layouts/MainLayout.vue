@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header reveal elevated>
-      <q-toolbar class="glossy">
+    <q-header reveal elevated class="coadmin-header">
+      <q-toolbar class="">
         <q-btn
           flat
           dense
@@ -117,18 +117,19 @@
           </q-tab>
         </q-tabs>
         <q-btn-dropdown
-          id="toolbar-user"
+          class="btn-dropdown-hide-droparrow"
           flat
           dense
           no-caps
           stretch
           no-icon-animation
+          auto-close
         >
           <template v-slot:label>
             <div class='text-center'>系统管理员</div>
             &nbsp;
             <q-avatar size="md">
-              <img src="../assets/boy-avatar.jpg">
+              <img src="~assets/boy-avatar.jpg">
             </q-avatar>
           </template>
 
@@ -136,14 +137,15 @@
             <div class="column">
               <div class="text-h6 q-mb-md">Settings</div>
               <!-- <q-toggle v-model="$q.dark.isActive" label="Dark模式"/> -->
-              <q-btn @click="$q.dark.toggle()" label="Dark"/>
+              <q-btn @click="$q.dark.toggle()" label="Dark模式" color="primary"/>
+              <brand-color />
             </div>
 
             <q-separator vertical inset class="q-mx-lg" />
 
             <div class="column items-center">
               <q-avatar size="72px">
-                <img src="../assets/boy-avatar.jpg">
+                <img src="~assets/boy-avatar.jpg">
               </q-avatar>
 
               <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
@@ -163,7 +165,7 @@
 
     <q-page-container class="main-page-container">
 
-      <q-drawer class="main-page-sidebar full-height non-selectable no-scroll"
+      <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"
         v-model="leftDrawerOpen"
         side="left"
         show-if-above
@@ -209,6 +211,8 @@
 
 <script>
 import SideMenu from 'components/SideMenu.vue'
+import BrandColor from 'components/BrandColor.vue'
+
 // 演示引入其他图标
 import { mdiCallMade } from '@quasar/extras/mdi-v5'
 
@@ -422,7 +426,10 @@ const menusData = [
 
 export default {
   name: 'MainLayout',
-  components: { SideMenu },
+  components: {
+    SideMenu,
+    BrandColor
+  },
   data () {
     return {
       miniState: false,
