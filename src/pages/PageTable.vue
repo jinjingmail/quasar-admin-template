@@ -1,43 +1,59 @@
 <template>
   <q-page class="q-pa-sm q-gutter-sm">
 
-    <q-dialog v-model="dialogData"
+    <q-dialog v-model="dialogShow"
       content-class="coadmin-dialog"
       :maximized="dialogFullscreen"
-      persistent
       :no-esc-dismiss="false"
+      persistent
     >
-      <q-card id="dragableDialog" v-drag="{dragOutY:45}"
-        style="max-width:none;"
+      <!-- style="max-width:none;" -->
+      <q-card id="dragableDialog" v-drag="{dragOutY:40}"
+        style=""
       >
         <q-toolbar>
           <q-avatar>
             <q-icon name="edit"/>
           </q-avatar>
-
-          <q-toolbar-title><div>菜单</div></q-toolbar-title>
-
+          <q-toolbar-title><div>标题栏</div></q-toolbar-title>
           <q-btn flat round dense :icon="dialogFullscreen?'fullscreen_exit':'fullscreen'" @click="dialogFullscreen = !dialogFullscreen"/>
           <q-btn flat round dense icon="close" v-close-popup />
         </q-toolbar>
 
         <q-card-section class="q-pt-none">
-          <q-form class="coadmin-form">
+          <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
             <div class="row q-col-gutter-md">
               <div class="col-12 col-sm-6">
-                <label>姓名</label>
-                <q-input outlined v-model="text" dense placeholder="place" no-error-icon :rules="[val => !!val || 'Field is required']"/>
+                <label>名称</label>
+                <q-input v-if="dialogFormReadonly" outlined :value="dialogForm.name" disable dense/>
+                <q-input v-else outlined v-model="dialogForm.name" dense lazy-rules no-error-icon :rules="[val => !!val || 'Field is required']" placeholder="place" />
               </div>
               <div class="col-12 col-sm-6">
-                <label>性别</label>
-                <q-input outlined v-model="text" no-error-icon dense/>
+                <label>calories</label>
+                <q-input outlined v-model="dialogForm.calories" dense no-error-icon />
               </div>
               <div class="col-12 col-sm-6">
-                <label>手机</label>
-                <q-input outlined v-model="text" no-error-icon :rules="[
+                <label>fat</label>
+                <q-input outlined v-model="dialogForm.fat" dense no-error-icon lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
-                  ]" dense/>
+                  ]" />
+              </div>
+              <div class="col-12 col-sm-6">
+                <label>protein</label>
+                <q-input outlined v-model="dialogForm.protein" dense no-error-icon />
+              </div>
+              <div class="col-12 col-sm-6">
+                <label>sodium</label>
+                <q-input outlined v-model="dialogForm.sodium" dense no-error-icon />
+              </div>
+              <div class="col-12 col-sm-6">
+                <label>calcium</label>
+                <q-input outlined v-model="dialogForm.calcium" dense no-error-icon />
+              </div>
+              <div class="col-12 col-sm-6">
+                <label>iron</label>
+                <q-input outlined v-model="dialogForm.iron" dense no-error-icon />
               </div>
             </div>
           </q-form>
@@ -54,7 +70,7 @@
       row-key="id"
       dense
       flat
-      class="coadmin-table coadmin-table-sticky-header-and-column-last"
+      class="coadmin-table coadmin-table-sticky-header-and-last-column"
       :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 7.5vh)'):'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
       separator="horizontal"
@@ -63,7 +79,7 @@
       :columns="columns"
       :visible-columns="visibleColumns"
       :hide-pagination="false"
-      :rows-per-page-options="[12]"
+      :rows-per-page-options="[0]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
@@ -71,36 +87,14 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-          <template v-if="searchToggle" >
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-          </template>
-          <q-btn-group outline class="col">
-            <q-btn dense outline color="primary" label="查询"/>
-            <q-separator vertical />
-            <q-btn dense outline color="primary" label="Reset"/>
-          </q-btn-group>
-        </div>
-        <q-toolbar class="no-padding">
-          <div class='q-gutter-sm'>
-            <q-btn dense color="primary" icon="add" @click="addClick"/>
-            <q-btn dense color="primary" icon="edit"/>
-            <q-btn dense color="primary" icon="delete"/>
-          </div>
-
-          <q-space />
-
-          <q-btn-group outline>
-            <q-btn dense :outline="!searchToggle" color="primary" icon="search" @click="searchToggle = !searchToggle"/>
-            <q-separator vertical />
-            <q-btn dense outline color="primary" icon="autorenew" @click="loading = !loading"/>
-            <q-separator vertical/>
-            <q-btn dense outline color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
-            <q-separator vertical/>
-            <q-btn-dropdown auto-close outline dense no-icon-animation :class="'table-column-selector'" color="primary" icon="apps">
+          <q-btn-group flat class="col-auto">
+            <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
+            <q-separator vertical dark />
+            <q-btn dense color="primary" icon="edit" @click="rowEditClick_selected" :disable="selected.length!==1"/>
+            <q-separator vertical dark />
+            <q-btn dense color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
+            <q-separator vertical dark />
+            <q-btn-dropdown auto-close dense color="primary">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
                   <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
@@ -109,7 +103,37 @@
             </q-btn-dropdown>
           </q-btn-group>
 
-        </q-toolbar>
+          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <template v-if="searchToggle" >
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          </template>
+
+          <q-btn-group outline class="col-auto">
+            <q-btn dense outline color="primary" icon="search"/>
+            <q-separator vertical />
+            <q-btn dense outline color="primary" icon="autorenew" @click="loading = !loading"/>
+            <q-separator vertical />
+            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'unfold_less':'unfold_more'" @click="searchToggle = !searchToggle"/>
+          </q-btn-group>
+
+          <q-space/>
+
+          <q-btn-group outline class="col-auto">
+            <q-btn dense :outline="!props.inFullscreen" color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
+            <q-separator vertical/>
+            <q-btn-dropdown auto-close outline dense no-icon-animation class="table-column-selector" color="primary" icon="apps">
+              <div class="row no-wrap q-pa-sm">
+                <div class="column">
+                  <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
+                </div>
+              </div>
+            </q-btn-dropdown>
+          </q-btn-group>
+
+        </div>
       </template>
 
       <template v-slot:body-cell-name="props">
@@ -130,13 +154,13 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup dense>
+              <q-item clickable v-close-popup dense @click="rowEditClick(props.row)">
                 <q-item-section>
                   <q-item-label>修改</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup dense>
+              <q-item clickable v-close-popup dense @click="rowDelClick(props.row)">
                 <q-item-section>
                   <q-item-label>删除</q-item-label>
                 </q-item-section>
@@ -197,6 +221,8 @@
 </template>
 
 <script>
+const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
+
 export default {
   name: 'PageTable',
   data () {
@@ -208,7 +234,9 @@ export default {
       numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
       searchToggle: false,
       loading: false,
-      dialogData: false,
+      dialogShow: false,
+      dialogForm: {},
+      dialogFormReadonly: true,
       dialogFullscreen: false,
       fabPos: [48, 68],
       draggingFab: false,
@@ -427,13 +455,65 @@ export default {
     }
   },
   methods: {
-    rowViewClick (row) {
-      this.dialogData = true
+    // this.$refs.dialogForm.resetValidation()
+    onDialogFormSubmit () {
+      this.$refs.dialogForm.validate().then(success => {
+        if (success) {
+          // yay, models are correct
+          this.$q.notify({
+            type: 'positive',
+            message: `提交ID:${this.dialogForm.id}`
+          })
+        } else {
+          // oh no, user has filled in
+          // at least one invalid value
+          this.$q.notify({
+            type: 'negative',
+            message: '提交失败'
+          })
+        }
+      })
     },
-    addClick () {
-      this.dialogData = true
+    rowViewClick (row) {
+      this.dialogForm = { ...row }
+      this.dialogFormReadonly = true
+      this.dialogShow = true
+    },
+    rowAddClick () {
+      this.dialogForm = { ...dialogFormDefault }
+      this.dialogFormReadonly = false
+      this.dialogShow = true
+    },
+    rowEditClick (row) {
+      this.dialogForm = { ...row }
+      this.dialogFormReadonly = false
+      this.dialogShow = true
+    },
+    rowEditClick_selected () {
+      var row = this.selected[0]
+      this.rowEditClick(row)
+    },
+    rowDelClick (row) {
+      this.$q.notify({
+        type: 'warning',
+        message: `删除ID:${row.id}`
+      })
+    },
+    rowDelClick_selected () {
+      var count = 0
+      if (this.selected) {
+        count = this.selected.length
+      }
+      this.$q.notify({
+        type: 'negative',
+        message: `删除${count}条`
+      })
     },
     rowLooooooongButtonClick () {
+      this.$q.notify({
+        type: 'positive',
+        message: 'rowLooooooongButtonClick'
+      })
     },
     moveFab (ev) {
       this.draggingFab = ev.isFirst !== true && ev.isFinal !== true

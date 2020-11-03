@@ -69,15 +69,15 @@
       :loading="loading"
     >
       <template v-slot:top="props">
-        <div class='row q-col-gutter-md' style="width:100%;">
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
+        <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
+          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <template v-if="searchToggle" >
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           </template>
-          <q-btn-group outline class="col-xs-6 col-sm-4 col-md-3">
+          <q-btn-group outline class="col">
             <q-btn dense outline color="primary" label="查询"/>
             <q-separator vertical />
             <q-btn dense outline color="primary" label="Reset"/>

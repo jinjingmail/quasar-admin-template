@@ -12,7 +12,7 @@
           v-if="!$q.screen.gt.xs"
         />
         <q-avatar class="q-logo">
-          <img src="../assets/logo.svg" />
+          <img src="~assets/logo.svg" />
         </q-avatar>
         <q-toolbar-title
           shrink
@@ -163,7 +163,7 @@
 
     <q-page-container class="main-page-container">
 
-      <q-drawer class="main-page-sidebar full-height non-selectable hide-scrollbar"
+      <q-drawer class="main-page-sidebar full-height non-selectable no-scroll"
         v-model="leftDrawerOpen"
         side="left"
         show-if-above

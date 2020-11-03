@@ -54,7 +54,7 @@
   /* 表格头部锁定 end */
 }
 
-.coadmin-table-sticky-column-first {
+.coadmin-table-sticky-first-column {
   &.q-dark td:first-child,
   &.q-dark thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
@@ -73,7 +73,7 @@
   }
 }
 
-.coadmin-table-sticky-column-last {
+.coadmin-table-sticky-last-column {
   &.q-dark td:last-child,
   &.q-dark thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
@@ -88,14 +88,14 @@
   th:last-child,
   td:last-child {
     padding-right: 6px !important;
-    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
+    // box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
     position: sticky;
     right: 0;
     z-index: 1;
   }
 }
 
-.coadmin-table-sticky-header-and-column-first {
+.coadmin-table-sticky-header-and-first-column {
   td:first-child {
     /* bg color is important for td; just specify one */
     background-color: inherit !important;
@@ -131,11 +131,11 @@
     left: 0;
   }
 }
-.coadmin-table-sticky-header-and-column-last {
+.coadmin-table-sticky-header-and-last-column {
   td:last-child,
   th:last-child {
     padding-right: 6px !important;
-    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
+    // box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
   }
 
   &.q-dark td:last-child,
