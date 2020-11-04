@@ -1,7 +1,34 @@
 // app global css in SCSS form
-.left-side-menu-active {
-  background-color: $blue-1;
-  color: $blue;
+
+/* 修改全局样式 BEGIN */
+.coadmin-page,
+.coadmin-dialog {
+  // 按钮高度缩小
+  .q-field__control {
+    height: 45px;
+  }
+  .q-field--dense .q-field__control, 
+  .q-field--dense .q-field__marginal {
+    height: 35px;
+  }  
+}
+/* 修改全局样式 END */
+
+.coadmin-sidebar {
+  &-menu-active {
+    background-color: $light-blue-2;
+    color: var(--q-color-primary);
+  }
+  .q-item__label + .q-item__label {
+    margin-top: 0;
+  }
+}
+
+// 隐藏DropDown按钮右侧的下箭头
+.btn-dropdown-hide-droparrow {
+  &.q-btn-dropdown--simple .q-btn-dropdown__arrow {
+    display: none;
+  }
 }
 
 .coadmin-header {
@@ -25,23 +52,61 @@
   }
 }
 
-// 修改一些全局css
 .coadmin-page {
-  // 按钮高度缩小
-  .q-field--dense .q-field__control, 
-  .q-field--dense .q-field__marginal {
-    height: 35px;
-  }
-  .q-field__control {
-    height: 45px;
-  }
-    
 }
 
-// 隐藏DropDown按钮右侧的下箭头
-.btn-dropdown-hide-droparrow {
-  &.q-btn-dropdown--simple .q-btn-dropdown__arrow {
-    display: none;
+.coadmin-table {
+  // 表格slot：top 里面
+  .q-table__top {
+    padding: 4px 3px 8px 0px;
+    .q-col-gutter-x-md, .q-col-gutter-md {
+      margin-left: 0;
+      & > * {
+        padding-left: 8px;
+      }
+    }
+    .q-space {
+      padding-left: 0;
+    }
+  }
+}
+
+.coadmin-dialog {
+  /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
+  & .q-dialog__inner--minimized {
+    margin: 10px;
+  }
+}
+
+.coadmin-form {
+  /* 验证失败样式 */
+  & .q-field {
+    &__bottom--animated {
+      left: -5px;
+      bottom: 16px !important;
+      z-index: 10;
+      & .q-field__messages {
+        & div {
+          width: max-content;
+          border-radius: 5px;
+          background: $negative;
+          color: #fff;
+          padding: 5px;
+        }
+      }
+    }
+  }
+  &.gutter {
+    & .q-field {
+      &--with-bottom {
+        padding-bottom: 0;
+      }
+    }
+  }
+  & .q-field {
+    &--with-bottom {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -200,58 +265,5 @@
   td:last-child, th:last-child {
     position: sticky;
     right: 0;
-  }
-}
-
-.coadmin-table {
-
-  // 表格slot：top 里面
-  .q-table__top {
-    padding: 4px 4px 8px 0px;
-    .q-col-gutter-x-md, .q-col-gutter-md {
-      margin-left: 0;
-      & > * {
-        padding-left: 7px;
-      }
-    }
-  }
-}
-
-.coadmin-dialog {
-  /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
-  & .q-dialog__inner--minimized {
-    margin: 10px;
-  }
-}
-
-.coadmin-form {
-  /* 验证失败样式 */
-  & .q-field {
-    &__bottom--animated {
-      left: -5px;
-      bottom: 16px !important;
-      z-index: 10;
-      & .q-field__messages {
-        & div {
-          width: max-content;
-          border-radius: 5px;
-          background: $negative;
-          color: #fff;
-          padding: 5px;
-        }
-      }
-    }
-  }
-  &.gutter {
-    & .q-field {
-      &--with-bottom {
-        padding-bottom: 0;
-      }
-    }
-  }
-  & .q-field {
-    &--with-bottom {
-      padding-bottom: 0;
-    }
   }
 }

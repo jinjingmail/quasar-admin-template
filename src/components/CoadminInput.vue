@@ -1,21 +1,26 @@
 <template>
-  <div v-if="label" :class="formClass">
-    <label>{{label}}</label>
+  <div v-if="formLabel" :class="contentClass">
+    <label>{{formLabel}}</label>
     <q-input v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined" :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"></q-input>
   </div>
-  <q-input v-else v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined" :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"></q-input>
+  <q-input v-else :class="contentClass" v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined" :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"></q-input>
 </template>
 
 <script>
+/*
+ * 重新定义input等form组件，有几个目的：
+ * 1、简化代码量
+ * 2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
+ */
 export default {
   name: 'CoadminInput',
   inheritAttrs: false,
   props: {
-    label: {
+    formLabel: {
       type: String,
       default: undefined
     },
-    formClass: {
+    contentClass: {
       type: String,
       default: ''
     },

@@ -1,5 +1,6 @@
 <template>
   <q-page class="coadmin-page q-pa-sm">
+
     <q-dialog v-model="dialogShow"
       content-class="coadmin-dialog"
       :maximized="dialogFullscreen"
@@ -7,34 +8,34 @@
       persistent
     >
       <!-- style="max-width:none;" -->
-      <q-card id="dragableDialog"
-        style=""
-      >
-        <q-toolbar>
-          <q-toolbar v-drag="{moveElId:'dragableDialog', dragOutY:40}">
-            <q-avatar>
-              <q-icon name="edit"/>
-            </q-avatar>
-            <q-toolbar-title><div>标题栏</div></q-toolbar-title>
+      <q-card id="dragableDialog" style="width: 700px; max-width:100vw;">
+        <q-card-section class="no-padding">
+          <q-toolbar>
+            <q-toolbar v-drag="{moveElId:'dragableDialog', dragOutY:40}">
+              <q-avatar>
+                <q-icon name="edit"/>
+              </q-avatar>
+              <q-toolbar-title><div>标题栏</div></q-toolbar-title>
+            </q-toolbar>
+            <q-btn flat round dense :icon="dialogFullscreen?'fullscreen_exit':'fullscreen'" @click="dialogFullscreen = !dialogFullscreen"/>
+            <q-btn flat round dense icon="close" v-close-popup />
           </q-toolbar>
-          <q-btn flat round dense :icon="dialogFullscreen?'fullscreen_exit':'fullscreen'" @click="dialogFullscreen = !dialogFullscreen"/>
-          <q-btn flat round dense icon="close" v-close-popup />
-        </q-toolbar>
+        </q-card-section>
 
-        <q-card-section class="q-pt-none">
+        <q-card-section style="" class="q-pt-none">
           <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
             <div class="row q-col-gutter-md">
-              <coadmin-input form-class="col-12 col-sm-6" label="ID" v-model="dialogForm.id" disable></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="名称" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
+              <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="名称" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
                   ]" />
-              <coadmin-input form-class="col-12 col-sm-6" label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input form-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
             </div>
           </q-form>
         </q-card-section>
@@ -59,7 +60,7 @@
       :columns="columns"
       :visible-columns="visibleColumns"
       :hide-pagination="false"
-      :rows-per-page-options="[3, 5, 7, 10, 15, 20, 25, 50, 0 ]"
+      :rows-per-page-options="[3, 5, 7, 10, 15, 20, 25, 50]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
@@ -85,19 +86,19 @@
           </q-btn-group>
 
           <q-space />
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-          <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <q-input v-model="textSearch" class="col-12 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <template v-if="searchToggle" >
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           </template>
 
           <q-space />
           <q-btn-group outline class="col-auto">
-            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'expand_less':'expand_more'" @click="searchToggle = !searchToggle"/>
-            <q-separator vertical />
             <q-btn dense outline color="primary" icon="search"/>
+            <q-separator vertical />
+            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'zoom_out':'zoom_in'" @click="searchToggle = !searchToggle"/>
             <q-separator vertical />
             <q-btn dense outline color="primary" icon="replay" @click="loading = !loading"/>
             <q-separator vertical />

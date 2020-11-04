@@ -162,48 +162,82 @@
         </q-btn-dropdown>
       </q-toolbar>
     </q-header>
+    <!--
+    <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"
+      v-model="leftDrawerOpen"
+      side="left"
+      show-if-above
+      :width="240"
+      :mini="miniCheck"
+      @mouseover="leftDrawerMouseOver"
+      @mouseout="leftDrawerMouseOut"
+      :bordered="true"
+      :breakpoint="599"
+      :mini-to-overlay="miniToOverlay"
+      content-class="#fff"
+    >
+      <div class="sidebar-body">
+        <q-scroll-area class="fit">
+          <q-list padding class="rounded-borders">
+            <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
+          </q-list>
+        </q-scroll-area>
+      </div>
 
-    <q-page-container class="main-page-container">
-
-      <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"
-        v-model="leftDrawerOpen"
-        side="left"
-        show-if-above
-        :width="240"
-        :mini-width="50"
-        :mini="miniCheck"
-        @mouseover="leftDrawerMouseOver"
-        @mouseout="leftDrawerMouseOut"
-        :bordered="true"
-        :breakpoint="599"
-        :mini-to-overlay="miniToOverlay"
-        content-class="#fff"
+      <div
+        class="sidebar-footer row items-center"
       >
-        <div class="sidebar-body">
-          <q-scroll-area class="fit">
-            <q-list padding class="rounded-borders">
-              <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
-            </q-list>
-          </q-scroll-area>
-        </div>
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerMiniClick"
+          :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
+          aria-label="Menu"
+          color="primary"
+          size="sm"
+        />
+      </div>
+    </q-drawer>
+    -->
 
-        <div
-          class="sidebar-footer row items-center"
-        >
-          <q-btn
-            flat
-            dense
-            round
-            @click="leftDrawerMiniClick"
-            :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
-            aria-label="Menu"
-            color="primary"
-            size="sm"
-          />
-        </div>
+    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
+      v-model="leftDrawerOpen"
+      show-if-above
+      side="left"
 
-      </q-drawer>
+      :mini="miniCheck"
+      @mouseover="leftDrawerMouseOver"
+      @mouseout="leftDrawerMouseOut"
+      :mini-to-overlay="miniToOverlay"
 
+      :width="240"
+      :breakpoint="599"
+      bordered
+    >
+      <div class="sidebar-body">
+        <q-scroll-area class="fit">
+          <q-list padding class="rounded-borders">
+            <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
+          </q-list>
+        </q-scroll-area>
+      </div>
+      <div
+        class="sidebar-footer row items-center"
+      >
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerMiniClick"
+          :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
+          aria-label="Menu"
+          color="primary"
+          size="sm"
+        />
+      </div>
+    </q-drawer>
+    <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
@@ -487,6 +521,9 @@ export default {
       return undefined
     },
     menuOpen (menu) {
+      if (this.$q.screen.lt.sm) {
+        return
+      }
       if (menu !== undefined && menu !== this) {
         this.menuOpen(menu.$parent)
         if (menu.show) {
