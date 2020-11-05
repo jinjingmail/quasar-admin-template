@@ -1,7 +1,7 @@
 <template>
   <div class="text-center q-pa-md flex flex-center">
     <div>
-      <div style="font-size: 30vh">
+      <div style="font-size: 20vh">
         404
       </div>
 
@@ -15,7 +15,7 @@
         text-color="blue"
         unelevated
         to="/"
-        label="Go Home"
+        label="首&nbsp;页"
         no-caps
       />
     </div>

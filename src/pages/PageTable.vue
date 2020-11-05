@@ -2,15 +2,13 @@
   <q-page class="coadmin-page q-pa-sm">
 
     <coadmin-dialog
-      v-model="dialogCoadminShow"
-      title="Coadmin自定义对话框"
-      icon="add"
-      :draggable="true"
-      :maximized="true"
+      v-model="dialogShow"
+      title="对话框"
+      icon="edit"
       persistent
     >
       <q-card >
-        <q-card-section style="">
+        <q-card-section>
           <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
             <div class="row q-col-gutter-md">
               <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable></coadmin-input>
@@ -35,54 +33,6 @@
       </q-card>
     </coadmin-dialog>
 
-    <q-dialog v-model="dialogShow"
-      content-class="coadmin-dialog"
-      :maximized="dialogFullscreen"
-      :no-esc-dismiss="false"
-      persistent
-    >
-      <!-- style="max-width:none;" -->
-      <q-card style="" class="">
-        <q-card-section class="no-padding">
-          <q-toolbar>
-            <q-toolbar v-drag="{selectorTrim: ' > div > div > div', dragOutY:40}">
-              <q-avatar>
-                <q-icon name="edit"/>
-              </q-avatar>
-              <q-toolbar-title><div>标题栏</div></q-toolbar-title>
-            </q-toolbar>
-            <q-btn flat round dense :icon="dialogFullscreen?'fullscreen_exit':'fullscreen'" @click="dialogFullscreen = !dialogFullscreen"/>
-            <q-btn flat round dense icon="close" v-close-popup />
-          </q-toolbar>
-        </q-card-section>
-
-        <q-card >
-          <q-card-section >
-            <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
-              <div class="row q-col-gutter-md">
-                <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" form-label="名称" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
-                    val => !!val || '不能空',
-                    val => val.length === 11 || '请输入11个字符'
-                    ]" />
-                <coadmin-input content-class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-                <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              </div>
-            </q-form>
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
-            <q-btn label="Cancel" flat v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-card>
-    </q-dialog>
-
     <q-table
       row-key="id"
       dense
@@ -101,7 +51,6 @@
       selection="multiple"
       :selected.sync="selected"
       :loading="loading"
-      loading-label="正在。。。"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
@@ -115,7 +64,7 @@
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-btn label="打开Coadmin对话框" @click="dialogCoadminShow = true"></q-btn>
+                  <q-btn label="打开Coadmin对话框" @click="dialogShow = true"></q-btn>
                 </div>
               </div>
             </q-btn-dropdown>
@@ -259,11 +208,9 @@ export default {
       numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
       searchToggle: false,
       loading: false,
-      dialogCoadminShow: false,
       dialogShow: false,
       dialogForm: {},
       dialogFormReadonly: true,
-      dialogFullscreen: false,
       fabPos: [48, 68],
       draggingFab: false,
       selected: [],
@@ -479,6 +426,9 @@ export default {
     '$q.screen.gt.xs' (val) {
       console.log('$q.screen.gt.xs=' + this.$q.screen.gt.xs + ', val=' + val)
     }
+  },
+  mounted () {
+    this.__loadIconSet('icons')
   },
   methods: {
     // this.$refs.dialogForm.resetValidation()

@@ -1,9 +1,11 @@
 <template>
   <div v-if="formLabel" :class="contentClass">
     <label>{{formLabel}}</label>
-    <q-input v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined" :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"></q-input>
+    <q-input v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined"
+      :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"/>
   </div>
-  <q-input v-else :class="contentClass" v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined" :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"></q-input>
+  <q-input v-else :class="contentClass" v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined"
+    :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"/>
 </template>
 
 <script>

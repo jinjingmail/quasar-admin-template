@@ -9,7 +9,8 @@ const routes = [
       { path: 'page2', component: () => import('pages/Page2.vue') },
       { path: 'page3', component: () => import('pages/Page3.vue') },
       { path: 'pageTable', component: () => import('pages/PageTable.vue') },
-      { path: 'pageTree', component: () => import('pages/PageTree.vue') }
+      { path: 'pageTree', component: () => import('pages/PageTree.vue') },
+      { path: 'pageIcons', component: () => import('pages/PageIcons.vue') }
     ]
   },
 

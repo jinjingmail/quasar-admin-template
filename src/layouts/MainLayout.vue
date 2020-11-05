@@ -268,6 +268,12 @@ const menusData = [
     children: ''
   },
   {
+    title: '图标列表',
+    icon: 'code',
+    icon_color: 'primary',
+    link: '/pageIcons'
+  },
+  {
     title: '子菜单1',
     icon: 'img:img/logo.svg',
     icon_color: 'teal-10',
