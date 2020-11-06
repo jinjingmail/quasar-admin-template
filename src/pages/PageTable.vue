@@ -37,30 +37,33 @@
       row-key="id"
       dense
       flat
-      class="coadmin-table coadmin-table-sticky-header-and-last-column"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 7.5vh)'):'auto')}"
-      :virtual-scroll="$q.screen.gt.xs"
+      class="coadmin-table coadmin-table-sticky-header-and-last-column1"
       separator="horizontal"
       :wrap-cells="false"
       :data="data"
       :columns="columns"
       :visible-columns="visibleColumns"
       :hide-pagination="false"
-      :rows-per-page-options="[3, 5, 7, 10, 15, 20, 25, 50]"
+      :rows-per-page-options="[7, 10, 15, 20, 25, 50]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
       :loading="loading"
     >
       <template v-slot:top="props">
+        <div class="q-gutter-xs q-pl-sm">
+          <q-breadcrumbs>
+            <q-breadcrumbs-el label="Home" icon="home" />
+            <q-breadcrumbs-el label="Components" icon="widgets" />
+            <q-breadcrumbs-el label="Breadcrumbs" />
+          </q-breadcrumbs>
+        </div>
+
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <q-btn-group flat class="col-auto">
+          <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
-            <q-separator vertical dark />
             <q-btn dense color="primary" icon="edit" @click="rowEditClick_selected" :disable="selected.length!==1"/>
-            <q-separator vertical dark />
             <q-btn dense color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
-            <q-separator vertical dark />
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
@@ -68,10 +71,11 @@
                 </div>
               </div>
             </q-btn-dropdown>
-          </q-btn-group>
+          </div>
 
           <q-space />
-          <q-input v-model="textSearch" class="col-12 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+
+          <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           <template v-if="searchToggle" >
             <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
@@ -79,19 +83,17 @@
             <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
           </template>
 
-          <q-space />
-          <q-btn-group outline class="col-auto">
-            <q-btn dense outline color="primary" icon="search"/>
-            <q-separator vertical />
-            <q-btn dense :outline="!searchToggle" color="primary" :icon="searchToggle?'zoom_out':'zoom_in'" @click="searchToggle = !searchToggle"/>
-            <q-separator vertical />
-            <q-btn dense outline color="primary" icon="replay" @click="loading = !loading"/>
-            <q-separator vertical />
-            <q-btn dense :outline="!props.inFullscreen" color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
-            <q-separator vertical/>
-            <q-btn-dropdown auto-close outline dense no-icon-animation class="btn-dropdown-hide-droparrow" color="primary" icon="apps">
+          <q-space/>
+
+          <q-btn-group flat rounded class="col-auto">
+            <q-btn color="grey-3" text-color="dark" icon="search"/>
+            <q-btn color="grey-3" text-color="dark" :icon="searchToggle?'zoom_out':'zoom_in'" @click="searchToggle = !searchToggle"/>
+            <q-btn-dropdown auto-close color="grey-3" text-color="dark" class="btn-dropdown-hide-droparrow" icon="apps">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
+                  <q-btn flat label="清空搜索" icon="replay" @click="loading = !loading"/>
+                  <q-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
+                  <q-separator/>
                   <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
                 </div>
               </div>
@@ -180,7 +182,7 @@
     </q-table>
 
     <!-- place QPageScroller at end of page -->
-    <q-page-scroller position="bottom-right" style="z-index:999" :scroll-offset="150" :offset="fabPos">
+    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">
       <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
     </q-page-scroller>
 
@@ -188,7 +190,7 @@
 </template>
 
 <script>
-import CoadminInput from 'components/CoadminInput.vue'
+import CoadminInput from 'components/form/CoadminInput.vue'
 import CoadminDialog from 'components/CoadminDialog.vue'
 
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
@@ -428,7 +430,6 @@ export default {
     }
   },
   mounted () {
-    this.__loadIconSet('icons')
   },
   methods: {
     // this.$refs.dialogForm.resetValidation()

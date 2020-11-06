@@ -1,5 +1,5 @@
 <template>
-  <q-expansion-item v-if="item.children"
+  <q-expansion-item v-if="item.children && item.children.length > 0"
     :dense-toggle="level!==1"
     :content-inset-level="0.4"
     :group="'topmenu'+level"
@@ -25,7 +25,7 @@
     </side-menu>
   </q-expansion-item>
 
-  <q-item v-else-if="item.link.startsWith('http')"
+  <q-item v-else-if="item.link && item.link.startsWith('http')"
       :dense="false"
       :ref="'route-'+item.link"
       clickable tag="a" target="_blank"

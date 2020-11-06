@@ -25,6 +25,7 @@
             </slot>
           </template>
 
+          <slot name="header_right_prepend"></slot>
           <slot name="header_right">
             <q-btn v-if="maxable" flat round dense :icon="maxscreen?icon_max_exit:icon_max" @click="maxscreen = !maxscreen"/>
             <q-btn v-if="icon_close" flat round dense :icon="icon_close" v-close-popup />
@@ -77,7 +78,7 @@ export default {
     },
     maxable: {
       type: Boolean,
-      default: true
+      default: false
     },
     contentClass: {
       type: String,

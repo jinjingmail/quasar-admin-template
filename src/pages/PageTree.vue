@@ -84,7 +84,7 @@
           </q-btn-group>
         </div>
         <q-toolbar class="no-padding">
-          <div class='q-gutter-sm'>
+          <div class='q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" @click="rowViewClick"/>
             <q-btn dense color="primary" icon="edit"/>
             <q-btn dense color="primary" icon="delete"/>
@@ -99,7 +99,7 @@
             <q-separator vertical/>
             <q-btn dense outline color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click="props.toggleFullscreen"/>
             <q-separator vertical/>
-            <q-btn-dropdown auto-close outline dense no-icon-animation :class="'table-column-selector'" color="primary" icon="apps">
+            <q-btn-dropdown auto-close outline dense no-icon-animation class="btn-dropdown-hide-droparrow" color="primary" icon="apps">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
                   <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />

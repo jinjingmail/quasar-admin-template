@@ -1,11 +1,16 @@
 <template>
   <q-page class="q-pa-md">
     <div class="q-gutter-md">
-        <q-btn v-for="item in iconsList" :key="item.name" size="md" flat text-color="primary" @click="$q.dialog({title: ' ', message:item.name})">
+        <q-btn v-for="item in iconsList" :key="item.name" size="md" flat text-color="primary">
           <q-icon :name="item.name">
-            <q-tooltip>
-              {{item.name}}
-            </q-tooltip>
+            <q-popup-proxy transition-show="flip-up" transition-hide="flip-down">
+              <q-banner class="bg-brown text-white">
+                <template v-slot:avatar>
+                  <q-icon :name="item.name" />
+                </template>
+                {{item.name}}
+              </q-banner>
+            </q-popup-proxy>
           </q-icon>
         </q-btn>
     </div>
