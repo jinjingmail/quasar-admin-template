@@ -4,6 +4,8 @@
     dense
     align="left"
     inline-label
+    outside-arrows
+    :mobile-arrows="false"
     class="bg-white text-teal"
   >
     <q-tab
@@ -13,9 +15,9 @@
       :name="tab.path"
       :class="{'bg-blue-1 text-primary':isActive(tab)}"
     >
-      <div class="row items-center">
+      <div class="row items-center no-wrap">
         <span class="q-mr-xs">{{tab.title}}</span>
-        <q-btn v-if="!isAffix(tab)" @click.stop="closeTab(tab.path)" icon="close" flat size="8px" round/>
+        <q-btn v-if="!isAffix(tab)" @click.stop="closeTab(tab)" icon="close" flat size="8px" round/>
       </div>
     </q-tab>
   </q-tabs>
@@ -80,12 +82,26 @@ export default {
     moveToCurrentTag () {
       this.currentTab = this.$route.path
     },
-    closeTab (path) {
-      this.$q.notify({
-        type: 'warning',
-        title: '提示',
-        message: '待续'
-      })
+    closeTab (tab) {
+      let newPath = ''
+      if (this.$route.path === tab.path) {
+        const tabs = this.visitedViews
+        tabs.forEach((item, index) => {
+          if (this.$route.path === item.path) {
+            if (index + 1 < tabs.length) {
+              newPath = tabs[index + 1].path
+            } else if (index - 1 >= 0) {
+              newPath = tabs[index - 1].path
+            } else {
+              // nothing
+            }
+          }
+        })
+      }
+      this.$store.dispatch('tagviews/delView', tab)
+      if (newPath) {
+        this.$router.push({ path: newPath })
+      }
     },
     isActive (tab) {
       return tab.path === this.$route.path

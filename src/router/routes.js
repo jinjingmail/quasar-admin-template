@@ -138,7 +138,7 @@ const routes = [
             path: 'page2',
             name: 'NestedPage2',
             component: () => import('pages/nested/Page2.vue'),
-            meta: { title: '嵌套页2', icon: 'add', affix: true }
+            meta: { title: '嵌套页2', icon: 'add', affix: false }
           }
         ]
       },

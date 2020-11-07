@@ -429,7 +429,20 @@ export default {
       console.log('$q.screen.gt.xs=' + this.$q.screen.gt.xs + ', val=' + val)
     }
   },
+  created () {
+    console.log('pageTable created')
+  },
   mounted () {
+    console.log('pageTable mounted')
+  },
+  activated () {
+    console.log('pageTable activated')
+  },
+  deactivated () {
+    console.log('pageTable deactivated')
+  },
+  destroyed () {
+    console.log('pageTable destroyed')
   },
   methods: {
     // this.$refs.dialogForm.resetValidation()
