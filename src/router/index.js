@@ -5,9 +5,6 @@ import routes from './routes'
 
 Vue.use(VueRouter)
 
-// import vueDragDrag from 'vue-dragdrag'
-// Vue.use(vueDragDrag)
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

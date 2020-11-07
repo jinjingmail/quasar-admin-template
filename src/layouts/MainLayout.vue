@@ -161,6 +161,8 @@
           </div>
         </q-btn-dropdown>
       </q-toolbar>
+      <q-separator />
+      <page-tag-views />
     </q-header>
     <!--
     <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"
@@ -218,7 +220,7 @@
       <div class="sidebar-body">
         <q-scroll-area class="fit">
           <q-list padding class="rounded-borders">
-            <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
+            <side-menu ref="menu" v-for="(routeItem) in routes" :route-item="routeItem" :key="routeItem.path" base-path="" :level="1"/>
           </q-list>
         </q-scroll-area>
       </div>
@@ -238,236 +240,27 @@
       </div>
     </q-drawer>
     <q-page-container>
-      <router-view />
+      <keep-alive :include="cachedViews">
+        <router-view :key="key" />
+      </keep-alive>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import SideMenu from 'components/SideMenu.vue'
+import PageTagViews from 'components/PageTagViews.vue'
 import BrandColor from 'components/BrandColor.vue'
+import routes from '../router/routes.js'
 
 // 演示引入其他图标
 import { mdiCallMade } from '@quasar/extras/mdi-v5'
-
-/*
- * title: 标题
- * caption: 副标题
- * icon: icon_name | img:image/path/image.png
- * icon_color: Color name for component from the Quasar Color Palette
- * link: 组件路径 | http://xxx.com/image.png
- * children: [{},{}]
- */
-const menusData = [
-  {
-    title: '首页',
-    caption: null,
-    icon: 'code',
-    icon_color: 'primary',
-    link: '/',
-    children: ''
-  },
-  {
-    title: '图标列表',
-    icon: 'code',
-    icon_color: 'primary',
-    link: '/pageIcons'
-  },
-  {
-    title: '子菜单1',
-    icon: 'img:img/logo.svg',
-    icon_color: 'teal-10',
-    children: [
-      {
-        title: '子菜单11',
-        icon: 'chat',
-        link: 'https://chat.quasar.dev'
-      },
-      {
-        title: '子菜单12',
-        icon: 'chat',
-        link: 'https://chat.quasar.dev'
-      }
-    ]
-  },
-  {
-    title: '子菜单2',
-    caption: 'quasar.dev',
-    icon: 'menu',
-    icon_color: 'teal-10',
-    children: [
-      {
-        title: '子菜单21',
-        icon: 'chat',
-        children: [
-          {
-            title: 'Page1',
-            icon: 'chat',
-            link: '/page1'
-          }
-        ]
-      },
-      {
-        title: '子菜单22',
-        icon: 'chat',
-        children: [
-          {
-            title: 'Page2',
-            icon: 'chat',
-            link: '/page2'
-          },
-          {
-            title: 'Page3',
-            link: '/page3'
-          }
-        ]
-      },
-      {
-        title: 'PageNotExist',
-        icon: 'chat',
-        link: '/page_not_exist'
-      },
-      {
-        title: '表格Demo',
-        icon: 'star',
-        link: '/pageTable'
-      },
-      {
-        title: '树表Demo',
-        icon: 'add',
-        link: '/pageTree'
-      }
-    ]
-  },
-  {
-    title: '子菜单3',
-    icon: 'school',
-    icon_color: 'teal-10',
-    children: [
-      {
-        title: '子菜单31',
-        icon: 'chat',
-        link: 'https://chat.quasar.dev'
-      },
-      {
-        title: '子菜单32',
-        link: 'https://chat.quasar.dev'
-      },
-      {
-        title: '子菜单33',
-        icon: 'chat',
-        children: [
-          {
-            title: '子子菜单331',
-            link: 'https://chat.quasar.dev'
-          },
-          {
-            title: '子子菜单332',
-            link: 'https://chat.quasar.dev'
-          }
-        ]
-      },
-      {
-        title: '子菜单34',
-        caption: 'chat.quasar.dev',
-        icon: 'chat',
-        children: [
-          {
-            title: '子子菜单341',
-            link: 'https://chat.quasar.dev'
-          },
-          {
-            title: '子子菜单342',
-            link: 'https://chat.quasar.dev'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Github',
-    icon: 'code',
-    icon_color: 'primary',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: '其他菜单1',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单12',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单13',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单14',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单15',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单16',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单17',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单3',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单4',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  },
-  {
-    title: '其他菜单5',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
 
 export default {
   name: 'MainLayout',
   components: {
     SideMenu,
+    PageTagViews,
     BrandColor
   },
   data () {
@@ -475,14 +268,14 @@ export default {
       miniState: false,
       leftDrawerMini: false,
       leftDrawerOpen: false,
-      leftSideMenus: menusData,
       mdiCallMade: mdiCallMade,
 
       scrollTarget: undefined,
-      itemsMenu: [{}, {}, {}, {}, {}, {}, {}]
+      itemsMenu: [{}, {}, {}, {}, {}, {}, {}] // 通知项
     }
   },
   created () {
+    console.log('routes:', routes)
   },
   mounted () {
     console.log('route:', this.$route.path)
@@ -495,6 +288,15 @@ export default {
     }
   },
   computed: {
+    routes () {
+      return routes
+    },
+    cachedViews () {
+      return this.$store.state.tagviews.cachedViews
+    },
+    key () {
+      return this.$route.path
+    },
     miniCheck: function () {
       if (this.leftDrawerMini) {
         return this.miniState

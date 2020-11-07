@@ -1,8 +1,8 @@
 <template>
-  <q-expansion-item v-if="item.children && item.children.length > 0"
+  <q-expansion-item v-if="isExpansionItem(item)"
     :dense-toggle="level!==1"
     :content-inset-level="0.4"
-    :group="'topmenu'+level"
+    :group="'menu'+level"
     :expand-separator="level===1"
     :dense="false"
     :default-opened="false"
@@ -20,16 +20,16 @@
       </q-item-section>
     </template>
 
-    <side-menu ref="menu" v-for="(item2) in item.children" :key="item2.title"
-      :item="item2" :level="level+1">
+    <side-menu ref="menu" v-for="(child) in item.children" :key="child.path"
+      :route-item="child" :base-path="item.path" :level="level+1">
     </side-menu>
   </q-expansion-item>
 
-  <q-item v-else-if="item.link && item.link.startsWith('http')"
+  <q-item v-else-if="isExternalItem(item)"
       :dense="false"
-      :ref="'route-'+item.link"
+      :ref="'route-'+item.path"
       clickable tag="a" target="_blank"
-      :href="item.link">
+      :href="item.path">
     <q-item-section avatar v-if="item.icon">
       <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
@@ -39,10 +39,10 @@
     </q-item-section>
   </q-item>
 
-  <q-item v-else
+  <q-item v-else-if="isRouteItem(item)"
     :dense="false"
-    :ref="'route-'+item.link"
-    :to="item.link"
+    :ref="'route-'+item.path"
+    :to="item.path"
     exact
     active-class="coadmin-sidebar-menu-active"
   >
@@ -58,6 +58,9 @@
 </template>
 
 <script>
+import path from 'path'
+import { isExternal } from '../utils/validate'
+
 export default {
   name: 'SideMenu',
   props: {
@@ -66,17 +69,84 @@ export default {
       type: Number,
       required: true
     },
-    item: {
+    routeItem: {
       type: Object,
       required: true
+    },
+    basePath: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-  },
-  mounted () {
-    // console.log('"refs"', this.$refs)
+    /*
+     * 把 routeItem 转换成如下的简单格式
+     * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, children: []  }
+     */
+    item () {
+      const ri = this.routeItem
+      if (!ri || ri.hidden) {
+        return undefined
+      }
+      const meta = ri.meta || {}
+      if (!ri.children || ri.children.length === 0) {
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon }
+      }
+      let allChildHide = true
+      for (const child of ri.children) {
+        if (!child.hidden) {
+          allChildHide = false
+          break
+        }
+      }
+      if (allChildHide) {
+        return undefined
+      }
+      // (ri.alwaysShow == undefined || ri.alwaysShow == false)
+      if (ri.children.length === 1 && !ri.alwaysShow) {
+        const child = ri.children[0]
+        const m = child.meta || {}
+        return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, icon: m.icon }
+      } else {
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, children: ri.children }
+      }
+    }
   },
   methods: {
+    isRouteItem (item) {
+      if (!item) {
+        return undefined
+      }
+      return item
+    },
+    isExternalItem (item) {
+      if (!item) {
+        return undefined
+      }
+      if (item.path && isExternal(item.path)) {
+        return true
+      } else {
+        return false
+      }
+    },
+    isExpansionItem (item) {
+      if (!item) {
+        return undefined
+      }
+      if (!item.children || item.children.length === 0) {
+        return false
+      }
+      return true
+    },
+    resolvePath (routePath) {
+      if (isExternal(routePath)) {
+        return routePath
+      }
+      if (isExternal(this.basePath)) {
+        return this.basePath
+      }
+      return path.resolve(this.basePath, routePath)
+    },
     iconColor (color) {
       if (color) {
         return color
