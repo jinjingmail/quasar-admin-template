@@ -5,6 +5,7 @@
       v-model="dialogShow"
       title="对话框"
       icon="edit"
+      maxable
       persistent
     >
       <q-card >

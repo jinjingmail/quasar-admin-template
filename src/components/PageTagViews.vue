@@ -2,18 +2,23 @@
   <q-tabs
     v-model="currentTab"
     dense
-    align="left"
+    :breakpoint="0"
+    align="justify"
     inline-label
     outside-arrows
+    narrow-indicator
     :mobile-arrows="false"
-    class="bg-white text-teal"
+    :stretch="false"
+    shrink
   >
     <q-tab
       v-for="(tab,index) in visitedViews"
       ref="tag"
+      no-caps
       :key="index"
       :name="tab.path"
-      :class="{'bg-blue-1 text-primary':isActive(tab)}"
+      classxxx="{'bg-blue-2 text-primary':isActive(tab)}"
+      @click.middle.native="!isAffix(tab)?closeTab(tab):''"
     >
       <div class="row items-center no-wrap">
         <span class="q-mr-xs">{{tab.title}}</span>

@@ -197,7 +197,7 @@
 
 <script>
 export default {
-  name: 'PageTree',
+  name: 'PageTableNoData',
   data () {
     return {
       text: '',

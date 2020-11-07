@@ -25,9 +25,14 @@
           >v1.14.1</span>
         </q-toolbar-title>
 
+        <q-separator vertical inset/>
+
+        <page-tag-views v-if="!$q.screen.xs"/>
+
         <!-- 右侧工具栏 -->
         <q-space ></q-space>
-        <q-btn flat round dense icon="search" class="q-mr-xs" />
+
+        <q-separator vertical inset/>
         <q-tabs
           :breakpoint="0"
           align="justify"
@@ -37,7 +42,7 @@
           <q-tab
             name="notifications"
             icon="notifications"
-            v-if="$q.screen.gt.sm"
+            v-if="!$q.screen.xs"
           >
             <q-badge
               color="red"
@@ -161,8 +166,6 @@
           </div>
         </q-btn-dropdown>
       </q-toolbar>
-      <q-separator />
-      <page-tag-views />
     </q-header>
     <!--
     <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"

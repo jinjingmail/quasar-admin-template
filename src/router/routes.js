@@ -111,10 +111,15 @@ const routes = [
         component: () => import('pages/PageTable.vue'),
         meta: { title: 'PageTable', icon: 'add' }
       }, {
-        path: 'pageTree',
-        name: 'PageTree',
-        component: () => import('pages/PageTree.vue'),
-        meta: { title: 'PageTree', icon: 'add', noCache: true }
+        path: 'pageTableNoData',
+        name: 'pageTableNoData',
+        component: () => import('pages/PageTableNoData.vue'),
+        meta: { title: 'pageTableNoData', icon: 'add', noCache: true }
+      }, {
+        path: 'pageTreeTable',
+        name: 'pageTreeTable',
+        component: () => import('pages/PageTreeTable.vue'),
+        meta: { title: 'pageTreeTable', icon: 'add' }
       }
     ]
   }, {

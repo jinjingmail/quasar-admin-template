@@ -102,10 +102,12 @@ export default {
       if (allChildHide) {
         return undefined
       }
-      // (ri.alwaysShow == undefined || ri.alwaysShow == false)
       if (ri.children.length === 1 && !ri.alwaysShow) {
         const child = ri.children[0]
         const m = child.meta || {}
+        if (isExternal(child.path)) {
+          return { path: child.path, name: child.name, title: m.title, icon: m.icon }
+        }
         return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, icon: m.icon }
       } else {
         return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, children: ri.children }
