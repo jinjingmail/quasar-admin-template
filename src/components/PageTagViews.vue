@@ -4,7 +4,7 @@
     dense
     :breakpoint="0"
     align="left"
-    inline-label
+    :inline-label="true"
     outside-arrows
     :mobile-arrows="false"
     :switch-indicator="switchIndicator"

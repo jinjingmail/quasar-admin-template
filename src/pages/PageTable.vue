@@ -1,10 +1,10 @@
 <template>
-  <q-page class="coadmin-page q-pa-sm q-gutter-sm">
+  <q-page class="coadmin-page q-pl-sm q-pr-sm q-gutter-sm">
 
     <coadmin-dialog
       v-model="dialogShow"
       title="对话框"
-      icon="edit"
+      icon="border_color"
       maxable
       persistent
     >
@@ -39,7 +39,7 @@
       dense
       flat
       class="coadmin-table coadmin-table-sticky-header-and-last-column"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 60px - 46px)'):'auto')}"
+      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px - 3px)'):'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
       separator="horizontal"
       :wrap-cells="false"
@@ -60,7 +60,7 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
-            <q-btn dense color="primary" icon="edit" @click="rowEditClick_selected" :disable="selected.length!==1"/>
+            <q-btn dense color="primary" icon="border_color" @click="rowEditClick_selected" :disable="selected.length!==1"/>
             <q-btn dense color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">

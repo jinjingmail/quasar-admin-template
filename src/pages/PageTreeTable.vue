@@ -24,8 +24,12 @@
               </q-input>
 
               <q-space/>
-              <q-btn class="col-auto" dense :icon="treeDatasExpanded?'unfold_more':'unfold_less'"
-               @click="(treeDatasExpanded=!treeDatasExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"/>
+
+              <q-btn class="col-auto"
+                dense
+                :icon="treeDatasExpanded?'unfold_more':'unfold_less'"
+                @click="(treeDatasExpanded=!treeDatasExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
+               />
             </div>
           </q-toolbar>
 

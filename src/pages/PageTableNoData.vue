@@ -52,8 +52,6 @@
 
     <q-table
       class="coadmin-table"
-      :style="{height:($q.screen.gt.xs?'calc(91.5vh)':'auto')}"
-      :virtual-scroll="$q.screen.gt.xs"
       dense flat
       :wrap-cells="false"
       :data="data"

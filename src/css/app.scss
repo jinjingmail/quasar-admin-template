@@ -1,6 +1,8 @@
 // app global css in SCSS form
 
 /* 修改全局样式 BEGIN */
+.coadmin-header,
+.coadmin-footer,
 .coadmin-page,
 .coadmin-dialog {
   // 按钮高度缩小
@@ -10,7 +12,13 @@
   .q-field--dense .q-field__control, 
   .q-field--dense .q-field__marginal {
     height: 35px;
-  }  
+  }
+  .q-tab {
+    padding: 0 5px 0 12px;
+  }
+  .q-tabs--dense .q-tab {
+    min-height: 32px;
+  }
 }
 /* 修改全局样式 END */
 

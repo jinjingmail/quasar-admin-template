@@ -188,7 +188,7 @@
     >
       <div class="sidebar-body">
         <q-scroll-area class="fit">
-          <q-list padding class="rounded-borders">
+          <q-list>
             <side-menu ref="menu" v-for="(routeItem) in routes" :route-item="routeItem" :key="routeItem.path" base-path="" :level="1"/>
           </q-list>
         </q-scroll-area>
@@ -209,9 +209,9 @@
       </div>
     </q-drawer>
 
-    <q-page-container v-if="pageTagViewPositionTop">
+    <q-page-container v-if="pageTagViewPosition === 'top'">
       <q-layout container style="height: calc(100vh - 50px);">
-        <q-header reveal class="bg-white text-primary">
+        <q-header reveal class="coadmin-header bg-white text-primary">
           <page-tag-views />
           <q-separator v-if="!$q.dark.isActive"/>
         </q-header>
@@ -228,7 +228,7 @@
       </keep-alive>
     </q-page-container>
 
-    <q-footer reveal v-if="!pageTagViewPositionTop" class="bg-white text-primary">
+    <q-footer reveal v-if="pageTagViewPosition === 'bottom'" class="coadmin-footer bg-white text-primary">
       <q-separator v-if="!$q.dark.isActive"/>
       <page-tag-views switch-indicator/>
     </q-footer>
@@ -261,7 +261,7 @@ export default {
 
       scrollTarget: undefined,
       itemsMenu: [{}, {}, {}, {}, {}, {}, {}], // 通知项
-      pageTagViewPositionTop: true // 页面Tab栏位置
+      pageTagViewPosition: 'top' // 页面Tab栏位置（top、bottom、none）
     }
   },
   created () {

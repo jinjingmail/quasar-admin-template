@@ -3,7 +3,6 @@ import MainLayout from 'layouts/MainLayout.vue'
 import BlankLayout from 'layouts/BlankLayout.vue'
 
 /**
- * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
  * hidden: true                   if set true, item will not show in the sidebar(default is false)
@@ -11,11 +10,13 @@ import BlankLayout from 'layouts/BlankLayout.vue'
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)（必须跟'page.vue'中的name完全一致，包括大小写，才能正确keep-alive）
  * meta : {
     （不支持）roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+    caption: '副标题'             可选
+    icon: 'name|img:path|base64' the icon show in the sidebar
+    icon_color: 'text-gray'      不填默认primary
     noCache: true                if set true, the page will no be cached(default is false)
     affix: true                  if set true, the tag will affix in the tags-view (default is false)
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
@@ -27,12 +28,13 @@ const routes = [
   {
     path: '/',
     component: MainLayout,
+    redirect: '/index',
     children: [
       {
         path: 'index',
         name: 'Index',
         component: () => import('pages/Index.vue'),
-        meta: { title: '首页', icon: 'index', affix: true }
+        meta: { title: '首页', icon: 'home', affix: true }
       }
     ]
   }, {
@@ -81,14 +83,14 @@ const routes = [
         path: 'index',
         name: 'PageIconShow',
         component: () => import('pages/PageIcons.vue'),
-        meta: { title: '图标', icon: 'add' }
+        meta: { title: '图标', icon: 'insert_emoticon' }
       }
     ]
   }, {
     path: '/page',
     component: MainLayout,
     name: 'Page',
-    meta: { title: '页面展示', icon: 'menu' },
+    meta: { title: '页面展示', icon: 'web' },
     children: [
       {
         path: 'page1',
@@ -118,7 +120,7 @@ const routes = [
         meta: { title: 'pageTableNoData', icon: 'add', noCache: true }
       }, {
         path: 'pageTreeTable',
-        name: 'pageTreeTable',
+        name: 'PageTreeTable',
         component: () => import('pages/PageTreeTable.vue'),
         meta: { title: 'pageTreeTable', icon: 'add' }
       }
@@ -127,7 +129,7 @@ const routes = [
     path: '/nested',
     component: MainLayout,
     name: 'Nested',
-    meta: { title: '嵌套页面' },
+    meta: { title: '嵌套页面', icon: 'clear_all' },
     children: [
       {
         path: 'nested1',
@@ -164,8 +166,8 @@ const routes = [
     component: MainLayout,
     children: [
       {
-        path: 'http://baidu.com',
-        meta: { title: '百度', icon: 'link' }
+        path: 'http://taobao.com',
+        meta: { title: '淘宝', icon: 'link' }
       }
     ]
   },
