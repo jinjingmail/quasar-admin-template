@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header reveal elevated class="coadmin-header">
+    <q-header reveal :elevated="false" class="coadmin-header">
       <q-toolbar class="">
         <q-btn
           flat
@@ -27,7 +27,11 @@
 
         <q-separator vertical inset/>
 
-        <page-tag-views v-if="!$q.screen.xs"/>
+        <q-breadcrumbs active-color="white" v-if="!$q.screen.xs">
+          <q-breadcrumbs-el label="Home" icon="home" />
+          <q-breadcrumbs-el label="Components" icon="widgets" />
+          <q-breadcrumbs-el label="Breadcrumbs" />
+        </q-breadcrumbs>
 
         <!-- 右侧工具栏 -->
         <q-space ></q-space>
@@ -167,44 +171,6 @@
         </q-btn-dropdown>
       </q-toolbar>
     </q-header>
-    <!--
-    <q-drawer class="coadmin-sidebar main-page-sidebar full-height non-selectable no-scroll"
-      v-model="leftDrawerOpen"
-      side="left"
-      show-if-above
-      :width="240"
-      :mini="miniCheck"
-      @mouseover="leftDrawerMouseOver"
-      @mouseout="leftDrawerMouseOut"
-      :bordered="true"
-      :breakpoint="599"
-      :mini-to-overlay="miniToOverlay"
-      content-class="#fff"
-    >
-      <div class="sidebar-body">
-        <q-scroll-area class="fit">
-          <q-list padding class="rounded-borders">
-            <side-menu ref="menu" v-for="(item) in leftSideMenus" :item="item" :key="item.title" :level="1"/>
-          </q-list>
-        </q-scroll-area>
-      </div>
-
-      <div
-        class="sidebar-footer row items-center"
-      >
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerMiniClick"
-          :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
-          aria-label="Menu"
-          color="primary"
-          size="sm"
-        />
-      </div>
-    </q-drawer>
-    -->
 
     <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
       v-model="leftDrawerOpen"
@@ -242,11 +208,31 @@
         />
       </div>
     </q-drawer>
-    <q-page-container>
+
+    <q-page-container v-if="pageTagViewPositionTop">
+      <q-layout container style="height: calc(100vh - 50px);">
+        <q-header reveal class="bg-white text-primary">
+          <page-tag-views />
+          <q-separator v-if="!$q.dark.isActive"/>
+        </q-header>
+        <q-page-container>
+          <keep-alive :include="cachedViews">
+            <router-view :key="key" />
+          </keep-alive>
+        </q-page-container>
+      </q-layout>
+    </q-page-container>
+    <q-page-container v-else>
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
     </q-page-container>
+
+    <q-footer reveal v-if="!pageTagViewPositionTop" class="bg-white text-primary">
+      <q-separator v-if="!$q.dark.isActive"/>
+      <page-tag-views switch-indicator/>
+    </q-footer>
+
   </q-layout>
 </template>
 
@@ -274,7 +260,8 @@ export default {
       mdiCallMade: mdiCallMade,
 
       scrollTarget: undefined,
-      itemsMenu: [{}, {}, {}, {}, {}, {}, {}] // 通知项
+      itemsMenu: [{}, {}, {}, {}, {}, {}, {}], // 通知项
+      pageTagViewPositionTop: true // 页面Tab栏位置
     }
   },
   created () {

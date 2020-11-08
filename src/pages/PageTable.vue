@@ -1,5 +1,5 @@
 <template>
-  <q-page class="coadmin-page q-pa-sm">
+  <q-page class="coadmin-page q-pa-sm q-gutter-sm">
 
     <coadmin-dialog
       v-model="dialogShow"
@@ -38,7 +38,9 @@
       row-key="id"
       dense
       flat
-      class="coadmin-table coadmin-table-sticky-header-and-last-column1"
+      class="coadmin-table coadmin-table-sticky-header-and-last-column"
+      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 60px - 46px)'):'auto')}"
+      :virtual-scroll="$q.screen.gt.xs"
       separator="horizontal"
       :wrap-cells="false"
       :data="data"
@@ -53,11 +55,6 @@
     >
       <template v-slot:top="props">
         <div class="q-gutter-xs q-pl-sm">
-          <q-breadcrumbs>
-            <q-breadcrumbs-el label="Home" icon="home" />
-            <q-breadcrumbs-el label="Components" icon="widgets" />
-            <q-breadcrumbs-el label="Breadcrumbs" />
-          </q-breadcrumbs>
         </div>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>

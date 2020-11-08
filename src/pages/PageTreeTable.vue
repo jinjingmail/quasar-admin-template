@@ -8,7 +8,7 @@
       emit-immediately
     >
       <template v-slot:before>
-        <div class="q-pa-none">
+        <div class="q-pa-xs">
           <q-toolbar>
             <div class="row full-width">
               <q-input
@@ -54,7 +54,7 @@
       </template>
 
       <template v-slot:after>
-        <div class="q-pa-none">
+        <div class="q-pa-xs">
           <q-table
             class="coadmin-table"
             flat

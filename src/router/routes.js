@@ -1,5 +1,6 @@
 /* Layout */
 import MainLayout from 'layouts/MainLayout.vue'
+import BlankLayout from 'layouts/BlankLayout.vue'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -130,7 +131,7 @@ const routes = [
     children: [
       {
         path: 'nested1',
-        component: () => import('pages/nested/Layout.vue'),
+        component: BlankLayout,
         name: 'Nested1',
         meta: { title: '嵌套1' },
         children: [

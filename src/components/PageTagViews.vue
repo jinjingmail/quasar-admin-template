@@ -3,13 +3,12 @@
     v-model="currentTab"
     dense
     :breakpoint="0"
-    align="justify"
+    align="left"
     inline-label
     outside-arrows
-    narrow-indicator
     :mobile-arrows="false"
-    :stretch="false"
-    shrink
+    :switch-indicator="switchIndicator"
+    :class="$q.dark.isActive?'bg-dark':'bg-light'"
   >
     <q-tab
       v-for="(tab,index) in visitedViews"
@@ -17,7 +16,7 @@
       no-caps
       :key="index"
       :name="tab.path"
-      classxxx="{'bg-blue-2 text-primary':isActive(tab)}"
+      :class="isActive(tab)?($q.dark.isActive?'bg-blue-2':'bg-blue-2'):''"
       @click.middle.native="!isAffix(tab)?closeTab(tab):''"
     >
       <div class="row items-center no-wrap">
@@ -34,6 +33,12 @@ import routes from '../router/routes.js'
 
 export default {
   name: 'PageTagViews',
+  props: {
+    switchIndicator: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       currentTab: 'index'
