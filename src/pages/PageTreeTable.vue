@@ -77,8 +77,63 @@
           >
             <template v-slot:top="props">
               <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
-                <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-                <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+                <q-select v-model="popupTreeTickedComputed" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" @click.native="treeSelectClicked()" dense placeholder="机构"
+                  multiple
+                >
+                  <q-popup-proxy>
+                    <q-card class="q-pa-sm">
+                      <q-card-section>
+                        <q-toolbar>
+                          <div class="row full-width">
+                            <q-input
+                              ref="popupFilter"
+                              dense
+                              v-model="popupTreeDatasFilter"
+                              label="Filter..."
+                              class="col-8"
+                            >
+                              <template v-slot:append>
+                                <q-icon v-if="popupTreeDatasFilter !== ''" name="clear" class="cursor-pointer" @click="popupTreeDatasFilterReset" />
+                              </template>
+                            </q-input>
+
+                            <q-space/>
+
+                            <q-btn class="col-auto"
+                              dense
+                              :icon="popupTreeDatasExpanded?'unfold_more':'unfold_less'"
+                              @click="(popupTreeDatasExpanded = !popupTreeDatasExpanded)?$refs.popupTree.collapseAll():$refs.popupTree.expandAll()"
+                            />
+                          </div>
+                        </q-toolbar>
+                      </q-card-section>
+                      <q-tree
+                        ref="popupTree"
+                        node-key="id"
+                        label-key="name"
+                        :nodes="treeDatas"
+                        no-connectors
+                        :filter="popupTreeDatasFilter"
+                        :filter-method="popupTreeDatasFilterMethod"
+                        :expanded.sync="popupTreeExpanded"
+                        :ticked.sync="popupTreeTicked"
+                        tick-strategy="strict"
+                        selected-color="purple"
+                        no-nodes-label="无数据"
+                        no-results-label="无数据"
+                        class="bg-light"
+                        style="min-width:250px"
+                      >
+                      </q-tree>
+                    </q-card>
+                  </q-popup-proxy>
+                </q-select>
+                <q-select v-model="selectInputs" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" dense placeholder="姓名"
+                  use-chips
+                  use-input
+                  multiple
+                  new-value-mode="add-unique"
+                />
                 <template v-if="searchToggle" >
                   <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
                   <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
@@ -91,11 +146,11 @@
                 </q-btn-group>
               </div>
               <q-toolbar class="no-padding">
-                <div class='q-gutter-sm no-wrap'>
-                  <q-btn dense color="primary" icon="add" @click="rowViewClick"/>
-                  <q-btn dense color="primary" icon="edit"/>
-                  <q-btn dense color="primary" icon="delete"/>
-                </div>
+                <q-btn-group flat rounded class="q-mr-sm">
+                  <q-btn color="grey-3" text-color="primary" icon="add" @click="rowViewClick" />
+                  <q-btn color="grey-3" text-color="warning" icon="edit" />
+                  <q-btn color="grey-3" text-color="red" icon="delete" />
+                </q-btn-group>
 
                 <q-space />
 
@@ -208,6 +263,14 @@ export default {
       treeNodeSelected: null,
       treeDatasFilter: '',
       treeDatasExpanded: true,
+
+      selectInputs: null,
+      poppTreeNodeSelected: null,
+      popupTreeDatasFilter: '',
+      popupTreeDatasExpanded: true,
+      popupTreeExpanded: [],
+      popupTreeTicked: [],
+
       text: '',
       textSearch: '',
       currentPage: 1,
@@ -241,6 +304,8 @@ export default {
   },
   mounted () {
     console.log(depts)
+    const a = [8, 21]
+    this.popupTreeTicked = [...a]
   },
   watch: {
     '$q.screen.gt.xs' (val) {
@@ -254,14 +319,72 @@ export default {
     treeDatasSelected () {
       const a = this.getTreeDatasByPid(this.treeDatas, this.treeNodeSelected)
       return a || []
+    },
+    popupTreeTickedComputed () {
+      const a = []
+      this.popupTreeTicked.forEach(id => {
+        const node = this.findTreeNode(id)
+        if (node && node.name) {
+          a.push(node.name)
+        }
+      })
+      return a
     }
   },
   methods: {
+    treeSelectClicked () {
+      // 找到父节点（总共向上找两级）
+      const newArray = []
+      for (const b of this.popupTreeTicked) {
+        const node = this.findTreeNode(b)
+        if (node && node.pid) newArray.push(node.pid)
+      }
+      for (const b of [...newArray]) {
+        const node = this.findTreeNode(b)
+        if (node && node.pid) newArray.push(node.pid)
+      }
+      this.popupTreeExpanded = [...this.popupTreeTicked, ...newArray]
+    },
+    findTreeNode (id) {
+      if (this.treeDatas) {
+        for (const node of this.treeDatas) {
+          if (node.id === id) {
+            return node
+          } else if (node.hasChildren) {
+            const node2 = this.findTreeNode2(id, node.children)
+            if (node2) {
+              return node2
+            }
+          }
+        }
+      }
+      return null
+    },
+    findTreeNode2 (id, nodeList) {
+      for (const node of nodeList) {
+        if (node.id === id) {
+          return node
+        } else if (node.hasChildren) {
+          const node2 = this.findTreeNode2(id, node.children)
+          if (node2) {
+            return node2
+          }
+        }
+      }
+    },
     treeDatasFilterReset () {
       this.treeDatasFilter = ''
       this.$refs.filter.focus()
     },
     treeDatasFilterMethod (node, filter) {
+      const filt = filter.toLowerCase()
+      return (node.name && node.name.toLowerCase().indexOf(filt) > -1) || (node.nameLetter && node.nameLetter.toLowerCase().indexOf(filt) > -1)
+    },
+    popupTreeDatasFilterReset () {
+      this.popupTreeDatasFilter = ''
+      this.$refs.popupFilter.focus()
+    },
+    popupTreeDatasFilterMethod (node, filter) {
       const filt = filter.toLowerCase()
       return (node.name && node.name.toLowerCase().indexOf(filt) > -1) || (node.nameLetter && node.nameLetter.toLowerCase().indexOf(filt) > -1)
     },

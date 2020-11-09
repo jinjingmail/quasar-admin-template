@@ -122,7 +122,12 @@ const routes = [
         path: 'pageTreeTable',
         name: 'PageTreeTable',
         component: () => import('pages/PageTreeTable.vue'),
-        meta: { title: 'pageTreeTable', icon: 'add' }
+        meta: { title: 'pageTreeTable', icon: 'add', noCache: false }
+      }, {
+        path: 'pageSelect',
+        name: 'PageSelect',
+        component: () => import('pages/PageSelect.vue'),
+        meta: { title: 'PageSelect', icon: 'add' }
       }
     ]
   }, {

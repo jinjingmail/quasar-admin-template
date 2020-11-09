@@ -16,7 +16,7 @@
       no-caps
       :key="index"
       :name="tab.path"
-      :class="isActive(tab)?($q.dark.isActive?'bg-blue-2':'bg-blue-2'):''"
+      :class="isActive(tab)?($q.dark.isActive?'bg-blue-2':'bg-blue-1'):''"
       @click.middle.native="!isAffix(tab)?closeTab(tab):''"
     >
       <div class="row items-center no-wrap">

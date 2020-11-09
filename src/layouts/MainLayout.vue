@@ -19,27 +19,24 @@
           class="text-bold logo-text-primary"
         >
           5G管理系统
-          <span
+          <span v-show="false"
             class="q-ml-xs"
             style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
           >v1.14.1</span>
         </q-toolbar-title>
 
-        <q-separator vertical inset/>
-
         <q-breadcrumbs active-color="white" v-if="!$q.screen.xs">
-          <q-breadcrumbs-el label="Home" icon="home" />
-          <q-breadcrumbs-el label="Components" icon="widgets" />
+          <q-breadcrumbs-el label="Home" />
+          <q-breadcrumbs-el label="Components" />
           <q-breadcrumbs-el label="Breadcrumbs" />
         </q-breadcrumbs>
 
         <!-- 右侧工具栏 -->
-        <q-space ></q-space>
+        <q-space/>
 
-        <q-separator vertical inset/>
         <q-tabs
           :breakpoint="0"
-          align="justify"
+          align="right"
           indicator-color="transparent"
           outside-arrows
         >
@@ -169,6 +166,22 @@
             </div>
           </div>
         </q-btn-dropdown>
+
+        <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn round dense flat color="grey-8" icon="notifications">
+            <q-badge color="red" text-color="white" floating>
+              2
+            </q-badge>
+            <q-tooltip>Notifications</q-tooltip>
+          </q-btn>
+          <q-btn round flat>
+            <q-avatar size="md">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+            <q-tooltip>Account</q-tooltip>
+          </q-btn>
+        </div>
+
       </q-toolbar>
     </q-header>
 
@@ -209,23 +222,11 @@
       </div>
     </q-drawer>
 
-    <q-page-container v-if="pageTagViewPosition === 'top'">
-      <q-layout container style="height: calc(100vh - 50px);">
-        <q-header reveal class="coadmin-header bg-white text-primary">
-          <page-tag-views />
-          <q-separator v-if="!$q.dark.isActive"/>
-        </q-header>
-        <q-page-container>
-          <keep-alive :include="cachedViews">
-            <router-view :key="key" />
-          </keep-alive>
-        </q-page-container>
-      </q-layout>
-    </q-page-container>
-    <q-page-container v-else>
-      <keep-alive :include="cachedViews">
-        <router-view :key="key" />
+    <q-page-container>
+      <keep-alive :include="cachedViews" max="10">
+        <router-view />
       </keep-alive>
+
     </q-page-container>
 
     <q-footer reveal v-if="pageTagViewPosition === 'bottom'" class="coadmin-footer bg-white text-primary">
@@ -261,7 +262,7 @@ export default {
 
       scrollTarget: undefined,
       itemsMenu: [{}, {}, {}, {}, {}, {}, {}], // 通知项
-      pageTagViewPosition: 'top' // 页面Tab栏位置（top、bottom、none）
+      pageTagViewPosition: 'bottom' // 页面Tab栏位置（top、bottom、none）
     }
   },
   created () {
@@ -284,8 +285,11 @@ export default {
     cachedViews () {
       return this.$store.state.tagviews.cachedViews
     },
+    // 20201109 发现一个问题：当noCache==false的页面在dev模式下更改了页面结构，会导致网页白屏，<router-view /> 不使用key就没这个问题
     key () {
+      console.log('$route=', this.$route)
       return this.$route.path
+      // return this.$route.name
     },
     miniCheck: function () {
       if (this.leftDrawerMini) {
