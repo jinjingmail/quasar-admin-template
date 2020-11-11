@@ -1,3 +1,8 @@
+<!--
+  重新定义input等form组件，有几个目的：
+  1、简化代码量
+  2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
+-->
 <template>
   <div v-if="formLabel" :class="contentClass">
     <label>{{formLabel}}</label>
@@ -9,11 +14,6 @@
 </template>
 
 <script>
-/*
- * 重新定义input等form组件，有几个目的：
- * 1、简化代码量
- * 2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
- */
 export default {
   name: 'CoadminInput',
   inheritAttrs: false,

@@ -81,19 +81,23 @@
 
 .coadmin-dialog {
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
-  & .q-dialog__inner--minimized {
+  .q-dialog__inner--minimized {
     margin: 10px;
+  }
+  /* 改成16px以便跟 q-card__section 有相同的边距好对齐 */
+  .q-card__actions {
+    padding: 16px;
   }
 }
 
 .coadmin-form {
   /* 验证失败样式 */
-  & .q-field {
+  .q-field {
     &__bottom--animated {
       left: -5px;
       bottom: 16px !important;
       z-index: 10;
-      & .q-field__messages {
+      .q-field__messages {
         & div {
           width: max-content;
           border-radius: 5px;
@@ -105,13 +109,13 @@
     }
   }
   &.gutter {
-    & .q-field {
+    .q-field {
       &--with-bottom {
         padding-bottom: 0;
       }
     }
   }
-  & .q-field {
+  .q-field {
     &--with-bottom {
       padding-bottom: 0;
     }

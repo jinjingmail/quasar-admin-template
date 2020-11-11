@@ -34,22 +34,12 @@
         <!-- 右侧工具栏 -->
         <q-space/>
 
-        <q-tabs
-          :breakpoint="0"
-          align="right"
-          indicator-color="transparent"
-          outside-arrows
-        >
-          <q-tab
-            name="notifications"
-            icon="notifications"
-            v-if="!$q.screen.xs"
-          >
-            <q-badge
-              color="red"
-              floating
-            >{{itemsMenu.length}}</q-badge>
-            <q-tooltip class="bg-blue">通知</q-tooltip>
+        <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn dense flat icon="notifications">
+            <q-badge color="red" text-color="white" floating>
+              {{itemsMenu.length}}
+            </q-badge>
+            <q-tooltip>通知</q-tooltip>
             <q-menu
               fit
               anchor="bottom left"
@@ -77,13 +67,6 @@
                     v-for="(item, index) in itemsMenu"
                     :key="index"
                   >
-                    <!-- <q-item-section>
-                        <q-item-label>Content filtering {{ index + 1 }}</q-item-label>
-                        <q-item-label caption>
-                          Set the content filtering level to restrict
-                          apps that can be downloaded
-                        </q-item-label>
-                      </q-item-section> -->
                     <q-item-section avatar>
                       <q-avatar
                         color="primary"
@@ -120,65 +103,40 @@
                 </q-infinite-scroll>
               </q-list>
             </q-menu>
-          </q-tab>
-        </q-tabs>
-        <q-btn-dropdown
-          class="btn-dropdown-hide-droparrow"
-          flat
-          dense
-          no-caps
-          stretch
-          no-icon-animation
-          auto-close
-        >
-          <template v-slot:label>
-            <div class='text-center'>系统管理员</div>
-            &nbsp;
+          </q-btn>
+          <q-btn flat stretch dense label="系统管理员">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
-          </template>
+            <q-tooltip>账户</q-tooltip>
 
-          <div class="row no-wrap q-pa-md">
-            <div class="column">
-              <div class="text-h6 q-mb-md">Settings</div>
-              <!-- <q-toggle v-model="$q.dark.isActive" label="Dark模式"/> -->
-              <q-btn @click="$q.dark.toggle()" label="Dark模式" color="primary"/>
-              <brand-color />
-            </div>
+            <q-popup-proxy>
+              <div class="row no-wrap q-pa-md">
+                <div class="column">
+                  <div class="text-h6 q-mb-md">Settings</div>
+                  <q-btn @click="$q.dark.toggle()" label="Dark模式" color="primary"/>
+                  <brand-color />
+                </div>
 
-            <q-separator vertical inset class="q-mx-lg" />
+                <q-separator vertical inset class="q-mx-lg" />
 
-            <div class="column items-center">
-              <q-avatar size="72px">
-                <img src="~assets/boy-avatar.jpg">
-              </q-avatar>
+                <div class="column items-center">
+                  <q-avatar size="xl">
+                    <img src="~assets/boy-avatar.jpg">
+                  </q-avatar>
 
-              <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
+                  <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
 
-              <q-btn
-                color="primary"
-                label="Logout"
-                push
-                size="sm"
-                v-close-popup
-              />
-            </div>
-          </div>
-        </q-btn-dropdown>
-
-        <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn round dense flat color="grey-8" icon="notifications">
-            <q-badge color="red" text-color="white" floating>
-              2
-            </q-badge>
-            <q-tooltip>Notifications</q-tooltip>
-          </q-btn>
-          <q-btn round flat>
-            <q-avatar size="md">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-            </q-avatar>
-            <q-tooltip>Account</q-tooltip>
+                  <q-btn
+                    color="primary"
+                    label="Logout"
+                    push
+                    size="sm"
+                    v-close-popup
+                  />
+                </div>
+              </div>
+            </q-popup-proxy>
           </q-btn>
         </div>
 

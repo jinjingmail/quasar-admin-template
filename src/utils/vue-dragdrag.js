@@ -29,98 +29,10 @@ function cssPath (el) {
 }
 
 /*
-https://stackoverflow.com/questions/3620116/get-css-path-from-dom-element
-Doing a reverse CSS selector lookup is an inherently tricky thing. I've generally come across two types of solutions:
-
-Go up the DOM tree to assemble the selector string out of a combination of element names, classes, and the id or name attribute. The problem with this method is that it can result in selectors that return multiple elements, which won't cut it if we require them to select only one unique element.
-
-Assemble the selector string using nth-child() or nth-of-type(), which can result in very long selectors. In most cases the longer a selector is the higher specificity it has, and the higher the specificity the more likely it will break when the DOM structure changes.
-
-The solution below is an attempt at tackling both of these issues. It is a hybrid approach that outputs a unique CSS selector (i.e., document.querySelectorAll(getUniqueSelector(el)) should always return a one-item array). While the returned selector string is not necessarily the shortest, it is derived with an eye towards CSS selector efficiency while balancing specificity by prioritizing nth-of-type() and nth-child() last.
-
-You can specify what attributes to incorporate into the selector by updating the aAttr array. The minimum browser requirement is IE 9.
-*/
-function getUniqueSelector (elSrc) {
-  if (!(elSrc instanceof Element)) return
-  var sSel,
-    aAttr = ['name', 'value', 'title', 'placeholder', 'data-*'], // Common attributes
-    aSel = [],
-    // Derive selector from element
-    getSelector = function (el) {
-      // 1. Check ID first
-      // NOTE: ID must be unique amongst all IDs in an HTML5 document.
-      // https://www.w3.org/TR/html5/dom.html#the-id-attribute
-      if (el.id) {
-        aSel.unshift('#' + el.id)
-        return true
-      }
-      aSel.unshift(sSel = el.nodeName.toLowerCase())
-      // 2. Try to select by classes
-      if (el.className) {
-        aSel[0] = sSel += '.' + el.className.trim().replace(/ +/g, '.')
-        if (uniqueQuery()) return true
-      }
-      // 3. Try to select by classes + attributes
-      for (var i = 0; i < aAttr.length; ++i) {
-        if (aAttr[i] === 'data-*') {
-          // Build array of data attributes
-          var aDataAttr = [].filter.call(el.attributes, function (attr) {
-            return attr.name.indexOf('data-') === 0
-          })
-          for (var j = 0; j < aDataAttr.length; ++j) {
-            aSel[0] = sSel += '[' + aDataAttr[j].name + '="' + aDataAttr[j].value + '"]'
-            if (uniqueQuery()) return true
-          }
-        } else if (el[aAttr[i]]) {
-          aSel[0] = sSel += '[' + aAttr[i] + '="' + el[aAttr[i]] + '"]'
-          if (uniqueQuery()) return true
-        }
-      }
-      // 4. Try to select by nth-of-type() as a fallback for generic elements
-      var elChild = el
-      // sChild,
-      var n = 1
-      elChild = elChild.previousElementSibling
-      while (elChild) {
-        if (elChild.nodeName === el.nodeName) {
-          ++n
-        }
-        elChild = elChild.previousElementSibling
-      }
-      aSel[0] = sSel += ':nth-of-type(' + n + ')'
-      if (uniqueQuery()) return true
-      // 5. Try to select by nth-child() as a last resort
-      elChild = el
-      n = 1
-      elChild = elChild.previousElementSibling
-      while (elChild) {
-        ++n
-        elChild = elChild.previousElementSibling
-      }
-      aSel[0] = sSel = sSel.replace(/:nth-of-type\(\d+\)/, n > 1 ? ':nth-child(' + n + ')' : ':first-child')
-      if (uniqueQuery()) return true
-      return false
-    },
-    // Test query to see if it returns one element
-    uniqueQuery = function () {
-      return document.querySelectorAll(aSel.join('>') || null).length === 1
-    }
-  // Walk up the DOM tree to compile a unique selector
-  while (elSrc.parentNode) {
-    if (getSelector(elSrc)) return aSel.join(' > ')
-    elSrc = elSrc.parentNode
-  }
-}
-
-/*
  * 20201103 修改自github项目 Vue-DragDrag
  */
 export default {
   inserted: function (el, binding) {
-    console.log('drag.el=', el)
-    console.log('drag.binding=', binding)
-    console.log('cssPath=' + cssPath(el))
-    console.log('cssPath2=' + getUniqueSelector(el))
     // 拖拽时的手势
     el.style.cursor = binding.value && binding.value.cursor ? binding.value.cursor : 'default'
 

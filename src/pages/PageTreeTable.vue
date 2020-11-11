@@ -77,7 +77,8 @@
           >
             <template v-slot:top="props">
               <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
-                <q-select v-model="popupTreeTickedComputed" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" @click.native="treeSelectClicked()" dense placeholder="机构"
+                <q-select v-model="popupTreeTickedComputed" class="col-xs-6 col-sm-5 col-md-4 col-lg-3"
+                  @click.native="treeSelectClicked()" dense placeholder="机构"
                   multiple
                 >
                   <q-popup-proxy>
@@ -117,7 +118,7 @@
                         :filter-method="popupTreeDatasFilterMethod"
                         :expanded.sync="popupTreeExpanded"
                         :ticked.sync="popupTreeTicked"
-                        tick-strategy="strict"
+                        tick-strategy="leaf"
                         selected-color="purple"
                         no-nodes-label="无数据"
                         no-results-label="无数据"
@@ -128,11 +129,11 @@
                     </q-card>
                   </q-popup-proxy>
                 </q-select>
-                <q-select v-model="selectInputs" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" dense placeholder="姓名"
-                  use-chips
-                  use-input
+                <q-select v-model="popupTreeTickedWithParentComputed" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" dense placeholder="全部节点"
                   multiple
-                  new-value-mode="add-unique"
+                />
+                <q-select v-model="popupTreeTickedParentOnlyComputed" class="col-xs-6 col-sm-5 col-md-4 col-lg-3" dense placeholder="公共父节点"
+                  multiple
                 />
                 <template v-if="searchToggle" >
                   <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
@@ -264,7 +265,6 @@ export default {
       treeDatasFilter: '',
       treeDatasExpanded: true,
 
-      selectInputs: null,
       poppTreeNodeSelected: null,
       popupTreeDatasFilter: '',
       popupTreeDatasExpanded: true,
@@ -303,9 +303,8 @@ export default {
     }
   },
   mounted () {
-    console.log(depts)
-    const a = [8, 21]
-    this.popupTreeTicked = [...a]
+    // const a = [8, 21]
+    // this.popupTreeTicked = [...a]
   },
   watch: {
     '$q.screen.gt.xs' (val) {
@@ -321,17 +320,108 @@ export default {
       return a || []
     },
     popupTreeTickedComputed () {
+      return this.treeKeyToLabel(this.popupTreeTicked)
+    },
+    // 如果叶子节点全选中，则同时返回父节点
+    popupTreeTickedWithParentComputed () {
+      const tickedWithParent = [...this.popupTreeTicked]
+      for (const t of this.treeDatas) {
+        if (t.hasChildren) {
+          if (this.isAllChildTicked(tickedWithParent, t, t.children)) {
+            tickedWithParent.unshift(t.id)
+          }
+        }
+      }
+      return this.treeKeyToLabel(tickedWithParent)
+    },
+    // 如果叶子节点全选中，则只返回父节点
+    popupTreeTickedParentOnlyComputed () {
+      const tickedWithParent = [...this.popupTreeTicked]
+      for (const t of this.treeDatas) {
+        if (t.hasChildren) {
+          if (this.isAllChildTicked_forParentOnly(tickedWithParent, t, t.children)) {
+            tickedWithParent.push(t.id)
+          }
+        }
+      }
+      return this.treeKeyToLabel(tickedWithParent)
+    }
+  },
+  methods: {
+    treeKeyToLabel (ids) {
       const a = []
-      this.popupTreeTicked.forEach(id => {
+      ids.forEach(id => {
         const node = this.findTreeNode(id)
         if (node && node.name) {
           a.push(node.name)
         }
       })
       return a
-    }
-  },
-  methods: {
+    },
+    isAllChildTicked (tickedWithParent, parent, nodes) {
+      if (!nodes || nodes.length === 0) {
+        return this.popupTreeTickedContains(parent.id)
+      }
+      let allTicked = true
+      for (const t of nodes) {
+        if (t.hasChildren) {
+          if (this.isAllChildTicked(tickedWithParent, t, t.children)) {
+            tickedWithParent.unshift(t.id)
+          } else {
+            allTicked = false
+          }
+        } else {
+          if (allTicked) {
+            if (!this.popupTreeTickedContains(t.id)) {
+              allTicked = false
+            }
+          }
+        }
+      }
+      return allTicked
+    },
+    isAllChildTicked_forParentOnly (tickedWithParent, parent, nodes) {
+      if (!nodes || nodes.length === 0) {
+        return this.popupTreeTickedContains(parent.id)
+      }
+      let allTicked = true
+      for (const t of nodes) {
+        if (t.hasChildren) {
+          if (this.isAllChildTicked_forParentOnly(tickedWithParent, t, t.children)) {
+            tickedWithParent.push(t.id)
+          } else {
+            allTicked = false
+          }
+        } else {
+          if (allTicked) {
+            if (!this.popupTreeTickedContains(t.id)) {
+              allTicked = false
+            }
+          }
+        }
+      }
+      if (allTicked) {
+        for (const t of nodes) {
+          this.arrayRemove(tickedWithParent, t.id)
+        }
+      }
+      return allTicked
+    },
+    arrayRemove (array, val) {
+      if (array && array.length > 0 && val !== undefined) {
+        const idx = array.indexOf(val)
+        if (idx !== -1) {
+          array.splice(idx, 1)
+        }
+      }
+    },
+    popupTreeTickedContains (key) {
+      if (this.popupTreeTicked && this.popupTreeTicked.length > 0) {
+        return this.popupTreeTicked.includes(key)
+      } else {
+        return false
+      }
+    },
     treeSelectClicked () {
       // 找到父节点（总共向上找两级）
       const newArray = []
@@ -343,7 +433,7 @@ export default {
         const node = this.findTreeNode(b)
         if (node && node.pid) newArray.push(node.pid)
       }
-      this.popupTreeExpanded = [...this.popupTreeTicked, ...newArray]
+      this.popupTreeExpanded = [...newArray]
     },
     findTreeNode (id) {
       if (this.treeDatas) {

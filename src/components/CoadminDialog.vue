@@ -1,14 +1,24 @@
+<!--
+  重新定义QDialog组件，主要是为了增加拖拽功能，和默认标题栏
+  增加插槽：
+    header_left
+    header_right
+    header_right_prepend
+  增加属性：
+    参考 props 定义
+-->
 <template>
   <q-dialog
+      ref="dialog"
       :content-class="customContentClass()"
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
   >
-    <q-card :style="contentStyle">
+    <q-card :style="contentStyle" :id="uuid">
       <q-card-section class="no-padding">
         <q-toolbar>
-          <q-toolbar v-if="draggable" v-drag="{selectorTrim: ' > div > div > div', dragOutY:40}">
+          <q-toolbar v-if="draggable" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
             <slot name="header_left">
               <q-avatar>
                 <q-icon :name="icon"/>
@@ -33,20 +43,20 @@
         </q-toolbar>
       </q-card-section>
 
-      <slot>
-      </slot>
+      <slot />
 
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-/*
- * 重新定义QDialog组件，主要是为了增加拖拽功能，和默认标题栏
- */
+import random from '../utils'
+// import { QDialog } from 'quasar'
+
 export default {
   name: 'CoadminDialog',
   inheritAttrs: false,
+  // mixins: [QDialog],
   props: {
     title: {
       type: String,
@@ -91,10 +101,30 @@ export default {
   },
   data () {
     return {
+      uuid: '',
       maxscreen: this.maximized
     }
   },
+  created () {
+    console.log('coadmin.table.created')
+    this.uuid = 'id' + random()
+  },
   methods: {
+    show (evt) {
+      this.$refs.dialog.show(evt)
+    },
+    hide (evt) {
+      this.$refs.dialog.hide(evt)
+    },
+    toggle (evt) {
+      this.$refs.dialog.toggle(evt)
+    },
+    focus () {
+      this.$refs.dialog.focus()
+    },
+    shake () {
+      this.$refs.dialog.shake()
+    },
     customContentClass () {
       if (!this.contentClass) {
         return 'coadmin-dialog'

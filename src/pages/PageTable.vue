@@ -2,7 +2,26 @@
   <q-page class="coadmin-page q-pl-sm q-pr-sm q-gutter-sm">
 
     <coadmin-dialog
-      v-model="dialogShow"
+      ref="printDialog"
+      title="打印"
+      icon="print"
+      maxable
+      @escape-key="$q.notify({type:'info', message:'esc key'})"
+      >
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">打印的标题</div>
+          <div class="text-body2">这里是要打印的内容</div>
+        </q-card-section>
+      </q-card>
+        <q-card-actions align="right">
+          <q-btn dense label="打印" color="primary" @click="$q.notify({type:'info', message:'打印'})"/>
+          <q-btn dense label="Cancel" flat v-close-popup />
+        </q-card-actions>
+    </coadmin-dialog>
+
+    <coadmin-dialog
+      ref="formDialog"
       title="对话框"
       icon="border_color"
       maxable
@@ -27,9 +46,11 @@
           </q-form>
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
-          <q-btn label="Cancel" flat v-close-popup />
+        <q-card-actions>
+          <q-btn dense label="打印" color="primary" @click="$refs.printDialog.show()"/>
+          <q-space />
+          <q-btn dense label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
+          <q-btn dense label="Cancel" flat v-close-popup />
         </q-card-actions>
       </q-card>
     </coadmin-dialog>
@@ -65,7 +86,7 @@
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-btn label="打开Coadmin对话框" @click="dialogShow = true"></q-btn>
+                  <q-btn label="打开Coadmin对话框" @click="$refs.formDialog.show()"></q-btn>
                 </div>
               </div>
             </q-btn-dropdown>
@@ -208,7 +229,6 @@ export default {
       numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
       searchToggle: false,
       loading: false,
-      dialogShow: false,
       dialogForm: {},
       dialogFormReadonly: true,
       fabPos: [48, 68],
@@ -469,17 +489,17 @@ export default {
     rowViewClick (row) {
       this.dialogForm = { ...row }
       this.dialogFormReadonly = true
-      this.dialogShow = true
+      this.$refs.formDialog.show()
     },
     rowAddClick () {
       this.dialogForm = { ...dialogFormDefault }
       this.dialogFormReadonly = false
-      this.dialogShow = true
+      this.$refs.formDialog.show()
     },
     rowEditClick (row) {
       this.dialogForm = { ...row }
       this.dialogFormReadonly = false
-      this.dialogShow = true
+      this.$refs.formDialog.show()
     },
     rowEditClick_selected () {
       var row = this.selected[0]
