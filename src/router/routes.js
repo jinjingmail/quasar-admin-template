@@ -128,6 +128,11 @@ const routes = [
         name: 'PageSelect',
         component: () => import('pages/PageSelect.vue'),
         meta: { title: 'PageSelect', icon: 'add' }
+      }, {
+        path: 'pageTreeSelect',
+        name: 'PageTreeSelect',
+        component: () => import('pages/PageTreeSelect.vue'),
+        meta: { title: 'PageTreeSelect', icon: 'add' }
       }
     ]
   }, {

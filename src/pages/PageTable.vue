@@ -26,28 +26,40 @@
       icon="border_color"
       maxable
       persistent
+      content-style="width:700px; max-width:90vw;"
     >
       <q-card >
         <q-card-section>
-          <q-form ref="dialogForm" @submit="onDialogFormSubmit" class="coadmin-form">
+          <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="medium" label-position="center">
             <div class="row q-col-gutter-md">
-              <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable></coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="名称" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
+              </coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules @blur="$q.notify({message:'blur notify'})"></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
+                <template v-slot:append>
+                  <q-icon v-if="!dialogForm.calories" name="search" />
+                  <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
+                </template>
+              </coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
                   ]" />
-              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" label='xxx' v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label=" " placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
+                <q-popup-proxy>
+                  <div >ThisisPopup</div>
+                </q-popup-proxy>
+              </coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
             </div>
-          </q-form>
+          </coadmin-form>
         </q-card-section>
 
         <q-card-actions>
           <q-btn dense label="打印" color="primary" @click="$refs.printDialog.show()"/>
+          <q-btn dense label="选择calories" color="primary" @click="$refs.form_calories.select()"/>
           <q-space />
           <q-btn dense label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
           <q-btn dense label="Cancel" flat v-close-popup />
@@ -210,6 +222,7 @@
 
 <script>
 import CoadminInput from 'components/form/CoadminInput.vue'
+import CoadminForm from 'components/form/CoadminForm.vue'
 import CoadminDialog from 'components/CoadminDialog.vue'
 
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
@@ -218,7 +231,8 @@ export default {
   name: 'PageTable',
   components: {
     CoadminInput,
-    CoadminDialog
+    CoadminDialog,
+    CoadminForm
   },
   data () {
     return {

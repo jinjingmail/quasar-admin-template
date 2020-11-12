@@ -180,11 +180,31 @@
       </div>
     </q-drawer>
 
+    <!--
     <q-page-container>
       <keep-alive :include="cachedViews" max="10">
         <router-view />
       </keep-alive>
+    </q-page-container>
+    -->
 
+    <q-page-container v-if="pageTagViewPosition === 'top'">
+      <q-layout container style="height: calc(100vh - 50px);">
+        <q-header reveal class="coadmin-header bg-white text-primary">
+          <page-tag-views />
+          <q-separator v-if="!$q.dark.isActive"/>
+        </q-header>
+        <q-page-container>
+          <keep-alive :include="cachedViews">
+            <router-view />
+          </keep-alive>
+        </q-page-container>
+      </q-layout>
+    </q-page-container>
+    <q-page-container v-else>
+      <keep-alive :include="cachedViews">
+        <router-view />
+      </keep-alive>
     </q-page-container>
 
     <q-footer reveal v-if="pageTagViewPosition === 'bottom'" class="coadmin-footer bg-white text-primary">
@@ -220,7 +240,7 @@ export default {
 
       scrollTarget: undefined,
       itemsMenu: [{}, {}, {}, {}, {}, {}, {}], // 通知项
-      pageTagViewPosition: 'bottom' // 页面Tab栏位置（top、bottom、none）
+      pageTagViewPosition: 'top' // 页面Tab栏位置（top、bottom、none）
     }
   },
   created () {

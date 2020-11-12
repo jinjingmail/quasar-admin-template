@@ -10,12 +10,12 @@
 <template>
   <q-dialog
       ref="dialog"
-      :content-class="customContentClass()"
+      :content-class="customContentClass"
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
   >
-    <q-card :style="contentStyle" :id="uuid">
+    <q-card ref="card" :style="contentStyle" :id="uuid">
       <q-card-section class="no-padding">
         <q-toolbar>
           <q-toolbar v-if="draggable" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
@@ -37,7 +37,7 @@
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
-            <q-btn v-if="maxable" flat round dense :icon="maxscreen?icon_max_exit:icon_max" @click="maxscreen = !maxscreen"/>
+            <q-btn v-if="maxable" flat round dense :icon="maxscreen?icon_max_exit:icon_max" @click="toggleMaxScreen()"/>
             <q-btn v-if="icon_close" flat round dense :icon="icon_close" v-close-popup />
           </slot>
         </q-toolbar>
@@ -102,7 +102,21 @@ export default {
   data () {
     return {
       uuid: '',
-      maxscreen: this.maximized
+      maxscreen: this.maximized,
+      tempStyleWidth: null,
+      tempStyleMaxWidth: null
+    }
+  },
+  computed: {
+    customContentClass () {
+      if (!this.contentClass) {
+        return 'coadmin-dialog'
+      }
+      if (this.contentClass.indexOf('coadmin-dialog') < 0) {
+        return 'coadmin-dialog ' + this.contentClass
+      } else {
+        return this.contentClass
+      }
     }
   },
   created () {
@@ -125,15 +139,26 @@ export default {
     shake () {
       this.$refs.dialog.shake()
     },
-    customContentClass () {
-      if (!this.contentClass) {
-        return 'coadmin-dialog'
-      }
-      if (this.contentClass.indexOf('coadmin-dialog') < 0) {
-        return 'coadmin-dialog ' + this.contentClass
+    toggleMaxScreen () {
+      if (this.maxscreen) {
+        if (this.tempStyleWidth) {
+          console.log('toggleScreen:', this.tempStyleWidth)
+          this.$refs.card.$el.style.width = this.tempStyleWidth
+        } else {
+          this.$refs.card.$el.style.width = ''
+        }
+        if (this.tempStyleMaxWidth) {
+          this.$refs.card.$el.style.maxWidth = this.tempStyleMaxWidth
+        } else {
+          this.$refs.card.$el.style.maxWidth = ''
+        }
       } else {
-        return this.contentClass
+        this.tempStyleWidth = this.$refs.card.$el.style.width
+        this.tempStyleMaxWidth = this.$refs.card.$el.style.maxWidth
+        this.$refs.card.$el.style.width = '100%'
+        this.$refs.card.$el.style.maxWidth = '100vw'
       }
+      this.maxscreen = !this.maxscreen
     }
   }
 }

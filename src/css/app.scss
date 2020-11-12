@@ -91,11 +91,11 @@
 }
 
 .coadmin-form {
-  /* 验证失败样式 */
+  /* 验证失败样式 begin */
   .q-field {
     &__bottom--animated {
       left: -5px;
-      bottom: 16px !important;
+      bottom: 18px !important;
       z-index: 10;
       .q-field__messages {
         & div {
@@ -119,6 +119,13 @@
     &--with-bottom {
       padding-bottom: 0;
     }
+  }
+  /* 验证失败样式 end */
+
+  /* 缩小表格输入框直接的垂直间距 */
+  .q-col-gutter-y-md > *,
+  .q-col-gutter-md > * {
+    padding-top: 10px;
   }
 }
 

@@ -2,15 +2,48 @@
   重新定义input等form组件，有几个目的：
   1、简化代码量
   2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
+  新增插槽：
+      form-label
+  新增prop：
+      见prop定义
 -->
 <template>
-  <div v-if="formLabel" :class="contentClass">
-    <label>{{formLabel}}</label>
-    <q-input v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined"
-      :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"/>
+  <div v-if="formLabel" :class="contentClass" >
+    <div class="form-label">
+      <label class="ellipsis"><slot name="form-label">{{formLabel}}</slot></label>
+      <q-input
+        class="col"
+        ref="input"
+        v-bind="$attrs" v-on="inputListeners" :label="label" :dense="dense" :outlined="outlined"
+        :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"
+      >
+        <slot />
+        <template v-slot:prepend><slot name="prepend"/></template>
+        <template v-slot:append><slot name="append"/></template>
+        <template v-slot:before><slot name="before"/></template>
+        <template v-slot:after><slot name="after"/></template>
+        <template v-slot:error><slot name="error"/></template>
+        <template v-slot:hint><slot name="hint"/></template>
+        <template v-slot:counter><slot name="counter"/></template>
+        <template v-slot:loading><slot name="loading"/></template>
+      </q-input>
+    </div>
   </div>
-  <q-input v-else :class="contentClass" v-bind="$attrs" v-on="inputListeners" :dense="dense" :outlined="outlined"
-    :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"/>
+  <q-input v-else
+    ref="input"
+    :class="contentClass" v-bind="$attrs" v-on="inputListeners" :label="label" :dense="dense" :outlined="outlined"
+    :no-error-icon="noErrorIcon" :disable="disable" :readonly="disable"
+  >
+    <slot />
+    <template v-slot:prepend><slot name="prepend"/></template>
+    <template v-slot:append><slot name="append"/></template>
+    <template v-slot:before><slot name="before"/></template>
+    <template v-slot:after><slot name="after"/></template>
+    <template v-slot:error><slot name="error"/></template>
+    <template v-slot:hint><slot name="hint"/></template>
+    <template v-slot:counter><slot name="counter"/></template>
+    <template v-slot:loading><slot name="loading"/></template>
+  </q-input>
 </template>
 
 <script>
@@ -19,6 +52,10 @@ export default {
   inheritAttrs: false,
   props: {
     formLabel: {
+      type: String,
+      default: undefined
+    },
+    label: {
       type: String,
       default: undefined
     },
@@ -60,6 +97,23 @@ export default {
           }
         }
       )
+    }
+  },
+  methods: {
+    resetValidation () {
+      this.$refs.input.resetValidation()
+    },
+    validate (value) {
+      return this.$refs.validate(value)
+    },
+    focus () {
+      this.$refs.input.focus()
+    },
+    blur () {
+      this.$refs.input.blur()
+    },
+    select () {
+      this.$refs.input.select()
     }
   }
 }

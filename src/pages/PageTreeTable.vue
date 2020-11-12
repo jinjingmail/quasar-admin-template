@@ -33,7 +33,7 @@
             </div>
           </q-toolbar>
 
-          <q-tree
+          <coadmin-tree
             ref="tree"
             node-key="id"
             label-key="name"
@@ -49,7 +49,7 @@
             <template v-slot:default-header="prop">
               <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
             </template>
-          </q-tree>
+          </coadmin-tree>
         </div>
       </template>
 
@@ -108,7 +108,7 @@
                           </div>
                         </q-toolbar>
                       </q-card-section>
-                      <q-tree
+                      <coadmin-tree
                         ref="popupTree"
                         node-key="id"
                         label-key="name"
@@ -125,7 +125,7 @@
                         class="bg-light"
                         style="min-width:250px"
                       >
-                      </q-tree>
+                      </coadmin-tree>
                     </q-card>
                   </q-popup-proxy>
                 </q-select>
@@ -255,9 +255,13 @@
 
 <script>
 import depts from '../data/depts.js'
+import CoadminTree from 'components/CoadminTree.vue'
 
 export default {
   name: 'PageTreeTable',
+  components: {
+    CoadminTree
+  },
   data () {
     return {
       splitter: 250,
@@ -425,23 +429,23 @@ export default {
     treeSelectClicked () {
       // 找到父节点（总共向上找两级）
       const newArray = []
-      for (const b of this.popupTreeTicked) {
-        const node = this.findTreeNode(b)
+      for (const key of this.popupTreeTicked) {
+        const node = this.findTreeNode(key)
         if (node && node.pid) newArray.push(node.pid)
       }
-      for (const b of [...newArray]) {
-        const node = this.findTreeNode(b)
+      for (const key of [...newArray]) {
+        const node = this.findTreeNode(key)
         if (node && node.pid) newArray.push(node.pid)
       }
       this.popupTreeExpanded = [...newArray]
     },
-    findTreeNode (id) {
+    findTreeNode (key) {
       if (this.treeDatas) {
         for (const node of this.treeDatas) {
-          if (node.id === id) {
+          if (node.id === key) {
             return node
           } else if (node.hasChildren) {
-            const node2 = this.findTreeNode2(id, node.children)
+            const node2 = this.findTreeNode2(key, node.children)
             if (node2) {
               return node2
             }
@@ -450,12 +454,12 @@ export default {
       }
       return null
     },
-    findTreeNode2 (id, nodeList) {
+    findTreeNode2 (key, nodeList) {
       for (const node of nodeList) {
-        if (node.id === id) {
+        if (node.id === key) {
           return node
         } else if (node.hasChildren) {
-          const node2 = this.findTreeNode2(id, node.children)
+          const node2 = this.findTreeNode2(key, node.children)
           if (node2) {
             return node2
           }
