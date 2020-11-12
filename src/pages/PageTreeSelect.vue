@@ -1,12 +1,12 @@
 <template>
   <q-page class="coadmin-page q-pa-sm q-gutter-sm">
-    <q-select v-model="popupTreeTickedComputed" class=""
+    <q-select v-model="popupTreeTickedLabel"
       dense placeholder="机构"
       multiple
     >
       <q-popup-proxy>
         <q-card class="q-pa-sm">
-          <q-card-section>
+          <q-card-section class="no-padding">
             <q-toolbar>
               <div class="row full-width">
                 <q-input
@@ -34,19 +34,16 @@
           <coadmin-tree
             ref="popupTree"
             node-key="id"
-            label-key="label"
+            label-key="name"
             children-key="children"
             :nodes="treeDatas"
             no-connectors
             :filter="popupTreeDatasFilter"
             :filter-method="popupTreeDatasFilterMethod"
             :ticked.sync="popupTreeTicked"
+            @ticked-label="labels => popupTreeTickedLabel=labels"
             ticked-auto-expand
-            tick-strategy="leaf-else-parent"
-            selected-color="purple"
-            no-nodes-label="无数据"
-            no-results-label="无数据"
-            class="bg-light"
+            tick-strategy="leaf-all-only-parent"
             style="min-width:350px"
           >
           </coadmin-tree>
@@ -70,7 +67,8 @@ export default {
       popupTreeDatasFilter: '',
       popupTreeDatasExpanded: true,
       popupTreeExpanded: [],
-      popupTreeTicked: []
+      popupTreeTicked: [],
+      popupTreeTickedLabel: []
     }
   },
   mounted () {
@@ -78,11 +76,7 @@ export default {
   computed: {
     treeDatas () {
       return depts.content
-    },
-    popupTreeTickedComputed () {
-      return this.treeKeyToLabel(this.popupTreeTicked)
     }
-
   },
   watch: {
     popupTreeExpanded (val) {
@@ -90,43 +84,6 @@ export default {
     }
   },
   methods: {
-    treeKeyToLabel (ids) {
-      const a = []
-      ids.forEach(id => {
-        const node = this.findTreeNode(id)
-        if (node && node.name) {
-          a.push(node.name)
-        }
-      })
-      return a
-    },
-    findTreeNode (key) {
-      if (this.treeDatas) {
-        for (const node of this.treeDatas) {
-          if (node.id === key) {
-            return node
-          } else if (node.hasChildren) {
-            const node2 = this.findTreeNode2(key, node.children)
-            if (node2) {
-              return node2
-            }
-          }
-        }
-      }
-      return null
-    },
-    findTreeNode2 (key, nodeList) {
-      for (const node of nodeList) {
-        if (node.id === key) {
-          return node
-        } else if (node.hasChildren) {
-          const node2 = this.findTreeNode2(key, node.children)
-          if (node2) {
-            return node2
-          }
-        }
-      }
-    },
     popupTreeDatasFilterReset () {
       this.popupTreeDatasFilter = ''
       this.$refs.popupFilter.focus()

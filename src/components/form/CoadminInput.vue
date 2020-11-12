@@ -4,6 +4,8 @@
   2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
   新增插槽：
       form-label
+  移除插槽：
+      label：使用label插槽后，会导致显示不正常，待解决
   新增prop：
       见prop定义
 -->

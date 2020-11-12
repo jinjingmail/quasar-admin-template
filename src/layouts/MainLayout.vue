@@ -265,9 +265,7 @@ export default {
     },
     // 20201109 发现一个问题：当noCache==false的页面在dev模式下更改了页面结构，会导致网页白屏，<router-view /> 不使用key就没这个问题
     key () {
-      console.log('$route=', this.$route)
       return this.$route.path
-      // return this.$route.name
     },
     miniCheck: function () {
       if (this.leftDrawerMini) {
