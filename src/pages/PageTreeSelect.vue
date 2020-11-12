@@ -34,18 +34,20 @@
           <coadmin-tree
             ref="popupTree"
             node-key="id"
-            label-key="name"
+            label-key="label"
+            children-key="children"
             :nodes="treeDatas"
             no-connectors
             :filter="popupTreeDatasFilter"
             :filter-method="popupTreeDatasFilterMethod"
             :ticked.sync="popupTreeTicked"
+            ticked-auto-expand
             tick-strategy="leaf-else-parent"
             selected-color="purple"
             no-nodes-label="无数据"
             no-results-label="无数据"
             class="bg-light"
-            style="min-width:250px"
+            style="min-width:350px"
           >
           </coadmin-tree>
         </q-card>
@@ -97,19 +99,6 @@ export default {
         }
       })
       return a
-    },
-    treeSelectClicked () {
-      // 找到父节点（总共向上找两级）
-      const newArray = []
-      for (const key of this.popupTreeTicked) {
-        const node = this.findTreeNode(key)
-        if (node && node.pid) newArray.push(node.pid)
-      }
-      for (const key of [...newArray]) {
-        const node = this.findTreeNode(key)
-        if (node && node.pid) newArray.push(node.pid)
-      }
-      this.popupTreeExpanded = [...newArray]
     },
     findTreeNode (key) {
       if (this.treeDatas) {

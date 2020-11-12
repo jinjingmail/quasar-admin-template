@@ -1,10 +1,10 @@
 <!--
   增加插槽：
   增加属性：
-    tickedExpandAuto: 自动展开ticked的节点
+    tickedAutoExpand: 自动展开ticked的节点
     tickStrategy: 新增
-        leaf-and-parent : 叶子跟父节点同时返回
-        leaf-else-parent: 如果parent节点子节点全部ticked，只返回parent
+        leaf-and-parent : 子节点跟父节点同时返回
+        leaf-else-parent: 如果parent节点子节点全部ticked，只取parent，去掉子节点
     参考 props 定义
 -->
 <template>
@@ -13,6 +13,9 @@
       v-bind="$attrs"
       v-on="$listeners"
       :nodes="nodes"
+      :node-key="nodeKey"
+      :label-key="labelKey"
+      :children-key="childrenKey"
       :expanded.sync="expandedSync"
       :ticked.sync="tickedSync"
       :tick-strategy="tickStrategyComputed"
@@ -27,9 +30,19 @@ export default {
   props: {
     nodes: {
       type: Array,
-      default: function () {
-        return []
-      }
+      required: true
+    },
+    nodeKey: {
+      type: String,
+      required: true
+    },
+    labelKey: {
+      type: String,
+      default: 'label'
+    },
+    childrenKey: {
+      type: String,
+      default: 'children'
     },
     ticked: {
       type: Array,
@@ -43,9 +56,9 @@ export default {
       type: String,
       default: 'none' // none strict leaf leaf-filtered leaf-and-parent leaf-else-parent
     },
-    tickedExpandAuto: {
+    tickedAutoExpand: {
       type: Boolean,
-      default: true
+      default: false
     },
     keyToLabel: {
       type: String
@@ -75,9 +88,9 @@ export default {
         return
       }
       if (this.tickStrategy === 'leaf-and-parent') {
-        this.$emit('update:ticked', this.popupTreeTickedWithParentComputed())
+        this.$emit('update:ticked', this.queryTickedLeafAndParent())
       } else if (this.tickStrategy === 'leaf-else-parent') {
-        this.$emit('update:ticked', this.popupTreeTickedParentOnlyComputed())
+        this.$emit('update:ticked', this.queryTickedLeafElseParent())
       } else {
         this.$emit('update:ticked', [...this.tickedSync])
       }
@@ -85,8 +98,8 @@ export default {
   },
   computed: {
     tickStrategyComputed () {
-      if (this.tickStrategy === 'leaf-and-parent' || this.tickStrategy === 'leaf-else-parent' || this.tickStrategy === 'parent-only') {
-        return 'leaf'
+      if (this.tickStrategy === 'leaf-and-parent' || this.tickStrategy === 'leaf-else-parent') {
+        return 'leaf-filtered'
       } else {
         return this.tickStrategy
       }
@@ -94,32 +107,30 @@ export default {
   },
   methods: {
     calcExpanded () {
-      console.log('calcExpanded')
-      // if (!this.expanded || this.expanded.length === 0) {
-      //  return []
-      // }
-      // 明确指定了展开项，则不自动展开ticked项
+      if (!this.tickedAutoExpand) {
+        return []
+      }
+      // 指定了展开项，则不自动展开ticked项
       if (this.expanded && this.expanded.length > 0) {
         return [...this.expanded]
       }
-      if (!this.tickedExpandAuto) {
-        return []
-      }
-      // 找到父节点（总共向上找两级）
+      // 找到父节点（总共向上找3级）
       const set = new Set()
       for (const key of this.tickedSync) {
-        const node = this.findTreeNode(key)
-        if (node && node.pid) set.add(node.pid)
+        const node = this.findParentNode(key, null, this.nodes)
+        if (node && node[this.nodeKey]) set.add(node[this.nodeKey])
       }
       for (const key of set) {
-        const node = this.findTreeNode(key)
-        if (node && node.pid) set.add(node.pid)
+        const node = this.findParentNode(key, null, this.nodes)
+        if (node && node[this.nodeKey]) set.add(node[this.nodeKey])
       }
-      console.log('calcExpanded:', set)
+      for (const key of set) {
+        const node = this.findParentNode(key, null, this.nodes)
+        if (node && node[this.nodeKey]) set.add(node[this.nodeKey])
+      }
       return [...set]
     },
     calcTicked () {
-      console.log('calcTicked')
       if (!this.ticked || this.ticked.length === 0) {
         return []
       }
@@ -128,65 +139,67 @@ export default {
       }
       if (this.tickStrategy === 'leaf-else-parent') {
         // 把子节点给勾上
-        const keys = []
+        const keys = new Set()
         for (const key of this.ticked) {
           const node = this.findTreeNode(key)
-          if (node && node.children && node.children.length > 0) {
-            this.fillLeaf(keys, node.children)
+          if (this.hasChildren(node)) {
+            this.fillLeaf(keys, node[this.childrenKey])
           } else {
-            keys.push(key)
+            keys.add(key)
           }
         }
-        return keys
+        return [...keys]
       }
       return [...this.ticked]
     },
     fillLeaf (keys, children) {
       if (children && children.length > 0) {
         for (const n of children) {
-          if (n.children && n.children.length > 0) {
-            this.fillLeaf(keys, n.children)
+          if (this.hasChildren(n)) {
+            this.fillLeaf(keys, n[this.childrenKey])
           } else {
-            keys.push(n.id)
+            keys.add(n[this.nodeKey])
           }
         }
       }
     },
-    // 如果叶子节点全选中，则同时返回父节点
-    popupTreeTickedWithParentComputed () {
-      const tickedWithParent = [...this.tickedSync]
+    // 如果子节点全选中，则增加父节点
+    queryTickedLeafAndParent () {
+      const keys = [...this.tickedSync]
       for (const t of this.nodes) {
-        if (t.hasChildren) {
-          if (this.isAllChildTicked(tickedWithParent, t, t.children)) {
-            tickedWithParent.unshift(t.id)
+        if (this.hasChildren(t)) {
+          if (this.isAllChildTicked(keys, t, t[this.childrenKey])) {
+            keys.unshift(t[this.nodeKey])
           }
         }
       }
-      // return this.treeKeyToLabel(tickedWithParent)
-      return tickedWithParent
+      return [...new Set(keys)]
     },
-    // 如果叶子节点全选中，则只返回父节点
-    popupTreeTickedParentOnlyComputed () {
-      const tickedWithParent = [...this.tickedSync]
+    hasChildren (node) {
+      if (node && node[this.childrenKey] && node[this.childrenKey].length > 0) {
+        return true
+      } else {
+        return false
+      }
+    },
+    // 如果子节点全选中，则增加父节点，去掉子节点
+    queryTickedLeafElseParent () {
+      const keys = [...this.tickedSync]
       for (const t of this.nodes) {
-        if (t.hasChildren) {
-          if (this.isAllChildTicked_forParentOnly(tickedWithParent, t, t.children)) {
-            tickedWithParent.push(t.id)
+        if (this.hasChildren(t)) {
+          if (this.isAllChildTicked_parentOnly(keys, t, t[this.childrenKey])) {
+            keys.push(t[this.nodeKey])
           }
         }
       }
-      // return this.treeKeyToLabel(tickedWithParent)
-      return tickedWithParent
+      return [...new Set(keys)]
     },
-    isAllChildTicked (tickedWithParent, parent, nodes) {
-      if (!nodes || nodes.length === 0) {
-        return this.tickedContains(parent.id)
-      }
+    isAllChildTicked (keys, parent, children) {
       let allTicked = true
-      for (const t of nodes) {
-        if (t.hasChildren) {
-          if (this.isAllChildTicked(tickedWithParent, t, t.children)) {
-            tickedWithParent.unshift(t.id)
+      for (const t of children) {
+        if (this.hasChildren(t)) {
+          if (this.isAllChildTicked(keys, t, t.children)) {
+            keys.unshift(t.id)
           } else {
             allTicked = false
           }
@@ -200,15 +213,12 @@ export default {
       }
       return allTicked
     },
-    isAllChildTicked_forParentOnly (tickedWithParent, parent, nodes) {
-      if (!nodes || nodes.length === 0) {
-        return this.tickedContains(parent.id)
-      }
+    isAllChildTicked_parentOnly (keys, parent, children) {
       let allTicked = true
-      for (const t of nodes) {
-        if (t.hasChildren) {
-          if (this.isAllChildTicked_forParentOnly(tickedWithParent, t, t.children)) {
-            tickedWithParent.push(t.id)
+      for (const t of children) {
+        if (this.hasChildren(t)) {
+          if (this.isAllChildTicked_parentOnly(keys, t, t.children)) {
+            keys.push(t.id)
           } else {
             allTicked = false
           }
@@ -221,8 +231,8 @@ export default {
         }
       }
       if (allTicked) {
-        for (const t of nodes) {
-          this.arrayRemove(tickedWithParent, t.id)
+        for (const t of children) {
+          this.arrayRemove(keys, t.id)
         }
       }
       return allTicked
@@ -241,6 +251,20 @@ export default {
       } else {
         return false
       }
+    },
+    findParentNode (key, parent, children) {
+      for (const t of children) {
+        if (t.id === key) {
+          return parent
+        }
+        if (t.hasChildren) {
+          const node = this.findParentNode(key, t, t.children)
+          if (node != null) {
+            return node
+          }
+        }
+      }
+      return null
     },
     findTreeNode (key) {
       if (this.nodes) {
