@@ -104,7 +104,9 @@ export default {
       uuid: '',
       maxscreen: this.maximized,
       tempStyleWidth: null,
-      tempStyleMaxWidth: null
+      tempStyleMaxWidth: null,
+      tempStyleLeft: null,
+      tempStyleTop: null
     }
   },
   computed: {
@@ -142,7 +144,6 @@ export default {
     toggleMaxScreen () {
       if (this.maxscreen) {
         if (this.tempStyleWidth) {
-          console.log('toggleScreen:', this.tempStyleWidth)
           this.$refs.card.$el.style.width = this.tempStyleWidth
         } else {
           this.$refs.card.$el.style.width = ''
@@ -152,11 +153,25 @@ export default {
         } else {
           this.$refs.card.$el.style.maxWidth = ''
         }
+        if (this.tempStyleLeft) {
+          this.$refs.card.$el.style.left = this.tempStyleLeft
+        } else {
+          this.$refs.card.$el.style.left = ''
+        }
+        if (this.tempStyleTop) {
+          this.$refs.card.$el.style.top = this.tempStyleTop
+        } else {
+          this.$refs.card.$el.style.top = ''
+        }
       } else {
         this.tempStyleWidth = this.$refs.card.$el.style.width
         this.tempStyleMaxWidth = this.$refs.card.$el.style.maxWidth
+        this.tempStyleLeft = this.$refs.card.$el.style.left
+        this.tempStyleTop = this.$refs.card.$el.style.top
         this.$refs.card.$el.style.width = '100%'
         this.$refs.card.$el.style.maxWidth = '100vw'
+        this.$refs.card.$el.style.left = ''
+        this.$refs.card.$el.style.top = ''
       }
       this.maxscreen = !this.maxscreen
     }

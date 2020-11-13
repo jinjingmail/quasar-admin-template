@@ -34,25 +34,40 @@
             <div class="row q-col-gutter-md">
               <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules @blur="$q.notify({message:'blur notify'})"></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules
+                @blur="$q.notify({message:'名称 blur notify'})"/>
               <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
                 <template v-slot:append>
                   <q-icon v-if="!dialogForm.calories" name="search" />
                   <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
                 </template>
+                <template v-slot:prepend>
+                  <q-icon name="add" />
+                </template>
+                <template v-slot:before>
+                  <q-icon name="expand_less" />
+                </template>
+                <template v-slot:after>
+                  <q-icon name="expand_more" />
+                </template>
               </coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
-                  ]" />
-              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" label='xxx' v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+                  ]"
+                  >
+              </coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
               <coadmin-input content-class="col-12 col-sm-6" form-label=" " placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
                 <q-popup-proxy>
-                  <div >ThisisPopup</div>
+                  <q-card>
+                    <div >ThisisPopup</div>
+                  </q-card>
                 </q-popup-proxy>
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules>
+              </coadmin-input>
             </div>
           </coadmin-form>
         </q-card-section>

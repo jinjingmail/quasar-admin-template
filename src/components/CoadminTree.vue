@@ -21,7 +21,7 @@
     @ticked-label -> function(labels)：以label数组的形式输出ticked的数据
 -->
 <template>
-  <q-card class="q-pa-sm">
+  <q-card flat>
     <slot name="toolbar">
       <q-toolbar v-if="!noFilter || !noExpandBtn">
         <div class="row full-width">
@@ -64,17 +64,14 @@
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
     >
-      <template v-slot:default-header="prop">
-        <slot name="default-header" v-bind:node="prop.node">
-        </slot>
+      <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
+        <slot name="default-header" v-bind="prop"/>
       </template>
-      <template v-slot:default-body="prop">
-        <slot name="default-body" v-bind:node="prop.node">
-        </slot>
+      <template v-if="$scopedSlots['default-body']" v-slot:default-body="prop">
+        <slot name="default-body" v-bind="prop"/>
       </template>
       <template v-slot:[slotName]="prop" v-for="slotName in computedDynamicSlotNames">
-        <slot v-bind:name="slotName" v-bind:node="prop.node">
-        </slot>
+        <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
   </q-card>
@@ -168,7 +165,7 @@ export default {
   mounted () {
     this.tickedSync = this.calcTicked()
     this.expandedSync = this.calcExpanded()
-    this.filterReset()
+    console.log('$slots=', this.$scopedSlots)
   },
   created () {
   },
@@ -206,9 +203,10 @@ export default {
   computed: {
     computedDynamicSlotNames () {
       const names = new Set()
-      if (this.nodes && this.nodes.length > 0) {
-        this.calcDynamicSlotNames(names, this.nodes)
+      for (const key in this.$scopedSlots) {
+        if (key.includes('header-') || key.includes('body-')) names.add(key)
       }
+      console.log('names=', names)
       return names
     },
     tickStrategyComputed () {
@@ -234,19 +232,6 @@ export default {
     }
   },
   methods: {
-    calcDynamicSlotNames (names, nodes) {
-      for (const node of nodes) {
-        if (node.header) {
-          names.add('header-' + node.header)
-        }
-        if (node.body) {
-          names.add('body-' + node.body)
-        }
-        if (this.hasChildren(node)) {
-          this.calcDynamicSlotNames(names, node.children)
-        }
-      }
-    },
     filterReset () {
       if (this.noFilter) {
         return

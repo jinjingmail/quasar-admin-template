@@ -9,30 +9,6 @@
     >
       <template v-slot:before>
         <div class="q-pa-xs">
-          <q-toolbar>
-            <div class="row full-width">
-              <q-input
-                ref="filter"
-                dense
-                v-model="treeDatasFilter"
-                label="Filter..."
-                class="col-8"
-              >
-                <template v-slot:append>
-                  <q-icon v-if="treeDatasFilter !== ''" name="clear" class="cursor-pointer" @click="treeDatasFilterReset" />
-                </template>
-              </q-input>
-
-              <q-space/>
-
-              <q-btn class="col-auto"
-                dense
-                :icon="treeDatasExpanded?'unfold_more':'unfold_less'"
-                @click="(treeDatasExpanded=!treeDatasExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
-               />
-            </div>
-          </q-toolbar>
-
           <coadmin-tree
             ref="tree"
             node-key="id"
@@ -44,6 +20,31 @@
             :selected.sync="treeNodeSelected"
             selected-color="purple"
           >
+            <template v-slot:toolbar>
+              <q-toolbar flat>
+                <div class="row full-width">
+                  <q-input
+                    ref="filter"
+                    dense
+                    v-model="treeDatasFilter"
+                    label="Filter..."
+                    class="col-8"
+                  >
+                    <template v-slot:append>
+                      <q-icon v-if="treeDatasFilter !== ''" name="clear" class="cursor-pointer" @click="treeDatasFilterReset" />
+                    </template>
+                  </q-input>
+
+                  <q-space/>
+
+                  <q-btn class="col-auto"
+                    dense
+                    :icon="treeDatasExpanded?'unfold_more':'unfold_less'"
+                    @click="(treeDatasExpanded=!treeDatasExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
+                  />
+                </div>
+              </q-toolbar>
+            </template>
             <template v-slot:default-header="prop">
               <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
             </template>

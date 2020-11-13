@@ -24,7 +24,8 @@
           expand-btn-icon-less="expand_less"
           filter-placeholder="过滤.."
           :filter-methodxxx="myFilterMethod"
-          style="min-width:350px"
+          style="min-width:350px; max-height:60vh;"
+          class="q-pa-sm"
         >
           <template v-slot:default-header="prop">
             <div class="row items-center">
@@ -96,6 +97,9 @@ export default {
   watch: {
     popupTreeExpanded (val) {
       console.log('pageTreeSelect.popupTreeExpanded', this.popupTreeExpanded)
+    },
+    popupTreeTicked (val) {
+      console.log('pageTreeSelect.popupTreeTicked', this.popupTreeTicked)
     }
   },
   methods: {
