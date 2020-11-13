@@ -2,6 +2,7 @@
 const depts = {
     "content":[
         {
+            "header": 'root',
             "id":8,
             "pid":0,
             "name":"华北分部",
@@ -49,6 +50,7 @@ const depts = {
             "hasChildren":true
         },
         {
+            "header":"test",
             "id":5,
             "pid":0,
             "name":"运维部",
@@ -61,6 +63,7 @@ const depts = {
             "treeNamesLetter":"/ywb",
             "children":[
                 {
+                    "body":"new",
                     "id":19,
                     "pid":5,
                     "name":"运维一组",
@@ -76,6 +79,8 @@ const depts = {
                     "hasChildren":false
                 },
                 {
+                    "header":"test",
+                    "body":"new",
                     "id":46,
                     "pid":5,
                     "name":"运维二组",

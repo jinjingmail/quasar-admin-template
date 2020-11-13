@@ -5,49 +5,66 @@
       multiple
     >
       <q-popup-proxy>
-        <q-card class="q-pa-sm">
-          <q-card-section class="no-padding">
-            <q-toolbar>
-              <div class="row full-width">
-                <q-input
-                  ref="popupFilter"
-                  dense
-                  v-model="popupTreeDatasFilter"
-                  label="Filter..."
-                  class="col-8"
-                >
-                  <template v-slot:append>
-                    <q-icon v-if="popupTreeDatasFilter !== ''" name="clear" class="cursor-pointer" @click="popupTreeDatasFilterReset" />
-                  </template>
-                </q-input>
+        <coadmin-tree
+          ref="popupTree"
+          node-key="id"
+          label-key="name"
+          children-key="children"
+          :nodes="treeDatas"
+          no-connectors
+          :ticked.sync="popupTreeTicked"
+          @ticked-label="labels => popupTreeTickedLabel=labels"
+          ticked-expand-auto
+          tick-strategy="leaf-all-only-parent"
+          filter-key-like="nameLetter"
+          filter-key-equal="id"
+          :no-filter="false"
+          :no-expand-btn="false"
+          expand-btn-icon-more="expand_more"
+          expand-btn-icon-less="expand_less"
+          filter-placeholder="过滤.."
+          :filter-methodxxx="myFilterMethod"
+          style="min-width:350px"
+        >
+          <template v-slot:default-header="prop">
+            <div class="row items-center">
+              <div class="text-weight-bold text-primary">{{ prop.node.label }}</div>
+            </div>
+          </template>
 
-                <q-space/>
+          <template v-slot:default-body="prop">
+            <div v-if="prop.node.label==='西南'">
+              <span class="text-weight-bold">This node is</span>: {{ prop.node.label }}
+            </div>
+            <span v-else class="text-weight-light text-black">This is some default content.</span>
+          </template>
 
-                <q-btn class="col-auto"
-                  dense
-                  :icon="popupTreeDatasExpanded?'unfold_more':'unfold_less'"
-                  @click="(popupTreeDatasExpanded = !popupTreeDatasExpanded)?$refs.popupTree.collapseAll():$refs.popupTree.expandAll()"
-                />
+          <template v-slot:header-root="prop">
+            <div class="row items-center">
+              <div>
+                {{ prop.node.label }}
+                <q-badge color="orange" class="q-ml-sm">Header Root!</q-badge>
               </div>
-            </q-toolbar>
-          </q-card-section>
-          <coadmin-tree
-            ref="popupTree"
-            node-key="id"
-            label-key="name"
-            children-key="children"
-            :nodes="treeDatas"
-            no-connectors
-            :filter="popupTreeDatasFilter"
-            :filter-method="popupTreeDatasFilterMethod"
-            :ticked.sync="popupTreeTicked"
-            @ticked-label="labels => popupTreeTickedLabel=labels"
-            ticked-auto-expand
-            tick-strategy="leaf-all-only-parent"
-            style="min-width:350px"
-          >
-          </coadmin-tree>
-        </q-card>
+            </div>
+          </template>
+          <template v-slot:header-test="{node}">
+            <div class="row items-center">
+              <div>
+                {{ node.label }}
+                <q-badge color="orange" class="q-ml-sm">Header Test!</q-badge>
+              </div>
+            </div>
+          </template>
+          <template v-slot:body-new="prop">
+            <div class="row items-center">
+              <div>
+                {{ prop.node.label }}
+                <q-badge color="orange" class="q-ml-sm">Body New</q-badge>
+              </div>
+            </div>
+          </template>
+        </coadmin-tree>
+
       </q-popup-proxy>
     </q-select>
   </q-page>
@@ -64,8 +81,6 @@ export default {
   },
   data () {
     return {
-      popupTreeDatasFilter: '',
-      popupTreeDatasExpanded: true,
       popupTreeExpanded: [],
       popupTreeTicked: [],
       popupTreeTickedLabel: []
@@ -84,13 +99,12 @@ export default {
     }
   },
   methods: {
-    popupTreeDatasFilterReset () {
-      this.popupTreeDatasFilter = ''
-      this.$refs.popupFilter.focus()
-    },
-    popupTreeDatasFilterMethod (node, filter) {
+    myFilterMethod (node, filter) {
+      if (!node) {
+        return false
+      }
       const filt = filter.toLowerCase()
-      return (node.name && node.name.toLowerCase().indexOf(filt) > -1) || (node.nameLetter && node.nameLetter.toLowerCase().indexOf(filt) > -1)
+      return (node.name && node.name.toLowerCase().indexOf(filt) > -1)
     }
   }
 }

@@ -1,8 +1,16 @@
 <!--
   增加插槽：
+    toolbar:         过滤界面
   增加属性：
-    tickedAutoExpand: 自动展开ticked的节点
-    tickStrategy:
+    no-filter：     是否显示过滤输入框
+    no-expand-btn： 是否显示展开按钮
+    expand-btn-icon-more 展开按钮图标
+    expand-btn-icon-less 展开按钮图标
+    filter-key-like   过滤条件相似比较
+    filter-key-equal  过滤条件等于比较
+    filter-placeholder
+    ticked-expand-auto: 自动展开ticked的节点
+    tick-strategy:
         原有：
         none strict leaf leaf-filtered
         新增：
@@ -13,7 +21,33 @@
     @ticked-label -> function(labels)：以label数组的形式输出ticked的数据
 -->
 <template>
-  <div>
+  <q-card class="q-pa-sm">
+    <slot name="toolbar">
+      <q-toolbar v-if="!noFilter || !noExpandBtn">
+        <div class="row full-width">
+          <q-input v-if="!noFilter"
+            ref="filter"
+            dense
+            v-model="filterInput"
+            :placeholder="filterPlaceholder"
+            class="col-8"
+          >
+            <template v-slot:append>
+              <q-icon v-if="filterInput !== ''" name="clear" class="cursor-pointer" @click="filterReset" />
+            </template>
+          </q-input>
+
+          <q-space/>
+
+          <q-btn v-if="!noExpandBtn"
+            class="col-auto"
+            dense
+            :icon="filterExpanded?expandBtnIconMore:expandBtnIconLess"
+            @click="(filterExpanded = !filterExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
+          />
+        </div>
+      </q-toolbar>
+    </slot>
     <q-tree
         ref="tree"
         v-bind="$attrs"
@@ -27,9 +61,23 @@
         :tick-strategy="tickStrategyComputed"
         :no-nodes-label="noNodesLabel"
         :no-results-label="noResultsLabel"
+        :filter="filterComputed"
+        :filter-method="filterMethodComputed"
     >
+      <template v-slot:default-header="prop">
+        <slot name="default-header" v-bind:node="prop.node">
+        </slot>
+      </template>
+      <template v-slot:default-body="prop">
+        <slot name="default-body" v-bind:node="prop.node">
+        </slot>
+      </template>
+      <template v-slot:[slotName]="prop" v-for="slotName in computedDynamicSlotNames">
+        <slot v-bind:name="slotName" v-bind:node="prop.node">
+        </slot>
+      </template>
     </q-tree>
-  </div>
+  </q-card>
 </template>
 
 <script>
@@ -53,19 +101,48 @@ export default {
       type: String,
       default: 'children'
     },
-    ticked: {
-      type: Array,
-      default: null
-    },
-    expanded: {
-      type: Array,
-      default: null
-    },
+    ticked: Array, // sync
+    expanded: Array, // sync
     tickStrategy: {
       type: String,
-      default: 'none' // none strict leaf leaf-filtered leaf-all-with-parent leaf-all-only-parent leaf-any-with-parent
+      default: 'none',
+      validator: v => ['none', 'strict', 'leaf', 'leaf-filtered', 'leaf-all-with-parent', 'leaf-all-only-parent', 'leaf-any-with-parent'].includes(v)
     },
-    tickedAutoExpand: {
+    tickedExpandAuto: {
+      type: Boolean,
+      default: false
+    },
+    filter: {
+      type: String
+    },
+    filterMethod: { // (node, filter) => Boolean
+      type: Function
+    },
+    filterKeyLike: {
+      type: String,
+      default: null
+    },
+    filterKeyEqual: {
+      type: String,
+      default: null
+    },
+    filterPlaceholder: {
+      type: String,
+      default: 'Filter...'
+    },
+    noFilter: {
+      type: Boolean,
+      default: false
+    },
+    expandBtnIconMore: {
+      type: String,
+      default: 'unfold_more'
+    },
+    expandBtnIconLess: {
+      type: String,
+      default: 'unfold_less'
+    },
+    noExpandBtn: {
       type: Boolean,
       default: false
     },
@@ -81,12 +158,17 @@ export default {
   data () {
     return {
       tickedSync: [],
-      expandedSync: []
+      expandedSync: [],
+      filterInput: '',
+      filterExpanded: true,
+      dynamicSlotNameHeaders: [],
+      dynamicSlotNameBodys: []
     }
   },
   mounted () {
     this.tickedSync = this.calcTicked()
     this.expandedSync = this.calcExpanded()
+    this.filterReset()
   },
   created () {
   },
@@ -122,15 +204,71 @@ export default {
     }
   },
   computed: {
+    computedDynamicSlotNames () {
+      const names = new Set()
+      if (this.nodes && this.nodes.length > 0) {
+        this.calcDynamicSlotNames(names, this.nodes)
+      }
+      return names
+    },
     tickStrategyComputed () {
-      if (this.tickStrategy === 'leaf-all-with-parent' || this.tickStrategy === 'leaf-all-only-parent' || this.tickStrategy === 'leaf-any-with-parent') {
+      if (this.tickStrategy === 'leaf-all-only-parent' || this.tickStrategy === 'leaf-any-with-parent' || this.tickStrategy === 'leaf-all-with-parent') {
         return 'leaf-filtered'
       } else {
         return this.tickStrategy
       }
+    },
+    filterComputed () {
+      if (this.filter) {
+        return this.filter
+      } else {
+        return this.filterInput
+      }
+    },
+    filterMethodComputed () {
+      if (this.filterMethod) {
+        return this.filterMethod
+      } else {
+        return this.filterMethodDefault
+      }
     }
   },
   methods: {
+    calcDynamicSlotNames (names, nodes) {
+      for (const node of nodes) {
+        if (node.header) {
+          names.add('header-' + node.header)
+        }
+        if (node.body) {
+          names.add('body-' + node.body)
+        }
+        if (this.hasChildren(node)) {
+          this.calcDynamicSlotNames(names, node.children)
+        }
+      }
+    },
+    filterReset () {
+      if (this.noFilter) {
+        return
+      }
+      this.filterInput = ''
+      this.$refs.filter.focus()
+    },
+    filterMethodDefault (node, filter) {
+      if (!node) {
+        return false
+      }
+      const filt = filter.toLowerCase()
+      let second = false
+      if (this.filterKeyLike) {
+        second = node[this.filterKeyLike] && (node[this.filterKeyLike].toString().toLowerCase().indexOf(filt) > -1)
+      }
+      let third = false
+      if (this.filterKeyEqual) {
+        third = node[this.filterKeyEqual] && (node[this.filterKeyEqual].toString() === filt)
+      }
+      return (node[this.labelKey] && node[this.labelKey].toLowerCase().indexOf(filt) > -1) || second || third
+    },
     keysToLabels (keys) {
       if (!this.labelKey) {
         return []
@@ -145,7 +283,7 @@ export default {
       return labels
     },
     calcExpanded () {
-      if (!this.tickedAutoExpand) {
+      if (!this.tickedExpandAuto) {
         return []
       }
       // 指定了展开项，则不自动展开ticked项
