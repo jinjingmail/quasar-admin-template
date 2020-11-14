@@ -42,6 +42,7 @@
           <q-btn v-if="!noExpandBtn"
             class="col-auto"
             dense
+            flat
             :icon="filterExpanded?expandBtnIconMore:expandBtnIconLess"
             @click="(filterExpanded = !filterExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
           />

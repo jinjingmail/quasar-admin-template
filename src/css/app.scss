@@ -6,7 +6,7 @@
 .coadmin-page,
 .coadmin-dialog {
   // 按钮高度缩小
-  .q-field__control {
+  .q-field__control, .q-field__marginal {
     height: 45px;
   }
   .q-field--dense .q-field__control, 
@@ -18,6 +18,22 @@
   }
   .q-tabs--dense .q-tab {
     min-height: 32px;
+  }
+  .q-field--auto-height .q-field__control,
+  .q-field--auto-height .q-field__native {
+    // min-height: 45px;
+    min-height: auto;
+  }
+  .q-field--auto-height.q-field--dense .q-field__control,
+  .q-field--auto-height.q-field--dense .q-field__native {
+    // min-height: 35px;
+    min-height: auto;
+  }
+  .q-field__label {
+    top: 15px;
+  }
+  .q-field--dense .q-field__label {
+    top: 8px;
   }
 }
 /* 修改全局样式 END */

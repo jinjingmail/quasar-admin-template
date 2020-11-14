@@ -9,48 +9,26 @@
     v-bind="$attrs"
     v-on="$listeners"
     class="coadmin-form"
-    :class="customContentClass"
+    :class="computedClass"
   >
     <slot />
   </q-form>
 </template>
 
 <script>
+import formMixin from './formMixin.js'
+
 export default {
   name: 'CoadminForm',
   inheritAttrs: false,
+  mixins: [formMixin],
   props: {
-    contentClass: {
-      type: String,
-      default: undefined
-    },
-    labelWidth: {
-      type: String,
-      default: 'medium' // xsmall/small/medium/large/xlarge
-    },
-    labelPosition: {
-      type: String,
-      default: 'top' // left/right/center/top
-    }
   },
   data () {
     return {
     }
   },
   computed: {
-    customContentClass () {
-      let cls = ''
-      if (this.contentClass) {
-        cls = this.contentClass
-      }
-      if (this.labelPosition === 'left' || this.labelPosition === 'center' || this.labelPosition === 'right') {
-        cls += ' label-custom label-' + this.labelPosition
-        if (this.labelWidth) {
-          cls += ' label-' + this.labelWidth
-        }
-      }
-      return cls
-    }
   },
   created () {
   },
@@ -78,72 +56,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.label-custom {
-  &.label-xsmall {
-    ::v-deep {
-      .form-label > label:first-child {
-        width:45px;
-      }
-    }
-  }
-  &.label-small {
-    ::v-deep {
-      .form-label > label:first-child {
-        width:70px;
-      }
-    }
-  }
-  &.label-medium {
-    ::v-deep {
-      .form-label > label:first-child {
-        width:110px;
-      }
-    }
-  }
-  &.label-large {
-    ::v-deep {
-      .form-label > label:first-child {
-        width:150px;
-      }
-    }
-  }
-  &.label-xlarge {
-    ::v-deep {
-      .form-label > label:first-child {
-        width:220px;
-      }
-    }
-  }
-  &.label-left {
-    ::v-deep {
-      .form-label > label:first-child {
-        text-align:left;
-      }
-    }
-  }
-  &.label-center {
-    ::v-deep {
-      .form-label > label:first-child {
-        text-align:center;
-      }
-    }
-  }
-  &.label-right {
-    ::v-deep {
-      .form-label > label:first-child {
-        text-align:right;
-      }
-    }
-  }
-  ::v-deep {
-    .form-label {
-      > label:first-child{
-        padding-top:6px;
-        padding-right:4px;
-      }
-      display:flex;
-    }
-  }
-}
-
+@import './form.scss'
 </style>

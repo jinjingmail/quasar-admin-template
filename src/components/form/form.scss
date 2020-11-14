@@ -1,0 +1,77 @@
+.label-custom {
+  &.label-xsmall {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:50px;
+      }
+    }
+  }
+  &.label-small {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:70px;
+      }
+    }
+  }
+  &.label-medium {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:90px;
+      }
+    }
+  }
+  &.label-large {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:110px;
+      }
+    }
+  }
+  &.label-xlarge {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:150px;
+      }
+    }
+  }
+  &.label-xxlarge {
+    ::v-deep {
+      .form-label > label:first-child {
+        width:200px;
+      }
+    }
+  }
+  &.label-left {
+    ::v-deep {
+      .form-label > label:first-child {
+        text-align:left;
+      }
+    }
+  }
+  &.label-center {
+    ::v-deep {
+      .form-label > label:first-child {
+        text-align:center;
+      }
+    }
+  }
+  &.label-right {
+    ::v-deep {
+      .form-label > label:first-child {
+        text-align:right;
+      }
+    }
+  }
+  ::v-deep {
+    .form-label {
+      display:flex;
+      > label:first-child{
+        padding-top:12px;
+        padding-right:4px;
+      }
+      > label.dense:first-child{
+        padding-top:6px;
+      }
+    }
+  }
+}

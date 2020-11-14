@@ -13,11 +13,11 @@
           <div class="text-h6">打印的标题</div>
           <div class="text-body2">这里是要打印的内容</div>
         </q-card-section>
-      </q-card>
         <q-card-actions align="right">
           <q-btn dense label="打印" color="primary" @click="$q.notify({type:'info', message:'打印'})"/>
           <q-btn dense label="Cancel" flat v-close-popup />
         </q-card-actions>
+      </q-card>
     </coadmin-dialog>
 
     <coadmin-dialog
@@ -30,13 +30,13 @@
     >
       <q-card >
         <q-card-section>
-          <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="medium" label-position="center">
-            <div class="row q-col-gutter-md">
-              <coadmin-input content-class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
+          <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="small" label-position="right">
+            <div class="row q-col-gutter-x-md q-col-gutter-y-md">
+              <coadmin-input class="col-12 col-sm-6" form-label="ID" :dense="false" v-model="dialogForm.id" disable>
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" :disable="dialogFormReadonly" lazy-rules
+              <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
                 @blur="$q.notify({message:'名称 blur notify'})"/>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="calories" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
+              <coadmin-input class="col-12 col-sm-6" form-label="calories" :dense="false" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
                 <template v-slot:append>
                   <q-icon v-if="!dialogForm.calories" name="search" />
                   <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
@@ -51,33 +51,103 @@
                   <q-icon name="expand_more" />
                 </template>
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
+              <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
                   val => !!val || '不能空',
                   val => val.length === 11 || '请输入11个字符'
                   ]"
                   >
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" form-label=" " placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
+              <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" filled :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :outlined="false" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
                 <q-popup-proxy>
                   <q-card>
                     <div >ThisisPopup</div>
                   </q-card>
                 </q-popup-proxy>
               </coadmin-input>
-              <coadmin-input content-class="col-12 col-sm-6" label="iron" v-model="dialogForm.iron" :disable="dialogFormReadonly" lazy-rules>
+              <coadmin-input class="col-12 col-sm-6" form-label="iron" label-slot v-model="dialogForm.iron" clearable :disable="dialogFormReadonly" lazy-rules>
+                <template v-slot:label>
+                  <div style="color:red;">iron in slot</div>
+                </template>
               </coadmin-input>
+              <coadmin-select
+                class="col-12 col-sm-6"
+                form-label="protein5"
+                label="选择"
+                :disable="dialogFormReadonly"
+                dense
+                options-dense
+                outlined
+                v-model="selectModel"
+                no-filter
+                :options="mapOptions"
+                option-value="id"
+                option-label="desc"
+                option-disable="inactive"
+                clearable
+                emit-value
+                map-options
+              />
+              <coadmin-select
+                v-model="selectModel"
+                form-label="protein2"
+                class="col-12 col-sm-6"
+                :disable="dialogFormReadonly"
+                clearable
+                options-dense
+                outlined
+                use-input
+                input-class="abc"
+                hide-selected
+                fill-input
+                input-debounce="0"
+                placeholder="选择巨头"
+                :options="listOptions"
+              />
+              <coadmin-field
+                dense outlined
+                class="col-12 col-sm-12"
+                form-label="options"
+                :disable="dialogFormReadonly"
+              >
+                <template v-slot:control>
+                  <div class="q-gutter-sm">
+                    <q-radio dense name="shape" v-model="selectModel" val="facebook" label="Facebook" />
+                    <q-radio dense name="shape" v-model="selectModel" val="腾讯" label="腾讯控股" />
+                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
+                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
+                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
+                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
+                  </div>
+                </template>
+              </coadmin-field>
+              <coadmin-field
+                dense outlined
+                class="col-12 col-sm-12"
+                form-label="options"
+                :disable="dialogFormReadonly"
+              >
+                <template v-slot:control>
+                  <div class="q-gutter-sm">
+                    <q-radio dense name="shape" v-model="selectModel" val="facebook" label="Facebook" />
+                    <q-radio dense name="shape" v-model="selectModel" val="腾讯" label="腾讯控股" />
+                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
+                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
+                  </div>
+                </template>
+              </coadmin-field>
             </div>
           </coadmin-form>
+
         </q-card-section>
 
         <q-card-actions>
-          <q-btn dense label="打印" color="primary" @click="$refs.printDialog.show()"/>
-          <q-btn dense label="选择calories" color="primary" @click="$refs.form_calories.select()"/>
+          <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
+          <q-btn label="选择calories" color="primary" @click="$refs.form_calories.select()"/>
           <q-space />
-          <q-btn dense label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
-          <q-btn dense label="Cancel" flat v-close-popup />
+          <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
+          <q-btn label="Cancel" flat v-close-popup />
         </q-card-actions>
       </q-card>
     </coadmin-dialog>
@@ -236,7 +306,9 @@
 </template>
 
 <script>
+import CoadminField from 'components/form/CoadminField.vue'
 import CoadminInput from 'components/form/CoadminInput.vue'
+import CoadminSelect from 'components/form/CoadminSelect.vue'
 import CoadminForm from 'components/form/CoadminForm.vue'
 import CoadminDialog from 'components/CoadminDialog.vue'
 
@@ -245,7 +317,9 @@ const dialogFormDefault = { id: null, name: null, calories: null, fat: null, pro
 export default {
   name: 'PageTable',
   components: {
+    CoadminField,
     CoadminInput,
+    CoadminSelect,
     CoadminDialog,
     CoadminForm
   },
@@ -253,6 +327,39 @@ export default {
     return {
       text: '',
       textSearch: '',
+      selectModel: '',
+      listOptions: ['facebook', 'twitter', 'google', '阿里巴巴', '腾讯'],
+      mapOptions: [
+        {
+          id: 'google',
+          desc: 'Google'
+        },
+        {
+          id: 'facebook',
+          desc: 'Facebook'
+        },
+        {
+          id: 'twitter',
+          desc: 'Twitter'
+        },
+        {
+          id: 'apple',
+          desc: '苹果'
+        },
+        {
+          id: '阿里巴巴',
+          desc: '阿里巴巴集团'
+        },
+        {
+          id: 'oracle',
+          desc: 'Oracle',
+          inactive: true
+        },
+        {
+          id: '腾讯',
+          desc: '腾讯控股'
+        }
+      ],
       currentPage: 0,
       numberPerPage: 10,
       numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
