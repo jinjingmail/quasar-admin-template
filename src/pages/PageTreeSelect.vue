@@ -1,8 +1,9 @@
 <template>
   <q-page class="coadmin-page q-pa-sm q-gutter-sm">
-    <q-select v-model="popupTreeTickedLabel"
-      dense placeholder="机构"
+    <coadmin-select v-model="popupTreeTickedLabel"
+      placeholder="机构"
       multiple
+      behavior="menu"
     >
       <q-popup-proxy>
         <coadmin-tree
@@ -67,18 +68,20 @@
         </coadmin-tree>
 
       </q-popup-proxy>
-    </q-select>
+    </coadmin-select>
   </q-page>
 </template>
 
 <script>
 import depts from '../data/depts.js'
 import CoadminTree from 'components/CoadminTree.vue'
+import CoadminSelect from 'components/form/CoadminSelect.vue'
 
 export default {
   name: 'PageTreeSelect',
   components: {
-    CoadminTree
+    CoadminTree,
+    CoadminSelect
   },
   data () {
     return {

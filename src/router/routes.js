@@ -112,7 +112,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add' }
+        meta: { title: 'PageTable', icon: 'add', icon_color: 'yellow' }
       }, {
         path: 'pageTableNoData',
         name: 'pageTableNoData',
@@ -156,7 +156,7 @@ const routes = [
             path: 'page2',
             name: 'NestedPage2',
             component: () => import('pages/nested/Page2.vue'),
-            meta: { title: '嵌套页2', icon: 'add', affix: false }
+            meta: { title: '嵌套页2很长的一个菜单标题', icon: 'add', affix: false }
           }
         ]
       },

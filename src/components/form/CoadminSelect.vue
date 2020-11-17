@@ -16,7 +16,7 @@
       :dense="dense"
       :outlined="outlined"
       :disable="disable"
-      :readonly="disable"
+      :readonly="readonly"
       @filter="_filterFn"
       @input-valuexxx="inputValue"
     >
@@ -38,7 +38,7 @@
     :dense="dense"
     :outlined="outlined"
     :disable="disable"
-    :readonly="disable"
+    :readonly="readonly"
     @filter="_filterFn"
     @input-valuexxx="inputValue"
   >
@@ -90,7 +90,7 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           input: function (value) {
-            if (!vm.disable) {
+            if (!vm.disable && !vm.readonly) {
               vm.$emit('input', value)
             }
           }
@@ -105,7 +105,6 @@ export default {
     }
   },
   mounted () {
-    console.log('coadmin.select.this2=', this.$refs.select)
   },
   methods: {
     inputValue (value) {

@@ -14,7 +14,7 @@
       :dense="dense"
       :outlined="outlined"
       :disable="disable"
-      :readonly="disable"
+      :readonly="readonly"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
@@ -32,7 +32,7 @@
     :dense="dense"
     :outlined="outlined"
     :disable="disable"
-    :readonly="disable"
+    :readonly="readonly"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -54,7 +54,6 @@ export default {
   },
   data () {
     return {
-      optionsInData: this.options
     }
   },
   computed: {
@@ -66,7 +65,7 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           input: function (value) {
-            if (!vm.disable) {
+            if (!vm.disable && !vm.readonly) {
               vm.$emit('input', value)
             }
           }
@@ -75,24 +74,19 @@ export default {
     }
   },
   mounted () {
-    console.log('select.slots=', this.$slots)
-    console.log('select.scopedSlots=', this.$scopedSlots)
-    for (const key of Object.keys(this.$scopedSlots)) {
-      console.log('select.key=', key)
-    }
   },
   methods: {
     resetValidation () {
-      this.$refs.input.resetValidation()
+      this.$refs.field.resetValidation()
     },
     validate (value) {
-      return this.$refs.validate(value)
+      return this.$refs.field.validate(value)
     },
     focus () {
-      this.$refs.input.focus()
+      this.$refs.field.focus()
     },
     blur () {
-      this.$refs.input.blur()
+      this.$refs.field.blur()
     }
   }
 }

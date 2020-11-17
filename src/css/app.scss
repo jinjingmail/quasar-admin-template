@@ -40,8 +40,13 @@
 
 .coadmin-sidebar {
   &-menu-active {
-    background-color: $light-blue-2;
-    color: var(--q-color-primary);
+    // background-color: $light-blue-2;
+    // color: var(--q-color-primary);
+    background-color: green;
+  }
+  .q-item.q-link {
+    border-radius: 5px;
+    margin-rightx: 5px;
   }
   .q-item__label + .q-item__label {
     margin-top: 0;
@@ -142,6 +147,11 @@
   .q-col-gutter-y-md > *,
   .q-col-gutter-md > * {
     padding-top: 10px;
+  }
+
+  /* 当组件剩余空间很富裕时，上方对齐，默认是居中 */
+  .q-field > .q-field__inner {
+    justify-content: flex-start;
   }
 }
 

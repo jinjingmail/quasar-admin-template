@@ -26,17 +26,17 @@
       icon="border_color"
       maxable
       persistent
-      content-style="width:700px; max-width:90vw;"
+      content-style="width:800px; max-width:90vw;"
     >
       <q-card >
         <q-card-section>
-          <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="small" label-position="right">
+          <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="medium" label-position="left">
             <div class="row q-col-gutter-x-md q-col-gutter-y-md">
               <coadmin-input class="col-12 col-sm-6" form-label="ID" :dense="false" v-model="dialogForm.id" disable>
               </coadmin-input>
               <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
                 @blur="$q.notify({message:'名称 blur notify'})"/>
-              <coadmin-input class="col-12 col-sm-6" form-label="calories" :dense="false" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
+              <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" :dense="false" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
                 <template v-slot:append>
                   <q-icon v-if="!dialogForm.calories" name="search" />
                   <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
@@ -106,8 +106,7 @@
                 :options="listOptions"
               />
               <coadmin-field
-                dense outlined
-                class="col-12 col-sm-12"
+                class="col-12 col-sm-6"
                 form-label="options"
                 :disable="dialogFormReadonly"
               >
@@ -115,28 +114,63 @@
                   <div class="q-gutter-sm">
                     <q-radio dense name="shape" v-model="selectModel" val="facebook" label="Facebook" />
                     <q-radio dense name="shape" v-model="selectModel" val="腾讯" label="腾讯控股" />
-                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
-                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
-                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
-                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
                   </div>
                 </template>
               </coadmin-field>
-              <coadmin-field
-                dense outlined
-                class="col-12 col-sm-12"
-                form-label="options"
+              <coadmin-option-group
+                v-model="selectModel"
+                class="col-12 col-sm-6"
+                :inline="true"
+                form-label="optionsGroup"
                 :disable="dialogFormReadonly"
-              >
-                <template v-slot:control>
-                  <div class="q-gutter-sm">
-                    <q-radio dense name="shape" v-model="selectModel" val="facebook" label="Facebook" />
-                    <q-radio dense name="shape" v-model="selectModel" val="腾讯" label="腾讯控股" />
-                    <q-radio dense name="shape" v-model="selectModel" val="google" label="Google" />
-                    <q-radio dense name="shape" v-model="selectModel" val="twitter" label="Twitter" />
-                  </div>
+                :options="mapOptions"
+                label-key="desc"
+                value-key="id"
+              />
+              <coadmin-option-group
+                v-model="selectModels"
+                class="col-12 col-sm-6"
+                :inline="true"
+                form-label="optionsGroup"
+                :disable="dialogFormReadonly"
+                :options="mapOptions"
+                label-key="desc"
+                value-key="id"
+                type="checkbox"
+              />
+              <coadmin-date
+                v-model="selectDate"
+                class="col-12 col-sm-6"
+                label-position="top"
+                form-label="date"
+                today-btn
+                :minimal="false"
+                :disable="dialogFormReadonly"
+              />
+              <coadmin-input class="col-12 col-sm-6" label-position="right" mask="####-##-##" placeholder="####-##-##" form-label="dateinput" v-model="selectDate" :disable="dialogFormReadonly">
+                <q-popup-proxy >
+                  <coadmin-date v-model="selectDate">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </coadmin-date>
+                </q-popup-proxy>
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                  </q-icon>
                 </template>
-              </coadmin-field>
+              </coadmin-input>
+              <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
+                <div class="text-body2">语句用于基于不同条件执行不同动作</div>
+              </coadmin-form-item>
+              <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-position="right" label-width="fit-content">
+                <div class="row q-gutter-none">
+                  <q-radio v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
+                  <q-radio v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
+                  <q-radio v-model="shape" class="col-6 col-md-4" val="ellipse" label="Ellipse" />
+                  <q-radio v-model="shape" class="col-6 col-md-4" val="polygon" label="Polygon" />
+                </div>
+              </coadmin-form-item>
             </div>
           </coadmin-form>
 
@@ -308,7 +342,10 @@
 <script>
 import CoadminField from 'components/form/CoadminField.vue'
 import CoadminInput from 'components/form/CoadminInput.vue'
+import CoadminDate from 'components/form/CoadminDate.vue'
+import CoadminOptionGroup from 'components/form/CoadminOptionGroup.vue'
 import CoadminSelect from 'components/form/CoadminSelect.vue'
+import CoadminFormItem from 'components/form/CoadminFormItem.vue'
 import CoadminForm from 'components/form/CoadminForm.vue'
 import CoadminDialog from 'components/CoadminDialog.vue'
 
@@ -319,15 +356,22 @@ export default {
   components: {
     CoadminField,
     CoadminInput,
+    CoadminDate,
+    CoadminOptionGroup,
     CoadminSelect,
     CoadminDialog,
-    CoadminForm
+    CoadminForm,
+    CoadminFormItem
   },
   data () {
     return {
       text: '',
       textSearch: '',
+      shape: '',
       selectModel: '',
+      selectModels: [],
+      selectDate: '',
+      selectDateRange: { from: '2020-11-14', to: '2020-11-22' },
       listOptions: ['facebook', 'twitter', 'google', '阿里巴巴', '腾讯'],
       mapOptions: [
         {

@@ -1,0 +1,180 @@
+<!--
+  增加插槽：
+  增加属性：
+    multiple-limit 多选最多可以选多少个
+-->
+<template>
+  <div v-if="formLabel" :class="computedClass" class="form-label">
+    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <q-date
+      ref="date"
+      class=""
+      style="display: flex"
+      v-bind="$attrs"
+      v-on="listeners"
+      :mask="mask"
+      :locale="cnLocale"
+      :multiple="multiple"
+      :range="range"
+      :disable="disable"
+      :readonly="readonly"
+      :subtitle="computedSubtitle"
+      :title="computedTitle"
+    >
+      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
+        <slot :name="slotName"/>
+      </template>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
+      </template>
+    </q-date>
+  </div>
+  <q-date v-else
+    ref="date"
+    :class="computedClass"
+    v-bind="$attrs"
+    v-on="listeners"
+    :mask="mask"
+    :locale="cnLocale"
+    :multiple="multiple"
+    :range="range"
+    :disable="disable"
+    :readonly="disable"
+    :subtitle="computedSubtitle"
+    :title="computedTitle"
+  >
+    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
+      <slot :name="slotName"/>
+    </template>
+    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+      <slot :name="slotName" v-bind="prop"/>
+    </template>
+  </q-date>
+
+</template>
+
+<script>
+import { date } from 'quasar'
+import formMixin from './formMixin.js'
+
+export default {
+  name: 'CoadminDate',
+  inheritAttrs: false,
+  mixins: [formMixin],
+  props: {
+    mask: {
+      type: String,
+      default: 'YYYY-MM-DD'
+    },
+    locale: Object,
+    subtitle: String,
+    title: String,
+    multiple: Boolean,
+    multipleLimit: Number,
+    range: Boolean,
+    autoClose: Boolean
+  },
+  data () {
+    return {
+      cnLocale: {
+        /* starting with Sunday */
+        days: '周日_周一_周二_周三_周四_周五_周六'.split('_'),
+        daysShort: '日_一_二_三_四_五_六'.split('_'),
+        months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
+        monthsShort: '1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月'.split('_'),
+        firstDayOfWeek: 1
+      }
+    }
+  },
+  created () {
+    if (this.locale) {
+      this.cnLocale = this.locale
+    }
+  },
+  computed: {
+    computedSubtitle () {
+      if (this.subtitle) {
+        return this.subtitle
+      }
+      const v = this.$attrs.value
+      if (!v) {
+        return ''
+      }
+      if (this.range) {
+        if (this.multiple) {
+          return ''
+        } else {
+          return v.from + ' ~ ' + v.to
+        }
+      } else if (this.multiple) {
+        return ''
+      } else {
+        const date_ = new Date(v)
+        const days = date.getDayOfWeek(date_)
+        return date_.getUTCFullYear() + ' ' + (days === 7 ? this.cnLocale.days[0] : this.cnLocale.days[days])
+      }
+    },
+    computedTitle () {
+      if (this.title) {
+        return this.title
+      }
+      const v = this.$attrs.value
+      if (!v) {
+        return ''
+      }
+      if (this.range) {
+        if (this.multiple) {
+          return (v.length ? v.length : '1') + '个时间段'
+        } else {
+          if (typeof v === 'string') return '1天'
+          return date.getDateDiff(v.to, v.from, 'days') + 1 + ' 天'
+        }
+      } else if (this.multiple) {
+        return v.length + '天'
+      } else {
+        return v.toString()
+      }
+    },
+    listeners: function () {
+      const vm = this
+      return Object.assign({},
+        // 从父级添加所有的监听器
+        vm.$listeners,
+        // 添加自定义监听器，或覆写一些监听器的行为
+        {
+          input: function (value, reason, details) {
+            if (!vm.disable && !vm.readonly) {
+              vm.$emit('input', value, reason, details)
+              if (!vm.multiple && vm.autoClose) {
+              }
+            }
+          }
+        }
+      )
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    setToday () {
+      this.$refs.date.setToday()
+    },
+    setView (view) {
+      this.$refs.date.setView(view)
+    },
+    offsetCalendar (type, descending) {
+      this.$refs.date.offsetCalendar(type, descending)
+    },
+    setCalendarTo (year, month) {
+      this.$refs.date.setCalendarTo(year, month)
+    },
+    setEditingRange (from, to) {
+      this.$refs.date.setEditingRange(from, to)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import './form.scss'
+</style>

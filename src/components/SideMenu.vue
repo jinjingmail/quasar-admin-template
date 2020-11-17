@@ -81,7 +81,7 @@ export default {
   computed: {
     /*
      * 把 routeItem 转换成如下的简单格式
-     * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, children: []  }
+     * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, icon_color:yyy, children: []  }
      */
     item () {
       const ri = this.routeItem
@@ -90,7 +90,7 @@ export default {
       }
       const meta = ri.meta || {}
       if (!ri.children || ri.children.length === 0) {
-        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon }
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, icon_color: meta.icon_color }
       }
       let allChildHide = true
       for (const child of ri.children) {
@@ -106,11 +106,11 @@ export default {
         const child = ri.children[0]
         const m = child.meta || {}
         if (isExternal(child.path)) {
-          return { path: child.path, name: child.name, title: m.title, icon: m.icon }
+          return { path: child.path, name: child.name, title: m.title, icon: m.icon, icon_color: meta.icon_color }
         }
-        return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, icon: m.icon }
+        return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, icon: m.icon, icon_color: meta.icon_color }
       } else {
-        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, children: ri.children }
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, icon_color: meta.icon_color, children: ri.children }
       }
     }
   },
@@ -153,7 +153,7 @@ export default {
       if (color) {
         return color
       } else {
-        return 'primary'
+        return 'white'
       }
     },
     expansionItemInput (value) {

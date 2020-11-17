@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header reveal :elevated="false" class="coadmin-header">
+    <q-header reveal :elevated="false" class="coadmin-header" :class="$q.dark.isActive ? 'header_dark' : 'header_normal'">
       <q-toolbar class="">
         <q-btn
           flat
@@ -143,21 +143,20 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
+    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll text-white"
       v-model="leftDrawerOpen"
       show-if-above
       side="left"
-
+      elevated
       :mini="miniCheck"
       @mouseover="leftDrawerMouseOver"
       @mouseout="leftDrawerMouseOut"
       :mini-to-overlay="miniToOverlay"
-
-      :width="240"
+      :width="260"
       :breakpoint="599"
       bordered
     >
-      <div class="sidebar-body">
+      <div class="sidebar-body" :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'">
         <q-scroll-area class="fit">
           <q-list>
             <side-menu ref="menu" v-for="(routeItem) in routes" :route-item="routeItem" :key="routeItem.path" base-path="" :level="1"/>
@@ -341,7 +340,33 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+.header_normal {
+  background: linear-gradient(
+    145deg,
+    rgb(32, 106, 80) 15%,
+    rgb(21, 57, 102) 70%
+  );
+}
+
+.header_dark {
+  background: linear-gradient(145deg, rgb(61, 14, 42) 15%, rgb(14, 43, 78) 70%);
+}
+
+.coadmin-sidebar .q-drawer {
+  /*background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;*/
+  background-image: url("~assets/sidebar-bg.jpg") !important;
+  background-size: cover !important;
+}
+.drawer_normal {
+  background-color: rgba(1, 1, 1, 0.75);
+}
+
+.drawer_dark {
+  background-color: rgba(1, 1, 1, 0.863);
+}
+
 </style>
 
 <style lang="sass" scoped>

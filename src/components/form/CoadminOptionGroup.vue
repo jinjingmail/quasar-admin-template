@@ -1,78 +1,90 @@
 <!--
-  重新定义input等form组件，有几个目的：
-  1、简化代码量
-  2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
-  新增插槽：
-      form-label
-  新增prop：
-      见prop定义
+  增加插槽：
+  增加属性：
+    参考 props 定义
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label">
+  <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
     <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
-    <q-input
-      class="col"
-      ref="input"
+    <q-option-group
+      ref="optionGroup"
+      class="col q-pt-xs"
       v-bind="$attrs"
       v-on="listeners"
-      :label="label"
+      :options="optionsTranslated"
       :dense="dense"
-      :outlined="outlined"
-      :no-error-icon="noErrorIcon"
       :disable="disable"
       :readonly="readonly"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
       </template>
-    </q-input>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
+      </template>
+    </q-option-group>
   </div>
-  <q-input v-else
-    ref="input"
+  <q-option-group v-else
+    ref="optionGroup"
+    class="q-pt-sm"
     :class="computedClass"
     v-bind="$attrs"
     v-on="listeners"
-    :label="label"
+    :options="optionsTranslated"
     :dense="dense"
-    :outlined="outlined"
-    :no-error-icon="noErrorIcon"
     :disable="disable"
     :readonly="readonly"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
-  </q-input>
+    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+      <slot :name="slotName" v-bind="prop"/>
+    </template>
+  </q-option-group>
+
 </template>
 
 <script>
 import formMixin from './formMixin.js'
 export default {
-  name: 'CoadminInput',
+  name: 'CoadminOptionGroup',
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
-    label: {
-      type: String,
-      default: undefined
+    options: {
+      type: Array,
+      default: () => []
     },
-    noErrorIcon: {
-      type: Boolean,
-      default: true
+    labelKey: {
+      type: String,
+      default: 'label'
+    },
+    valueKey: {
+      type: String,
+      default: 'value'
     }
   },
-  mounted () {
+  data () {
+    return {
+      optionsTranslated: []
+    }
+  },
+  created () {
+    if (this.labelKey === 'label' && this.valueKey === 'value') {
+      this.optionsTranslated = this.options
+    } else {
+      this.optionsTranslated = this.options.map(o => { return { label: o[this.labelKey], value: o[this.valueKey] } })
+    }
   },
   computed: {
     listeners: function () {
       const vm = this
-      // `Object.assign` 将所有的对象合并为一个新对象
       return Object.assign({},
         // 从父级添加所有的监听器
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          // 这里确保组件配合 `v-model` 的工作
           input: function (value) {
             if (!vm.disable && !vm.readonly) {
               vm.$emit('input', value)
@@ -82,25 +94,13 @@ export default {
       )
     }
   },
+  mounted () {
+  },
   methods: {
-    resetValidation () {
-      this.$refs.input.resetValidation()
-    },
-    validate (value) {
-      return this.$refs.input.validate(value)
-    },
-    focus () {
-      this.$refs.input.focus()
-    },
-    blur () {
-      this.$refs.input.blur()
-    },
-    select () {
-      this.$refs.input.select()
-    }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @import './form.scss'
 </style>
