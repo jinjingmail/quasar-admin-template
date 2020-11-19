@@ -1,6 +1,6 @@
 <template>
   <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'">
-    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :class="$q.dark.isActive ? 'header_dark' : 'header_normal'">
+    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :style="headerStyles" :class="$q.dark.isActive ? 'header_dark22' : 'header_normal22'">
       <q-toolbar>
         <q-btn
           flat
@@ -20,7 +20,7 @@
             class="text-bold logo-text-primary"
             v-if="$q.screen.gt.xs"
           >
-            5G管理系统
+            {{title}}
             <span v-show="false"
               class="q-ml-xs"
               style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
@@ -123,7 +123,7 @@
       :overlay="false"
       :bordered="true"
       :elevated="false"
-      :width="240"
+      :width="260"
       :breakpoint="599"
     >
       <q-scroll-area class="fit" :class="$q.dark.isActive?'':'bg-grey-3'">
@@ -136,7 +136,7 @@
           <div class="no-wrap">
 
             <div class="column items-center">
-              <div class="text-subtitle1 q-mb-xs">{{username}}</div>
+              <div class="text-h6 q-mb-xs">{{username}}</div>
               <q-avatar size="80px">
                 <img src="~assets/boy-avatar.jpg">
               </q-avatar>
@@ -162,15 +162,62 @@
             <q-separator inset class="q-mx-lg" />
 
             <div class="column">
-              <div class="text-h6 ">Settings</div>
-              <q-toggle :value="$q.dark.isActive" :val="true" label="Dark模式" @click.native="$q.dark.toggle()"/>
+              <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              <div class="text-subtitle1 ">Settings</div>
               <q-toggle :value="tagsView" :val="true" label="显示Tab栏" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="顶部显示Tab栏" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
-              <q-toggle :value="fixedHeader" :val="true" label="锁定Header" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
+              <q-toggle :value="fixedHeader" :val="true" label="锁定头部" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
               <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <q-toggle :value="sidebarTop" :val="true" label="菜单栏到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
-              <div class="text-h6 ">颜色</div>
+              <q-toolbar class="no-padding">
+                <div class="text-subtitle1 ">颜色</div>
+                <q-space/>
+                <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              </q-toolbar>
               <brand-color />
+              <q-toolbar class="no-padding">
+                  <div class="text-subtitle1 ">菜单栏</div>
+                  <q-space/>
+                  <q-btn label="默认" size="sm" color="primary" @click="restoreSetting('colorMenu')"/>
+                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              </q-toolbar>
+              <div class="row q-gutter-lg">
+                <q-btn class="col-auto" size="sm" label="背景" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorMenuBg" @change="value => changeSetting({key:'colorMenuBg', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="文字" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorMenuText" @change="value => changeSetting({key:'colorMenuText', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+              </div>
+
+              <q-toolbar class="no-padding">
+                  <div class="text-subtitle1 ">头部</div>
+                  <q-space/>
+                  <q-btn label="默认" size="sm" color="primary" @click="restoreSetting('colorHeader')"/>
+                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              </q-toolbar>
+              <div class="row q-gutter-lg">
+                <q-btn class="col-auto" size="sm" label="背景1" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorHeaderBg1" @change="value => changeSetting({key:'colorHeaderBg1', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="背景2" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorHeaderBg2" @change="value => changeSetting({key:'colorHeaderBg2', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="文字" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorHeaderText" @change="value => changeSetting({key:'colorHeaderText', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+              </div>
+
             </div>
 
           </div>
@@ -191,7 +238,7 @@
       :breakpoint="599"
       :bordered="false"
     >
-      <div class="sidebar-body" :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'">
+      <div class="sidebar-body" :style="drawerStyles" :class="$q.dark.isActive?'drawer_darkxx':'drawer_normalxx'">
         <q-scroll-area class="fit">
           <q-list>
             <template v-if="sidebarTop">
@@ -206,7 +253,7 @@
                     shrink
                     class="text-bold logo-text-primary"
                   >
-                    5G管理系统
+                    {{title}}
                   </q-toolbar-title>
 
                 </q-item-section>
@@ -218,7 +265,7 @@
       </div>
       <div
         class="sidebar-footer row items-center"
-        :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'"
+        :style="drawerStyles"
       >
         <q-btn
           flat
@@ -292,10 +339,8 @@ export default {
     }
   },
   created () {
-    console.log('routes:', routes)
   },
   mounted () {
-    console.log('route:', this.$route.path)
     if (this.colorPrimary) {
       colors.setBrand('primary', this.colorPrimary)
     }
@@ -303,18 +348,35 @@ export default {
   },
   watch: {
     $route (route) {
-      console.log('watch.route change:', route.path)
       this.menuOpen(this.menuFind(this.$refs.menu, route.path))
     }
   },
   computed: {
+    drawerStyles () {
+      return {
+        backgroundColor: this.colorMenuBg,
+        color: this.colorMenuText
+      }
+    },
+    headerStyles () {
+      return {
+        background: 'linear-gradient(145deg, ' + this.colorHeaderBg1 + ' 15%, ' + this.colorHeaderBg2 + ' 70%)',
+        color: this.colorHeaderText
+      }
+    },
     ...mapGetters('settings', [
+      'title',
       'tagsView',
       'tagsViewTop',
       'fixedHeader',
       'uniqueOpened',
       'sidebarTop',
-      'colorPrimary'
+      'colorPrimary',
+      'colorHeaderBg1',
+      'colorHeaderBg2',
+      'colorHeaderText',
+      'colorMenuBg',
+      'colorMenuText'
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'
@@ -349,7 +411,8 @@ export default {
   },
   methods: {
     ...mapActions('settings', [
-      'changeSetting'
+      'changeSetting',
+      'restoreSetting'
     ]),
     moveFab (ev) {
       this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
@@ -420,15 +483,14 @@ export default {
 <style lang="scss" scoped>
 
 .header_normal {
-  background: linear-gradient(
-    145deg,
-    rgb(32, 106, 80) 15%,
-    rgb(21, 57, 102) 70%
-  );
+  background: linear-gradient(145deg, rgb(32, 106, 80) 15%, rgb(21, 57, 102) 70%);
 }
 
 .header_dark {
-  background: linear-gradient(145deg, rgb(61, 14, 42) 15%, rgb(14, 43, 78) 70%);
+  background: linear-gradient(
+    145deg,
+    rgb(61, 14, 42) 15%,
+    rgb(14, 43, 78) 70%);
 }
 
 .coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {
@@ -437,12 +499,12 @@ export default {
 }
 .drawer_normal {
   background-color: rgba(1, 1, 1, 0.75);
-  color: white;
+  color: red;
 }
 
 .drawer_dark {
   background-color: rgba(1, 1, 1, 0.863);
-  color: white;
+  color: yellow;
 }
 .pagetagviews-normal {
   background-color: $grey-3;
@@ -452,9 +514,9 @@ export default {
   }
 }
 .pagetagviews-dark {
-  // color: var(--q-color-primary);
   background-color: $grey-10;
-  color: $grey-2;
+  color: var(--q-color-primary);
+  // color: $grey-2;
   ::v-deep .q-tab--active {
     background-color: $grey-9;
   }

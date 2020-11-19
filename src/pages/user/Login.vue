@@ -2,7 +2,7 @@
   <q-page class="row items-center justify-center">
     <q-card
       class="login-wrapper shadow-24"
-      bordered
+      :bordered="false"
     >
       <!-- https://placeimg.com/430/500/nature -->
       <q-card-section horizontal>
@@ -16,14 +16,13 @@
           </div>
         </q-img>
 
-        <q-card-section :class="`${$q.screen.gt.xs?'col-6':'col'} q-mt-xs q-pa-xl`">
-          <div>
-            <q-avatar>
+        <q-card-section :class="`${$q.screen.gt.xs?'col-6':'col'} q-mt-xs q-px-xl q-py-md`">
+          <div class="flex flex-center">
+            <q-avatar size="120px">
               <q-img src="~assets/logo.svg" />
             </q-avatar>
           </div>
           <div class="text-h5 text-primary q-mb-xs">登录</div>
-          <div class="text-h6 q-mt-sm q-mb-xs">欢迎回来，请登录后继续</div>
           <q-form
             @submit="onSubmit"
             class="login-form my-form q-mt-lg"
@@ -67,14 +66,13 @@
             </div>
           </q-form>
 
+          <q-toolbar class="no-padding">
+            <q-space />
+            <brand-color />
+          </q-toolbar>
         </q-card-section>
       </q-card-section>
-      <q-separator />
 
-      <q-card-actions v-if="$q.screen.gt.sm">
-        <q-space />
-        <brand-color />
-      </q-card-actions>
       <q-inner-loading :showing="loading">
         <q-spinner-hourglass
           size="sm"
@@ -135,7 +133,7 @@ export default {
   width: 840px
 @media (max-width: 1023px)
   .login-wrapper, login-form
-    width: 98%
+    width: 94%
 @media (max-width: 599px)
   .q-pa-xl
     padding: 15px

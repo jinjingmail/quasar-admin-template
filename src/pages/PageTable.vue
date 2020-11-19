@@ -1,5 +1,5 @@
 <template>
-  <div class="coadmin-page q-pa-sm q-gutter-sm">
+  <div class="coadmin-page">
 
     <coadmin-dialog
       ref="printDialog"
@@ -189,8 +189,8 @@
       row-key="id"
       dense
       flat
-      class="coadmin-table coadmin-table-sticky-header-and-last-column"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px - 17px)'):'auto')}"
+      class="q-pa-sm coadmin-table coadmin-table-sticky-header-and-last-column"
+      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px)'):'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
       separator="horizontal"
       :wrap-cells="false"

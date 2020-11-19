@@ -54,7 +54,6 @@ export default {
       this.moveToCurrentTag()
     },
     currentTab (value) {
-      console.log('watch.currentTab:' + value)
       if (!value) {
         return
       }
@@ -119,7 +118,6 @@ export default {
       return tab.affix
     },
     filterAffixTags (routes, basePath = '/') {
-      console.log('filterAffixTags:' + basePath)
       let tags = []
       routes.forEach(route => {
         if (route.meta && route.meta.affix) {

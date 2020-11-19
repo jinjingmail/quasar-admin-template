@@ -42,11 +42,10 @@ export default {
       'changeSetting'
     ]),
     setBrand (color) {
-      colors.setBrand('primary', color)
+      // colors.setBrand('primary', color)
       this.changeSetting({ key: 'colorPrimary', value: color })
     },
     customColor () {
-      console.log('primary', colors.getBrand('primary'))
       this.color = colors.getBrand('primary')
     }
   }

@@ -48,6 +48,10 @@ module.exports = {
    */
   showFooter: true,
   /**
+   * 是否进入dark模式
+   */
+  darkMode: false,
+  /**
    * 底部文字，支持html语法
    */
   footerTxt: '© 2020 XXYY 版权所有',

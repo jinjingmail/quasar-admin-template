@@ -11,11 +11,11 @@
   >
     <template v-slot:header>
       <q-item-section avatar v-if="item.icon">
-        <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+        <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
       </q-item-section>
 
       <q-item-section>
-        <q-item-label>{{item.title}}</q-item-label>
+        <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
         <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
       </q-item-section>
     </template>
@@ -31,10 +31,10 @@
       clickable tag="a" target="_blank"
       :href="item.path">
     <q-item-section avatar v-if="item.icon">
-      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+      <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
-      <q-item-label>{{item.title}}</q-item-label>
+      <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
       <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
     </q-item-section>
   </q-item>
@@ -47,10 +47,10 @@
     active-class="coadmin-sidebar-menu-active"
   >
     <q-item-section avatar v-if="item.icon">
-      <q-icon :color="iconColor(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+      <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
-      <q-item-label>{{item.title}}</q-item-label>
+      <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
       <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
     </q-item-section>
   </q-item>
@@ -82,8 +82,20 @@ export default {
   },
   computed: {
     ...mapGetters('settings', [
-      'uniqueOpened'
+      'uniqueOpened',
+      'colorMenuText'
     ]),
+    iconColor2 () {
+      return function (color) {
+        let c = color
+        if (!c) {
+          c = this.colorMenuText
+        }
+        return {
+          color: c
+        }
+      }
+    },
     /*
      * 把 routeItem 转换成如下的简单格式
      * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, icon_color:yyy, children: []  }
@@ -161,7 +173,7 @@ export default {
       if (color) {
         return color
       } else {
-        return 'white'
+        return this.colorMenuText
       }
     },
     expansionItemInput (value) {
