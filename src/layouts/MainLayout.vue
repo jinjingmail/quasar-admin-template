@@ -106,7 +106,7 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat stretch dense label="系统管理员" @click="$refs.drawerRight.toggle()">
+          <q-btn flat stretch dense :label="username" @click="$refs.drawerRight.toggle()">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
@@ -136,7 +136,7 @@
           <div class="no-wrap">
 
             <div class="column items-center">
-              <div class="text-subtitle1 q-mb-xs">系统管理员</div>
+              <div class="text-subtitle1 q-mb-xs">{{username}}</div>
               <q-avatar size="80px">
                 <img src="~assets/boy-avatar.jpg">
               </q-avatar>
@@ -318,6 +318,9 @@ export default {
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'
+    ]),
+    ...mapGetters('user', [
+      'username'
     ]),
     routes () {
       return routes

@@ -73,6 +73,35 @@ const routes = [
       }
     ]
   }, {
+    path: '/user',
+    component: () => import('layouts/LoginLayout.vue'),
+    meta: { title: '用户', icon: 'add' },
+    children: [
+      {
+        path: 'login',
+        name: 'user-login',
+        component: () => import('pages/user/Login.vue'),
+        meta: { title: '登录', icon: 'add', noCache: true }
+      },
+      {
+        path: 'register',
+        name: 'user-register',
+        component: () => import('pages/user/Register.vue'),
+        meta: { title: '注册', icon: 'add', noCache: true }
+      }
+    ]
+  }, {
+    path: '/needLogin',
+    component: MainLayout,
+    children: [
+      {
+        path: 'index',
+        name: 'PageNeedLogin',
+        component: () => import('pages/PageNeedLogin.vue'),
+        meta: { auth: true, title: '登录后才能访问', icon: 'insert_emoticon' }
+      }
+    ]
+  }, {
     path: '/pageIcon',
     component: MainLayout,
     name: 'PageIcon',

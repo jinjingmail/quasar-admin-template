@@ -3,8 +3,15 @@ import Vuex from 'vuex'
 
 import tagviews from './module-tagviews'
 import settings from './module-settings'
+import user from './module-user'
 
 Vue.use(Vuex)
+
+const modules = {
+  tagviews,
+  settings,
+  user
+}
 
 /*
  * If not building with SSR mode, you can
@@ -17,15 +24,19 @@ Vue.use(Vuex)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
-    modules: {
-      tagviews,
-      settings
-    },
+    modules,
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEV
   })
+
+  // Automatically run the `init` action if available for every module.
+  for (const moduleName of Object.keys(modules)) {
+    if (modules[moduleName].actions.init) {
+      Store.dispatch(`${moduleName}/init`)
+    }
+  }
 
   return Store
 }

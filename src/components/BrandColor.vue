@@ -12,7 +12,7 @@
       @click="setBrand('indigo')" size="7px"/>
     <q-btn round style="background-color:#ff6a00"
       @click="setBrand('#ff6a00')" size="7px"/>
-    <q-btn round color="green" icon="more_horiz" @click="customColor()"
+    <q-btn round color="green" label="M" @click="customColor()"
       size="7px">
       <q-popup-proxy>
         <q-color v-model="color"/>
