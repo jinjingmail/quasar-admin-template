@@ -1,50 +1,54 @@
 <template>
   <div class="q-gutter-sm q-ma-none">
-    <q-badge
-      color="blue"
-      text-color="black"
-      class="skin-color q-ml-none"
-      @click="setBrand('primary', '#1976D2')"
-    />
-    <q-badge
-      color="brown"
-      text-color="black"
-      class="skin-color"
-      @click="setBrand('primary', 'brown')"
-    />
-    <q-badge
-      color="teal"
-      text-color="black"
-      class="skin-color"
-      @click="setBrand('primary', 'teal')"
-    />
-    <q-badge
-      color="dark"
-      text-color="black"
-      class="skin-color"
-      @click="setBrand('primary', '#263238')"
-    />
-    <q-badge
-      color="indigo"
-      text-color="black"
-      class="skin-color"
-      @click="setBrand('primary', 'indigo')"
-    />
-    <q-badge
-      color="orange"
-      text-color="black"
-      class="skin-color"
-      @click="setBrand('primary', '#ff6a00')"
-    />
+    <q-btn round style="background-color:#1976D2"
+      @click="setBrand('#1976D2')" size="7px"/>
+    <q-btn round color="brown"
+      @click="setBrand('brown')" size="7px"/>
+    <q-btn round color="teal"
+      @click="setBrand('teal')" size="7px"/>
+    <q-btn round style="background-color:#2b2b2b"
+      @click="setBrand('#2b2b2b')" size="7px"/>
+    <q-btn round color="indigo"
+      @click="setBrand('indigo')" size="7px"/>
+    <q-btn round style="background-color:#ff6a00"
+      @click="setBrand('#ff6a00')" size="7px"/>
+    <q-btn round color="green" icon="more_horiz" @click="customColor()"
+      size="7px">
+      <q-popup-proxy>
+        <q-color v-model="color"/>
+      </q-popup-proxy>
+    </q-btn>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import { colors } from 'quasar'
 export default {
   name: 'BrandColor',
+  data () {
+    return {
+      color: ''
+    }
+  },
+  watch: {
+    color (val) {
+      this.setBrand(this.color)
+    }
+  },
   methods: {
-    setBrand: colors.setBrand
+    ...mapActions('settings', [
+      'changeSetting'
+    ]),
+    setBrand (color) {
+      colors.setBrand('primary', color)
+      this.changeSetting({ key: 'colorPrimary', value: color })
+    },
+    customColor () {
+      console.log('primary', colors.getBrand('primary'))
+      this.color = colors.getBrand('primary')
+    }
   }
 }
 </script>

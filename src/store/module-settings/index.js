@@ -22,7 +22,9 @@ const state = {
   uniqueOpened: get('setting.uniqueOpened', defaultSetting.uniqueOpened),
   showFooter: get('setting.showFooter', defaultSetting.showFooter),
   footerTxt: get('setting.footerTxt', defaultSetting.footerTxt),
-  caseNumber: get('setting.caseNumber', defaultSetting.caseNumber)
+  caseNumber: get('setting.caseNumber', defaultSetting.caseNumber),
+
+  colorPrimary: get('setting.colorPrimary', null)
 }
 
 const getters = {
@@ -34,7 +36,8 @@ const getters = {
   uniqueOpened: state => state.uniqueOpened,
   showFooter: state => state.showFooter,
   footerTxt: state => state.footerTxt,
-  caseNumber: state => state.caseNumber
+  caseNumber: state => state.caseNumber,
+  colorPrimary: state => state.colorPrimary
 }
 
 const mutations = {

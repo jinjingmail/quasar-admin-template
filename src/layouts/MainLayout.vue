@@ -126,9 +126,13 @@
       :width="240"
       :breakpoint="599"
     >
-      <q-scroll-area class="fit">
+      <q-scroll-area class="fit" :class="$q.dark.isActive?'':'bg-grey-3'">
         <div class="q-pa-sm">
-          <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
+          <q-bar class="transparent">
+            <q-space/>
+            <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
+          </q-bar>
+
           <div class="no-wrap">
 
             <div class="column items-center">
@@ -159,13 +163,14 @@
 
             <div class="column">
               <div class="text-h6 ">Settings</div>
-              <brand-color />
               <q-toggle :value="$q.dark.isActive" :val="true" label="Dark模式" @click.native="$q.dark.toggle()"/>
               <q-toggle :value="tagsView" :val="true" label="显示Tab栏" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="顶部显示Tab栏" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="锁定Header" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
               <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <q-toggle :value="sidebarTop" :val="true" label="菜单栏到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+              <div class="text-h6 ">颜色</div>
+              <brand-color />
             </div>
 
           </div>
@@ -255,6 +260,7 @@
 </template>
 
 <script>
+import { colors } from 'quasar'
 import { mapGetters, mapActions } from 'vuex'
 import SideMenu from 'components/SideMenu.vue'
 import PageTagViews from 'components/PageTagViews.vue'
@@ -290,6 +296,9 @@ export default {
   },
   mounted () {
     console.log('route:', this.$route.path)
+    if (this.colorPrimary) {
+      colors.setBrand('primary', this.colorPrimary)
+    }
     this.menuOpen(this.menuFind(this.$refs.menu, this.$route.path))
   },
   watch: {
@@ -304,7 +313,8 @@ export default {
       'tagsViewTop',
       'fixedHeader',
       'uniqueOpened',
-      'sidebarTop'
+      'sidebarTop',
+      'colorPrimary'
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'
