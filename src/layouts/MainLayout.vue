@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
-    <q-header reveal :elevated="false" class="coadmin-header" :class="$q.dark.isActive ? 'header_dark' : 'header_normal'">
-      <q-toolbar class="">
+  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'">
+    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :class="$q.dark.isActive ? 'header_dark' : 'header_normal'">
+      <q-toolbar>
         <q-btn
           flat
           dense
@@ -11,19 +11,22 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
           v-if="!$q.screen.gt.xs"
         />
-        <q-avatar class="q-logo">
-          <img src="~assets/logo.svg" />
-        </q-avatar>
-        <q-toolbar-title
-          shrink
-          class="text-bold logo-text-primary"
-        >
-          5G管理系统
-          <span v-show="false"
-            class="q-ml-xs"
-            style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
-          >v1.14.1</span>
-        </q-toolbar-title>
+        <template v-if="!sidebarTop">
+          <q-avatar class="q-logo">
+            <img src="~assets/logo.svg" />
+          </q-avatar>
+          <q-toolbar-title
+            shrink
+            class="text-bold logo-text-primary"
+            v-if="$q.screen.gt.xs"
+          >
+            5G管理系统
+            <span v-show="false"
+              class="q-ml-xs"
+              style="letter-spacing: 0.1em;font-size:12px;font-weight:500;"
+            >v1.14.1</span>
+          </q-toolbar-title>
+        </template>
 
         <q-breadcrumbs active-color="white" v-if="!$q.screen.xs">
           <q-breadcrumbs-el label="Home" />
@@ -39,7 +42,6 @@
             <q-badge color="red" text-color="white" floating>
               {{itemsMenu.length}}
             </q-badge>
-            <q-tooltip>通知</q-tooltip>
             <q-menu
               fit
               anchor="bottom left"
@@ -104,46 +106,74 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat stretch dense label="系统管理员">
+          <q-btn flat stretch dense label="系统管理员" @click="$refs.drawerRight.toggle()">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
-            <q-tooltip>账户</q-tooltip>
-
-            <q-popup-proxy>
-              <div class="row no-wrap q-pa-md">
-                <div class="column">
-                  <div class="text-h6 q-mb-md">Settings</div>
-                  <q-btn @click="$q.dark.toggle()" label="Dark模式" color="primary"/>
-                  <brand-color />
-                </div>
-
-                <q-separator vertical inset class="q-mx-lg" />
-
-                <div class="column items-center">
-                  <q-avatar size="xl">
-                    <img src="~assets/boy-avatar.jpg">
-                  </q-avatar>
-
-                  <div class="text-subtitle1 q-mt-md q-mb-xs">John Doe</div>
-
-                  <q-btn
-                    color="primary"
-                    label="Logout"
-                    push
-                    size="sm"
-                    v-close-popup
-                  />
-                </div>
-              </div>
-            </q-popup-proxy>
           </q-btn>
         </div>
 
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll text-white"
+    <q-drawer
+      side="right"
+      ref="drawerRight"
+      :show-if-above="false"
+      :overlay="false"
+      :bordered="true"
+      :elevated="false"
+      :width="240"
+      :breakpoint="599"
+    >
+      <q-scroll-area class="fit">
+        <div class="q-pa-sm">
+          <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
+          <div class="no-wrap">
+
+            <div class="column items-center">
+              <div class="text-subtitle1 q-mb-xs">系统管理员</div>
+              <q-avatar size="80px">
+                <img src="~assets/boy-avatar.jpg">
+              </q-avatar>
+
+              <q-toolbar>
+                <q-btn
+                  color="primary"
+                  label="个人设置"
+                  push
+                  size="sm"
+                />
+                <q-space/>
+                <q-btn
+                  color="primary"
+                  label="Logout"
+                  push
+                  size="sm"
+                  v-close-popup
+                />
+              </q-toolbar>
+            </div>
+
+            <q-separator inset class="q-mx-lg" />
+
+            <div class="column">
+              <div class="text-h6 ">Settings</div>
+              <brand-color />
+              <q-toggle :value="$q.dark.isActive" :val="true" label="Dark模式" @click.native="$q.dark.toggle()"/>
+              <q-toggle :value="tagsView" :val="true" label="显示Tab栏" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
+              <q-toggle :value="tagsViewTop" :val="true" label="顶部显示Tab栏" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
+              <q-toggle :value="fixedHeader" :val="true" label="锁定Header" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
+              <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
+              <q-toggle :value="sidebarTop" :val="true" label="菜单栏到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+            </div>
+
+          </div>
+        </div>
+      </q-scroll-area>
+    </q-drawer>
+
+    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
       v-model="leftDrawerOpen"
       show-if-above
       side="left"
@@ -154,17 +184,36 @@
       :mini-to-overlay="miniToOverlay"
       :width="260"
       :breakpoint="599"
-      bordered
+      :bordered="false"
     >
       <div class="sidebar-body" :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'">
         <q-scroll-area class="fit">
           <q-list>
+            <template v-if="sidebarTop">
+              <q-item>
+                <q-item-section avatar>
+                  <q-avatar class="q-logo">
+                    <img src="~assets/logo.svg" />
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section>
+                  <q-toolbar-title
+                    shrink
+                    class="text-bold logo-text-primary"
+                  >
+                    5G管理系统
+                  </q-toolbar-title>
+
+                </q-item-section>
+              </q-item>
+            </template>
             <side-menu ref="menu" v-for="(routeItem) in routes" :route-item="routeItem" :key="routeItem.path" base-path="" :level="1"/>
           </q-list>
         </q-scroll-area>
       </div>
       <div
         class="sidebar-footer row items-center"
+        :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'"
       >
         <q-btn
           flat
@@ -173,48 +222,40 @@
           @click="leftDrawerMiniClick"
           :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
           aria-label="Menu"
-          color="primary"
           size="sm"
         />
       </div>
     </q-drawer>
 
-    <!--
-    <q-page-container>
-      <keep-alive :include="cachedViews" max="10">
-        <router-view />
-      </keep-alive>
-    </q-page-container>
-    -->
+    <q-page-container >
+      <q-page
+        :style="(tagsView && tagsViewTop)?'padding-top: 36px;':((tagsView && !tagsViewTop)?'padding-bottom: 36px':'')"
+      >
+        <keep-alive :include="cachedViews">
+          <router-view />
+        </keep-alive>
 
-    <q-page-container v-if="pageTagViewPosition === 'top'">
-      <q-layout container style="height: calc(100vh - 50px);">
-        <q-header reveal class="coadmin-header bg-white text-primary">
-          <page-tag-views />
-          <q-separator v-if="!$q.dark.isActive"/>
-        </q-header>
-        <q-page-container>
-          <keep-alive :include="cachedViews">
-            <router-view />
-          </keep-alive>
-        </q-page-container>
-      </q-layout>
+        <!-- place QPageSticky at end of page -->
+        <q-page-sticky expand position="top" v-if="tagsView && tagsViewTop">
+          <page-tag-views :class="$q.dark.isActive ? 'pagetagviews-dark' : 'pagetagviews-normal'"/>
+          <q-separator/>
+        </q-page-sticky>
+        <q-page-sticky expand position="bottom" v-if="tagsView && !tagsViewTop">
+          <q-separator/>
+          <page-tag-views switch-indicator :class="$q.dark.isActive ? 'pagetagviews-dark' : 'pagetagviews-normal'"/>
+        </q-page-sticky>
+        <!-- place QPageScroller at end of page -->
+        <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos">
+          <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
+        </q-page-scroller>
+      </q-page>
     </q-page-container>
-    <q-page-container v-else>
-      <keep-alive :include="cachedViews">
-        <router-view />
-      </keep-alive>
-    </q-page-container>
-
-    <q-footer reveal v-if="pageTagViewPosition === 'bottom'" class="coadmin-footer bg-white text-primary">
-      <q-separator v-if="!$q.dark.isActive"/>
-      <page-tag-views switch-indicator/>
-    </q-footer>
 
   </q-layout>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import SideMenu from 'components/SideMenu.vue'
 import PageTagViews from 'components/PageTagViews.vue'
 import BrandColor from 'components/BrandColor.vue'
@@ -237,9 +278,11 @@ export default {
       leftDrawerOpen: false,
       mdiCallMade: mdiCallMade,
 
+      fabPos: [48, 25],
+      draggingFab: false,
+
       scrollTarget: undefined,
-      itemsMenu: [{}, {}, {}, {}, {}, {}, {}], // 通知项
-      pageTagViewPosition: 'top' // 页面Tab栏位置（top、bottom、none）
+      itemsMenu: [{}, {}, {}, {}, {}, {}, {}] // 通知项
     }
   },
   created () {
@@ -256,12 +299,22 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('settings', [
+      'tagsView',
+      'tagsViewTop',
+      'fixedHeader',
+      'uniqueOpened',
+      'sidebarTop'
+    ]),
+    ...mapGetters('tagviews', [
+      'cachedViews'
+    ]),
     routes () {
       return routes
     },
-    cachedViews () {
+    /* cachedViews () {
       return this.$store.state.tagviews.cachedViews
-    },
+    }, */
     // 20201109 发现一个问题：当noCache==false的页面在dev模式下更改了页面结构，会导致网页白屏，<router-view /> 不使用key就没这个问题
     key () {
       return this.$route.path
@@ -282,6 +335,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions('settings', [
+      'changeSetting'
+    ]),
+    moveFab (ev) {
+      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
+
+      this.fabPos = [
+        this.fabPos[0] - ev.delta.x,
+        this.fabPos[1] - ev.delta.y
+      ]
+    },
     menuFind (array, path) {
       if (array === undefined || array.length === 0) {
         return undefined
@@ -340,7 +404,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .header_normal {
   background: linear-gradient(
@@ -354,19 +418,34 @@ export default {
   background: linear-gradient(145deg, rgb(61, 14, 42) 15%, rgb(14, 43, 78) 70%);
 }
 
-.coadmin-sidebar .q-drawer {
-  /*background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;*/
+.coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {
   background-image: url("~assets/sidebar-bg.jpg") !important;
   background-size: cover !important;
 }
 .drawer_normal {
   background-color: rgba(1, 1, 1, 0.75);
+  color: white;
 }
 
 .drawer_dark {
   background-color: rgba(1, 1, 1, 0.863);
+  color: white;
 }
-
+.pagetagviews-normal {
+  background-color: $grey-3;
+  color: var(--q-color-primary);
+  ::v-deep .q-tab--active {
+    background-color: white;
+  }
+}
+.pagetagviews-dark {
+  // color: var(--q-color-primary);
+  background-color: $grey-10;
+  color: $grey-2;
+  ::v-deep .q-tab--active {
+    background-color: $grey-9;
+  }
+}
 </style>
 
 <style lang="sass" scoped>

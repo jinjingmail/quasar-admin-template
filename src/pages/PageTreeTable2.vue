@@ -57,132 +57,8 @@
       </template>
 
       <template v-slot:after>
-        <div class="q-pa-xs">
-          <q-table
-            class="coadmin-table"
-            flat
-            :wrap-cells="false"
-            :data="treeDatasSelected"
-            :columns="columns"
-            row-key="id"
-            :visible-columns="visibleColumns"
-            separator="horizontal"
-            :hide-pagination="false"
-            :rows-per-page-options="[0]"
-            no-data-label="无数据"
-            selection="multiple"
-            :selected.sync="selected"
-            :loading="loading"
-          >
-            <template v-slot:top="props">
-              <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
-                <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-                <template v-if="searchToggle" >
-                  <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-                  <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-                  <q-input v-model="textSearch" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-                </template>
-                <q-btn-group outline class="col">
-                  <q-btn dense outline color="primary" label="查询"/>
-                  <q-separator vertical />
-                  <q-btn dense outline color="primary" label="Reset"/>
-                </q-btn-group>
-              </div>
-              <q-toolbar class="no-padding">
-                <q-btn-group flat rounded class="q-mr-sm">
-                  <q-btn color="grey-3" text-color="primary" icon="add" @click="rowViewClick" />
-                  <q-btn color="grey-3" text-color="warning" icon="edit" />
-                  <q-btn color="grey-3" text-color="red" icon="delete" />
-                </q-btn-group>
-
-                <q-space />
-
-                <q-btn-group outline>
-                  <q-btn dense :outline="!searchToggle" color="primary" icon="search" @click="searchToggle = !searchToggle"/>
-                  <q-separator vertical />
-                  <q-btn dense outline color="primary" icon="autorenew" @click="loading = !loading"/>
-                  <q-separator vertical/>
-                  <q-btn dense outline color="primary" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click="props.toggleFullscreen"/>
-                  <q-separator vertical/>
-                  <q-btn-dropdown auto-close outline dense no-icon-animation class="btn-dropdown-hide-droparrow" color="primary" icon="apps">
-                    <div class="row no-wrap q-pa-sm">
-                      <div class="column">
-                        <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
-                      </div>
-                    </div>
-                  </q-btn-dropdown>
-                </q-btn-group>
-
-              </q-toolbar>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <q-btn-dropdown label="" dense flat>
-                  <q-list>
-                    <q-item clickable v-close-popup dense @click="rowViewClick(props.row)">
-                      <q-item-section>
-                        <q-item-label>查看</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item clickable v-close-popup dense>
-                      <q-item-section>
-                        <q-item-label>修改</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item clickable v-close-popup dense>
-                      <q-item-section>
-                        <q-item-label>删除</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-separator />
-
-                    <q-item clickable v-close-popup dense @click="rowLooooooongButtonClick()">
-                      <q-item-section>
-                        <q-item-label>一个长长的按钮</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                  </q-list>
-                </q-btn-dropdown>
-              </q-td>
-            </template>
-
-            <template v-slot:no-data="{ icon, message, filter }">
-              <div class="full-width row flex-center text-accent q-gutter-sm">
-                <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
-                <span style="font-size:2em">
-                  {{ message }}
-                </span>
-              </div>
-            </template>
-
-            <template v-slot:pagination>
-              <q-pagination
-                v-model="currentPage"
-                :max="50"
-                :direction-links="true"
-                :boundary-links="false"
-                input
-                input-class="text-orange-10"
-              />
-              <q-select
-                dense options-dense outlined
-                v-model="numberPerPage"
-                :options="numberPerPageOptions"
-                emit-value
-                map-options
-              />
-
-            </template>
-
-            <template v-slot:loading>
-              <q-inner-loading showing color="primary" />
-            </template>
-          </q-table>
+        <div class="q-pa-sm">
+          <coadmin-tree-table :columns="columns" :data="treeDatasSelected"/>
         </div>
       </template>
     </q-splitter>
@@ -198,11 +74,13 @@
 <script>
 import depts from '../data/depts.js'
 import CoadminTree from 'components/CoadminTree.vue'
+import CoadminTreeTable from 'components/CoadminTreeTable.vue'
 
 export default {
-  name: 'PageTreeTable',
+  name: 'PageTreeTable2',
   components: {
-    CoadminTree
+    CoadminTree,
+    CoadminTreeTable
   },
   data () {
     return {

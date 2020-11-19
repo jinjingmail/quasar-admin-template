@@ -1,5 +1,5 @@
 <template>
-  <q-page class="coadmin-page q-pa-sm q-gutter-sm">
+  <div class="coadmin-page q-pa-sm q-gutter-sm">
 
     <q-dialog v-model="dialogData"
       content-class="coadmin-dialog"
@@ -190,7 +190,7 @@
       <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
     </q-page-scroller>
 
-  </q-page>
+  </div>
 </template>
 
 <script>

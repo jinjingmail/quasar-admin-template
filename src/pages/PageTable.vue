@@ -1,5 +1,5 @@
 <template>
-  <q-page class="coadmin-page q-pl-sm q-pr-sm q-gutter-sm">
+  <div class="coadmin-page q-pa-sm q-gutter-sm">
 
     <coadmin-dialog
       ref="printDialog"
@@ -148,11 +148,10 @@
                 :disable="dialogFormReadonly"
               />
               <coadmin-input class="col-12 col-sm-6" label-position="right" mask="####-##-##" placeholder="####-##-##" form-label="dateinput" v-model="selectDate" :disable="dialogFormReadonly">
-                <q-popup-proxy >
-                  <coadmin-date v-model="selectDate">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
+                <q-popup-proxy
+                  ref="popupDateinput"
+                >
+                  <coadmin-date v-model="selectDate" @input="$refs.popupDateinput.hide()">
                   </coadmin-date>
                 </q-popup-proxy>
                 <template v-slot:append>
@@ -191,7 +190,7 @@
       dense
       flat
       class="coadmin-table coadmin-table-sticky-header-and-last-column"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px - 3px)'):'auto')}"
+      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px - 17px)'):'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
       separator="horizontal"
       :wrap-cells="false"
@@ -331,12 +330,12 @@
       </template>
     </q-table>
 
-    <!-- place QPageScroller at end of page -->
+    <!-- place QPageScroller at end of page
     <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">
       <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
     </q-page-scroller>
-
-  </q-page>
+    -->
+  </div>
 </template>
 
 <script>

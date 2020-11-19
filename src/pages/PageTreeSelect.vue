@@ -1,5 +1,5 @@
 <template>
-  <q-page class="coadmin-page q-pa-sm q-gutter-sm">
+  <div class="coadmin-page q-pa-sm q-gutter-sm">
     <coadmin-select v-model="popupTreeTickedLabel"
       placeholder="机构"
       multiple
@@ -69,7 +69,7 @@
 
       </q-popup-proxy>
     </coadmin-select>
-  </q-page>
+  </div>
 </template>
 
 <script>

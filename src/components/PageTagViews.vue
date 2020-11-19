@@ -2,13 +2,13 @@
   <q-tabs
     v-model="currentTab"
     dense
-    :breakpoint="0"
     align="left"
+    class="full-width"
+    :breakpoint="0"
     :inline-label="true"
     outside-arrows
     :mobile-arrows="false"
     :switch-indicator="switchIndicator"
-    :class="$q.dark.isActive?'bg-dark':'bg-light'"
   >
     <q-tab
       v-for="(tab,index) in visitedViews"
@@ -16,7 +16,6 @@
       no-caps
       :key="index"
       :name="tab.path"
-      :class="isActive(tab)?($q.dark.isActive?'bg-blue-2':'bg-blue-1'):''"
       @click.middle.native="!isAffix(tab)?closeTab(tab):''"
     >
       <div class="row items-center no-wrap">

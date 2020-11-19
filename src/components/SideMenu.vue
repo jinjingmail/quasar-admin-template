@@ -2,7 +2,7 @@
   <q-expansion-item v-if="isExpansionItem(item)"
     :dense-toggle="level!==1"
     :content-inset-level="0.4"
-    :group="'menu'+level"
+    :group="uniqueOpened?('menu'+level):('menu' + randomAlphaNumber())"
     :expand-separator="level===1"
     :dense="false"
     :default-opened="false"
@@ -58,7 +58,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import path from 'path'
+import random from '../utils'
 import { isExternal } from '../utils/validate'
 
 export default {
@@ -79,6 +81,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('settings', [
+      'uniqueOpened'
+    ]),
     /*
      * 把 routeItem 转换成如下的简单格式
      * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, icon_color:yyy, children: []  }
@@ -115,6 +120,9 @@ export default {
     }
   },
   methods: {
+    randomAlphaNumber () {
+      return random() + ''
+    },
     isRouteItem (item) {
       if (!item) {
         return undefined

@@ -43,7 +43,7 @@
         </q-toolbar>
       </q-card-section>
 
-      <slot />
+        <slot />
 
     </q-card>
   </q-dialog>

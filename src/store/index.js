@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import tagviews from './module-tagviews'
+import settings from './module-settings'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      tagviews
+      tagviews,
+      settings
     },
 
     // enable strict mode (adds overhead!)

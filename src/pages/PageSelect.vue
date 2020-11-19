@@ -1,5 +1,5 @@
 <template>
-  <q-page class="coadmin-page q-pa-sm">
+  <div class="coadmin-page q-pa-sm">
     <div class="q-gutter-md">
       <q-badge color="secondary" multi-line>
         Model: "{{ model }}"
@@ -30,7 +30,7 @@
         </template>
       </q-select>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script>

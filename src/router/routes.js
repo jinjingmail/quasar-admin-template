@@ -124,6 +124,11 @@ const routes = [
         component: () => import('pages/PageTreeTable.vue'),
         meta: { title: 'pageTreeTable', icon: 'add', noCache: false }
       }, {
+        path: 'pageTreeTable2',
+        name: 'PageTreeTable2',
+        component: () => import('pages/PageTreeTable2.vue'),
+        meta: { title: 'pageTreeTable2', icon: 'add' }
+      }, {
         path: 'pageSelect',
         name: 'PageSelect',
         component: () => import('pages/PageSelect.vue'),
@@ -165,6 +170,18 @@ const routes = [
         name: 'Nested2',
         component: () => import('pages/nested/Page1.vue'),
         meta: { title: '嵌套2', icon: 'add' }
+      }
+    ]
+  }, {
+    path: '/sales',
+    component: MainLayout,
+    name: 'Sales',
+    children: [
+      {
+        path: 'invoices',
+        name: 'SalesInvoices',
+        component: () => import('pages/sales_invoices.vue'),
+        meta: { title: 'SalesInvoices', icon: 'insert_emoticon' }
       }
     ]
   }, {
