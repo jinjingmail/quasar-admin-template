@@ -30,7 +30,5 @@ export default {
   font-size: 10px;
   letter-spacing: .3px;
   padding: 15px 25px;
-  background-color: #fafbfc;
-  color: #637388;
   text-transform: uppercase;
 </style>

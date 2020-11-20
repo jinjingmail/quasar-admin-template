@@ -1,6 +1,5 @@
 <template>
-  <div class="coadmin-page">
-
+  <div>
     <coadmin-dialog
       ref="printDialog"
       title="打印"
@@ -188,17 +187,16 @@
     <q-table
       row-key="id"
       dense
-      flat
-      class="q-pa-sm coadmin-table coadmin-table-sticky-header-and-last-column"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 36px)'):'auto')}"
+      class="q-pa-sm coadmin-table2 coadmin-table-sticky-header"
+      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 40px)'):'auto')}"
       :virtual-scroll="$q.screen.gt.xs"
+      :rows-per-page-options="[0]"
       separator="horizontal"
       :wrap-cells="false"
       :data="data"
       :columns="columns"
       :visible-columns="visibleColumns"
       :hide-pagination="false"
-      :rows-per-page-options="[7, 10, 15, 20, 25, 50]"
       no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
@@ -304,17 +302,18 @@
         </div>
       </template>
 
-      <template v-slot:paginationx>
+      <template v-slot:pagination>
         <q-pagination
           v-model="currentPage"
-          :max="50000"
+          :max="500"
           :direction-links="true"
           :boundary-links="false"
           input
           input-class="text-orange-10"
         />
         <q-select
-          dense options-dense outlined
+          dense options-dense borderless
+          flat
           v-model="numberPerPage"
           :options="numberPerPageOptions"
           emit-value

@@ -1,5 +1,5 @@
 <template>
-  <div class="coadmin-page q-pa-sm q-gutter-sm">
+  <div class="q-pa-sm">
 
     <q-dialog v-model="dialogData"
       content-class="coadmin-dialog"
@@ -51,8 +51,8 @@
     </q-dialog>
 
     <q-table
-      class="coadmin-table"
-      dense flat
+      class="coadmin-table2 q-pa-sm"
+      dense
       :wrap-cells="false"
       :data="data"
       :columns="columns"

@@ -109,9 +109,6 @@ export default {
     this.imgsrc = '/img/nature-' + (random() % 8) + '.jpg'
   },
   computed: {
-    loginImage () {
-      return 'assets/img/nature-3.jpg'
-    }
   },
   methods: {
     ...mapActions('settings', [

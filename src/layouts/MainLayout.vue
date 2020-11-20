@@ -1,6 +1,6 @@
 <template>
-  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'">
-    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :style="headerStyles" :class="$q.dark.isActive ? 'header_dark22' : 'header_normal22'">
+  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" class="layout-main">
+    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :style="headerStyles">
       <q-toolbar>
         <q-btn
           flat
@@ -107,6 +107,7 @@
             </q-menu>
           </q-btn>
           <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+          <q-btn flat dense :icon="$q.dark.isActive ? 'brightness_high' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
           <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
@@ -128,7 +129,7 @@
       :breakpoint="599"
       class="non-selectable"
     >
-        <div class="q-pa-sm full-height" :class="$q.dark.isActive?'':'bg-grey-3'">
+        <div class="q-pa-sm fit" :class="$q.dark.isActive?'':'bg-grey-3'">
           <q-bar class="transparent">
             <q-space/>
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
@@ -152,15 +153,14 @@
                 <q-space/>
                 <q-btn
                   color="primary"
-                  label="Logout"
+                  label="退出登录"
                   push
                   size="sm"
-                  v-close-popup
                 />
               </q-toolbar>
             </div>
 
-            <q-separator inset class="q-mx-lg" />
+            <q-separator inset class="q-my-sm" />
 
             <div class="column">
               <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
@@ -176,29 +176,27 @@
                 <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <brand-color />
-              <q-toolbar class="no-padding">
-                  <div class="text-subtitle1 ">菜单栏</div>
-                  <q-space/>
-                  <q-btn label="默认" size="sm" color="primary" @click="restoreSetting('colorMenu')"/>
-                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-              </q-toolbar>
-              <div class="row q-gutter-lg">
-                <q-btn class="col-auto" size="sm" label="背景" color="primary">
-                  <q-popup-proxy>
-                    <q-color :value="colorMenuBg" @change="value => changeSetting({key:'colorMenuBg', value: value})"/>
-                  </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="文字" color="primary">
-                  <q-popup-proxy>
-                    <q-color :value="colorMenuText" @change="value => changeSetting({key:'colorMenuText', value: value})"/>
-                  </q-popup-proxy>
-                </q-btn>
-              </div>
 
               <q-toolbar class="no-padding">
                   <div class="text-subtitle1 ">头部</div>
                   <q-space/>
-                  <q-btn label="默认" size="sm" color="primary" @click="restoreSetting('colorHeader')"/>
+                  <q-btn icon="restore" flat round color="primary">
+                    <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
+                      恢复默认
+                    </q-tooltip>
+                    <q-popup-proxy>
+                      <q-card class="my-card">
+                        <q-card-section class="bg-primary text-white">
+                          <div class="text-h6">恢复默认？</div>
+                        </q-card-section>
+                        <q-separator />
+                        <q-card-actions align="right">
+                          <q-btn dense v-close-popup @click="restoreSetting('colorHeader')">好的</q-btn>
+                          <q-btn dense v-close-popup flat>取消</q-btn>
+                        </q-card-actions>
+                      </q-card>
+                    </q-popup-proxy>
+                  </q-btn>
                   <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <div class="row q-gutter-lg">
@@ -215,6 +213,41 @@
                 <q-btn class="col-auto" size="sm" label="文字" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorHeaderText" @change="value => changeSetting({key:'colorHeaderText', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+              </div>
+
+              <q-toolbar class="no-padding">
+                  <div class="text-subtitle1 ">菜单栏</div>
+                  <q-space/>
+                  <q-btn icon="restore" flat round color="primary">
+                    <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
+                      恢复默认
+                    </q-tooltip>
+                    <q-popup-proxy>
+                      <q-card class="my-card">
+                        <q-card-section class="bg-primary text-white">
+                          <div class="text-h6">恢复默认？</div>
+                        </q-card-section>
+                        <q-separator />
+                        <q-card-actions align="right">
+                          <q-btn dense v-close-popup @click="restoreSetting('colorMenu')">好的</q-btn>
+                          <q-btn dense v-close-popup flat>取消</q-btn>
+                        </q-card-actions>
+                      </q-card>
+                    </q-popup-proxy>
+                  </q-btn>
+                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              </q-toolbar>
+              <div class="row q-gutter-lg">
+                <q-btn class="col-auto" size="sm" label="背景" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorMenuBg" @change="value => changeSetting({key:'colorMenuBg', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="文字" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorMenuText" @change="value => changeSetting({key:'colorMenuText', value: value})"/>
                   </q-popup-proxy>
                 </q-btn>
               </div>
@@ -252,6 +285,7 @@
                   <q-toolbar-title
                     shrink
                     class="text-bold logo-text-primary"
+                    :style="drawerStylesFontColor"
                   >
                     {{title}}
                   </q-toolbar-title>
@@ -279,7 +313,7 @@
       </div>
     </q-drawer>
 
-    <q-page-container >
+    <q-page-container :style="stylesPageContainer">
       <q-page
         :style="(tagsView && tagsViewTop)?'padding-top: 36px;':((tagsView && !tagsViewTop)?'padding-bottom: 36px':'')"
       >
@@ -288,16 +322,16 @@
         </keep-alive>
 
         <!-- place QPageSticky at end of page -->
-        <q-page-sticky expand position="top" v-if="tagsView && tagsViewTop">
+        <q-page-sticky expand position="top" v-if="tagsView && tagsViewTop" style="z-index:5;">
           <page-tag-views :class="$q.dark.isActive ? 'pagetagviews-dark' : 'pagetagviews-normal'"/>
           <q-separator/>
         </q-page-sticky>
-        <q-page-sticky expand position="bottom" v-if="tagsView && !tagsViewTop">
+        <q-page-sticky expand position="bottom" v-if="tagsView && !tagsViewTop" style='z-index:5;'>
           <q-separator/>
           <page-tag-views switch-indicator :class="$q.dark.isActive ? 'pagetagviews-dark' : 'pagetagviews-normal'"/>
         </q-page-sticky>
         <!-- place QPageScroller at end of page -->
-        <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos">
+        <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos" style="z-index:$z-fab;">
           <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
         </q-page-scroller>
       </q-page>
@@ -351,6 +385,16 @@ export default {
     drawerStyles () {
       return {
         backgroundColor: this.colorMenuBg,
+        color: this.colorMenuText
+      }
+    },
+    stylesPageContainer () {
+      return {
+        // backgroundColor: this.$q.dark.isActive ? '#000' : 'rgb(238 240 248 / 70%)'
+      }
+    },
+    drawerStylesFontColor () {
+      return {
         color: this.colorMenuText
       }
     },
@@ -478,7 +522,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .header_normal {
   background: linear-gradient(145deg, rgb(32, 106, 80) 15%, rgb(21, 57, 102) 70%);
 }
@@ -490,9 +533,18 @@ export default {
     rgb(14, 43, 78) 70%);
 }
 
+.layout-main {
+  background-image: url("~assets/index.svg");
+  background-repeat: no-repeat;
+  background-position: center 0px;
+  background-size: 100%;
+  // background-color: red;
+}
+
 .coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {
-  background-image: url("~assets/sidebar-bg.jpg") !important;
+  background-image: url("/img/sidebar-bg.jpg") !important;
   background-size: cover !important;
+  background-repeat: no-repeat;
 }
 .drawer_normal {
   background-color: rgba(1, 1, 1, 0.75);
@@ -504,14 +556,14 @@ export default {
   color: yellow;
 }
 .pagetagviews-normal {
-  background-color: $grey-3;
+  background-color: #eeeeee;  // $grey-3
   color: var(--q-color-primary);
   ::v-deep .q-tab--active {
     background-color: white;
   }
 }
 .pagetagviews-dark {
-  background-color: $grey-10;
+  background-color: #212121; // $grey-10
   color: var(--q-color-primary);
   // color: $grey-2;
   ::v-deep .q-tab--active {
