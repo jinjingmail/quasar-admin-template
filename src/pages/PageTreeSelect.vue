@@ -34,13 +34,6 @@
             </div>
           </template>
 
-          <template v-slot:default-body="prop">
-            <div v-if="prop.node.label==='西南'">
-              <span class="text-weight-bold">This node is</span>: {{ prop.node.label }}
-            </div>
-            <span v-else class="text-weight-light text-black">This is some default content.</span>
-          </template>
-
           <template v-slot:header-root="prop">
             <div class="row items-center">
               <div>
@@ -54,14 +47,6 @@
               <div>
                 {{ node.label }}
                 <q-badge color="orange" class="q-ml-sm">Header Test!</q-badge>
-              </div>
-            </div>
-          </template>
-          <template v-slot:body-new="prop">
-            <div class="row items-center">
-              <div>
-                {{ prop.node.label }}
-                <q-badge color="orange" class="q-ml-sm">Body New</q-badge>
               </div>
             </div>
           </template>

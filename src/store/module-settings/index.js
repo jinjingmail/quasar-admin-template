@@ -107,6 +107,14 @@ const mutations = {
 }
 
 const actions = {
+  init ({ commit }) {
+    console.log('do setting init')
+    if (getters.darkMode(state)) {
+      commit('CHANGE_SETTING', { key: 'darkMode', value: true })
+    } else {
+      commit('CHANGE_SETTING', { key: 'darkMode', value: false })
+    }
+  },
   changeSetting ({ commit }, data) {
     commit('CHANGE_SETTING', data)
   },

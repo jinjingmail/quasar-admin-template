@@ -11,7 +11,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
           v-if="!$q.screen.gt.xs"
         />
-        <template v-if="!sidebarTop">
+        <template v-if="!sidebarTop || !$q.screen.gt.xs">
           <q-avatar class="q-logo">
             <img src="~assets/logo.svg" />
           </q-avatar>
@@ -106,7 +106,8 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat stretch dense :label="username" @click="$refs.drawerRight.toggle()">
+          <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+          <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
@@ -125,9 +126,9 @@
       :elevated="false"
       :width="260"
       :breakpoint="599"
+      class="non-selectable"
     >
-      <q-scroll-area class="fit" :class="$q.dark.isActive?'':'bg-grey-3'">
-        <div class="q-pa-sm">
+        <div class="q-pa-sm full-height" :class="$q.dark.isActive?'':'bg-grey-3'">
           <q-bar class="transparent">
             <q-space/>
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
@@ -222,7 +223,6 @@
 
           </div>
         </div>
-      </q-scroll-area>
     </q-drawer>
 
     <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
@@ -238,10 +238,10 @@
       :breakpoint="599"
       :bordered="false"
     >
-      <div class="sidebar-body" :style="drawerStyles" :class="$q.dark.isActive?'drawer_darkxx':'drawer_normalxx'">
+      <div class="sidebar-body" :style="drawerStyles">
         <q-scroll-area class="fit">
           <q-list>
-            <template v-if="sidebarTop">
+            <template v-if="sidebarTop || !$q.screen.gt.xs">
               <q-item>
                 <q-item-section avatar>
                   <q-avatar class="q-logo">
@@ -307,7 +307,6 @@
 </template>
 
 <script>
-import { colors } from 'quasar'
 import { mapGetters, mapActions } from 'vuex'
 import SideMenu from 'components/SideMenu.vue'
 import PageTagViews from 'components/PageTagViews.vue'
@@ -341,9 +340,6 @@ export default {
   created () {
   },
   mounted () {
-    if (this.colorPrimary) {
-      colors.setBrand('primary', this.colorPrimary)
-    }
     this.menuOpen(this.menuFind(this.$refs.menu, this.$route.path))
   },
   watch: {
@@ -371,6 +367,7 @@ export default {
       'fixedHeader',
       'uniqueOpened',
       'sidebarTop',
+      'darkMode',
       'colorPrimary',
       'colorHeaderBg1',
       'colorHeaderBg2',

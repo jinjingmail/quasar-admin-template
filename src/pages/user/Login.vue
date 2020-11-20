@@ -67,7 +67,8 @@
           </q-form>
 
           <q-toolbar class="no-padding">
-            <q-space />
+            <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+             <q-space />
             <brand-color />
           </q-toolbar>
         </q-card-section>
@@ -84,6 +85,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import BrandColor from 'components/BrandColor.vue'
 import random from '../../utils'
 
@@ -112,6 +114,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('settings', [
+      'changeSetting'
+    ]),
     onSubmit () {
       this.loading = true
       this.$store.dispatch('user/login', this.form).then(() => {
