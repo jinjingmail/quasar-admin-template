@@ -83,6 +83,7 @@
             :filter-methodxxx="myFilterMethod"
             style="min-width:350px; max-height:60vh;"
             class="q-pa-sm"
+            accordion
           >
             <template v-slot:default-header="prop">
               <div class="row items-center">
@@ -110,6 +111,18 @@
 
         </q-popup-proxy>
       </coadmin-input>
+
+      <coadmin-tree-input
+        ref="popupTree3"
+        node-key="id"
+        label-key="name"
+        :nodes="treeDatas"
+        tick-strategy="leaf-all-only-parent"
+        filter-key-like="nameLetter"
+        filter-key-equal="id"
+        tree-style="min-width:350px; max-height:60vh;"
+        tree-class="q-pa-sm"
+      />
     </q-card>
   </div>
 </template>

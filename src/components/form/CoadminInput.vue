@@ -25,6 +25,11 @@
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
       </template>
+      <!--
+      <template v-slot:append>
+        <slot name="append"/>
+      </template>
+      -->
     </q-input>
   </div>
   <q-input v-else
@@ -42,6 +47,11 @@
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
+    <!--
+    <template v-slot:append>
+      <slot name="append"/>
+    </template>
+    -->
   </q-input>
 </template>
 
@@ -86,7 +96,7 @@ export default {
         {
           // 这里确保组件配合 `v-model` 的工作
           input: function (value) {
-            if (!vm.disable && !vm.readonly) {
+            if (!vm.disable) {
               vm.$emit('input', value)
             }
           }

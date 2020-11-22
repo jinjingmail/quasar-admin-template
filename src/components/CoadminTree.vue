@@ -19,6 +19,7 @@
         leaf-all-only-parent : 子节点全部ticked，则只取父节点，去掉子节点
   增加事件：
     @ticked-label -> function(labels)：以label数组的形式输出ticked的数据
+    @selected-label -> function(label)：以label的形式输出selected的数据
 -->
 <template>
   <q-card flat>
@@ -49,7 +50,35 @@
         </div>
       </q-toolbar>
     </slot>
-    <q-tree
+    <q-tree v-if="selectable"
+        ref="tree"
+        v-bind="$attrs"
+        v-on="$listeners"
+        :nodes="nodes"
+        :node-key="nodeKey"
+        :label-key="labelKey"
+        :children-key="childrenKey"
+        :selected.sync="selectedSync"
+        :expanded.sync="expandedSync"
+        :ticked.sync="tickedSync"
+        :tick-strategy="tickStrategyComputed"
+        :no-nodes-label="noNodesLabel"
+        :no-results-label="noResultsLabel"
+        :no-connectors="noConnectors"
+        :filter="filterComputed"
+        :filter-method="filterMethodComputed"
+    >
+      <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
+        <slot name="default-header" v-bind="prop"/>
+      </template>
+      <template v-if="$scopedSlots['default-body']" v-slot:default-body="prop">
+        <slot name="default-body" v-bind="prop"/>
+      </template>
+      <template v-slot:[slotName]="prop" v-for="slotName in computedDynamicSlotNames">
+        <slot :name="slotName" v-bind="prop"/>
+      </template>
+    </q-tree>
+    <q-tree v-else
         ref="tree"
         v-bind="$attrs"
         v-on="$listeners"
@@ -62,6 +91,7 @@
         :tick-strategy="tickStrategyComputed"
         :no-nodes-label="noNodesLabel"
         :no-results-label="noResultsLabel"
+        :no-connectors="noConnectors"
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
     >
@@ -83,6 +113,8 @@ export default {
   name: 'CoadminTree',
   inheritAttrs: false,
   props: {
+    disable: Boolean,
+    readonly: Boolean,
     nodes: {
       type: Array,
       required: true
@@ -99,6 +131,12 @@ export default {
       type: String,
       default: 'children'
     },
+    noConnectors: {
+      type: Boolean,
+      default: true
+    },
+    selected: {}, // sync
+    selectable: Boolean,
     ticked: Array, // sync
     expanded: Array, // sync
     tickStrategy: {
@@ -126,7 +164,7 @@ export default {
     },
     filterPlaceholder: {
       type: String,
-      default: 'Filter...'
+      default: '过滤...'
     },
     noFilter: {
       type: Boolean,
@@ -155,6 +193,7 @@ export default {
   },
   data () {
     return {
+      selectedSync: null,
       tickedSync: [],
       expandedSync: [],
       filterInput: '',
@@ -165,20 +204,32 @@ export default {
   },
   mounted () {
     this.tickedSync = this.calcTicked()
-    this.expandedSync = this.calcExpanded()
-    console.log('$slots=', this.$scopedSlots)
+    if (this.tickedExpandAuto) {
+      this.expandedSync = this.calcExpanded()
+    }
+    this.selectedSync = this.selectable ? (this.selected ? this.selected : null) : null
+    console.log('tree.selectedSync=', this.selectedSync)
+    console.log('tree.selectable=', this.selectable)
   },
   created () {
   },
   watch: {
+    selected (newVal) {
+      this.selectedSync = newVal
+    },
+    selectedSync (val) {
+      console.log('watch.selectedSync:', val)
+      this.$emit('update:selected', val)
+      this.$emit('selected-label', this.keyToLabel(this.selectedSync))
+    },
     expandedSync (val) {
-      if (!this.expanded) {
+      if (this.disable || this.readonly || this.tickStrategy === 'none') {
         return
       }
       this.$emit('update:expanded', [...this.expandedSync])
     },
     tickedSync (val) {
-      if (!this.ticked) {
+      if (this.disable || this.readonly || this.tickStrategy === 'none') {
         return
       }
       if (this.tickStrategy === 'leaf-all-with-parent') {
@@ -268,10 +319,17 @@ export default {
       })
       return labels
     },
-    calcExpanded () {
-      if (!this.tickedExpandAuto) {
-        return []
+    keyToLabel (key) {
+      if (!this.labelKey) {
+        return ''
       }
+      const node = this.findTreeNode(key, this.nodes)
+      if (node && node[this.labelKey]) {
+        return node[this.labelKey]
+      }
+      return ''
+    },
+    calcExpanded () {
       // 指定了展开项，则不自动展开ticked项
       if (this.expanded && this.expanded.length > 0) {
         return [...this.expanded]

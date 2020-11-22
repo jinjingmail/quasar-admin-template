@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <coadmin-table
       row-key="id"
       dense
@@ -33,7 +33,7 @@
 
           <coadmin-input class="col-sm-12 col-md" v-model="queryModel" filled clearable placeholder="查询">
             <q-popup-proxy breakpoint="500">
-              <q-card style="width:550px; max-width:98vw;" class="coadmin-popup">
+              <q-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>
                   <coadmin-form label-width="medium" label-position="left">
                     <div class="row q-col-gutter-x-md q-col-gutter-y-md">
@@ -124,7 +124,9 @@
                           </div>
                         </template>
                       </coadmin-field>
-                      <coadmin-input class="col-12 col-sm-6" label-position="right" mask="####-##-##" placeholder="####-##-##" form-label="dateinput"
+                      <coadmin-input class="col-12 col-sm-6" label-position="right"
+                        mask="####-##-##"
+                        placeholder="####-##-##" form-label="dateinput"
                         v-model="query.date" >
                         <q-popup-proxy
                           ref="popupDateinput"
@@ -137,6 +139,61 @@
                           </q-icon>
                         </template>
                       </coadmin-input>
+                      <coadmin-date-input
+                        class="col-12"
+                        form-label="date2"
+                        placeholder="日期范围选"
+                        range-separator=" 至 "
+                        v-model="query.date2"
+                        clearable
+                        range
+                      >
+                        <template v-slot:append>
+                          <q-icon name="event" />
+                        </template>
+                      </coadmin-date-input>
+                      <coadmin-date-input
+                        class="col-12 col-sm-6"
+                        form-label="date3"
+                        placeholder="日期单选"
+                        v-model="query.date3"
+                      >
+                        <template v-slot:append>
+                          <q-icon name="event" />
+                        </template>
+                      </coadmin-date-input>
+
+                      <coadmin-tree-input
+                        class="col-12"
+                        form-label="Tree"
+                        placeholder="Tree多选"
+                        :nodes="treeDatas()"
+                        node-key="id"
+                        label-key="name"
+                        :ticked.sync="query.ticked"
+                        ticked-expand-auto
+                        tick-strategy="leaf-all-only-parent"
+                        filter-key-like="nameLetter"
+                        filter-key-equal="id"
+                        tree-style="min-width:300px; max-height:70vh;"
+                        tree-class="q-pa-sm"
+                      />
+
+                      <coadmin-tree-input
+                        class="col-12 col-sm-6"
+                        form-label="TreeSingle"
+                        placeholder="Tree单选"
+                        :nodes="treeDatas()"
+                        node-key="id"
+                        label-key="name"
+                        selectable
+                        :selected.sync="query.selected"
+                        filter-key-like="nameLetter"
+                        filter-key-equal="id"
+                        tree-style="min-width:300px; max-height:70vh;"
+                        tree-class="q-pa-sm"
+                      />
+
                     </div>
                   </coadmin-form>
 
@@ -145,7 +202,7 @@
                   <q-btn label="查询" type="submit" color="primary" icon="search">
                   </q-btn>
                   <q-btn label="清空" flat v-close-popup />
-                  <q-btn label="Cancel" flat v-close-popup />
+                  <q-btn label="关闭" flat v-close-popup />
                 </q-card-actions>
 
               </q-card>
@@ -236,11 +293,13 @@
 </template>
 
 <script>
+import depts from '../data/depts.js'
+
 export default {
   name: 'PageTable2',
   data () {
     return {
-      query: {},
+      query: { selected: 7 },
       shape: '',
       selectModel: '',
       selectModels: [],
@@ -500,7 +559,7 @@ export default {
       get () {
         // TODO select 组件的值隐射为 label
         const values = Object.values(this.query)
-        return values.filter(item => { return !!item }).join(', ')
+        return values.filter(item => { return typeof item === 'number' ? true : item && item.length && item.length > 0 }).join(', ')
       },
       set (val) {
         if (!val) {
@@ -512,6 +571,9 @@ export default {
     }
   },
   methods: {
+    treeDatas () {
+      return depts.content
+    },
     rowLooooooongButtonClick () {
       this.$q.notify({
         type: 'positive',

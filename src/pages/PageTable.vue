@@ -56,8 +56,8 @@
                   ]"
                   >
               </coadmin-input>
-              <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" filled :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-              <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" :outlined="false" :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly" lazy-rules></coadmin-input>
+              <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly" lazy-rules></coadmin-input>
               <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
                 <q-popup-proxy>
                   <q-card>
@@ -169,6 +169,45 @@
                   <q-radio v-model="shape" class="col-6 col-md-4" val="polygon" label="Polygon" />
                 </div>
               </coadmin-form-item>
+
+              <coadmin-date-input
+                class="col-12 col-sm-6"
+                form-label="DateRange"
+                v-model="dialogForm.date2"
+                clearable
+                range
+                :disable="dialogFormReadonly"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" />
+                </template>
+              </coadmin-date-input>
+              <coadmin-date-input
+                class="col-12 col-sm-6"
+                form-label="Date3"
+                v-model="dialogForm.date3"
+                :disable="dialogFormReadonly"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" />
+                </template>
+              </coadmin-date-input>
+
+              <coadmin-tree-input
+                class="col-12 col-sm-6"
+                form-label="TreeTicked"
+                :nodes="treeDatas()"
+                node-key="id"
+                label-key="name"
+                :ticked.sync="dialogForm.ticked"
+                ticked-expand-auto
+                tick-strategy="leaf-all-only-parent"
+                filter-key-like="nameLetter"
+                filter-key-equal="id"
+                tree-style="min-width:300px; max-height:70vh;"
+                tree-class="q-pa-sm"
+                :disable="dialogFormReadonly"
+              />
             </div>
           </coadmin-form>
 
@@ -311,6 +350,8 @@
 </template>
 
 <script>
+import depts from '../data/depts.js'
+
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
 
 export default {
@@ -595,7 +636,9 @@ export default {
     console.log('pageTable destroyed')
   },
   methods: {
-    // this.$refs.dialogForm.resetValidation()
+    treeDatas () {
+      return depts.content
+    },
     onDialogFormSubmit () {
       console.log('this.dialogForm:', this.dialogForm)
       if (this.dialogFormReadonly) {

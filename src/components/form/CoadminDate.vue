@@ -1,7 +1,13 @@
 <!--
   增加插槽：
   增加属性：
-    multiple-limit 多选最多可以选多少个
+    multiple-max 多选最多可以选多少个
+    range-separator
+  返回值：
+    range=false, multiple=false："2019/02/10"
+    range=false, multiple=true ：["2019/02/10", "2019/02/12", "2019/02/13",]
+    range=true, multiple=false： { "from": "2020/07/08", "to": "2020/07/15" }
+    range=true, multiple=true ：  [{"from": "2020/07/08", "to": "2020/07/15"}, {"from": "2020/07/08", "to": "2020/07/15"}]
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
@@ -20,6 +26,7 @@
       :readonly="readonly"
       :subtitle="computedSubtitle"
       :title="computedTitle"
+      :today-btn="todayBtn"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
@@ -39,9 +46,10 @@
     :multiple="multiple"
     :range="range"
     :disable="disable"
-    :readonly="disable"
+    :readonly="readonly"
     :subtitle="computedSubtitle"
     :title="computedTitle"
+    :today-btn="todayBtn"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -69,10 +77,17 @@ export default {
     locale: Object,
     subtitle: String,
     title: String,
+    todayBtn: {
+      type: Boolean,
+      default: true
+    },
     multiple: Boolean,
-    multipleLimit: Number,
+    multipleMax: Number,
     range: Boolean,
-    autoClose: Boolean
+    rangeSeparator: {
+      type: String,
+      default: ' ~ '
+    }
   },
   data () {
     return {
@@ -104,7 +119,7 @@ export default {
         if (this.multiple) {
           return ''
         } else {
-          return v.from + ' ~ ' + v.to
+          return v.from + this.rangeSeparator + v.to
         }
       } else if (this.multiple) {
         return ''
@@ -143,9 +158,12 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           input: function (value, reason, details) {
-            if (!vm.disable && !vm.readonly) {
-              vm.$emit('input', value, reason, details)
-              if (!vm.multiple && vm.autoClose) {
+            if (!vm.disable) {
+              // 提示：Quasar在range状态下，如果只开始和结束是同一天，则Quasar返回的只有这一天的日期，这里修正一些
+              if (vm.range === true && typeof value === 'string') {
+                vm.$emit('input', { from: value, to: value }, reason, details)
+              } else {
+                vm.$emit('input', value, reason, details)
               }
             }
           }

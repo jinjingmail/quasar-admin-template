@@ -20,6 +20,8 @@ import CoadminOptionGroup from 'components/form/CoadminOptionGroup.vue'
 import CoadminSelect from 'components/form/CoadminSelect.vue'
 import CoadminFormItem from 'components/form/CoadminFormItem.vue'
 import CoadminForm from 'components/form/CoadminForm.vue'
+import CoadminDateInput from 'components/form/CoadminDateInput.vue'
+import CoadminTreeInput from 'components/form/CoadminTreeInput.vue'
 
 Vue.component(CoadminTable.name, CoadminTable)
 Vue.component(CoadminDialog.name, CoadminDialog)
@@ -32,6 +34,8 @@ Vue.component(CoadminOptionGroup.name, CoadminOptionGroup)
 Vue.component(CoadminSelect.name, CoadminSelect)
 Vue.component(CoadminFormItem.name, CoadminFormItem)
 Vue.component(CoadminForm.name, CoadminForm)
+Vue.component(CoadminDateInput.name, CoadminDateInput)
+Vue.component(CoadminTreeInput.name, CoadminTreeInput)
 
 export default {
   name: 'App'

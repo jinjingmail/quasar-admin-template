@@ -317,7 +317,7 @@
         :style="(tagsView && tagsViewTop)?'padding-top: 36px;':((tagsView && !tagsViewTop)?'padding-bottom: 36px':'')"
       >
         <keep-alive :include="cachedViews">
-          <router-view />
+          <router-view class="coadmin-page" />
         </keep-alive>
 
         <!-- place QPageSticky at end of page -->

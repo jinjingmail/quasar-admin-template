@@ -90,7 +90,7 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           input: function (value) {
-            if (!vm.disable && !vm.readonly) {
+            if (!vm.disable) {
               vm.$emit('input', value)
             }
           }
