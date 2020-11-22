@@ -61,9 +61,21 @@ export default {
       default: true
     }
   },
+  created () {
+    console.log('coadmininput created:', this.computedSlots)
+  },
   mounted () {
+    console.log('coadmininput mounted:', this.computedSlots)
   },
   computed: {
+    computedSlots () {
+      const keys = []
+      for (const key in this.$slots) {
+        keys.push(key)
+      }
+      console.log('keys=', keys)
+      return keys
+    },
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象

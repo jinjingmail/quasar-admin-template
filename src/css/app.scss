@@ -4,6 +4,7 @@
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
+.coadmin-popup,
 .coadmin-dialog {
   // 按钮高度缩小
   .q-field__control, .q-field__marginal {
@@ -83,6 +84,7 @@
 }
 
 .coadmin-table {
+  /*
   // 表格slot：top 里面
   .q-table__top {
     padding: 4px 3px 8px 0px;
@@ -95,13 +97,30 @@
     .q-space {
       padding-left: 0;
     }
-  }
+  } */
 }
 
 .coadmin-dialog {
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
   .q-dialog__inner--minimized {
-    margin: 10px;
+    // margin: 10px;
+    padding: 10px 24px;
+  }
+  /* 改成16px以便跟 q-card__section 有相同的边距好对齐 */
+  .q-card__actions {
+    padding: 16px;
+  }
+}
+
+.coadmin-popup {
+  background: white;
+  &.q-dark {
+    background: $grey-9;
+  }
+  /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
+  .q-dialog__inner--minimized {
+    // margin: 10px;
+    padding: 10px 24px;
   }
   /* 改成16px以便跟 q-card__section 有相同的边距好对齐 */
   .q-card__actions {
@@ -224,17 +243,62 @@
   }
 }
 
+.coadmin-table-sticky-first-and-last-column {
+  &.q-dark td:first-child,
+  &.q-dark thead tr:first-child th:first-child {
+    /* bg color is important for th; just specify one */
+    background-color: $dark;
+  }
+  td:first-child,
+  thead tr:first-child th:first-child {
+    /* bg color is important for th; just specify one */
+    background-color: #fff;
+  }
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+
+
+  &.q-dark td:last-child,
+  &.q-dark thead tr:last-child th:last-child {
+    /* bg color is important for th; just specify one */
+    background-color: $dark;
+  }
+  td:last-child,
+  thead tr:last-child th:last-child {
+    /* bg color is important for th; just specify one */
+    background-color: #fff;
+  }
+  th:last-child,
+  td:last-child {
+    padding-right: 6px !important;
+    position: sticky;
+    right: 0;
+    z-index: 1;
+  }
+  td:last-child {
+    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
+  }
+}
+
 .coadmin-table-sticky-header-and-first-column {
+  &.q-dark td:first-child,
+  &.q-dark tr th {
+    /* bg color is important for td; just specify one */
+    background-color: $dark;
+  }
+  tr th,
   td:first-child {
     /* bg color is important for td; just specify one */
-    background-color: inherit !important;
+    background-color: #fff;
   }
   tr th {
     position: sticky;
     /* higher than z-index for td below */
     z-index: 2;
-    /* bg color is important; just specify one */
-    background: #fff;
   }
 
   /* this will be the loading indicator */
@@ -308,5 +372,82 @@
   td:last-child, th:last-child {
     position: sticky;
     right: 0;
+  }
+}
+.coadmin-table-sticky-header-and-first-last-column {
+  td:last-child,
+  th:last-child {
+    padding-right: 6px !important;
+  }
+  td:last-child {
+    box-shadow:  inset 1px 0px 0px 0px #bcbcbc;
+  }
+
+  &.q-dark td:first-child,
+  &.q-dark tr th {
+    /* bg color is important for td; just specify one */
+    background-color: $dark;
+  }
+  tr th,
+  td:first-child {
+    /* bg color is important for td; just specify one */
+    background-color: #fff;
+  }
+
+  &.q-dark td:last-child,
+  &.q-dark tr th {
+    /* bg color is important for td; just specify one */
+    background-color: $dark;
+  }
+  tr th,
+  td:last-child {
+    /* bg color is important for td; just specify one */
+    background-color: #fff;
+  }
+  tr th {
+    position: sticky;
+    /* higher than z-index for td below */
+    z-index: 2;
+    /* bg color is important; just specify one */
+    // background: inherit;
+  }
+
+  /* this will be the loading indicator */
+  thead tr:last-child th {
+    /* height of all previous header rows */
+    top: 48px;
+    /* highest z-index */
+    z-index: 3;
+  }
+  thead tr:first-child th {
+    top: 0;
+    z-index: 1;
+  }
+  tr:last-child th:last-child {
+    /* highest z-index */
+    z-index: 3;
+  }
+  td:last-child {
+    z-index: 1;
+  }
+  td:last-child, th:last-child {
+    position: sticky;
+    right: 0;
+  }
+
+  thead tr:first-child th {
+    top: 0;
+    z-index: 1;
+  }
+  tr:first-child th:first-child {
+    /* highest z-index */
+    z-index: 3;
+  }
+  td:first-child {
+    z-index: 1;
+  }
+  td:first-child, th:first-child {
+    position: sticky;
+    left: 0;
   }
 }

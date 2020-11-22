@@ -25,7 +25,7 @@
       icon="border_color"
       maxable
       persistent
-      content-style="width:800px; max-width:90vw;"
+      content-style="width:800px; max-width:98vw;"
     >
       <q-card >
         <q-card-section>
@@ -184,28 +184,22 @@
       </q-card>
     </coadmin-dialog>
 
-    <q-table
+    <coadmin-table
       row-key="id"
       dense
-      class="q-pa-sm coadmin-table2 coadmin-table-sticky-header"
-      :style="{height:($q.screen.gt.xs?(tableFullscreen?'100vh':'calc(100vh - 50px - 40px)'):'auto')}"
-      :virtual-scroll="$q.screen.gt.xs"
-      :rows-per-page-options="[0]"
-      separator="horizontal"
-      :wrap-cells="false"
+      flat
+      class="q-pa-sm "
+      separator="cell"
+      stickyHeader
       :data="data"
       :columns="columns"
       :visible-columns="visibleColumns"
-      :hide-pagination="false"
-      no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
+      :fullscreen.sync="tableFullscreen"
       :loading="loading"
     >
       <template v-slot:top="props">
-        <div class="q-gutter-xs q-pl-sm">
-        </div>
-
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
@@ -293,15 +287,6 @@
         </q-td>
       </template>
 
-      <template v-slot:no-data="{ icon, message, filter }">
-        <div class="full-width row flex-center text-accent q-gutter-sm">
-          <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
-          <span style="font-size:2em">
-            {{ message }}
-          </span>
-        </div>
-      </template>
-
       <template v-slot:pagination>
         <q-pagination
           v-model="currentPage"
@@ -319,48 +304,17 @@
           emit-value
           map-options
         />
-
       </template>
 
-      <template v-slot:loading>
-        <q-inner-loading showing color="primary" style="z-index:5">
-          <q-spinner-gears size="50px" color="primary" />
-        </q-inner-loading>
-      </template>
-    </q-table>
-
-    <!-- place QPageScroller at end of page
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">
-      <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
-    </q-page-scroller>
-    -->
+    </coadmin-table>
   </div>
 </template>
 
 <script>
-import CoadminField from 'components/form/CoadminField.vue'
-import CoadminInput from 'components/form/CoadminInput.vue'
-import CoadminDate from 'components/form/CoadminDate.vue'
-import CoadminOptionGroup from 'components/form/CoadminOptionGroup.vue'
-import CoadminSelect from 'components/form/CoadminSelect.vue'
-import CoadminFormItem from 'components/form/CoadminFormItem.vue'
-import CoadminForm from 'components/form/CoadminForm.vue'
-import CoadminDialog from 'components/CoadminDialog.vue'
-
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
 
 export default {
   name: 'PageTable',
-  components: {
-    CoadminField,
-    CoadminInput,
-    CoadminDate,
-    CoadminOptionGroup,
-    CoadminSelect,
-    CoadminDialog,
-    CoadminForm,
-    CoadminFormItem
-  },
   data () {
     return {
       text: '',
@@ -412,7 +366,7 @@ export default {
       fabPos: [48, 68],
       draggingFab: false,
       selected: [],
-      tableFullscreen: false,
+      tableFullscreen: null,
       visibleColumns: ['id', 'name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action'],
       columns: [
         { name: 'id', label: 'ID', field: 'id' },
@@ -714,9 +668,10 @@ export default {
       ]
     },
     toggleTableFullscreen (props) {
-      this.tableFullscreen = !props.inFullscreen
       props.toggleFullscreen()
-      console.log(this.tableFullscreen)
+      this.$nextTick(() => {
+        console.log('tableFullscreen=', this.tableFullscreen)
+      })
     }
   }
 }

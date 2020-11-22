@@ -143,6 +143,11 @@ const routes = [
         component: () => import('pages/PageTable.vue'),
         meta: { title: 'PageTable', icon: 'add', icon_color: 'yellow' }
       }, {
+        path: 'pageTable2',
+        name: 'PageTable2',
+        component: () => import('pages/PageTable2.vue'),
+        meta: { title: 'PageTable2', icon: 'add', icon_color: 'green' }
+      }, {
         path: 'pageTableNoData',
         name: 'pageTableNoData',
         component: () => import('pages/PageTableNoData.vue'),

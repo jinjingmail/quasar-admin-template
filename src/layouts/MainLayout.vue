@@ -129,14 +129,13 @@
       :breakpoint="599"
       class="non-selectable"
     >
-        <div class="q-pa-sm fit" :class="$q.dark.isActive?'':'bg-grey-3'">
+        <div class="q-pa-sm fit">
           <q-bar class="transparent">
             <q-space/>
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
           </q-bar>
 
           <div class="no-wrap">
-
             <div class="column items-center">
               <div class="text-h6 q-mb-xs">{{username}}</div>
               <q-avatar size="80px">
@@ -364,7 +363,7 @@ export default {
       leftDrawerOpen: false,
       mdiCallMade: mdiCallMade,
 
-      fabPos: [48, 25],
+      fabPos: [48, 58],
       draggingFab: false,
 
       scrollTarget: undefined,

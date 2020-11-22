@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-sm">
-    <q-table
+    <coadmin-table
       title="Invoices"
       flat
       :data="data"
@@ -77,7 +77,7 @@
           </q-chip>
         </q-td>
       </template>
-    </q-table>
+    </coadmin-table>
     <q-dialog v-model="invoice_dialog">
       <q-card style="width: 600px; max-width: 60vw;">
         <q-card-section>

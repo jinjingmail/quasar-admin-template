@@ -50,18 +50,14 @@
       </q-card>
     </q-dialog>
 
-    <q-table
-      class="coadmin-table2 q-pa-sm"
+    <coadmin-table
+      class="q-pa-sm"
       dense
       :wrap-cells="false"
       :data="data"
       :columns="columns"
       row-key="id"
       :visible-columns="visibleColumns"
-      separator="horizontal"
-      :hide-pagination="false"
-      :rows-per-page-options="[0]"
-      no-data-label="无数据"
       selection="multiple"
       :selected.sync="selected"
       :loading="loading"
@@ -153,8 +149,8 @@
       </template>
 
       <template v-slot:no-data="{ icon, message, filter }">
-        <div class="full-width row flex-center text-gray q-gutter-sm">
-          <q-icon size="1.4em" :name="filter ? 'filter_b_and_w' : icon" />
+        <div class="">
+          <q-icon :name="filter ? 'filter_b_and_w' : icon" />
           <span style="font-size:1.4em">
             {{ message }}
           </span>
@@ -183,7 +179,7 @@
       <template v-slot:loading>
         <q-inner-loading showing color="primary" />
       </template>
-    </q-table>
+    </coadmin-table>
 
     <!-- place QPageScroller at end of page -->
     <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">

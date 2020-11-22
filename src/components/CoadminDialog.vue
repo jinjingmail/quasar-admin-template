@@ -43,7 +43,7 @@
         </q-toolbar>
       </q-card-section>
 
-        <slot />
+      <slot />
 
     </q-card>
   </q-dialog>
@@ -122,7 +122,6 @@ export default {
     }
   },
   created () {
-    console.log('coadmin.table.created')
     this.uuid = 'id' + random()
   },
   methods: {
