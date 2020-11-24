@@ -2,17 +2,8 @@
   <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" class="layout-main">
     <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :style="headerStyles">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          v-if="!$q.screen.gt.xs"
-        />
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
-          <q-avatar class="q-logo">
+          <q-avatar class="q-logo" @click="leftDrawerOpen = !leftDrawerOpen">
             <img src="~assets/logo.svg" />
           </q-avatar>
           <q-toolbar-title
@@ -27,6 +18,16 @@
             >v1.14.1</span>
           </q-toolbar-title>
         </template>
+
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          v-if="sidebarTop && $q.screen.gt.xs"
+        />
 
         <q-breadcrumbs active-color="white" v-if="!$q.screen.xs">
           <q-breadcrumbs-el label="Home" />

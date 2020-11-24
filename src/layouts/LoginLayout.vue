@@ -22,13 +22,13 @@ export default {
 
 <style lang="sass" scoped>
 .layout-user-container
-  background-image: url("~assets/index.svg");
-  background-repeat: no-repeat;
-  background-position: center 0px;
-  background-size: 100%;
+  background-image: url("~assets/index.svg")
+  background-repeat: no-repeat
+  background-position: center 0px
+  background-size: 100%
 .footer
-  font-size: 10px;
-  letter-spacing: .3px;
-  padding: 15px 25px;
-  text-transform: uppercase;
+  font-size: 10px
+  letter-spacing: .3px
+  padding: 15px 25px
+  text-transform: uppercase
 </style>
