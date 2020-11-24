@@ -101,7 +101,6 @@ export default {
         // 当前在ios手机测试，虚拟滚动有bug
         vs = false
       }
-      console.log('computedVirtualScroll=', vs)
       return vs
     },
     computedClass () {

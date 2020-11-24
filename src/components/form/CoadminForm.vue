@@ -32,6 +32,8 @@ export default {
   },
   created () {
   },
+  mounted () {
+  },
   methods: {
     validate (shouldFocus) {
       return this.$refs.form.validate(shouldFocus)

@@ -53,7 +53,7 @@
     <q-tree v-if="selectable"
         ref="tree"
         v-bind="$attrs"
-        v-on="$listeners"
+        v-on="listeners"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
@@ -78,10 +78,11 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
+    <!-- 注意：这里不需要定义 expanded.sync -->
     <q-tree v-else
         ref="tree"
         v-bind="$attrs"
-        v-on="$listeners"
+        v-on="listeners"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
@@ -208,8 +209,6 @@ export default {
       this.expandedSync = this.calcExpanded()
     }
     this.selectedSync = this.selectable ? (this.selected ? this.selected : null) : null
-    console.log('tree.selectedSync=', this.selectedSync)
-    console.log('tree.selectable=', this.selectable)
   },
   created () {
   },
@@ -218,16 +217,16 @@ export default {
       this.selectedSync = newVal
     },
     selectedSync (val) {
-      console.log('watch.selectedSync:', val)
+      const label = this.keyToLabel(val)
+      this.$emit('selected-label', label)
       this.$emit('update:selected', val)
-      this.$emit('selected-label', this.keyToLabel(this.selectedSync))
     },
-    expandedSync (val) {
+    /* expandedSync (val) {
       if (this.disable || this.readonly || this.tickStrategy === 'none') {
         return
       }
       this.$emit('update:expanded', [...this.expandedSync])
-    },
+    }, */
     tickedSync (val) {
       if (this.disable || this.readonly || this.tickStrategy === 'none') {
         return
@@ -258,7 +257,6 @@ export default {
       for (const key in this.$scopedSlots) {
         if (key.includes('header-') || key.includes('body-')) names.add(key)
       }
-      console.log('names=', names)
       return names
     },
     tickStrategyComputed () {
@@ -281,6 +279,22 @@ export default {
       } else {
         return this.filterMethodDefault
       }
+    },
+    listeners: function () {
+      const vm = this
+      // `Object.assign` 将所有的对象合并为一个新对象
+      return Object.assign({},
+        // 从父级添加所有的监听器
+        vm.$listeners,
+        // 添加自定义监听器，或覆写一些监听器的行为
+        {
+          // 这里确保组件配合 `.sync` 的工作
+          'update:selected': function (value) {
+          },
+          'update:ticked': function (value) {
+          }
+        }
+      )
     }
   },
   methods: {
@@ -307,8 +321,11 @@ export default {
       return (node[this.labelKey] && node[this.labelKey].toLowerCase().indexOf(filt) > -1) || second || third
     },
     keysToLabels (keys) {
+      if (!keys || keys.length === 0) {
+        return null
+      }
       if (!this.labelKey) {
-        return []
+        return null
       }
       const labels = []
       keys.forEach(key => {
@@ -320,6 +337,9 @@ export default {
       return labels
     },
     keyToLabel (key) {
+      if (!key) {
+        return ''
+      }
       if (!this.labelKey) {
         return ''
       }

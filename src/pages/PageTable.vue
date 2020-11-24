@@ -24,8 +24,8 @@
       title="对话框"
       icon="border_color"
       maxable
-      persistent
-      content-style="width:800px; max-width:98vw;"
+      no-backdrop-dismiss
+      content-style="width:800px; max-width:95vw;"
     >
       <q-card >
         <q-card-section>
@@ -35,7 +35,7 @@
               </coadmin-input>
               <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
                 @blur="$q.notify({message:'名称 blur notify'})"/>
-              <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" :dense="false" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
+              <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
                 <template v-slot:append>
                   <q-icon v-if="!dialogForm.calories" name="search" />
                   <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />

@@ -148,15 +148,6 @@
         </q-td>
       </template>
 
-      <template v-slot:no-data="{ icon, message, filter }">
-        <div class="">
-          <q-icon :name="filter ? 'filter_b_and_w' : icon" />
-          <span style="font-size:1.4em">
-            {{ message }}
-          </span>
-        </div>
-      </template>
-
       <template v-slot:pagination>
         <q-pagination
           v-model="currentPage"
@@ -175,16 +166,7 @@
         />
 
       </template>
-
-      <template v-slot:loading>
-        <q-inner-loading showing color="primary" />
-      </template>
     </coadmin-table>
-
-    <!-- place QPageScroller at end of page -->
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">
-      <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
-    </q-page-scroller>
 
   </div>
 </template>
@@ -203,8 +185,6 @@ export default {
       loading: false,
       dialogData: false,
       dialogFullscreen: false,
-      fabPos: [8, 68],
-      draggingFab: false,
       selected: [],
       visibleColumns: ['calories', 'name', 'protein', 'sodium', 'iron', 'action'],
       columns: [
@@ -241,14 +221,6 @@ export default {
       this.dialogData = true
     },
     rowLooooooongButtonClick () {
-    },
-    moveFab (ev) {
-      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
-
-      this.fabPos = [
-        this.fabPos[0] - ev.delta.x,
-        this.fabPos[1] - ev.delta.y
-      ]
     }
   }
 }

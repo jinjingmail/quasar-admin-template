@@ -35,11 +35,44 @@
             <q-popup-proxy breakpoint="500">
               <q-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>
-                  <coadmin-form label-width="medium" label-position="left">
-                    <div class="row q-col-gutter-x-md q-col-gutter-y-md">
-                      <coadmin-input class="col-12" form-label="名称很长怎么办" v-model="query.name" clearable
+                  <coadmin-form ref="searchform" label-width="medium" label-position="top">
+                    <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+                      <coadmin-tree-input
+                        class="col-12"
+                        form-label="Tree"
+                        placeholder="Tree多选"
+                        :nodes="treeDatas()"
+                        node-key="id"
+                        label-key="name"
+                        :ticked.sync="query.ticked"
+                        @ticked-label="labels => queryTickedLabels = labels"
+                        ticked-expand-auto
+                        tick-strategy="leaf-all-only-parent"
+                        filter-key-like="nameLetter"
+                        filter-key-equal="id"
+                        tree-style="min-width:300px; max-height:70vh;"
+                        tree-class="q-pa-sm"
+                      />
+
+                      <coadmin-tree-input
+                        class="col-12 col-sm-6"
+                        form-label="TreeSingle"
+                        placeholder="Tree单选"
+                        :nodes="treeDatas()"
+                        node-key="id"
+                        label-key="name"
+                        selectable
+                        :selected.sync="query.selected"
+                        @selected-label="label => querySelectedLabel = label"
+                        filter-key-like="nameLetter"
+                        filter-key-equal="id"
+                        tree-style="min-width:300px; max-height:70vh;"
+                        tree-class="q-pa-sm"
+                      />
+
+                      <coadmin-input ref="input1" class="col-12" form-label="名称很长怎么办" v-model="query.name" clearable
                         @blur="$q.notify({message:'名称 blur notify'})"/>
-                      <coadmin-input outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
+                      <coadmin-input ref="input2" outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
                         <template v-slot:append>
                           <q-icon v-if="!query.calories" name="search" />
                           <q-icon v-else name="clear" class="cursor-pointer" @click="query.calories = ''" />
@@ -57,7 +90,7 @@
                           ]"
                           >
                       </coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
+                      <coadmin-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
                       <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
                       <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
                         <q-popup-proxy breakpoint="0">
@@ -144,7 +177,7 @@
                         form-label="date2"
                         placeholder="日期范围选"
                         range-separator=" 至 "
-                        v-model="query.date2"
+                        v-model="query.dateRange"
                         clearable
                         range
                       >
@@ -156,43 +189,12 @@
                         class="col-12 col-sm-6"
                         form-label="date3"
                         placeholder="日期单选"
-                        v-model="query.date3"
+                        v-model="query.dateSingle"
                       >
                         <template v-slot:append>
                           <q-icon name="event" />
                         </template>
                       </coadmin-date-input>
-
-                      <coadmin-tree-input
-                        class="col-12"
-                        form-label="Tree"
-                        placeholder="Tree多选"
-                        :nodes="treeDatas()"
-                        node-key="id"
-                        label-key="name"
-                        :ticked.sync="query.ticked"
-                        ticked-expand-auto
-                        tick-strategy="leaf-all-only-parent"
-                        filter-key-like="nameLetter"
-                        filter-key-equal="id"
-                        tree-style="min-width:300px; max-height:70vh;"
-                        tree-class="q-pa-sm"
-                      />
-
-                      <coadmin-tree-input
-                        class="col-12 col-sm-6"
-                        form-label="TreeSingle"
-                        placeholder="Tree单选"
-                        :nodes="treeDatas()"
-                        node-key="id"
-                        label-key="name"
-                        selectable
-                        :selected.sync="query.selected"
-                        filter-key-like="nameLetter"
-                        filter-key-equal="id"
-                        tree-style="min-width:300px; max-height:70vh;"
-                        tree-class="q-pa-sm"
-                      />
 
                     </div>
                   </coadmin-form>
@@ -299,7 +301,9 @@ export default {
   name: 'PageTable2',
   data () {
     return {
-      query: { selected: 7 },
+      query: { selected: 7, ticked: [7, 49] },
+      querySelectedLabel: '',
+      queryTickedLabels: null,
       shape: '',
       selectModel: '',
       selectModels: [],
@@ -554,12 +558,28 @@ export default {
   },
   watch: {
   },
+  mounted () {
+  },
   computed: {
     queryModel: {
       get () {
-        // TODO select 组件的值隐射为 label
-        const values = Object.values(this.query)
-        return values.filter(item => { return typeof item === 'number' ? true : item && item.length && item.length > 0 }).join(', ')
+        // const values = Object.values(this.query)
+        // return values.filter(item => { return typeof item === 'number' ? true : item && item.length && item.length > 0 }).join(', ')
+        const labels = []
+        for (const key of Object.keys(this.query)) {
+          if (key === 'selected') {
+            if (this.querySelectedLabel) labels.push(this.querySelectedLabel)
+          } else if (key === 'ticked') {
+            if (this.queryTickedLabels) labels.push('[' + this.queryTickedLabels.join(',') + ']')
+          } else if (key === 'dateRange') {
+            const range = this.query[key]
+            if (range) labels.push('[' + range.join(',') + ']')
+          } else {
+            const v = this.query[key]
+            if (v) labels.push(v)
+          }
+        }
+        return labels.join(', ')
       },
       set (val) {
         if (!val) {

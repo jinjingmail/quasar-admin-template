@@ -72,10 +72,8 @@ export default {
     }
   },
   created () {
-    console.log('coadmininput created:', this.computedSlots)
   },
   mounted () {
-    console.log('coadmininput mounted:', this.computedSlots)
   },
   computed: {
     computedSlots () {
@@ -83,7 +81,6 @@ export default {
       for (const key in this.$slots) {
         keys.push(key)
       }
-      console.log('keys=', keys)
       return keys
     },
     listeners: function () {
