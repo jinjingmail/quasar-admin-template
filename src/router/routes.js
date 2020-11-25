@@ -143,10 +143,15 @@ const routes = [
         component: () => import('pages/PageTable.vue'),
         meta: { title: 'PageTable', icon: 'add', icon_color: 'yellow' }
       }, {
-        path: 'pageTable2',
-        name: 'PageTable2',
-        component: () => import('pages/PageTable2.vue'),
-        meta: { title: 'PageTable2', icon: 'add', icon_color: 'green' }
+        path: 'pageSearchPopup',
+        name: 'PageSearchPopup',
+        component: () => import('pages/PageSearchPopup.vue'),
+        meta: { title: 'PageSearchPopup', icon: 'add' }
+      }, {
+        path: 'pageSearchDialog',
+        name: 'PageSearchDialog',
+        component: () => import('pages/PageSearchDialog.vue'),
+        meta: { title: 'PageSearchDialog', icon: 'add' }
       }, {
         path: 'pageTableNoData',
         name: 'pageTableNoData',
