@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.9.10",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
     "quasar": "^1.14.5",
     "vue-nav": "^1.1.5"
   },
