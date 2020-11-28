@@ -14,11 +14,11 @@
             node-key="id"
             label-key="label"
             :nodes="treeDatas"
-            no-connectors
             :filter="treeDatasFilter"
             :filter-method="treeDatasFilterMethod"
             :selected.sync="treeNodeSelected"
             selected-color="purple"
+            selectable
           >
             <template v-slot:toolbar>
               <q-toolbar flat>
@@ -63,11 +63,6 @@
       </template>
     </q-splitter>
 
-    <!-- place QPageScroller at end of page -->
-    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="fabPos">
-      <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
-    </q-page-scroller>
-
   </div>
 </template>
 
@@ -98,8 +93,6 @@ export default {
       loading: false,
       dialogData: false,
       dialogFullscreen: false,
-      fabPos: [8, 68],
-      draggingFab: false,
       selected: [],
       visibleColumns: ['id', 'name', 'sort', 'enabled'],
       columns: [

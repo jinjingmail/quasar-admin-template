@@ -1,6 +1,6 @@
 <template>
   <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" class="layout-main">
-    <q-header :reveal="!fixedHeader" :elevated="false" class="coadmin-header" :style="headerStyles">
+    <q-header :reveal="!fixedHeader" :elevated="false" bordered class="coadmin-header" :style="headerStyles">
       <q-toolbar>
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
           <q-avatar class="q-logo" @click="leftDrawerOpen = !leftDrawerOpen">
@@ -8,7 +8,7 @@
           </q-avatar>
           <q-toolbar-title
             shrink
-            class="text-bold logo-text-primary"
+            class="text-bold"
             v-if="$q.screen.gt.xs"
           >
             {{title}}
@@ -29,7 +29,7 @@
           v-if="sidebarTop && $q.screen.gt.xs"
         />
 
-        <q-breadcrumbs active-color="white" v-if="!$q.screen.xs">
+        <q-breadcrumbs v-if="!$q.screen.xs">
           <q-breadcrumbs-el label="Home" />
           <q-breadcrumbs-el label="Components" />
           <q-breadcrumbs-el label="Breadcrumbs" />
@@ -108,7 +108,7 @@
             </q-menu>
           </q-btn>
           <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-          <q-btn flat dense :icon="$q.dark.isActive ? 'brightness_high' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
           <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()">
             <q-avatar size="md">
               <img src="~assets/boy-avatar.jpg">
@@ -165,11 +165,12 @@
             <div class="column">
               <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               <div class="text-subtitle1 ">Settings</div>
+              <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <q-toggle :value="tagsView" :val="true" label="显示Tab栏" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="顶部显示Tab栏" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
-              <q-toggle :value="fixedHeader" :val="true" label="锁定头部" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
-              <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
-              <q-toggle :value="sidebarTop" :val="true" label="菜单栏到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+              <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
+              <q-toggle :value="sidebarTop" :val="true" label="左侧到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+              <coadmin-input label="左侧宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
               <q-toolbar class="no-padding">
                 <div class="text-subtitle1 ">颜色</div>
                 <q-space/>
@@ -178,7 +179,7 @@
               <brand-color />
 
               <q-toolbar class="no-padding">
-                  <div class="text-subtitle1 ">头部</div>
+                  <div class="text-subtitle1 ">顶部</div>
                   <q-space/>
                   <q-btn icon="restore" flat round color="primary">
                     <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
@@ -218,7 +219,7 @@
               </div>
 
               <q-toolbar class="no-padding">
-                  <div class="text-subtitle1 ">菜单栏</div>
+                  <div class="text-subtitle1 ">左侧</div>
                   <q-space/>
                   <q-btn icon="restore" flat round color="primary">
                     <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
@@ -267,7 +268,7 @@
       @mouseover="leftDrawerMouseOver"
       @mouseout="leftDrawerMouseOut"
       :mini-to-overlay="miniToOverlay"
-      :width="260"
+      :width="parseInt(sidebarWidth)"
       :breakpoint="599"
       :bordered="false"
     >
@@ -284,7 +285,7 @@
                 <q-item-section>
                   <q-toolbar-title
                     shrink
-                    class="text-bold logo-text-primary"
+                    class="text-bold"
                     :style="drawerStylesFontColor"
                   >
                     {{title}}
@@ -411,6 +412,7 @@ export default {
       'fixedHeader',
       'uniqueOpened',
       'sidebarTop',
+      'sidebarWidth',
       'darkMode',
       'colorPrimary',
       'colorHeaderBg1',

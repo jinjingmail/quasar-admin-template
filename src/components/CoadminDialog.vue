@@ -6,6 +6,8 @@
     header_right_prepend   在最大化和删除按钮之前
   增加属性：
     参考 props 定义
+    loading
+    loading-spinner
     no-toolbar
     no-drag
     no-max
@@ -21,7 +23,7 @@
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
-      @show="_beforeShow"
+      @before-show="_beforeShow"
   >
     <q-card ref="card" :style="contentStyle" :id="uuid">
       <q-card-section v-if="!noToolbar" class="no-padding">
@@ -53,6 +55,14 @@
 
       <slot />
 
+      <q-inner-loading :showing="loading" style="z-index:5">
+          <q-spinner-gears v-if="loadingSpinner === 'gears'" size="50px" color="primary" />
+          <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="50px" color="primary" />
+          <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="50px" color="primary" />
+          <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="50px" color="primary" />
+          <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="50px" color="primary" />
+          <q-spinner-gears v-else size="50px" color="primary" />
+      </q-inner-loading>
     </q-card>
   </q-dialog>
 </template>
@@ -70,6 +80,7 @@ export default {
       type: String,
       default: ''
     },
+    loading: Boolean,
     noToolbar: Boolean,
     noClose: Boolean,
     noDrag: Boolean,
@@ -94,6 +105,11 @@ export default {
     icon_max_exit: {
       type: String,
       default: 'fullscreen_exit'
+    },
+    loadingSpinner: {
+      type: String,
+      default: 'gears',
+      validator: v => ['cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
     },
     contentClass: {
       type: String,

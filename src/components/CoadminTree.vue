@@ -2,14 +2,15 @@
   增加插槽：
     toolbar:         过滤界面
   增加属性：
+    selectable：    是否可以使用 selected 属性
     no-filter：     是否显示过滤输入框
     no-expand-btn： 是否显示展开按钮
+    no-ticked-expand: 是否自动展开ticked的节点
     expand-btn-icon-more 展开按钮图标
     expand-btn-icon-less 展开按钮图标
     filter-key-like   过滤条件相似比较
     filter-key-equal  过滤条件等于比较
     filter-placeholder
-    ticked-expand-auto: 自动展开ticked的节点
     tick-strategy:
         原有：
         none strict leaf leaf-filtered
@@ -78,7 +79,7 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
-    <!-- 注意：这里不需要定义 expanded.sync -->
+    <!-- 注意：这里不需要定义 selected.sync -->
     <q-tree v-else
         ref="tree"
         v-bind="$attrs"
@@ -145,10 +146,7 @@ export default {
       default: 'none',
       validator: v => ['none', 'strict', 'leaf', 'leaf-filtered', 'leaf-all-with-parent', 'leaf-all-only-parent', 'leaf-any-with-parent'].includes(v)
     },
-    tickedExpandAuto: {
-      type: Boolean,
-      default: false
-    },
+    noTickedExpand: Boolean,
     filter: {
       type: String
     },
@@ -205,7 +203,7 @@ export default {
   },
   mounted () {
     this.tickedSync = this.calcTicked()
-    if (this.tickedExpandAuto) {
+    if (!this.noTickedExpand) {
       this.expandedSync = this.calcExpanded()
     }
     this.selectedSync = this.selectable ? (this.selected ? this.selected : null) : null
@@ -214,40 +212,56 @@ export default {
   },
   watch: {
     selected (newVal) {
-      this.selectedSync = newVal
+      if (!this.disable) {
+        this.selectedSync = newVal
+      }
+    },
+    ticked (newVal, oldVal) {
+      if (!this.disable && (!newVal || newVal.length === 0)) {
+        if (!(newVal && newVal.length === 0 && oldVal && oldVal.length === 0)) {
+          this.tickedSync = []
+        }
+      }
+    },
+    expanded (newVal) {
+      if (!this.disable) {
+        this.expandedSync = newVal
+      }
     },
     selectedSync (val) {
       const label = this.keyToLabel(val)
-      this.$emit('selected-label', label)
+      if (this.$listeners['selected-label']) {
+        this.$emit('selected-label', label)
+      }
       this.$emit('update:selected', val)
     },
     /* expandedSync (val) {
-      if (this.disable || this.readonly || this.tickStrategy === 'none') {
+      if (this.disable) {
         return
       }
       this.$emit('update:expanded', [...this.expandedSync])
     }, */
     tickedSync (val) {
-      if (this.disable || this.readonly || this.tickStrategy === 'none') {
+      if (this.disable || this.tickStrategy === 'none') {
         return
       }
       if (this.tickStrategy === 'leaf-all-with-parent') {
         const tickedKeys = this.queryTickedLeafAllWithParent()
         this.$emit('update:ticked', tickedKeys)
-        this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
       } else
       if (this.tickStrategy === 'leaf-all-only-parent') {
         const tickedKeys = this.queryTickedLeafAllOnlyParent()
         this.$emit('update:ticked', tickedKeys)
-        this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
       } else
       if (this.tickStrategy === 'leaf-any-with-parent') {
         const tickedKeys = this.queryTickedLeafAnyWithParent()
         this.$emit('update:ticked', tickedKeys)
-        this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
       } else {
         this.$emit('update:ticked', [...this.tickedSync])
-        this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
       }
     }
   },

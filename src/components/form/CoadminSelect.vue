@@ -7,6 +7,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-select
+      v-model="model"
       ref="select"
       class="col"
       :input-class="computedInputClass"
@@ -14,6 +15,7 @@
       v-bind="$attrs"
       v-on="listeners"
       :dense="dense"
+      :options-dense="optionsDense"
       :outlined="outlined"
       :disable="disable"
       :readonly="readonly"
@@ -29,6 +31,7 @@
     </q-select>
   </div>
   <q-select v-else
+    v-model="model"
     ref="select"
     :class="computedClass"
     :input-class="computedInputClass"
@@ -36,6 +39,7 @@
     v-bind="$attrs"
     v-on="listeners"
     :dense="dense"
+    :options-dense="optionsDense"
     :outlined="outlined"
     :disable="disable"
     :readonly="readonly"
@@ -63,15 +67,44 @@ export default {
       type: Array,
       default: () => []
     },
+    optionsDense: {
+      type: Boolean,
+      default: true
+    },
     noFilter: {
       type: Boolean,
       default: false
+    },
+    filterKeyLike: {
+      type: String,
+      default: null
+    },
+    filterKeyEqual: {
+      type: String,
+      default: null
     },
     inputClass: String
   },
   data () {
     return {
+      model: null,
       optionsInData: this.options
+    }
+  },
+  created () {
+    this.model = this.$attrs.value
+  },
+  watch: {
+    '$attrs.value' (val) {
+      /* if (!val) {
+        this.model = null
+      } */
+      this.model = val
+    },
+    model (val) {
+      if (this.$listeners['value-label']) {
+        this.$emit('value-label', this.valueToLabel(val))
+      }
     }
   },
   computed: {
@@ -107,11 +140,55 @@ export default {
   mounted () {
   },
   methods: {
+    valueToLabel (value) {
+      if (typeof value !== 'number') {
+        if (!value || value.length === 0) {
+          return null
+        }
+      }
+      if (this.$attrs['map-options'] === '' || this.$attrs['map-options']) {
+        const optionLabelKey = (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
+        const optionValueKey = (this.$attrs['option-value'] === undefined) ? 'value' : this.$attrs['option-value']
+        if (this.$attrs['emit-value'] !== '' && !this.$attrs['emit-value']) {
+          value = this.transMapToValue(value, optionValueKey)
+        }
+        const labels = []
+        if (this.$attrs.multiple === '' || this.$attrs.multiple) {
+          for (const v of value) {
+            for (const m of this.options) {
+              if (m[optionValueKey] === v) {
+                labels.push(m[optionLabelKey])
+                break
+              }
+            }
+          }
+        } else {
+          for (const m of this.options) {
+            if (m[optionValueKey] === value) {
+              return m[optionLabelKey]
+            }
+          }
+        }
+        return labels
+      } else {
+        return value
+      }
+    },
+    transMapToValue (mapValue, valueKey) {
+      if (mapValue.length !== undefined) {
+        const values = []
+        for (const v of mapValue) {
+          values.push(v[valueKey])
+        }
+        return values
+      } else {
+        return mapValue[valueKey]
+      }
+    },
     inputValue (value) {
       console.log('input.value=', value)
     },
     _filterFn (val, update, abort) {
-      console.log('filterFn=', val)
       const fn = this.$listeners.filter
       if (typeof fn === 'function') {
         fn(val, update, abort)
@@ -125,8 +202,13 @@ export default {
             const needle = val.toLocaleLowerCase()
             this.optionsInData = this.options.filter(v => v.toLocaleLowerCase().indexOf(needle) > -1)
           } else {
+            const labelKey = (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
             const needle = val.toLocaleLowerCase()
-            this.optionsInData = this.options.filter(v => v.desc.toLocaleLowerCase().indexOf(needle) > -1)
+            const likeKey = this.filterKeyLike
+            const equalKey = this.filterKeyEqual
+            this.optionsInData = this.options.filter(v => v[labelKey].toLocaleLowerCase().indexOf(needle) > -1 ||
+             (likeKey && v[likeKey] && v[likeKey].toLocaleLowerCase().indexOf(needle) > -1) ||
+             (equalKey && v[equalKey] && v[equalKey].toString() === needle))
           }
         }
       },

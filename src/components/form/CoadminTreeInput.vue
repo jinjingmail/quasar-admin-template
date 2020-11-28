@@ -12,7 +12,8 @@
     v-on="listenersOfInput"
     v-bind="$attrs"
     :disable="disable"
-    readonly
+    :readonly="readonly"
+    @input="inputMethod"
   >
     <q-popup-proxy
       ref="popupTree"
@@ -30,7 +31,7 @@
         :selected.sync="popupTreeSelected"
         :expanded.sync="popupTreeExpanded"
         :ticked.sync="popupTreeTicked"
-        :ticked-expand-auto="tickedExpandAuto"
+        :no-ticked-expand="noTickedExpand"
         :tick-strategy="tickStrategy"
         :filter-key-like="filterKeyLike"
         :filter-key-equal="filterKeyEqual"
@@ -67,7 +68,10 @@ export default {
     readonly: Boolean,
 
     treeClass: String,
-    treeStyle: String,
+    treeStyle: {
+      type: String,
+      default: 'width:350px; max-height:65vh;'
+    },
     nodes: {
       type: Array,
       required: true
@@ -95,9 +99,9 @@ export default {
     accordion: Boolean,
     selectedColor: {
       type: String,
-      default: 'purple'
+      default: 'primary'
     },
-    selectable: Boolean,
+    selectable: Boolean, // 是否可以使用 selected.sync 属性
     selected: {}, // sync
     ticked: Array, // sync
     expanded: Array, // sync
@@ -105,10 +109,7 @@ export default {
       type: String,
       default: 'none'
     },
-    tickedExpandAuto: {
-      type: Boolean,
-      default: false
-    },
+    noTickedExpand: Boolean,
     filterKeyLike: {
       type: String,
       default: null
@@ -137,10 +138,16 @@ export default {
   },
   watch: {
     selected (newVal) {
+      if (this.disable) {
+        return
+      }
       this.popupTreeSelected = newVal
     },
-    ticked (newVal) {
-      if (!newVal) {
+    ticked (newVal, oldVal) {
+      if (this.disable) {
+        return
+      }
+      if ((!newVal || newVal.length === 0) && (oldVal && oldVal.length > 0)) {
         this.popupTreeTicked = []
         this.popupTreeExpanded = []
         this.popupTreeTickedLabels = null
@@ -153,7 +160,7 @@ export default {
       if (!val) {
         this.popupTreeSelectedLabel = null
       }
-      this.$emit('selected-label', this.popupTreeSelectedLabel)
+      if (this.$listeners['selected-label']) this.$emit('selected-label', this.popupTreeSelectedLabel)
       this.$emit('update:selected', val)
     },
     popupTreeExpanded (newVal, oldVal) {
@@ -162,7 +169,7 @@ export default {
     popupTreeTicked (newVal, oldVal) {
       if (this.tickStrategy !== 'none') {
         this.$emit('update:ticked', newVal)
-        this.$emit('ticked-label', this.popupTreeTickedLabels)
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.popupTreeTickedLabels)
       }
     }
   },
@@ -196,6 +203,14 @@ export default {
     }
   },
   methods: {
+    inputMethod (value) {
+      if (!value) {
+        this.popupTreeSelected = null
+        this.popupTreeTicked = []
+        this.popupTreeExpanded = []
+        this.popupTreeTickedLabels = null
+      }
+    },
     keysToLabels (keys) {
       if (!keys || keys.length === 0) {
         return null

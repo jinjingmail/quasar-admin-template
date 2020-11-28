@@ -47,7 +47,6 @@
                         label-key="name"
                         :ticked.sync="query.ticked"
                         @ticked-label="labels => queryTickedLabels = labels"
-                        ticked-expand-auto
                         tick-strategy="leaf-all-only-parent"
                         filter-key-like="nameLetter"
                         filter-key-equal="id"
@@ -202,7 +201,7 @@
 
                 </q-card-section>
                 <q-card-actions align="center">
-                  <q-btn label="查询" type="submit" color="primary" icon="search">
+                  <q-btn label="查询" type="submit" color="primary" icon="search" @click="doQuery">
                   </q-btn>
                   <q-btn label="清空" flat v-close-popup />
                   <q-btn label="关闭" flat v-close-popup />
@@ -211,7 +210,7 @@
               </q-card>
             </q-popup-proxy>
             <template v-slot:after>
-              <q-btn dense  color="primary" icon="search"/>
+              <q-btn dense  color="primary" icon="search" @click="doQuery"/>
               <q-btn-dropdown dense auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
                 <div class="row no-wrap q-pa-sm">
                   <div class="column">
@@ -371,7 +370,6 @@ export default {
       get () {
         // const values = Object.values(this.query)
         // return values.filter(item => { return typeof item === 'number' ? true : item && item.length && item.length > 0 }).join(', ')
-        console.log('treeInputMultiple=', this.$refs.treeInputMultiple)
         const labels = []
         for (const key of Object.keys(this.query)) {
           if (key === 'selected') {
@@ -390,14 +388,22 @@ export default {
       },
       set (val) {
         if (!val) {
-          this.query = {}
-        } else {
-          // nothing
+          this.querySelectedLabel = null
+          this.queryTickedLabels = null
+          for (const key of Object.keys(this.query)) {
+            this.query[key] = null
+          }
         }
       }
     }
   },
   methods: {
+    doQuery () {
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+      }, 1000)
+    },
     treeDatas () {
       return depts.content
     },

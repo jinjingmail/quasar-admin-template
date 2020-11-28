@@ -1,3 +1,35 @@
+export const visibleColumns = ['id', 'name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action']
+
+export const columns = [
+  { name: 'id', label: 'ID', field: 'id' },
+  {
+    name: 'name',
+    field: 'name',
+    required: true,
+    label: '名称',
+    align: 'left',
+    format: val => `${val}`,
+    sortable: true
+  },
+  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
+  { name: 'fat', label: 'Fat (g)', field: row => row.fat, sortable: true },
+  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
+  { name: 'protein', label: 'Protein (g)', field: 'protein' },
+  { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
+  { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
+  { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
+  { name: 'iron1', label: 'Iron1 (%)', field: 'iron1' },
+  { name: 'iron2', label: 'Iron2 (%)', field: 'iron2' },
+  { name: 'iron3', label: 'Iron3 (%)', field: 'iron3' },
+  { name: 'iron4', label: 'Iron4 (%)', field: 'iron4' },
+  { name: 'iron5', label: 'Iron5 (%)', field: 'iron5' },
+  { name: 'iron6', label: 'Iron6 (%)', field: 'iron6' },
+  { name: 'iron7', label: 'Iron7 (%)', field: 'iron7' },
+  { name: 'iron8', label: 'Iron8 (%)', field: 'iron8' },
+  { name: 'iron9', label: 'Iron9 (%)', field: 'iron9' },
+  { name: 'action', label: '操作', align: 'center' }
+]
+
 export const data = [
   {
     id: 1,
@@ -172,35 +204,4 @@ export const data = [
   {
     id: 1020, name: 'Donut', calories: 452, fat: 25.0, carbs: 51, protein: 4.9, sodium: 326, calcium: '2%', iron: '22%'
   }
-]
-
-export const visibleColumns = ['id', 'name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action']
-export const columns = [
-  { name: 'id', label: 'ID', field: 'id' },
-  {
-    name: 'name',
-    field: 'name',
-    required: true,
-    label: '名称',
-    align: 'left',
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Fat (g)', field: row => row.fat, sortable: true },
-  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-  { name: 'protein', label: 'Protein (g)', field: 'protein' },
-  { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-  { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron1', label: 'Iron1 (%)', field: 'iron1' },
-  { name: 'iron2', label: 'Iron2 (%)', field: 'iron2' },
-  { name: 'iron3', label: 'Iron3 (%)', field: 'iron3' },
-  { name: 'iron4', label: 'Iron4 (%)', field: 'iron4' },
-  { name: 'iron5', label: 'Iron5 (%)', field: 'iron5' },
-  { name: 'iron6', label: 'Iron6 (%)', field: 'iron6' },
-  { name: 'iron7', label: 'Iron7 (%)', field: 'iron7' },
-  { name: 'iron8', label: 'Iron8 (%)', field: 'iron8' },
-  { name: 'iron9', label: 'Iron9 (%)', field: 'iron9' },
-  { name: 'action', label: '操作', align: 'center' }
 ]

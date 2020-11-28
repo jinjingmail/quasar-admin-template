@@ -7,6 +7,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
     <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-option-group
+      v-model="model"
       ref="optionGroup"
       class="col q-pt-xs"
       v-bind="$attrs"
@@ -25,6 +26,7 @@
     </q-option-group>
   </div>
   <q-option-group v-else
+    v-model="model"
     ref="optionGroup"
     class="q-pt-sm"
     :class="computedClass"
@@ -67,6 +69,7 @@ export default {
   },
   data () {
     return {
+      model: null,
       optionsTranslated: []
     }
   },
@@ -75,6 +78,28 @@ export default {
       this.optionsTranslated = this.options
     } else {
       this.optionsTranslated = this.options.map(o => { return { label: o[this.labelKey], value: o[this.valueKey] } })
+    }
+    if ((this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle') && !this.$attrs.value) {
+      this.model = []
+    } else {
+      this.model = this.$attrs.value
+    }
+  },
+  mounted () {
+  },
+  watch: {
+    '$attrs.value' (val) {
+      if ((this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle') && !val) {
+        this.model = []
+      } else {
+        this.model = val
+      }
+    },
+    model (value) {
+      // 这里不判断 this.disable
+      if (this.$listeners['value-label']) {
+        this.$emit('value-label', this.valueToLabel(value))
+      }
     }
   },
   computed: {
@@ -94,9 +119,32 @@ export default {
       )
     }
   },
-  mounted () {
-  },
   methods: {
+    valueToLabel (value) {
+      if (value == null || value === undefined) {
+        return null
+      }
+      if (typeof value === 'object') {
+        const labels = []
+        for (const vv of value) {
+          for (const v of this.optionsTranslated) {
+            if (v.value === vv) {
+              labels.push(v.label)
+              break
+            }
+          }
+        }
+        return labels.length === 0 ? null : labels
+      }
+      if (typeof value === 'string' && value.length > 0) {
+        for (const v of this.optionsTranslated) {
+          if (v.value === value) {
+            return v.label
+          }
+        }
+      }
+      return value
+    }
   }
 }
 </script>

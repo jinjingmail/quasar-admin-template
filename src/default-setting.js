@@ -2,7 +2,7 @@ module.exports = {
   /**
    * @description 网站标题
    */
-  title: '眼睛管理系统眼睛管理系统',
+  title: '眼健康管理系统',
   /**
    * @description 是否显示 tagsView
    */
@@ -27,6 +27,10 @@ module.exports = {
    * 菜单栏是否占满顶部
    */
   sidebarTop: true,
+  /**
+   * 菜单栏宽度
+   */
+  sidebarWidth: 290,
   /**
    * @description 记住密码状态下的token在Cookie中存储的天数，默认1天
    */

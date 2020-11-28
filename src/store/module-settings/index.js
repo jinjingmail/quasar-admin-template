@@ -52,6 +52,7 @@ const state = {
   fixedHeader: get('setting.fixedHeader', defaultSetting.fixedHeader),
   sidebarLogo: get('setting.sidebarLogo', defaultSetting.sidebarLogo),
   sidebarTop: get('setting.sidebarTop', defaultSetting.sidebarTop),
+  sidebarWidth: get('setting.sidebarWidth', defaultSetting.sidebarWidth),
   uniqueOpened: get('setting.uniqueOpened', defaultSetting.uniqueOpened),
   showFooter: get('setting.showFooter', defaultSetting.showFooter),
 
@@ -77,6 +78,7 @@ const getters = {
   fixedHeader: state => state.fixedHeader,
   sidebarLogo: state => state.sidebarLogo,
   sidebarTop: state => state.sidebarTop,
+  sidebarWidth: state => state.sidebarWidth,
   uniqueOpened: state => state.uniqueOpened,
   showFooter: state => state.showFooter,
   footerTxt: state => state.footerTxt,

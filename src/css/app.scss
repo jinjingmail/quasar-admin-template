@@ -104,6 +104,14 @@
       padding-left: 0;
     }
   } */
+  &.q-table--dense {
+    .q-table__top {
+      padding: 6px 6px;
+    }
+  }
+  .q-table__top {
+    padding: 12px 6px;
+  }
 }
 
 .coadmin-dialog {

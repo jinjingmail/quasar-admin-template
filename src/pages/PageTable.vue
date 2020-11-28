@@ -199,7 +199,6 @@
                 node-key="id"
                 label-key="name"
                 :ticked.sync="dialogForm.ticked"
-                ticked-expand-auto
                 tick-strategy="leaf-all-only-parent"
                 filter-key-like="nameLetter"
                 filter-key-equal="id"

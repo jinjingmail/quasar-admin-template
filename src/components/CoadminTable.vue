@@ -4,7 +4,7 @@
     sticky-header
     sticky-first-column
     sticky-last-column
-
+    loading-spinner
 -->
 <template>
   <q-table
@@ -44,7 +44,12 @@
     <template v-slot:loading>
       <slot name="loading">
         <q-inner-loading showing color="primary" style="z-index:5">
-          <q-spinner-gears size="60px" color="primary" />
+          <q-spinner-gears v-if="loadingSpinner === 'gears'" size="60px" color="primary" />
+          <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="60px" color="primary" />
+          <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="60px" color="primary" />
+          <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="60px" color="primary" />
+          <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="60px" color="primary" />
+          <q-spinner-gears v-else size="60px" color="primary" />
         </q-inner-loading>
       </slot>
     </template>
@@ -78,6 +83,11 @@ export default {
     stickyLastColumn: {
       type: Boolean,
       default: false
+    },
+    loadingSpinner: {
+      type: String,
+      default: 'gears',
+      validator: v => ['cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
     }
   },
   data () {
