@@ -99,8 +99,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Pie
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -118,8 +118,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Radar
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -137,8 +137,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Bar
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -159,8 +159,8 @@
       <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Sales vs
-              Goals
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Scatter
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -178,8 +178,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Sankey
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -200,8 +200,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Point
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -219,8 +219,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Heat map
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -238,8 +238,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Graph
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -260,8 +260,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Theme River
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -279,8 +279,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Sunbrust
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -298,8 +298,8 @@
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Gauge
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -320,8 +320,8 @@
       <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Rich
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -339,8 +339,8 @@
       <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Funnel
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>
@@ -361,8 +361,8 @@
       <div class="col">
         <q-card flat bordered :class="$q.dark.isActive?'theme_color':''" class="shadow q-pa-none q-ma-none">
           <q-card-section class="row">
-            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">Market Share
-              & Growth
+            <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="col-12" style="font-weight: 600;letter-spacing: 1px;font-size: 16px;">
+              Category
               <q-btn flat dense icon="fas fa-download" class="float-right"
                       color="grey-6">
                 <q-tooltip>Download</q-tooltip>

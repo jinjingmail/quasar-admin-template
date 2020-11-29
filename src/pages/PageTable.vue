@@ -102,6 +102,7 @@
                 input-debounce="0"
                 placeholder="选择巨头"
                 :options="listOptions"
+                :rules="[val => !!val || 'Field is required']"
               />
               <coadmin-field
                 class="col-12 col-sm-6"
@@ -124,6 +125,7 @@
                 :options="mapOptions"
                 label-key="desc"
                 value-key="id"
+                :rules="[val => !!val || 'Field is required']"
               />
               <coadmin-option-group
                 v-model="selectModels"
@@ -135,6 +137,7 @@
                 label-key="desc"
                 value-key="id"
                 type="checkbox"
+                :rules="[val => !!val || 'Field is required']"
               />
               <coadmin-date
                 v-model="selectDate"
@@ -144,6 +147,7 @@
                 today-btn
                 :minimal="false"
                 :disable="dialogFormReadonly"
+                :rules="[val => !!val || 'Field is required']"
               />
               <coadmin-input class="col-12 col-sm-6" label-position="right" mask="####-##-##" placeholder="####-##-##" form-label="dateinput" v-model="selectDate" :disable="dialogFormReadonly">
                 <q-popup-proxy
@@ -176,6 +180,7 @@
                 clearable
                 range
                 :disable="dialogFormReadonly"
+                :rules="[val => !!val || 'Field is required']"
               >
                 <template v-slot:append>
                   <q-icon name="event" />
@@ -186,6 +191,7 @@
                 form-label="Date3"
                 v-model="dialogForm.date3"
                 :disable="dialogFormReadonly"
+                :rules="[val => !!val || 'Field is required']"
               >
                 <template v-slot:append>
                   <q-icon name="event" />
@@ -205,6 +211,8 @@
                 tree-style="min-width:300px; max-height:70vh;"
                 tree-class="q-pa-sm"
                 :disable="dialogFormReadonly"
+                clearable
+                :rules="[val => !!val || 'Field is required']"
               />
             </div>
           </coadmin-form>

@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'CoadminTable',
   inheritAttrs: false,
@@ -101,6 +103,9 @@ export default {
   mounted () {
   },
   computed: {
+    ...mapGetters('settings', [
+      'tagsView'
+    ]),
     computedVirtualScroll () {
       let vs = this.virtualScroll
       if (this.$q.screen.gt.xs) {
@@ -140,7 +145,11 @@ export default {
           if (this.isFullscreen) {
             height = '100vh'
           } else {
-            height = 'calc(100vh - 50px - 42px)'
+            if (this.tagsView) {
+              height = 'calc(100vh - 50px - 42px)'
+            } else {
+              height = 'calc(100vh - 50px - 2px)'
+            }
           }
         }
       }
