@@ -144,7 +144,7 @@ export default {
 <style lang="sass" scoped>
 .login-wrapper, login-form
   width: 450px
-@media (max-width: 1023px)
+@media (max-width: 599px)
   .login-wrapper, login-form
     width: 98%
 @media (max-width: 599px)

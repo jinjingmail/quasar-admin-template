@@ -135,7 +135,6 @@ export default {
       } else if (this.stickyLastColumn) {
         cls = 'coadmin-table-sticky-last-column'
       }
-      console.log('computedcss=', cls)
       return cls
     },
     computedStyle () {

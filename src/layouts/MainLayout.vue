@@ -20,16 +20,16 @@
         </template>
 
         <q-btn
+          v-if="sidebarTop && $q.screen.gt.xs"
           flat
           dense
           round
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
-          v-if="sidebarTop && $q.screen.gt.xs"
         />
 
-        <q-breadcrumbs v-if="!$q.screen.xs">
+        <q-breadcrumbs v-if="!$q.screen.xs" class="q-ml-md">
           <q-breadcrumbs-el label="Home" />
           <q-breadcrumbs-el label="Components" />
           <q-breadcrumbs-el label="Breadcrumbs" />
@@ -109,8 +109,8 @@
           </q-btn>
           <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
           <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-          <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()">
-            <q-avatar size="md">
+          <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()" class="no-wrap">
+            <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
           </q-btn>
@@ -164,11 +164,12 @@
 
             <div class="column">
               <div class="text-subtitle1 ">Settings</div>
-              <q-toggle :value="uniqueOpened" :val="true" label="只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
-              <q-toggle :value="tagsView" :val="true" label="显示Tab栏" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
-              <q-toggle :value="tagsViewTop" :val="true" label="顶部显示Tab栏" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
+              <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
+              <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
               <q-toggle :value="sidebarTop" :val="true" label="左侧到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+              <q-toggle :value="sidebarMini" :val="true" label="左侧Mini（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})"/>
+              <q-toggle :value="uniqueOpened" :val="true" label="左侧只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <coadmin-input label="左侧宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
               <q-toolbar class="no-padding">
                 <div class="text-subtitle1 ">颜色</div>
@@ -248,6 +249,11 @@
                 <q-btn class="col-auto" size="sm" label="文字" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorMenuText" @change="value => changeSetting({key:'colorMenuText', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="Active" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorMenuBgActive" @change="value => changeSetting({key:'colorMenuBgActive', value: value})"/>
                   </q-popup-proxy>
                 </q-btn>
               </div>
@@ -375,6 +381,10 @@ export default {
   },
   mounted () {
     this.menuOpen(this.menuFind(this.$refs.menu, this.$route.path))
+    if (this.sidebarMini || !this.$q.screen.gt.sm) {
+      this.leftDrawerMini = true
+      this.miniState = true
+    }
   },
   watch: {
     $route (route) {
@@ -412,13 +422,15 @@ export default {
       'uniqueOpened',
       'sidebarTop',
       'sidebarWidth',
+      'sidebarMini',
       'darkMode',
       'colorPrimary',
       'colorHeaderBg1',
       'colorHeaderBg2',
       'colorHeaderText',
       'colorMenuBg',
-      'colorMenuText'
+      'colorMenuText',
+      'colorMenuBgActive'
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'
@@ -523,17 +535,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header_normal {
-  background: linear-gradient(145deg, rgb(32, 106, 80) 15%, rgb(21, 57, 102) 70%);
-}
-
-.header_dark {
-  background: linear-gradient(
-    145deg,
-    rgb(61, 14, 42) 15%,
-    rgb(14, 43, 78) 70%);
-}
-
 .layout-main {
   background-image: url("~assets/index.svg");
   background-repeat: no-repeat;
@@ -546,15 +547,6 @@ export default {
   background-image: url("/img/sidebar-bg.jpg") !important;
   background-size: cover !important;
   background-repeat: no-repeat;
-}
-.drawer_normal {
-  background-color: rgba(1, 1, 1, 0.75);
-  color: red;
-}
-
-.drawer_dark {
-  background-color: rgba(1, 1, 1, 0.863);
-  color: yellow;
 }
 .pagetagviews-normal {
   background-color: #eeeeee;  // $grey-3

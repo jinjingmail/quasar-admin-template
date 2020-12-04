@@ -7,6 +7,10 @@
 */
 
 /* 修改全局样式 BEGIN */
+body {
+  // 左侧菜单栏active状态，默认颜色
+  --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
+}
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
@@ -47,12 +51,12 @@
 
 .coadmin-sidebar {
   &-menu-active {
-    // background-color: $light-blue-2;
-    // color: var(--q-color-primary);
-    background-color: green;
+    background-color: var(--q-color-menu-bg-active);
   }
   .q-item.q-link {
     border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
   .q-item__label + .q-item__label {
     margin-top: 0;

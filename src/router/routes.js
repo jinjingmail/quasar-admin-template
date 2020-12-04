@@ -34,7 +34,7 @@ const routes = [
         path: 'index',
         name: 'Index',
         component: () => import('pages/Index.vue'),
-        meta: { title: '首页', icon: 'home', affix: true }
+        meta: { title: '首页', icon: 'home', affix: true, noCache: true }
       }
     ]
   }, {
@@ -75,7 +75,7 @@ const routes = [
   }, {
     path: '/user',
     component: () => import('layouts/LoginLayout.vue'),
-    meta: { title: '用户', icon: 'add' },
+    meta: { title: '用户', icon: 'account_circle' },
     children: [
       {
         path: 'login',
@@ -98,7 +98,7 @@ const routes = [
         path: 'index',
         name: 'PageNeedLogin',
         component: () => import('pages/PageNeedLogin.vue'),
-        meta: { auth: true, title: '登录后才能访问', icon: 'insert_emoticon' }
+        meta: { auth: true, title: '登录后才能访问', icon: 'how_to_reg' }
       }
     ]
   }, {
@@ -208,7 +208,7 @@ const routes = [
         path: 'nested2',
         name: 'Nested2',
         component: () => import('pages/nested/Page1.vue'),
-        meta: { title: '嵌套2', icon: 'add' }
+        meta: { title: '嵌套2' }
       }
     ]
   }, {
@@ -220,7 +220,7 @@ const routes = [
         path: 'invoices',
         name: 'SalesInvoices',
         component: () => import('pages/sales_invoices.vue'),
-        meta: { title: 'SalesInvoices', icon: 'insert_emoticon' }
+        meta: { title: 'SalesInvoices', icon: 'account_balance_wallet' }
       }
     ]
   }, {

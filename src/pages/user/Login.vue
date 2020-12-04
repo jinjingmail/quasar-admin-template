@@ -18,7 +18,7 @@
 
         <q-card-section :class="`${$q.screen.gt.xs?'col-6':'col'} q-mt-xs q-px-xl q-py-md`">
           <div class="flex flex-center">
-            <q-avatar size="120px">
+            <q-avatar size="100px">
               <q-img src="~assets/logo.svg" />
             </q-avatar>
           </div>

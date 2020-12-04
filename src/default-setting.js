@@ -20,17 +20,21 @@ module.exports = {
    */
   uniqueOpened: true,
   /**
-   * @description 是否显示logo
+   * @description 左侧菜单栏是否显示logo
    */
   sidebarLogo: true,
   /**
-   * 菜单栏是否占满顶部
+   * 左侧菜单栏是否占满顶部
    */
   sidebarTop: true,
   /**
-   * 菜单栏宽度
+   * 左侧菜单栏默认宽度
    */
-  sidebarWidth: 300,
+  sidebarWidth: 280,
+  /**
+   * 左侧菜单栏默认mini状态
+   */
+  sidebarMini: false,
   /**
    * @description 记住密码状态下的token在Cookie中存储的天数，默认1天
    */
