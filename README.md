@@ -16,9 +16,9 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 - 演示了几种在页面实现搜索栏的样式（费了我不少时间）
 - 二次开发了CoadminDialog，可以实现拖拽和最大化等
 - 二次开发了CoadminTree，增加了很多功能
- - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
- - 增加事件 ticked-label和selected-label，返回选择的节点的label
- - 增加一个过滤输入栏
+  - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
+  - 增加事件 ticked-label和selected-label，返回选择的节点的label
+  - 增加一个过滤输入栏
 - 二次开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
 - 二次开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
 - 新增CoadminDateInput
