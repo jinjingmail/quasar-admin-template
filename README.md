@@ -1,27 +1,30 @@
 # quasar-admin-template
 
-基于 Quasar 的管理系统模板</br>
-Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了大量的Slot和Event，可以按自己喜好自定义，同时官网文档也相当详细，看文档能解决绝大多数问题。</br>
-问题是一些国内常用的功能和组件，Quasar功能上缺失，这就需要自己二次开发或用其他js库代替。</br>
+基于 Quasar 的管理系统模板
+
+Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了大量的Slot和Event，可以按自己喜好自定义，同时官网文档也相当详细，看文档能解决绝大多数问题。界面也相对漂亮一些，另外还有一个很大的优势，Quasar对于移动端的适配做得非常棒。
+
+问题是一些国内常用的功能和组件，Quasar缺失，这就需要自己二次开发或用其他js库代替。
 
 - 给个`star`吧
+- 最优适配移动端
 - Dark 和 Light模式自由切换
 - 可以分别自定义Dark 和 Light模式下的颜色样式，并保存到LocalStorage里面，关闭浏览器不丢失
-- 左侧菜单栏基于路由配置自动生成
+ - 可自定义左侧菜单栏宽度、背景色、字体色，顶部标题栏颜色、Tab标签栏位置和是否显示 等
+- 左侧菜单栏基于路由配置自动生成，可以实现noCache、icon等自定义配置
+- 页面路由Tab标签栏
 - 演示了几种在页面实现搜索栏的样式（费了我不少时间）
 - 二次开发了CoadminDialog，可以实现拖拽和最大化等
 - 二次开发了CoadminTree，增加了很多功能
-  - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
-  - 增加事件 ticked-label和selected-label，返回选择的节点的label
-  - 增加一个过滤输入栏
+ - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
+ - 增加事件 ticked-label和selected-label，返回选择的节点的label
+ - 增加一个过滤输入栏
 - 二次开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
 - 二次开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
 - 新增CoadminDateInput
 - 新增CoadminTreeInput
 - 新增CoadminTreeTable
 - 感谢：eladmin-web、vue-element-admin、quasar-admin-crm、quasar-element-pro
-
-</br>
 
 ```bash
 TODO CoadminInput外的其它自定义form项的错误提示
@@ -35,6 +38,9 @@ TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、bef
 TODO BUG 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色
 ```
+
+## 界面截图
+见“UI”目录
 
 ## Install the dependencies（安装依赖）
 ```bash
