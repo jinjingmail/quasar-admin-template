@@ -4,8 +4,6 @@
       ref="printDialog"
       title="打印"
       icon="print"
-      maxable
-      @escape-key="$q.notify({type:'info', message:'esc key'})"
       >
       <q-card>
         <q-card-section>
@@ -22,7 +20,6 @@
     <coadmin-dialog
       ref="formDialog"
       title="对话框"
-      :maximized="true"
       no-backdrop-dismiss
       content-style="width:800px; max-width:95vw;"
     >

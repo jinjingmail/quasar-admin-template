@@ -152,7 +152,6 @@ export default {
           }
         }
       }
-      console.log('computedStyle.height=', height)
       return {
         height: height
       }
