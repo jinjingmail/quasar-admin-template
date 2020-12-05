@@ -44,6 +44,8 @@ TODO BUG 图表dark模式文字颜色
 
 ## Install the dependencies（安装依赖）
 ```bash
+安装新版nodejs
+npm install -g @quasar/cli
 npm install
 ```
 
