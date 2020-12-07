@@ -40,7 +40,33 @@ TODO BUG 图表dark模式文字颜色
 ```
 
 ## 界面截图
-见“UI”目录
+### 见“UI”目录
+### PC上的效果
+![index](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/index.jpg)
+![index_dark](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/index_dark.jpg)
+![icons](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/icons.jpg)
+![login](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/login.jpg)
+![page_search_dialog](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_search_dialog.jpg)
+![page_search_popup](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_search_popup.jpg)
+![page_search_popup_dark](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_search_popup_dark.jpg)
+![page_table](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_table.jpg)
+![page_table_dark](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_table_dark.jpg)
+![page_table_with_dialog](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_table_with_dialog.jpg)
+![page_tree_select](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_tree_select.jpg)
+![page_tree_table2](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/page_tree_table2.jpg)
+![right_bar_setting](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/right_bar_setting.jpg)
+
+### 手机上的效果
+![index](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/index.png)
+![index_dark](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/index_dark.png)
+![left_sidebar](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/left_sidebar.png)
+![page_search_popup](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/page_search_popup.png)
+![page_table](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/page_table.png)
+![page_table_dark](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/page_table_dark.png)
+![page_table_with_dialog](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/page_table_with_dialog.png)
+![page_tree_table](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/page_tree_table.png)
+![right_setting_bar](https://gitee.com/jinjinge/quasar-admin-template/raw/main/UI/v0.9/mobile/right_setting_bar.png)
+
 
 ## Install the dependencies（安装依赖）
 ```bash
