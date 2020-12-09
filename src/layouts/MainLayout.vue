@@ -1,6 +1,6 @@
 <template>
   <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" class="layout-main">
-    <q-header :reveal="!fixedHeader" :elevated="false" bordered class="coadmin-header" :style="headerStyles">
+    <q-header :reveal="!fixedHeader" :elevated="false" :reveal-offset="60" bordered class="coadmin-header" :style="headerStyles">
       <q-toolbar>
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
           <q-avatar class="q-logo" @click="leftDrawerOpen = !leftDrawerOpen">

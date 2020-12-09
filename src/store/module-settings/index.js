@@ -70,10 +70,10 @@ const state = {
   colorHeaderText: getColor('setting.colorHeaderText', defaultColor.colorHeaderText),
   colorHeaderTextDark: getColor('setting.colorHeaderTextDark', defaultColor.colorHeaderTextDark),
   colorMenuBg: getColor('setting.colorMenuBg', defaultColor.colorMenuBg),
-  colorMenuBgDark: getColor('setting.colorMenuBgDark', defaultColor.colorMenuBgDark),
+  colorMenuBgDark: getColor('setting.colorMenuBgDark', defaultColor.colorMenuBg),
   colorMenuText: getColor('setting.colorMenuText', defaultColor.colorMenuText),
-  colorMenuTextDark: getColor('setting.colorMenuTextDark', defaultColor.colorMenuTextDark),
-  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBgActive)
+  colorMenuTextDark: getColor('setting.colorMenuTextDark', defaultColor.colorMenuText),
+  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBg)
 }
 
 const getters = {
