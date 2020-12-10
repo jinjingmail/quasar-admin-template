@@ -73,7 +73,7 @@ const state = {
   colorMenuBgDark: getColor('setting.colorMenuBgDark', defaultColor.colorMenuBg),
   colorMenuText: getColor('setting.colorMenuText', defaultColor.colorMenuText),
   colorMenuTextDark: getColor('setting.colorMenuTextDark', defaultColor.colorMenuText),
-  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBg)
+  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBgActive)
 }
 
 const getters = {
