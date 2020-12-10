@@ -8,7 +8,7 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 
 ## 主要特点
 - 给个`star`吧
-- 最优适配移动端
+- 良好的适配移动端小屏幕
 - Dark 和 Light模式自由切换
 - 可以分别自定义Dark 和 Light模式下的颜色样式，并保存到LocalStorage里面，关闭浏览器不丢失
  - 可自定义左侧菜单栏宽度、背景色、字体色，顶部标题栏颜色、Tab标签栏位置和是否显示 等
@@ -39,6 +39,9 @@ TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、bef
 TODO BUG 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色
 ```
+
+## Demo
+[Demo](http://jinjinge.gitee.io/quasar-admin-template)
 
 ## 界面截图
 ### 见“UI”目录

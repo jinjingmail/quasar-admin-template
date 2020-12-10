@@ -540,11 +540,10 @@ export default {
   background-repeat: no-repeat;
   background-position: center 0px;
   background-size: 100%;
-  // background-color: red;
 }
 
 .coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {
-  background-image: url("/img/sidebar-bg.jpg") !important;
+  background-image: url("~assets/sidebar-bg.jpg") !important;
   background-size: cover !important;
   background-repeat: no-repeat;
 }

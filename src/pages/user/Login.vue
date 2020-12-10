@@ -106,7 +106,7 @@ export default {
     }
   },
   created () {
-    this.imgsrc = '/img/nature-' + (random() % 8) + '.jpg'
+    this.imgsrc = 'img/nature-' + (random() % 8) + '.jpg'
   },
   computed: {
   },
