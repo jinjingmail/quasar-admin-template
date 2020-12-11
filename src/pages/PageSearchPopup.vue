@@ -18,8 +18,8 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" />
-            <q-btn dense color="primary" icon="edit" :disable="selected.length!==1"/>
-            <q-btn dense color="primary" icon="delete" :disable="selected.length===0"/>
+            <q-btn dense color="primary" icon="edit" v-if="!(selected.length!==1)"/>
+            <q-btn dense color="primary" icon="delete" v-if="!(selected.length===0)"/>
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
@@ -31,7 +31,7 @@
 
           <q-space />
 
-          <coadmin-input class="col-sm-12 col-md" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
+          <coadmin-input class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
               <q-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>

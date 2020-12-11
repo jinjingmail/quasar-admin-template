@@ -4,7 +4,7 @@
       row-key="id"
       dense
       flat
-      class="q-pa-sm "
+      table-class="q-pa-md "
       separator="cell"
       :data="data"
       :columns="columns"
@@ -14,13 +14,14 @@
       :fullscreen.sync="tableFullscreen"
       :loading="loading"
       loading-spinner="ios"
+      no-filter
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
             <q-btn dense color="primary" icon="add" />
-            <q-btn dense color="primary" icon="edit" :disable="selected.length!==1"/>
-            <q-btn dense color="primary" icon="delete" :disable="selected.length===0"/>
+            <q-btn dense color="primary" icon="edit" v-if="!(selected.length!==1)"/>
+            <q-btn dense color="primary" icon="delete" v-if="!(selected.length===0)"/>
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">

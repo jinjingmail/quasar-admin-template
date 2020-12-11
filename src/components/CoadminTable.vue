@@ -1,60 +1,71 @@
 <!--
   增加插槽：
   增加属性：
+    table-class
     sticky-header
     sticky-first-column
     sticky-last-column
     loading-spinner
+    no-filter
 -->
 <template>
-  <q-table
-    ref="table"
-    v-bind="$attrs"
-    v-on="listeners"
-    class="coadmin-table"
-    :class="computedClass"
-    :style="computedStyle"
-    :fullscreen="isFullscreen"
-    :virtual-scroll="computedVirtualScroll"
-    :rows-per-page-options="rowsPerPageOptions"
-    :no-data-label="noDataLabel"
-    :filter="filter"
-  >
-    <template v-slot:no-data="prop">
-      <div class="full-width row flex-center q-gutter-sm">
-        <q-icon size="1.4em" :name="prop.filter ? 'filter_b_and_w' : prop.icon" />
-        <span style="font-size:1.4em">
-          {{ prop.message }}
-        </span>
-      </div>
-    </template>
+  <div>
+    <coadmin-dialog v-model="filterDialog" title="查找" no-max seamless @hide="filterDialogHide">
+      <q-input placeholder="在当前页面中查找" dense outlined v-model="filter" clearable class="q-ml-sm q-mr-sm q-mt-none q-mb-sm"/>
+    </coadmin-dialog>
 
-    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-      <slot :name="slotName"/>
-    </template>
-    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-      <slot :name="slotName" v-bind="prop"/>
-    </template>
+    <q-table
+      ref="table"
+      class="coadmin-table"
+      :class="computedClass"
+      :style="computedStyle"
+      v-bind="$attrs"
+      v-on="listeners"
+      :fullscreen="isFullscreen"
+      :virtual-scroll="computedVirtualScroll"
+      :rows-per-page-options="rowsPerPageOptions"
+      :no-data-label="noDataLabel"
+      :filter="filter"
+    >
+      <template v-slot:no-data="prop">
+        <div class="full-width row flex-center q-gutter-sm">
+          <q-icon size="1.4em" :name="prop.filter ? 'filter_b_and_w' : prop.icon" />
+          <span style="font-size:1.4em">
+            {{ prop.message }}
+          </span>
+        </div>
+      </template>
 
-    <template v-slot:pagination>
-      <q-input placeholder="过滤" dense outlined v-model="filter"/>
-      <slot name="pagination"/>
-    </template>
+      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
+        <slot :name="slotName"/>
+      </template>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
+      </template>
 
-    <template v-slot:loading>
-      <slot name="loading">
-        <q-inner-loading showing color="primary" style="z-index:5">
-          <q-spinner-gears v-if="loadingSpinner === 'gears'" size="60px" color="primary" />
-          <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="60px" color="primary" />
-          <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="60px" color="primary" />
-          <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="60px" color="primary" />
-          <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="60px" color="primary" />
-          <q-spinner-gears v-else size="60px" color="primary" />
-        </q-inner-loading>
-      </slot>
-    </template>
+      <template v-slot:pagination>
+        <q-avatar icon="find_in_page" size='lg' v-if="!noFilter" @click="filterDialogShow">
 
-  </q-table>
+        </q-avatar>
+        <slot name="pagination"/>
+      </template>
+
+      <template v-slot:loading>
+        <slot name="loading">
+          <q-inner-loading showing color="primary" style="z-index:5">
+            <q-spinner-gears v-if="loadingSpinner === 'gears'" size="60px" color="primary" />
+            <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="60px" color="primary" />
+            <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="60px" color="primary" />
+            <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="60px" color="primary" />
+            <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="60px" color="primary" />
+            <q-spinner-gears v-else size="60px" color="primary" />
+          </q-inner-loading>
+        </slot>
+      </template>
+
+    </q-table>
+
+  </div>
 </template>
 
 <script>
@@ -90,12 +101,15 @@ export default {
       type: String,
       default: 'gears',
       validator: v => ['cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
-    }
+    },
+    tableClass: String,
+    noFilter: Boolean
   },
   data () {
     return {
       isFullscreen: this.fullscreen,
-      filter: ''
+      filter: '',
+      filterDialog: false
     }
   },
   created () {
@@ -135,6 +149,9 @@ export default {
       } else if (this.stickyLastColumn) {
         cls = 'coadmin-table-sticky-last-column'
       }
+      if (this.tableClass) {
+        cls = cls + ' ' + this.tableClass
+      }
       return cls
     },
     computedStyle () {
@@ -145,7 +162,7 @@ export default {
             height = '100vh'
           } else {
             if (this.tagsView) {
-              height = 'calc(100vh - 50px - 42px)'
+              height = 'calc(100vh - 50px - 50px)'
             } else {
               height = 'calc(100vh - 50px - 2px)'
             }
@@ -173,6 +190,15 @@ export default {
     }
   },
   methods: {
+    filterDialogShow () {
+      console.log('filterDialogShow')
+      this.filterDialog = true
+    },
+    filterDialogHide () {
+      this.filter = ''
+      this.filterDialog = false
+    },
+
     toggleFullscreen () {
       this.$refs.table.toggleFullscreen()
     },

@@ -109,16 +109,22 @@ body {
     }
   } */
   &.q-table--dense {
-    .q-table__top {
+    .q-table__top,
+    .q-table__bottom {
       padding: 6px 6px;
     }
   }
-  .q-table__top {
+  .q-table__top,
+  .q-table__bottom {
     padding: 12px 6px;
   }
 }
 
 .coadmin-dialog {
+  .q-dark {
+    background: $grey-9;
+  }
+
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
   .q-dialog__inner--minimized {
     // margin: 10px;
@@ -128,11 +134,12 @@ body {
   .q-card__actions {
     padding: 16px;
   }
+
 }
 
 .coadmin-popup {
-  background: white;
-  &.q-dark {
+  &.q-dark,
+  .q-dark {
     background: $grey-9;
   }
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
