@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <q-card class="q-pa-md q-gutter-sm">
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="leaf"
         node-key="id"
         label-key="name"
@@ -15,7 +15,7 @@
         clearable
       />
 
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="strict"
         node-key="id"
         label-key="name"
@@ -29,7 +29,7 @@
         tree-class="q-pa-sm"
         clearable
       />
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="leaf-any-with-parent"
         node-key="id"
         label-key="name"
@@ -44,7 +44,7 @@
         no-ticked-expand
       />
 
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="leaf-all-only-parent"
         node-key="id"
         label-key="name"
@@ -58,7 +58,7 @@
         clearable
       />
 
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="leaf-all-with-parent"
         node-key="id"
         label-key="name"
@@ -72,7 +72,7 @@
         clearable
       />
 
-      <coadmin-tree-input
+      <coadmin-tree-select
         placeholder="select"
         node-key="id"
         label-key="name"

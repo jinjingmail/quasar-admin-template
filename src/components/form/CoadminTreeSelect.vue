@@ -60,7 +60,7 @@
 <script>
 // import formMixin from './formMixin.js'
 export default {
-  name: 'CoadminTreeInput',
+  name: 'CoadminTreeSelect',
   inheritAttrs: false,
   // mixins: [formMixin],
   props: {

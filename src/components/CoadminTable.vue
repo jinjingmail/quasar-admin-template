@@ -5,7 +5,7 @@
     sticky-header
     sticky-first-column
     sticky-last-column
-    loading-spinner
+    loading-spinner     'cycle', 'gears', 'ios', 'ball', 'dots'
     no-filter
 -->
 <template>
@@ -107,12 +107,13 @@ export default {
   },
   data () {
     return {
-      isFullscreen: this.fullscreen,
+      isFullscreen: undefined,
       filter: '',
       filterDialog: false
     }
   },
   created () {
+    this.isFullscreen = this.fullscreen
   },
   mounted () {
   },

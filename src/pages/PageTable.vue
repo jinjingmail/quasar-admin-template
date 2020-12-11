@@ -170,7 +170,7 @@
                 </div>
               </coadmin-form-item>
 
-              <coadmin-date-input
+              <coadmin-date-select
                 class="col-12 col-sm-6"
                 form-label="DateRange"
                 v-model="dialogForm.date2"
@@ -182,8 +182,8 @@
                 <template v-slot:append>
                   <q-icon name="event" />
                 </template>
-              </coadmin-date-input>
-              <coadmin-date-input
+              </coadmin-date-select>
+              <coadmin-date-select
                 class="col-12 col-sm-6"
                 form-label="Date3"
                 v-model="dialogForm.date3"
@@ -193,9 +193,9 @@
                 <template v-slot:append>
                   <q-icon name="event" />
                 </template>
-              </coadmin-date-input>
+              </coadmin-date-select>
 
-              <coadmin-tree-input
+              <coadmin-tree-select
                 class="col-12 col-sm-6"
                 form-label="TreeTicked"
                 :nodes="treeDatas()"

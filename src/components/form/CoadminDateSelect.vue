@@ -62,7 +62,7 @@
 <script>
 // import formMixin from './formMixin.js'
 export default {
-  name: 'CoadminDateInput',
+  name: 'CoadminDateSelect',
   inheritAttrs: false,
   // mixins: [formMixin],
   props: {

@@ -22,8 +22,8 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
   - 增加一个过滤输入栏
 - 二次开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
 - 二次开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
-- 新增CoadminDateInput
-- 新增CoadminTreeInput
+- 新增CoadminDateSelect
+- 新增CoadminTreeSelect
 - 新增CoadminTreeTable
 - 感谢：eladmin-web、vue-element-admin、quasar-admin-crm、quasar-element-pro
 
@@ -31,7 +31,7 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 TODO CoadminInput外的其它自定义form项的错误提示
 TODO CoadminTable 可以单击某行，一直高亮这一行
 TODO Dialog、PopupProxy 等弹出层，在Dark模式下不好区分
-TODO CoadminDateInput 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
+TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
 TODO CoadminTree selected和ticked，可以设置“只选parent，只选leaf”
 
 TODO BUG CoadminSelect use-input的时候，会出现下拉列出的选项空行的问题

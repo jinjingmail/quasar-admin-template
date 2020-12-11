@@ -37,7 +37,7 @@
                 <q-card-section>
                   <coadmin-form ref="searchform" label-width="small" label-position="right">
                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                      <coadmin-tree-input
+                      <coadmin-tree-select
                         ref="treeInputMultiple"
                         class="col-12"
                         form-label="Tree"
@@ -54,7 +54,7 @@
                         tree-class="q-pa-sm"
                       />
 
-                      <coadmin-tree-input
+                      <coadmin-tree-select
                         class="col-12 col-sm-6"
                         form-label="TreeSingle"
                         placeholder="Tree单选"
@@ -172,7 +172,7 @@
                           </q-icon>
                         </template>
                       </coadmin-input>
-                      <coadmin-date-input
+                      <coadmin-date-select
                         class="col-12"
                         form-label="date2"
                         placeholder="日期范围选"
@@ -184,8 +184,8 @@
                         <template v-slot:append>
                           <q-icon name="event" />
                         </template>
-                      </coadmin-date-input>
-                      <coadmin-date-input
+                      </coadmin-date-select>
+                      <coadmin-date-select
                         class="col-12 col-sm-6"
                         form-label="date3"
                         placeholder="日期单选"
@@ -194,7 +194,7 @@
                         <template v-slot:append>
                           <q-icon name="event" />
                         </template>
-                      </coadmin-date-input>
+                      </coadmin-date-select>
 
                     </div>
                   </coadmin-form>
