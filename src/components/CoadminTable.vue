@@ -123,13 +123,8 @@ export default {
     ]),
     computedVirtualScroll () {
       let vs = this.virtualScroll
-      if (this.$q.screen.gt.xs) {
-        if (this.stickyHeader) {
-          vs = true
-        }
-      } else {
-        // 当前在ios手机测试，虚拟滚动有bug
-        vs = false
+      if (this.stickyHeader) {
+        vs = true
       }
       return vs
     },
@@ -158,17 +153,17 @@ export default {
     computedStyle () {
       let height = 'auto'
       if (this.computedVirtualScroll) {
-        if (this.$q.screen.gt.xs) {
-          if (this.isFullscreen) {
-            height = '100vh'
+        // if (this.$q.screen.gt.xs) {
+        if (this.isFullscreen) {
+          height = '100vh'
+        } else {
+          if (this.tagsView) {
+            height = 'calc(100vh - 50px - 50px)'
           } else {
-            if (this.tagsView) {
-              height = 'calc(100vh - 50px - 50px)'
-            } else {
-              height = 'calc(100vh - 50px - 2px)'
-            }
+            height = 'calc(100vh - 50px - 2px)'
           }
         }
+        // }
       }
       return {
         height: height

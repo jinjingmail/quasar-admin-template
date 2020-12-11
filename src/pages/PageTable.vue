@@ -230,8 +230,7 @@
       row-key="id"
       dense
       flat
-      table-class="q-pa-md "
-      separator="cell"
+      table-class="q-pa-sm "
       stickyHeader
       :data="data"
       :columns="columns"

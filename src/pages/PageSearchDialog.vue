@@ -4,8 +4,9 @@
       row-key="id"
       dense
       flat
-      table-class="q-pa-md "
-      separator="cell"
+      table-class="q-pa-sm "
+      stickyHeader
+      stickyLastColumn
       :data="data"
       :columns="columns"
       :visible-columns="visibleColumns"
@@ -38,7 +39,6 @@
               <q-btn-dropdown dense auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
                 <div class="row no-wrap q-pa-sm">
                   <div class="column">
-                    <q-btn flat label="清空搜索" icon="replay" @click="loading = !loading"/>
                     <q-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
                     <q-separator/>
                     <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
