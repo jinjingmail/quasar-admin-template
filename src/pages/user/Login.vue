@@ -87,7 +87,7 @@
 <script>
 import { mapActions } from 'vuex'
 import BrandColor from 'components/BrandColor.vue'
-import random from '../../utils'
+import { random } from '../../utils/index'
 
 export default {
   components: {

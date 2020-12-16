@@ -4,7 +4,7 @@
       row-key="id"
       dense
       flat
-      table-class="q-pa-sm "
+      class="q-pa-sm "
       stickyHeader
       stickyLastColumn
       :data="data"
@@ -15,7 +15,6 @@
       :fullscreen.sync="tableFullscreen"
       :loading="loading"
       loading-spinner="ios"
-      no-filter
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
@@ -52,225 +51,218 @@
               :loading="loading"
               loading-spinner="dots"
               seamless>
-              <q-card>
-                <q-card-section>
-                  <coadmin-form ref="searchform" label-width="small" label-position="right">
-                    <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                      <coadmin-tree-select
-                        class="col-12 col-sm-6"
-                        form-label="TreeSingle"
-                        placeholder="Tree单选"
-                        :nodes="treeDatas()"
-                        node-key="id"
-                        label-key="name"
-                        selectable
-                        :selected.sync="query.selected"
-                        @selected-label="label => querySelectedLabel = label"
-                        filter-key-like="nameLetter"
-                        filter-key-equal="id"
-                        tree-class="q-pa-sm"
-                        clearable
-                      />
+              <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
+                <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+                  <coadmin-tree-select
+                    class="col-12 col-sm-6"
+                    form-label="TreeSingle"
+                    placeholder="Tree单选"
+                    :nodes="treeDatas()"
+                    node-key="id"
+                    label-key="name"
+                    selectable
+                    :selected.sync="query.selected"
+                    @selected-label="label => querySelectedLabel = label"
+                    filter-key-like="nameLetter"
+                    filter-key-equal="id"
+                    tree-class="q-pa-sm"
+                    clearable
+                  />
 
-                      <coadmin-input ref="input1" class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="query.name" clearable
-                        @blur="$q.notify({message:'名称 blur notify'})"/>
+                  <coadmin-input ref="input1" class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="query.name" clearable
+                    @blur="$q.notify({message:'名称 blur notify'})"/>
 
-                      <coadmin-tree-select
-                        ref="treeInputMultiple"
-                        class="col-12"
-                        form-label="Tree"
-                        placeholder="Tree多选"
-                        :nodes="treeDatas()"
-                        node-key="id"
-                        label-key="name"
-                        :ticked.sync="query.ticked"
-                        @ticked-label="labels => queryTickedLabels = labels"
-                        tick-strategy="leaf-all-only-parent"
-                        filter-key-like="nameLetter"
-                        filter-key-equal="id"
-                        tree-style="width:300px; max-height:70vh;"
-                        tree-class="q-pa-sm"
-                        clearable
-                      />
+                  <coadmin-tree-select
+                    ref="treeInputMultiple"
+                    class="col-12"
+                    form-label="Tree"
+                    placeholder="Tree多选"
+                    :nodes="treeDatas()"
+                    node-key="id"
+                    label-key="name"
+                    :ticked.sync="query.ticked"
+                    @ticked-label="labels => queryTickedLabels = labels"
+                    tick-strategy="leaf-all-only-parent"
+                    filter-key-like="nameLetter"
+                    filter-key-equal="id"
+                    tree-style="width:300px; max-height:70vh;"
+                    tree-class="q-pa-sm"
+                    clearable
+                  />
 
-                      <coadmin-input ref="input2" outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
-                        <template v-slot:append>
-                          <q-icon v-if="!query.calories" name="search" />
-                          <q-icon v-else name="clear" class="cursor-pointer" @click="query.calories = ''" />
-                        </template>
-                        <template v-slot:before>
-                          <q-icon name="expand_less" />
-                        </template>
-                        <template v-slot:after>
-                          <q-icon name="add" />
-                        </template>
-                      </coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
-                          val => !!val || '不能空',
-                          val => val.length === 11 || '请输入11个字符'
-                          ]"
-                          >
-                      </coadmin-input>
-                      <coadmin-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
-                        <q-popup-proxy breakpoint="0">
-                          <q-card>
-                            <div >ThisisPopup</div>
-                          </q-card>
-                        </q-popup-proxy>
-                      </coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" label-slot v-model="query.iron" clearable >
-                        <template v-slot:label>
-                          <div style="color:red;">iron in slot</div>
-                        </template>
-                      </coadmin-input>
-                      <coadmin-select
-                        class="col-12 col-sm-6"
-                        form-label="单选map"
-                        placeholder="选择"
-                        v-model="query.selectSingle"
-                        no-filter
-                        :options="mapOptions"
-                        option-value="id"
-                        option-label="desc"
-                        filter-key-like="letters"
-                        filter-key-equal="id"
-                        clearable
-                        use-input
-                        hide-selected
-                        fill-input
-                        input-debounce="0"
-                        emit-value
-                        map-options
-                        @value-label="label => querySelectSingleLabel = label"
+                  <coadmin-input ref="input2" outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
+                    <template v-slot:append>
+                      <q-icon v-if="!query.calories" name="search" />
+                      <q-icon v-else name="clear" class="cursor-pointer" @click="query.calories = ''" />
+                    </template>
+                    <template v-slot:before>
+                      <q-icon name="expand_less" />
+                    </template>
+                    <template v-slot:after>
+                      <q-icon name="add" />
+                    </template>
+                  </coadmin-input>
+                  <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
+                      val => !!val || '不能空',
+                      val => val.length === 11 || '请输入11个字符'
+                      ]"
                       >
-                        <template v-slot:prepend>
-                          <q-icon name="add" />
-                        </template>
-                        <template v-slot:after>
-                          <q-icon name="menu" />
-                        </template>
-                      </coadmin-select>
-                      <coadmin-select
-                        v-model="query.selectSingle"
-                        form-label="单选list"
-                        class="col-12 col-sm-6"
-                        clearable
-                        use-input
-                        hide-selected
-                        fill-input
-                        input-debounce="0"
-                        placeholder="选择巨头"
-                        :options="listOptions"
-                        @value-label="label => querySelectSingleLabel = label"
-                      >
-                        <template v-slot:after>
-                          <q-icon name="menu" />
-                        </template>
-                      </coadmin-select>
-                      <coadmin-field
-                        class="col-12 col-sm-6"
-                        form-label="options"
-                      >
-                        <template v-slot:control>
-                          <div class="q-gutter-sm">
-                            <q-radio dense name="shape" v-model="query.selectCompany" val="facebook" label="Facebook" />
-                            <q-radio dense name="shape" v-model="query.selectCompany" val="腾讯" label="腾讯控股" />
-                          </div>
-                        </template>
-                      </coadmin-field>
-                      <coadmin-input class="col-12 col-sm-6" label-position="right"
-                        mask="####-##-##"
-                        placeholder="####-##-##" form-label="dateinput"
-                        v-model="query.date" >
-                        <q-popup-proxy
-                          ref="popupDateinput"
-                        >
-                          <coadmin-date v-model="query.date" @input="$refs.popupDateinput.hide()">
-                          </coadmin-date>
-                        </q-popup-proxy>
-                        <template v-slot:append>
-                          <q-icon name="event" class="cursor-pointer">
-                          </q-icon>
-                        </template>
-                      </coadmin-input>
-                      <coadmin-date-select
-                        class="col-12"
-                        form-label="date2"
-                        placeholder="日期范围选"
-                        range-separator=" 至 "
-                        v-model="query.dateRange"
-                        clearable
-                        range
-                      >
-                        <template v-slot:append>
-                          <q-icon name="event" />
-                        </template>
-                      </coadmin-date-select>
-                      <coadmin-date-select
-                        class="col-12 col-sm-6"
-                        form-label="date3"
-                        placeholder="日期单选"
-                        v-model="query.dateSingle"
-                      >
-                        <template v-slot:append>
-                          <q-icon name="event" />
-                        </template>
-                      </coadmin-date-select>
+                  </coadmin-input>
+                  <coadmin-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
+                  <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
+                  <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
+                    <q-popup-proxy breakpoint="0">
+                      <q-card>
+                        <div >ThisisPopup</div>
+                      </q-card>
+                    </q-popup-proxy>
+                  </coadmin-input>
+                  <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" label-slot v-model="query.iron" clearable >
+                    <template v-slot:label>
+                      <div style="color:red;">iron in slot</div>
+                    </template>
+                  </coadmin-input>
+                  <coadmin-select
+                    class="col-12 col-sm-6"
+                    form-label="单选map"
+                    placeholder="选择"
+                    v-model="query.selectSingle"
+                    no-filter
+                    :options="mapOptions"
+                    option-value="id"
+                    option-label="desc"
+                    filter-key-like="letters"
+                    filter-key-equal="id"
+                    clearable
+                    use-input
+                    hide-selected
+                    fill-input
+                    input-debounce="0"
+                    emit-value
+                    map-options
+                    @value-label="label => querySelectSingleLabel = label"
+                  >
+                    <template v-slot:prepend>
+                      <q-icon name="add" />
+                    </template>
+                    <template v-slot:after>
+                      <q-icon name="menu" />
+                    </template>
+                  </coadmin-select>
+                  <coadmin-select
+                    v-model="query.selectSingle"
+                    form-label="单选list"
+                    class="col-12 col-sm-6"
+                    clearable
+                    use-input
+                    hide-selected
+                    fill-input
+                    input-debounce="0"
+                    placeholder="选择巨头"
+                    :options="listOptions"
+                    @value-label="label => querySelectSingleLabel = label"
+                  >
+                    <template v-slot:after>
+                      <q-icon name="menu" />
+                    </template>
+                  </coadmin-select>
+                  <coadmin-field
+                    class="col-12 col-sm-6"
+                    form-label="options"
+                  >
+                    <template v-slot:control>
+                      <div class="q-gutter-sm">
+                        <q-radio dense name="shape" v-model="query.selectCompany" val="facebook" label="Facebook" />
+                        <q-radio dense name="shape" v-model="query.selectCompany" val="腾讯" label="腾讯控股" />
+                      </div>
+                    </template>
+                  </coadmin-field>
+                  <coadmin-input class="col-12 col-sm-6" label-position="right"
+                    mask="####-##-##"
+                    placeholder="####-##-##" form-label="dateinput"
+                    v-model="query.date" >
+                    <q-popup-proxy
+                      ref="popupDateinput"
+                    >
+                      <coadmin-date v-model="query.date" @input="$refs.popupDateinput.hide()">
+                      </coadmin-date>
+                    </q-popup-proxy>
+                    <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                      </q-icon>
+                    </template>
+                  </coadmin-input>
+                  <coadmin-date-select
+                    class="col-12"
+                    form-label="date2"
+                    placeholder="日期范围选"
+                    range-separator=" 至 "
+                    v-model="query.dateRange"
+                    clearable
+                    range
+                  >
+                    <template v-slot:append>
+                      <q-icon name="event" />
+                    </template>
+                  </coadmin-date-select>
+                  <coadmin-date-select
+                    class="col-12 col-sm-6"
+                    form-label="date3"
+                    placeholder="日期单选"
+                    v-model="query.dateSingle"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="event" />
+                    </template>
+                  </coadmin-date-select>
 
-                      <coadmin-option-group
-                        v-model="query.selectSingle"
-                        class="col-12 col-sm-6"
-                        :inline="true"
-                        form-label="optionsGroup"
-                        :options="mapOptions"
-                        label-key="desc"
-                        value-key="id"
-                        @value-label="label => querySelectSingleLabel = label"
-                      />
-                      <coadmin-option-group
-                        v-model="query.selectMultiple"
-                        class="col-12 col-sm-6"
-                        :inline="true"
-                        form-label="optionsGroup"
-                        :options="mapOptions"
-                        label-key="desc"
-                        value-key="id"
-                        type="checkbox"
-                        @value-label="labels => querySelectMultipleLabels = labels"
-                      />
-                      <coadmin-select
-                        class="col-12 col-sm-6"
-                        form-label="多选"
-                        v-model="query.selectMultiple"
-                        no-filter
-                        :options="mapOptions"
-                        option-value="id"
-                        option-label="desc"
-                        filter-key-like="letters"
-                        clearable
-                        use-input
-                        input-debounce="0"
+                  <coadmin-option-group
+                    v-model="query.selectSingle"
+                    class="col-12 col-sm-6"
+                    :inline="true"
+                    form-label="optionsGroup"
+                    :options="mapOptions"
+                    label-key="desc"
+                    value-key="id"
+                    @value-label="label => querySelectSingleLabel = label"
+                  />
+                  <coadmin-option-group
+                    v-model="query.selectMultiple"
+                    class="col-12 col-sm-6"
+                    :inline="true"
+                    form-label="optionsGroup"
+                    :options="mapOptions"
+                    label-key="desc"
+                    value-key="id"
+                    type="checkbox"
+                    @value-label="labels => querySelectMultipleLabels = labels"
+                  />
+                  <coadmin-select
+                    class="col-12 col-sm-6"
+                    form-label="多选"
+                    v-model="query.selectMultiple"
+                    no-filter
+                    :options="mapOptions"
+                    option-value="id"
+                    option-label="desc"
+                    filter-key-like="letters"
+                    clearable
+                    use-input
+                    input-debounce="0"
 
-                        map-options
-                        multiple
-                        emit-value
-                        @value-label="labels => querySelectMultipleLabels = labels"
-                      />
+                    map-options
+                    multiple
+                    emit-value
+                    @value-label="labels => querySelectMultipleLabels = labels"
+                  />
 
-                    </div>
-                  </coadmin-form>
-
-                </q-card-section>
-                <q-card-actions align="center">
-                  <q-btn label="查询" type="submit" color="primary" icon="search" v-close-popup @click="doQuery">
-                  </q-btn>
-                  <q-btn label="关闭" flat v-close-popup />
-                </q-card-actions>
-
-              </q-card>
-
+                </div>
+              </coadmin-form>
+              <q-card-actions align="center">
+                <q-btn label="查询" type="submit" color="primary" icon="search" v-close-popup @click="doQuery">
+                </q-btn>
+                <q-btn label="关闭" flat v-close-popup />
+              </q-card-actions>
             </coadmin-dialog>
           </coadmin-input>
 
@@ -368,8 +360,6 @@ export default {
       numberPerPage: 10,
       numberPerPageOptions: [{ label: '10/页', value: 10 }, { label: '20/页', value: 20 }, { label: '30/页', value: 30 }, { label: '40/页', value: 40 }, { label: '50/页', value: 50 }, { label: '100/页', value: 100 }],
       loading: false,
-      fabPos: [48, 68],
-      draggingFab: false,
       selected: [],
       tableFullscreen: null,
       visibleColumns: visibleColumns,
@@ -442,14 +432,6 @@ export default {
         type: 'positive',
         message: 'rowLooooooongButtonClick'
       })
-    },
-    moveFab (ev) {
-      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
-
-      this.fabPos = [
-        this.fabPos[0] - ev.delta.x,
-        this.fabPos[1] - ev.delta.y
-      ]
     },
     toggleTableFullscreen (props) {
       props.toggleFullscreen()

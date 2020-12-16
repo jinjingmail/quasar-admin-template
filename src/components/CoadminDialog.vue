@@ -19,13 +19,13 @@
 <template>
   <q-dialog
       ref="dialog"
-      :content-class="customContentClass"
+      class="coadmin-dialog"
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
       @before-show="_beforeShow"
   >
-    <q-card ref="card" :style="contentStyle" :id="uuid">
+    <q-card ref="card" :style="contentStyle" :class="contentClass" :id="uuid">
       <q-card-section v-if="!noToolbar" class="no-padding">
         <q-toolbar>
           <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
@@ -33,7 +33,7 @@
               <q-avatar v-if="!!icon">
                 <q-icon :name="icon"/>
               </q-avatar>
-              <q-toolbar-title><div>{{title}}</div></q-toolbar-title>
+              <div class="text-subtitle1">{{title}}</div>
             </slot>
           </q-toolbar>
           <template v-else>
@@ -41,7 +41,7 @@
               <q-avatar v-if="!!icon">
                 <q-icon :name="icon"/>
               </q-avatar>
-              <q-toolbar-title><div>{{title}}</div></q-toolbar-title>
+              <div class="text-subtitle1">{{title}}</div>
             </slot>
           </template>
 
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import random from '../utils'
+import { random } from '../utils/index'
 // import { QDialog } from 'quasar'
 
 export default {
@@ -128,18 +128,6 @@ export default {
       tempStyleMaxWidth: null,
       tempStyleLeft: null,
       tempStyleTop: null
-    }
-  },
-  computed: {
-    customContentClass () {
-      if (!this.contentClass) {
-        return 'coadmin-dialog'
-      }
-      if (this.contentClass.indexOf('coadmin-dialog') < 0) {
-        return 'coadmin-dialog ' + this.contentClass
-      } else {
-        return this.contentClass
-      }
     }
   },
   created () {

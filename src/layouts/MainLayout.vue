@@ -188,7 +188,7 @@
                     <q-popup-proxy>
                       <q-card class="my-card">
                         <q-card-section class="bg-primary text-white">
-                          <div class="text-h6">恢复默认？</div>
+                          <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
                         <q-separator />
                         <q-card-actions align="right">
@@ -228,7 +228,7 @@
                     <q-popup-proxy>
                       <q-card class="my-card">
                         <q-card-section class="bg-primary text-white">
-                          <div class="text-h6">恢复默认？</div>
+                          <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
                         <q-separator />
                         <q-card-actions align="right">

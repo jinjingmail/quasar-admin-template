@@ -60,7 +60,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import path from 'path'
-import random from '../utils'
+import { random } from '../utils/index'
 import { isExternal } from '../utils/validate'
 
 export default {

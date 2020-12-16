@@ -1,4 +1,9 @@
+/*
+ * demo 数据
+ */
+
 export const visibleColumns = ['id', 'name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action']
+export const defaultForm = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
 
 export const columns = [
   { name: 'id', label: 'ID', field: 'id' },
@@ -25,8 +30,6 @@ export const columns = [
   { name: 'iron5', label: 'Iron5 (%)', field: 'iron5' },
   { name: 'iron6', label: 'Iron6 (%)', field: 'iron6' },
   { name: 'iron7', label: 'Iron7 (%)', field: 'iron7' },
-  { name: 'iron8', label: 'Iron8 (%)', field: 'iron8' },
-  { name: 'iron9', label: 'Iron9 (%)', field: 'iron9' },
   { name: 'action', label: '操作', align: 'center' }
 ]
 

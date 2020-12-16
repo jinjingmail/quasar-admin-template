@@ -180,6 +180,26 @@ const routes = [
       }
     ]
   }, {
+    path: '/crud',
+    component: MainLayout,
+    name: 'CRUD',
+    alwaysShow: true,
+    meta: { title: 'CRUD', icon: 'add' },
+    children: [
+      {
+        path: 'pageCrud',
+        name: 'PageCrud',
+        component: () => import('pages/crud/PageCrud.vue'),
+        meta: { title: 'PageCrud', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom',
+        name: 'PageCrudCustom',
+        component: () => import('pages/crud/PageCrudCustom.vue'),
+        meta: { title: 'PageCrudCustom', icon: 'add' }
+      }
+    ]
+  }, {
     path: '/nested',
     component: MainLayout,
     name: 'Nested',

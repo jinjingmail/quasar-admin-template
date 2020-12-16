@@ -6,6 +6,10 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
+const path = require('path')
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = function (/* ctx */) {
   return {
@@ -71,6 +75,12 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias, // This adds the existing alias
+          // Add your own alias
+          '@': resolve('src'),
+          '@crud': resolve('src/components/CRUD')
+        }
       }
     },
 
