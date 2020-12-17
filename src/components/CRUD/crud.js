@@ -49,6 +49,7 @@ function CRUD(options) {
     },
     // 主页操作栏显示哪些按钮
     optShow: {
+      view: true,
       add: true,
       edit: true,
       del: true,

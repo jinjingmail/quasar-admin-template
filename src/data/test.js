@@ -2,7 +2,7 @@
  * demo 数据
  */
 
-export const visibleColumns = ['id', 'name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action']
+export const visibleColumns = ['name', 'calories', 'fat', 'protein', 'sodium', 'calcium', 'iron', 'action']
 export const defaultForm = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }
 
 export const columns = [

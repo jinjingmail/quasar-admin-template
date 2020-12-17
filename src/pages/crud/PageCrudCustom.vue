@@ -45,7 +45,7 @@
       ref="table"
       row-key="id"
       class="q-pt-sm"
-      dense
+      sticky-last-column
       flat
       :data="crud.data"
       :columns="crud.columns"
@@ -57,14 +57,22 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <crud-operation :permission="permission" />
+          <crud-operation :permission="permission"
+            label-del=""
+            icon-view=""
+            outline
+            >
+            <template v-slot:right>
+              <q-btn dense label="OK"/>
+            </template>
+          </crud-operation>
           <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
                 input-class="text-center">
             <template v-slot:after>
               <q-btn dense  color="primary" icon="search" @click="crud.toQuery"/>
               <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props">
-                  <q-btn flat label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
+                  <q-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
                   <q-separator/>
                 </crud-more>
               </q-btn-dropdown>
@@ -110,7 +118,26 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" :permission="permission"/>
+          <crud-row no-wrap
+            :data="props.row"
+            :type="$q.screen.gt.xs?'button':'menu'"
+            :permission="permission"
+            color-view='green'
+            label-del="删"
+            icon-del="delete_sweep"
+            disabledEdit
+            msg="真的删？">
+            <template v-slot:right>
+              <q-item clickable dense>
+                <q-item-section>
+                  <q-item-label>haha</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+            <template v-slot:right>
+              <q-btn flat dense label="导出" />
+            </template>
+          </crud-row>
         </q-td>
       </template>
 

@@ -41,7 +41,6 @@
       ref="table"
       row-key="id"
       class="q-pt-sm"
-      dense
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
@@ -88,7 +87,7 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" :permission="permission"/>
+          <crud-row :data="props.row" flat :permission="permission"/>
         </q-td>
       </template>
 

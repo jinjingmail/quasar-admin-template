@@ -3,7 +3,7 @@
     <div class="column">
       <slot />
       <template v-if="!noFullscreen && tableSlotTopProps && tableSlotTopProps.inFullscreen != undefined">
-        <q-btn flat label="全屏" :icon="tableSlotTopProps.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(tableSlotTopProps)"/>
+        <q-btn flat label="全屏" align="left" :icon="tableSlotTopProps.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(tableSlotTopProps)"/>
         <q-separator/>
       </template>
 

@@ -14,6 +14,7 @@
     :style="computedStyle"
     v-bind="$attrs"
     v-on="listeners"
+    :dense="dense"
     :fullscreen="isFullscreen"
     :virtual-scroll="computedVirtualScroll"
     :rows-per-page-options="rowsPerPageOptions"
@@ -63,6 +64,10 @@ export default {
   name: 'CoadminTable',
   inheritAttrs: false,
   props: {
+    dense: {
+      type: Boolean,
+      default: true
+    },
     rowsPerPageOptions: {
       type: Array,
       default: () => [0]

@@ -116,11 +116,12 @@ body {
   }
   .q-table__top,
   .q-table__bottom {
-    padding: 14px 12px;
+    padding: 14px 18px;
   }
 }
 
 .coadmin-dialog {
+  &.q-dark,
   .q-dark {
     background: $grey-9;
   }
