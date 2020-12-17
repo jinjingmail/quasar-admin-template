@@ -1,6 +1,18 @@
+<!--
+  插槽：
+    start
+    end
+  属性：
+    dense
+    icon-prev
+    icon-next
+    input
+    max-pages
+    no-persistence-page-size
+-->
 <template>
   <div class="row">
-    <slot name="left" />
+    <slot name="start" />
     <q-field dense borderless class="col-auto">
       <template v-slot:control>
         <div class="self-center full-width no-outline" tabindex="0">共{{page.total}}条</div>
@@ -12,28 +24,57 @@
       :max="pageMax"
       :direction-links="true"
       :boundary-links="false"
-      input
+      :input='input'
       @input="crud.pageChangeHandler"
+      :icon-prev="iconPrev"
+      :icon-next="iconNext"
+      :max-pages="$q.screen.gt.xs?maxPages:5"
+      :size="dense?undefined:'18px'"
     >
     </q-pagination>
     <q-select
       class="col-auto"
-      dense options-dense borderless
-      flat
+      standout
+      :dense="dense"
+      :options-dense="dense"
       :value="page.size"
       :options="sizePerPageOptions"
       emit-value
       map-options
-      @input="crud.sizeChangeHandler"
+      @input="pageSizeChange"
+      :hide-dropdown-icon="!$q.screen.gt.xs"
+      :borderless="!$q.screen.gt.xs"
     />
-    <slot name="right" />
+    <slot name="end" />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 import { pagination } from './crud'
 export default {
   mixins: [pagination()],
+  props: {
+    dense: {
+      type: Boolean,
+      default: true
+    },
+    iconPrev: {
+      type: String,
+      default: 'chevron_left'
+    },
+    iconNext: {
+      type: String,
+      default: 'chevron_right'
+    },
+    input: Boolean,
+    maxPages: {
+      type: Number,
+      default: 6
+    },
+    noPersistencePageSize: Boolean
+  },
   data () {
     return {
       sizePerPageOptions: [
@@ -53,7 +94,12 @@ export default {
       ]
     }
   },
+  mounted () {
+  },
   computed: {
+    ...mapGetters('settings', [
+      'pageSize'
+    ]),
     pageMax () {
       const p = parseInt(this.page.total / this.page.size)
       if (p * this.page.size === this.page.total) {
@@ -61,6 +107,17 @@ export default {
       } else {
         return p + 1
       }
+    }
+  },
+  methods: {
+    ...mapActions('settings', [
+      'changeSetting'
+    ]),
+    pageSizeChange (value) {
+      if (!this.noPersistencePageSize) {
+        this.changeSetting({ key: 'pageSize', value: value })
+      }
+      this.crud.sizeChangeHandler(value)
     }
   }
 }

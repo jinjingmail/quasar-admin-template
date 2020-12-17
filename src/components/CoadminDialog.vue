@@ -113,7 +113,7 @@ export default {
     },
     contentClass: {
       type: String,
-      default: 'coadmin-dialog'
+      default: ''
     },
     contentStyle: {
       type: String,

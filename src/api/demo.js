@@ -10,7 +10,11 @@ export function add(data) {
     method: 'post',
     data
   })*/
-  return Promise.resolve({})
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({})
+    }, 500)
+  })
 }
 
 export function del(ids) {
@@ -20,7 +24,11 @@ export function del(ids) {
     method: 'delete',
     data: ids
   })*/
-  return Promise.resolve({})
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({})
+    }, 500)
+  })
 }
 
 export function edit(data) {
@@ -30,7 +38,11 @@ export function edit(data) {
     method: 'put',
     data
   })*/
-  return Promise.resolve({})
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({})
+    }, 500)
+  })
 }
 
 export default { add, edit, del }

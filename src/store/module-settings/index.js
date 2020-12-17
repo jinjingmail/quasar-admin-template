@@ -11,7 +11,6 @@ function get (key, default_ = null) {
   }
 }
 function set (key, value) {
-  console.log('---store.set.' + key, value)
   if (key.startsWith('setting.color')) {
     setColor(key, value)
   } else {
@@ -50,6 +49,8 @@ const state = {
   footerTxt: defaultSetting.footerTxt,
   caseNumber: defaultSetting.caseNumber,
 
+  pageSize: get('setting.pageSize', defaultSetting.pageSize),
+
   tagsView: get('setting.tagsView', defaultSetting.tagsView),
   tagsViewTop: get('setting.tagsViewTop', defaultSetting.tagsViewTop),
   fixedHeader: get('setting.fixedHeader', defaultSetting.fixedHeader),
@@ -78,6 +79,10 @@ const state = {
 
 const getters = {
   title: state => state.title,
+  footerTxt: state => state.footerTxt,
+  caseNumber: state => state.caseNumber,
+  pageSize: state => state.pageSize,
+
   tagsView: state => state.tagsView,
   tagsViewTop: state => state.tagsViewTop,
   fixedHeader: state => state.fixedHeader,
@@ -87,8 +92,6 @@ const getters = {
   sidebarMini: state => state.sidebarMini,
   uniqueOpened: state => state.uniqueOpened,
   showFooter: state => state.showFooter,
-  footerTxt: state => state.footerTxt,
-  caseNumber: state => state.caseNumber,
 
   darkMode: state => state.darkMode,
   colorPrimary: state => Dark.isActive ? state.colorPrimaryDark : state.colorPrimary,

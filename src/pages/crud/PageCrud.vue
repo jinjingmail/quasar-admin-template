@@ -21,7 +21,7 @@
             </q-field>
           </coadmin-form-item>
           <coadmin-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
-              val => val.length >= 3 || '请输入3个以上字符'
+              val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
@@ -50,11 +50,13 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
+
           <crud-operation :permission="permission" />
+
           <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
                 input-class="text-center">
             <template v-slot:after>
-              <q-btn dense  color="primary" icon="search" @click="crud.toQuery"/>
+              <q-btn dense color="primary" icon="search" @click="crud.toQuery"/>
               <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props" />
               </q-btn-dropdown>
@@ -68,6 +70,7 @@
                     class="col-12 col-sm-6"
                     form-label="date"
                     placeholder="日期单选"
+                    clearable
                     v-model="query.dateSingle"
                   >
                     <template v-slot:append>
@@ -77,7 +80,7 @@
                 </div>
               </coadmin-form>
               <q-card-actions align="center">
-                <q-btn label="查询" color="primary" icon="search" v-close-popup @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+                <q-btn label="查询" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="关闭" flat v-close-popup />
               </q-card-actions>
             </coadmin-dialog>
@@ -149,6 +152,12 @@ export default {
           }
         }
       }
+    }
+  },
+  methods: {
+    [CRUD.HOOK.beforeRefresh] () {
+      console.log('pageCrud CRUD.HOOK.beforeRefresh')
+      //this.page.size = 3
     }
   }
 }

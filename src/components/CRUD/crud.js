@@ -1,5 +1,5 @@
-import { initData, download } from '../../api/data'
-import { parseTime, downloadFile } from '../../utils/index'
+import { initData, download } from '@/api/data'
+import { parseTime, downloadFile } from '@/utils/index'
 import Vue from 'vue'
 
 /**
@@ -147,29 +147,26 @@ function CRUD(options) {
       crud.selections = []
       return new Promise((resolve, reject) => {
         crud.loading = true
-        // TODO 真实环境需要去掉setTimeout
-        setTimeout(() => {
-          // 请求数据
-          initData(crud.url, crud.getQueryParams()).then(data => {
-            const table = crud.getTable()
-            if (table && table.lazy) { // 懒加载子节点数据，清掉已加载的数据
-              table.store.states.treeData = {}
-              table.store.states.lazyTreeNodeMap = {}
-            }
-            crud.page.total = data.totalElements
-            crud.data = data.content
-            crud.resetDataStatus()
-            // time 毫秒后显示表格
-            setTimeout(() => {
-              crud.loading = false
-              callVmHook(crud, CRUD.HOOK.afterRefresh)
-            }, crud.time)
-            resolve(data)
-          }).catch(err => {
+        // 请求数据
+        initData(crud.url, crud.getQueryParams()).then(data => {
+          const table = crud.getTable()
+          if (table && table.lazy) { // 懒加载子节点数据，清掉已加载的数据
+            table.store.states.treeData = {}
+            table.store.states.lazyTreeNodeMap = {}
+          }
+          crud.page.total = data.totalElements
+          crud.data = data.content
+          crud.resetDataStatus()
+          // time 毫秒后显示表格
+          setTimeout(() => {
             crud.loading = false
-            reject(err)
-          })
-        }, 500)
+            callVmHook(crud, CRUD.HOOK.afterRefresh)
+          }, crud.time)
+          resolve(data)
+        }).catch(err => {
+          crud.loading = false
+          reject(err)
+        })
       })
     },
     /**
@@ -723,10 +720,12 @@ function presenter(crud) {
         if (this.$crud[ele.tag]) {
           console.error('[CRUD error]: ' + 'crud with tag [' + ele.tag + ' is already exist')
         }
+        ele.page.size = this.$store.state.settings.pageSize
         this.$crud[ele.tag] = ele
         ele.registerVM('presenter', this, 0)
       })
       this.crud = this.$crud.defalut || cruds[0]
+      // this.crud.page.size = this.$store.state.settings.pageSize
     },
     methods: {
       parseTime

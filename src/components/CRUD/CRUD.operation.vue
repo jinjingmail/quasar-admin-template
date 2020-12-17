@@ -1,20 +1,42 @@
+<!--
+  插槽：
+    start
+    end
+  属性：
+    permission
+
+    dense
+    flat
+    rounded
+    round
+    outline
+    push
+    unelevated
+    glossy
+
+    color-edit / color-view / color-del / color-add
+    label-view / label-edit / label-del / label-add
+    icon-edit / icon-view / icon-del / icon-add
+    no-icon
+    no-label
+-->
 <template>
   <div class="col-auto q-pl-none q-gutter-sm no-wrap">
     <!--左侧插槽-->
-    <slot name="left" />
-    <q-btn :dense="dense" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="{'glossy':glossy}"
-      :color="colorAdd" :icon="computedIconAdd" :label="noLabel?'':labelAdd" v-if="crud.optShow.add" @click="crud.toAdd"/>
-    <q-btn dense :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="{'glossy':glossy}"
-      :color="colorView" :icon="computedIconView" :label="noLabel?'':labelView" v-if="crud.optShow.view && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
-    <q-btn dense :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="{'glossy':glossy}"
-      :color="colorEdit" :icon="computedIconEdit" :label="noLabel?'':labelEdit" v-if="crud.optShow.edit && !(crud.selections.length!==1)" @click="crud.toEdit(crud.selections[0])"/>
-    <q-btn dense :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="{'glossy':glossy}"
-      :color="colorDel" :icon="computedIconDel" :label="noLabel?'':labelDel" v-if="crud.optShow.del && !(crud.selections.length===0)"
+    <slot name="start" />
+    <q-btn :dense="dense" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="crud.optShow.add" @click="crud.toAdd"/>
+    <q-btn :dense="dense" :padding="(dense && computedLabelView)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorView" :icon="computedIconView" :label="computedLabelView" v-if="crud.optShow.view && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
+    <q-btn :dense="dense" :padding="(dense && computedLabelEdit)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit" v-if="crud.optShow.edit && !(crud.selections.length!==1)" @click="crud.toEdit(crud.selections[0])"/>
+    <q-btn :dense="dense" :padding="(dense && computedLabelDel)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorDel" :icon="computedIconDel" :label="computedLabelDel" v-if="crud.optShow.del && !(crud.selections.length===0)"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
     <!--右侧插槽-->
-    <slot name="right" />
+    <slot name="end" />
     <coadmin-dialog ref="dialogDelete" no-max title="删除" content-style="width:250px; max-width:95vw;">
       <q-card-section>
         <div class="text-body1">删除选中的{{crud.selections.length}}条数据?</div>
@@ -101,6 +123,46 @@ export default {
     noLabel: Boolean
   },
   computed: {
+    computedLabelView () {
+      if (!this.$q.screen.gt.xs && this.iconView) {
+        return undefined
+      }
+      if (this.labelView && !this.noLabel) {
+        return this.labelView
+      } else {
+        return undefined
+      }
+    },
+    computedLabelAdd () {
+      if (!this.$q.screen.gt.xs && this.iconAdd) {
+        return undefined
+      }
+      if (this.labelAdd && !this.noLabel) {
+        return this.labelAdd
+      } else {
+        return undefined
+      }
+    },
+    computedLabelEdit () {
+      if (!this.$q.screen.gt.xs && this.iconEdit) {
+        return undefined
+      }
+      if (this.labelEdit && !this.noLabel) {
+        return this.labelEdit
+      } else {
+        return undefined
+      }
+    },
+    computedLabelDel () {
+      if (!this.$q.screen.gt.xs && this.iconDel) {
+        return undefined
+      }
+      if (this.labelDel && !this.noLabel) {
+        return this.labelDel
+      } else {
+        return undefined
+      }
+    },
     computedIconView () {
       if (this.iconView && !this.noIcon) {
         return this.iconView
@@ -133,10 +195,7 @@ export default {
   methods: {
     doDelete (datas) {
       this.crud.delAllLoading = true
-      // TODO 实际使用需要去掉setTiemout
-      setTimeout(() => {
-        this.crud.doDelete(datas)
-      }, 500)
+      this.crud.doDelete(datas)
     }
   }
 }

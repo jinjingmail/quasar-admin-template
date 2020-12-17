@@ -12,9 +12,13 @@ export function initData(url, params) {
   console.log('initData.URL:', URL)
   const page = params.page
   const size = params.size
-  return Promise.resolve({
-    totalElements: data.length,
-    content: data.slice((page) * size, (page) * size + size)
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        totalElements: data.length,
+        content: data.slice((page) * size, (page) * size + size)
+      })
+    }, 500)
   })
 }
 
@@ -28,5 +32,9 @@ export function download(url, params) {
     responseType: 'blob'
   })
   */
-  return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({})
+    }, 500)
+  })
 }

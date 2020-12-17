@@ -25,7 +25,7 @@
             </q-field>
           </coadmin-form-item>
           <coadmin-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
-              val => val.length >= 3 || '请输入3个以上字符'
+              val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
@@ -62,8 +62,8 @@
             icon-view=""
             outline
             >
-            <template v-slot:right>
-              <q-btn dense label="OK"/>
+            <template v-slot:end>
+              <q-btn dense label="导出" outline/>
             </template>
           </crud-operation>
           <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
@@ -86,6 +86,7 @@
                     class="col-12 col-sm-6"
                     form-label="date"
                     placeholder="日期单选"
+                    clearable
                     v-model="query.dateSingle"
                   >
                     <template v-slot:append>
@@ -127,22 +128,15 @@
             icon-del="delete_sweep"
             disabledEdit
             msg="真的删？">
-            <template v-slot:right>
-              <q-item clickable dense>
-                <q-item-section>
-                  <q-item-label>haha</q-item-label>
-                </q-item-section>
-              </q-item>
-            </template>
-            <template v-slot:right>
-              <q-btn flat dense label="导出" />
+            <template v-slot:end>
+              <q-btn dense label="导出" />
             </template>
           </crud-row>
         </q-td>
       </template>
 
       <template v-slot:pagination>
-        <crud-pagination />
+        <crud-pagination input :dense="false"/>
       </template>
 
     </coadmin-table>

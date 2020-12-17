@@ -1,8 +1,10 @@
 <!--
   插槽：
-    left
-    right
+    start
+    end
   属性：
+    permission
+
     dense
     dense-menu
     flat
@@ -26,7 +28,7 @@
 -->
 <template>
   <q-btn no-wrap v-if="type === 'menu'"
-    :dense='dense' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="glossy?'glossy':''"
+    :dense='dense' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
     :flat="flat"
     :icon-right="menuShow?iconMenuOpen:iconMenu"
     :label="labelMenu"
@@ -34,7 +36,7 @@
     :loading="delLoading" :disable="delLoading">
     <q-menu ref="menu" :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
       <q-list>
-        <slot name="left" />
+        <slot name="start" />
         <q-item clickable :class="'text-' + colorView" :dense="computedDenseMenu" @click="crud.toView(data)" v-if="!disabledView">
           <q-item-section avatar v-if="computedIconView">
             <q-icon :name="computedIconView" />
@@ -74,16 +76,16 @@
           </q-popup-proxy>
         </q-item>
 
-        <slot name="right" />
+        <slot name="end" />
       </q-list>
     </q-menu>
   </q-btn>
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
-    <slot name="left" />
-    <q-btn @click="crud.toView(data)" v-if="!disabledView" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="glossy?'glossy':''" :label="noLabel?'':labelView"/>
-    <q-btn @click="crud.toEdit(data)" v-if="!disabledEdit" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="glossy?'glossy':''" :label="noLabel?'':labelEdit"/>
-    <q-btn v-if="!disabledDel" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :class="glossy?'glossy':''" :label="noLabel?'':labelDel"
+    <slot name="start" />
+    <q-btn @click="crud.toView(data)" v-if="!disabledView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView"/>
+    <q-btn @click="crud.toEdit(data)" v-if="!disabledEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit"/>
+    <q-btn v-if="!disabledDel" :padding="(dense && !noLabel && labelDel)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-popup-proxy>
         <q-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
@@ -98,7 +100,7 @@
         </q-card>
       </q-popup-proxy>
     </q-btn>
-    <slot name="right" />
+    <slot name="end" />
   </div>
 </template>
 
@@ -250,10 +252,7 @@ export default {
       if (this.$refs.menu) {
         this.$refs.menu.hide()
       }
-      // TODO 实际使用需要去掉setTiemout
-      setTimeout(() => {
-        this.crud.doDelete(this.data)
-      }, 500)
+      this.crud.doDelete(this.data)
     },
     [CRUD.HOOK.afterDelete](crud, data) {
       if (data === this.data) {

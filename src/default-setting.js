@@ -60,6 +60,10 @@ module.exports = {
    */
   darkMode: false,
   /**
+   * 表格每页显示的行数
+   */
+  pageSize: 10,
+  /**
    * 底部文字，支持html语法
    */
   footerTxt: '© 2020 XXYY 版权所有',
