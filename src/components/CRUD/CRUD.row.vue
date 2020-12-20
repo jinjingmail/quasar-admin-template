@@ -37,7 +37,7 @@
     <q-menu ref="menu" :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
       <q-list>
         <slot name="start" />
-        <q-item clickable :class="'text-' + colorView" :dense="computedDenseMenu" @click="crud.toView(data)" v-if="!disabledView">
+        <q-item clickable :class="'text-' + colorView" :dense="computedDenseMenu" @click="crud.toView(data)" v-if="!noView">
           <q-item-section avatar v-if="computedIconView">
             <q-icon :name="computedIconView" />
           </q-item-section>
@@ -46,7 +46,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :class="'text-' + colorEdit" :dense="computedDenseMenu" @click="crud.toEdit(data)" v-if="!disabledEdit">
+        <q-item clickable :class="'text-' + colorEdit" :dense="computedDenseMenu" @click="crud.toEdit(data)" v-if="!noEdit">
           <q-item-section avatar v-if="computedIconEdit">
             <q-icon :name="computedIconEdit" />
           </q-item-section>
@@ -55,7 +55,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :class="'text-' + colorDel" :dense="computedDenseMenu" v-if="!disabledDel">
+        <q-item clickable :class="'text-' + colorDel" :dense="computedDenseMenu" v-if="!noDel">
           <q-item-section avatar v-if="computedIconDel">
             <q-icon :name="computedIconDel" />
           </q-item-section>
@@ -83,9 +83,9 @@
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!disabledView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView"/>
-    <q-btn @click="crud.toEdit(data)" v-if="!disabledEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit"/>
-    <q-btn v-if="!disabledDel" :padding="(dense && !noLabel && labelDel)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView"/>
+    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit"/>
+    <q-btn v-if="!noDel" :padding="(dense && !noLabel && labelDel)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-popup-proxy>
         <q-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
@@ -117,9 +117,9 @@ export default {
       type: Object,
       required: true
     },
-    disabledView: Boolean,
-    disabledEdit: Boolean,
-    disabledDel: Boolean,
+    noView: Boolean,
+    noEdit: Boolean,
+    noDel: Boolean,
     msg: {
       type: String,
       default: '确定删除本条数据？'

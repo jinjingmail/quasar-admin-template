@@ -1,5 +1,5 @@
 <!--
-  重新定义input等form组件，有几个目的：
+  重新定义input等form组件：
   1、简化代码量
   2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
   新增插槽：
@@ -9,9 +9,12 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-input
+      v-model="model"
       class="col"
+      :class="contentClass"
+      :style="contentStyle"
       ref="input"
       v-bind="$attrs"
       v-on="listeners"
@@ -21,20 +24,25 @@
       :no-error-icon="noErrorIcon"
       :disable="disable"
       :readonly="readonly"
+      @mouseover.native="hover=true"
+      @mouseleave.native="hover=false"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
       </template>
-      <!--
       <template v-slot:append>
-        <slot name="append"/>
+        <template v-if="clearable && hover && !!model && !disable">
+          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+        </template>
+        <slot v-else name="append"/>
       </template>
-      -->
     </q-input>
   </div>
   <q-input v-else
     ref="input"
-    :class="computedClass"
+    v-model="model"
+    :class="{computedClass, contentClass}"
+    :style="contentStyle"
     v-bind="$attrs"
     v-on="listeners"
     :label="label"
@@ -43,15 +51,20 @@
     :no-error-icon="noErrorIcon"
     :disable="disable"
     :readonly="readonly"
+    @mouseover.native="hover=true"
+    @mouseleave.native="hover=false"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
-    <!--
+
     <template v-slot:append>
-      <slot name="append"/>
+      <template v-if="clearable && hover && !!model && !disable">
+        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+      </template>
+      <slot v-else name="append"/>
     </template>
-    -->
+
   </q-input>
 </template>
 
@@ -62,6 +75,15 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    clearable: Boolean,
+    clearIcon: {
+      type: String,
+      default: 'cancel'
+    },
+    noClearFocus: Boolean,
+    value: {
+      type: [String, Number]
+    },
     label: {
       type: String,
       default: undefined
@@ -71,18 +93,29 @@ export default {
       default: true
     }
   },
-  created () {
+  data () {
+    return {
+      hover: false,
+      model: undefined
+    }
   },
-  mounted () {
+  created () {
+    this.model = this.value
+  },
+  watch: {
+    value (valNew) {
+      this.model = this.value
+    },
+    model (valNew, valOld) {
+      if (!this.disable) {
+        if (!valNew) {
+          this.$emit('clear', valOld)
+        }
+        this.$emit('input', valNew)
+      }
+    }
   },
   computed: {
-    computedSlots () {
-      const keys = []
-      for (const key in this.$slots) {
-        keys.push(key)
-      }
-      return keys
-    },
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象
@@ -92,16 +125,24 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           // 这里确保组件配合 `v-model` 的工作
-          input: function (value) {
+          /*input: function (value) {
             if (!vm.disable) {
+              //vm.model = value
               vm.$emit('input', value)
             }
-          }
+          }*/
         }
       )
     }
   },
   methods: {
+    _doClean () {
+      this.model = ''
+      if (!this.noClearFocus) {
+        this.focus()
+      }
+    },
+
     resetValidation () {
       this.$refs.input.resetValidation()
     },

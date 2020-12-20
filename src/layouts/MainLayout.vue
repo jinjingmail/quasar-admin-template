@@ -29,7 +29,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-breadcrumbs v-if="!$q.screen.xs" class="q-ml-md">
+        <q-breadcrumbs v-if="$q.screen.gt.xs" class="q-ml-md">
           <q-breadcrumbs-el label="Home" />
           <q-breadcrumbs-el label="Components" />
           <q-breadcrumbs-el label="Breadcrumbs" />
@@ -109,7 +109,7 @@
           </q-btn>
           <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
           <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-          <q-btn flat dense :label="username" @click="$refs.drawerRight.toggle()" class="no-wrap">
+          <q-btn flat dense :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
             <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
@@ -130,7 +130,7 @@
       :breakpoint="599"
       class="non-selectable"
     >
-        <div class="q-pa-sm fit">
+        <div class="q-pa-sm q-pb-xl">
           <q-bar class="transparent">
             <q-space/>
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
@@ -164,6 +164,7 @@
 
             <div class="column">
               <div class="text-subtitle1 ">Settings</div>
+              <q-toggle :value="$q.dark.isActive" :val="true" label="DARK模式" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>

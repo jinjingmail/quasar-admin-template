@@ -81,6 +81,7 @@ const getters = {
   title: state => state.title,
   footerTxt: state => state.footerTxt,
   caseNumber: state => state.caseNumber,
+
   pageSize: state => state.pageSize,
 
   tagsView: state => state.tagsView,

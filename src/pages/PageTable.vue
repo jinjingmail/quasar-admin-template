@@ -21,11 +21,11 @@
       no-backdrop-dismiss
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-width="medium" label-position="left" class="q-pa-md">
+      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-position="left" label-width="medium" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-input class="col-12 col-sm-6" form-label="ID" :dense="false" v-model="dialogForm.id" disable>
+          <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
+          <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
             @blur="$q.notify({message:'名称 blur notify'})"/>
           <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
             <template v-slot:append>
@@ -142,7 +142,7 @@
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-input class="col-12 col-sm-6" label-position="right" mask="####-##-##" placeholder="####-##-##" form-label="dateinput" v-model="selectDate" :disable="dialogFormReadonly">
+          <coadmin-input class="col-12 col-sm-6" form-label="dateinput" no-ellipsis label-position="right" mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
             <q-popup-proxy
               ref="popupDateinput"
             >
@@ -186,7 +186,8 @@
           </coadmin-date-select>
           <coadmin-date-select
             class="col-12 col-sm-6"
-            form-label="Date3"
+            form-label="Date3 Date3 Date3 Date3 Date3"
+            no-ellipsis
             v-model="dialogForm.date3"
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
@@ -227,7 +228,7 @@
       row-key="id"
       dense
       flat
-      class="q-pa-sm"
+      class="q-pa-none"
       stickyHeader
       :data="data"
       :columns="columns"

@@ -46,6 +46,7 @@
       row-key="id"
       class="q-pt-sm"
       sticky-last-column
+      sticky-header
       flat
       :data="crud.data"
       :columns="crud.columns"
@@ -60,6 +61,7 @@
           <crud-operation :permission="permission"
             label-del=""
             icon-view=""
+            no-edit
             outline
             >
             <template v-slot:end>
@@ -67,9 +69,9 @@
             </template>
           </crud-operation>
           <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
-                input-class="text-center">
+                input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:after>
-              <q-btn dense  color="primary" icon="search" @click="crud.toQuery"/>
+              <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
               <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props">
                   <q-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
@@ -109,7 +111,7 @@
                 </div>
               </coadmin-form>
               <q-card-actions align="center">
-                <q-btn label="查询" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+                <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="关闭" flat v-close-popup />
               </q-card-actions>
             </coadmin-dialog>
@@ -123,10 +125,10 @@
             :data="props.row"
             :type="$q.screen.gt.xs?'button':'menu'"
             :permission="permission"
-            color-view='green'
+            color-edit='green'
             label-del="删"
             icon-del="delete_sweep"
-            disabledEdit
+            no-view
             msg="真的删？">
             <template v-slot:end>
               <q-btn dense label="导出" />
@@ -136,7 +138,7 @@
       </template>
 
       <template v-slot:pagination>
-        <crud-pagination input :dense="false"/>
+        <crud-pagination input />
       </template>
 
     </coadmin-table>
@@ -158,7 +160,8 @@ export default {
   name: 'PageCrudCustom',
   components: { crudOperation, crudMore, crudPagination, crudRow },
   cruds() {
-    return CRUD({ query: { name }, columns, visibleColumns, idField: 'id', title: '演示', url: 'api/demo', optShow: { edit: false }, crudMethod: { ...crudDemo } })
+    // * 默认查询参数：query
+    return CRUD({ query: { name: 'nnn' }, columns, visibleColumns, idField: 'id', title: '演示', url: 'api/demo', crudMethod: { ...crudDemo } })
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data () {
@@ -175,7 +178,8 @@ export default {
     }
   },
   created () {
-    /* 提示：如果需要指定页面的初始查询参数，还需要在上面的 cruds() 中初始化 query */
+    // 动态初始化参数初始化（比如通过URL携带来的参数）
+    /* 提示：如果需要指定页面的初始查询参数，还需要在上面的 cruds() 中初始化 query: {name} */
     this.query.name = 'Demo'
   },
   mounted () {
@@ -201,9 +205,6 @@ export default {
       set (val) {
         if (!val) {
           this.queryTickedLabels = null
-          for (const key of Object.keys(this.query)) {
-            this.query[key] = null
-          }
         }
       }
     }

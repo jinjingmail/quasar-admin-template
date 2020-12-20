@@ -197,6 +197,18 @@ const routes = [
         name: 'PageCrudCustom',
         component: () => import('pages/crud/PageCrudCustom.vue'),
         meta: { title: 'PageCrudCustom', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom2',
+        name: 'PageCrudCustom2',
+        component: () => import('pages/crud/PageCrudCustom2.vue'),
+        meta: { title: 'PageCrudCustom2', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom3',
+        name: 'PageCrudCustom3',
+        component: () => import('pages/crud/PageCrudCustom3.vue'),
+        meta: { title: 'PageCrudCustom3', icon: 'add' }
       }
     ]
   }, {

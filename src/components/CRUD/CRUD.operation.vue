@@ -25,13 +25,13 @@
     <!--左侧插槽-->
     <slot name="start" />
     <q-btn :dense="dense" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
-      :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="crud.optShow.add" @click="crud.toAdd"/>
+      :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <q-btn :dense="dense" :padding="(dense && computedLabelView)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
-      :color="colorView" :icon="computedIconView" :label="computedLabelView" v-if="crud.optShow.view && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
+      :color="colorView" :icon="computedIconView" :label="computedLabelView" v-if="!noView && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
     <q-btn :dense="dense" :padding="(dense && computedLabelEdit)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
-      :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit" v-if="crud.optShow.edit && !(crud.selections.length!==1)" @click="crud.toEdit(crud.selections[0])"/>
+      :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit" v-if="!noEdit && !(crud.selections.length!==1)" @click="crud.toEdit(crud.selections[0])"/>
     <q-btn :dense="dense" :padding="(dense && computedLabelDel)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
-      :color="colorDel" :icon="computedIconDel" :label="computedLabelDel" v-if="crud.optShow.del && !(crud.selections.length===0)"
+      :color="colorDel" :icon="computedIconDel" :label="computedLabelDel" v-if="!noDel && !(crud.selections.length===0)"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
@@ -58,6 +58,12 @@ export default {
       type: Object,
       default: () => { return {} }
     },
+
+    noAdd: Boolean,
+    noView: Boolean,
+    noEdit: Boolean,
+    noDel: Boolean,
+    noDownload: Boolean,
 
     flat: Boolean,
     rounded: Boolean,

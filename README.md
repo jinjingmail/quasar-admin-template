@@ -15,26 +15,26 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 - 左侧菜单栏基于路由配置自动生成，可以实现noCache、icon等自定义配置
 - 页面路由Tab标签栏
 - 演示了几种在页面实现搜索栏的样式（费了我不少时间）
-- 二次开发了CoadminDialog，可以实现拖拽和最大化等
-- 二次开发了CoadminTree，增加了很多功能
+- 增强开发了CoadminDialog，可以实现拖拽和最大化等
+- 增强开发了CoadminTree，增加了很多功能
   - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
   - 增加事件 ticked-label和selected-label，返回选择的节点的label
   - 增加一个过滤输入栏
-- 二次开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
-- 二次开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
+- 增强开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
+- 增强开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
 - 新增CoadminDateSelect
 - 新增CoadminTreeSelect
 - 新增CoadminTreeTable
 - 感谢：eladmin-web、vue-element-admin、quasar-admin-crm、quasar-element-pro
 
 ```bash
-TODO CoadminInput外的其它自定义form项的错误提示
+TODO CoadminOptionGroup 自定义form项的错误提示
 TODO CoadminTable 可以单击某行，一直高亮这一行
-TODO Dialog、PopupProxy 等弹出层，在Dark模式下不好区分
 TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
 TODO CoadminTree selected和ticked，可以设置“只选parent，只选leaf”
+TODO CoadminInputXxx 自定义clearable 图标和事件
 
-TODO BUG CoadminSelect use-input的时候，会出现下拉列出的选项空行的问题
+TODO BUG CoadminSelect use-input的时候，会出现下拉列出的选项空白行的问题
 TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
 TODO BUG 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色

@@ -37,10 +37,46 @@
       </q-card-actions>
     </coadmin-dialog>
 
+    <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width q-pa-md'>
+      <div class="col">
+        <coadmin-input class="" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+              input-class="text-center" @clear="crud.resetQuery()">
+          <template v-slot:after>
+            <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
+          </template>
+          <coadmin-dialog ref="searchPopup"
+            seamless content-style="width:700px; max-width:95vw;">
+            <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
+              <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+                <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" input-style="width:90px"/>
+                <coadmin-date-select
+                  class="col-12 col-sm-6"
+                  form-label="date"
+                  placeholder="日期单选"
+                  clearable
+                  v-model="query.dateSingle"
+                >
+                  <template v-slot:append>
+                    <q-icon name="event" />
+                  </template>
+                </coadmin-date-select>
+              </div>
+            </coadmin-form>
+            <q-card-actions align="center">
+              <q-btn label="查询" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+              <q-btn label="关闭" flat v-close-popup />
+            </q-card-actions>
+          </coadmin-dialog>
+        </coadmin-input>
+      </div>
+    </div>
+
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-sm"
+      class="q-pt-none"
+      flat
+      sticky-last-column
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
@@ -50,52 +86,23 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
+          <crud-operation :permission="permission" no-label/>
+          <div class="col-auto">
+            <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+              <crud-more :tableSlotTopProps="props" />
+            </q-btn-dropdown>
+          </div>
+          <q-space />
 
-          <crud-operation :permission="permission" />
+          <crud-pagination />
 
-          <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
-                input-class="text-center" @clear="crud.resetQuery()">
-            <template v-slot:after>
-              <q-btn dense color="primary" icon="search" @click="crud.toQuery"/>
-              <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
-                <crud-more :tableSlotTopProps="props" />
-              </q-btn-dropdown>
-            </template>
-            <coadmin-dialog ref="searchPopup"
-              seamless content-style="width:700px; max-width:95vw;">
-              <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
-                <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                  <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" />
-                  <coadmin-date-select
-                    class="col-12 col-sm-6"
-                    form-label="date"
-                    placeholder="日期单选"
-                    clearable
-                    v-model="query.dateSingle"
-                  >
-                    <template v-slot:append>
-                      <q-icon name="event" />
-                    </template>
-                  </coadmin-date-select>
-                </div>
-              </coadmin-form>
-              <q-card-actions align="center">
-                <q-btn label="查询" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
-                <q-btn label="关闭" flat v-close-popup />
-              </q-card-actions>
-            </coadmin-dialog>
-          </coadmin-input>
         </div>
       </template>
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" flat :permission="permission"/>
+          <crud-row :data="props.row" type="menu" :permission="permission"/>
         </q-td>
-      </template>
-
-      <template v-slot:pagination>
-        <crud-pagination />
       </template>
 
     </coadmin-table>
@@ -113,7 +120,7 @@ import crudDemo from '@/api/demo.js'
 import { columns, visibleColumns, defaultForm } from '@/data/test.js'
 
 export default {
-  name: 'PageCrud',
+  name: 'PageCrudCustom2',
   components: { crudOperation, crudMore, crudPagination, crudRow },
   cruds() {
     return CRUD({ columns, visibleColumns, idField: 'id', title: '演示', url: 'api/demo', crudMethod: { ...crudDemo } })
@@ -147,6 +154,12 @@ export default {
       },
       set (val) {
       }
+    }
+  },
+  methods: {
+    [CRUD.HOOK.beforeRefresh] () {
+      console.log('pageCrud CRUD.HOOK.beforeRefresh')
+      //this.page.size = 3
     }
   }
 }

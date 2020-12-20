@@ -490,7 +490,7 @@ function CRUD(options) {
      * 用于树形表格多选, 选中所有
      * @param selection
      */
-    selectAllChange(selection) {
+    /*selectAllChange(selection) {
       // 如果选中的数目与请求到的数目相同就选中子节点，否则就清空选中
       if (selection && selection.length === crud.data.length) {
         selection.forEach(val => {
@@ -499,13 +499,13 @@ function CRUD(options) {
       } else {
         crud.getTable().clearSelection()
       }
-    },
+    },*/
     /**
      * 用于树形表格多选，单选的封装
      * @param selection
      * @param row
      */
-    selectChange(selection, row) {
+    /*selectChange(selection, row) {
       // 如果selection中存在row代表是选中，否则是取消选中
       if (selection.find(val => { return crud.getDataId(val) === crud.getDataId(row) })) {
         if (row.children) {
@@ -520,13 +520,13 @@ function CRUD(options) {
       } else {
         crud.toggleRowSelection(selection, row)
       }
-    },
+    },*/
     /**
      * 切换选中状态
      * @param selection
      * @param data
      */
-    toggleRowSelection(selection, data) {
+    /*toggleRowSelection(selection, data) {
       if (data.children) {
         data.children.forEach(val => {
           crud.getTable().toggleRowSelection(val, false)
@@ -535,7 +535,7 @@ function CRUD(options) {
           }
         })
       }
-    },
+    },*/
     findVM(type) {
       return crud.vms.find(vm => vm && vm.type === type).vm
     },
@@ -543,7 +543,8 @@ function CRUD(options) {
       crud.vms[0].vm.$q.notify({
         type,
         message: title,
-        timeout: 2500
+        timeout: 3000,
+        position: 'top'
       })
     },
     updateProp(name, value) {

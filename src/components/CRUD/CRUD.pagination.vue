@@ -24,7 +24,7 @@
       :max="pageMax"
       :direction-links="true"
       :boundary-links="false"
-      :input='input'
+      :input='input || !$q.screen.gt.xs'
       @input="crud.pageChangeHandler"
       :icon-prev="iconPrev"
       :icon-next="iconNext"
@@ -43,7 +43,6 @@
       map-options
       @input="pageSizeChange"
       :hide-dropdown-icon="!$q.screen.gt.xs"
-      :borderless="!$q.screen.gt.xs"
     />
     <slot name="end" />
   </div>

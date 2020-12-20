@@ -2,11 +2,11 @@ export default {
   props: {
     labelWidth: {
       type: String,
-      validator: v => ['auto'/* TODO 使用最长的label作为其他label的宽度 */, 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge', 'fit-content'].includes(v)
+      validator: v => ['auto'/* label字符串有多长就占用多长 */, 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge', 'fit-content'].includes(v)
     },
     labelPosition: {
       type: String,
-      validator: v => ['top', 'left', 'right', 'center'].includes(v)
+      validator: v => ['auto', 'top', 'left', 'right', 'center'].includes(v)
     },
     formLabel: String,
     outlined: {
@@ -24,7 +24,10 @@ export default {
     readonly: {
       type: Boolean,
       default: false
-    }
+    },
+    contentClass: String,
+    contentStyle: String,
+    noEllipsis: Boolean // form 表单的label过长的情况
   },
   computed: {
     computedClass () {
@@ -36,8 +39,10 @@ export default {
         cls += ' label-custom label-' + this.labelPosition
         if (this.labelWidth) {
           cls += ' label-' + this.labelWidth
+        } else {
+          cls += ' label-small'
         }
-      } else if (this.labelPosition === 'top') {
+      } else {
         cls += ' label-top'
       }
       return cls

@@ -11,7 +11,7 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-date
       ref="date"
       class=""

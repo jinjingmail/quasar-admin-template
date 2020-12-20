@@ -8,6 +8,7 @@
       form-label
   新增prop：
       见prop定义
+      date-today-btn
   返回值：
       range=false "2019/02/10"
       range=true  ["2019/02/10", "2019/02/15"]
@@ -19,7 +20,8 @@
     v-on="listeners"
     v-bind="$attrs"
     :disable="disable"
-    :readonly="computedInputReadonly"
+    :readonly="readonly"
+    :no-clear-focus="noClearFocus"
   >
     <q-popup-proxy
       ref="popupDate"
@@ -69,6 +71,11 @@ export default {
     disable: Boolean,
     readonly: Boolean,
     noIcons: Boolean,
+    noClearFocus: {
+      type: Boolean,
+      default: true
+    },
+
     range: Boolean,
     rangeSeparator: {
       type: String,
@@ -144,12 +151,6 @@ export default {
     }
   },
   computed: {
-    computedInputReadonly () {
-      if (this.range) {
-        return true
-      }
-      return this.readonly
-    },
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象

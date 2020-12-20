@@ -5,12 +5,13 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-select
       v-model="model"
       ref="select"
       class="col"
       :input-class="computedInputClass"
+      :style="contentStyle"
       :options="optionsInData"
       v-bind="$attrs"
       v-on="listeners"
@@ -20,13 +21,20 @@
       :disable="disable"
       :readonly="readonly"
       @filter="_filterFn"
-      @input-valuexxx="inputValue"
+      @mouseover.native="hover=true"
+      @mouseleave.native="hover=false"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
       </template>
       <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
         <slot :name="slotName" v-bind="prop"/>
+      </template>
+      <template v-slot:append>
+        <template v-if="clearable && hover && !!model && !disable">
+          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+        </template>
+        <slot v-else name="append"/>
       </template>
     </q-select>
   </div>
@@ -35,6 +43,7 @@
     ref="select"
     :class="computedClass"
     :input-class="computedInputClass"
+    :style="contentStyle"
     :options="optionsInData"
     v-bind="$attrs"
     v-on="listeners"
@@ -44,7 +53,8 @@
     :disable="disable"
     :readonly="readonly"
     @filter="_filterFn"
-    @input-valuexxx="inputValue"
+    @mouseover.native="hover=true"
+    @mouseleave.native="hover=false"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -52,6 +62,14 @@
     <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
       <slot :name="slotName" v-bind="prop"/>
     </template>
+
+    <template v-slot:append>
+      <template v-if="clearable && hover && !!model && !disable">
+        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+      </template>
+      <slot v-else name="append"/>
+    </template>
+
   </q-select>
 
 </template>
@@ -63,6 +81,12 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    clearable: Boolean,
+    clearIcon: {
+      type: String,
+      default: 'cancel'
+    },
+    noClearFocus: Boolean,
     options: {
       type: Array,
       default: () => []
@@ -87,6 +111,7 @@ export default {
   },
   data () {
     return {
+      hover: false,
       model: null,
       optionsInData: this.options
     }
@@ -101,9 +126,15 @@ export default {
       } */
       this.model = val
     },
-    model (val) {
+    model (val, valOld) {
       if (this.$listeners['value-label']) {
         this.$emit('value-label', this.valueToLabel(val))
+      }
+      if (!this.disable) {
+        if (!val) {
+          this.$emit('clear', valOld)
+        }
+        this.$emit('input', val)
       }
     }
   },
@@ -122,11 +153,11 @@ export default {
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          input: function (value) {
+          /*input: function (value) {
             if (!vm.disable) {
               vm.$emit('input', value)
             }
-          }
+          }*/
           /*
           filter: function (inputValue, doneFn, abortFn) {
             if (vm.noFilter) {
@@ -140,6 +171,12 @@ export default {
   mounted () {
   },
   methods: {
+    _doClean () {
+      this.model = ''
+      if (!this.noClearFocus) {
+        this.focus()
+      }
+    },
     valueToLabel (value) {
       if (typeof value !== 'number') {
         if (!value || value.length === 0) {
@@ -184,9 +221,6 @@ export default {
       } else {
         return mapValue[valueKey]
       }
-    },
-    inputValue (value) {
-      console.log('input.value=', value)
     },
     _filterFn (val, update, abort) {
       const fn = this.$listeners.filter

@@ -13,6 +13,7 @@
     v-bind="$attrs"
     :disable="disable"
     :readonly="readonly"
+    :no-clear-focus="noClearFocus"
     @input="inputMethod"
   >
     <q-popup-proxy
@@ -66,6 +67,10 @@ export default {
   props: {
     disable: Boolean,
     readonly: Boolean,
+    noClearFocus: {
+      type: Boolean,
+      default: true
+    },
 
     treeClass: String,
     treeStyle: {

@@ -5,10 +5,11 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-field
       ref="field"
       class="col"
+      :style="contentStyle"
       v-bind="$attrs"
       v-on="listeners"
       :dense="dense"
@@ -27,6 +28,7 @@
   <q-field v-else
     ref="field"
     :class="computedClass"
+    :style="contentStyle"
     v-bind="$attrs"
     v-on="listeners"
     :dense="dense"

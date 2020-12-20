@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
-    <label class="ellipsis" :class="{'dense':dense}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-option-group
       v-model="model"
       ref="optionGroup"
