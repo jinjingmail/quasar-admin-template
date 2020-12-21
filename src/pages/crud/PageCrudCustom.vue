@@ -34,7 +34,7 @@
           <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
         </div>
       </coadmin-form>
-      <q-card-actions align="right">
+      <q-card-actions class="q-pa-md" align="right">
         <q-btn label="确认" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
         <q-btn label="取消" flat v-close-popup/>
@@ -110,7 +110,8 @@
                   />
                 </div>
               </coadmin-form>
-              <q-card-actions align="center">
+              <q-card-actions class="q-pa-md" align="center">
+                <q-btn label="查询(不关闭)" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="关闭" flat v-close-popup />
               </q-card-actions>

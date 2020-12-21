@@ -215,7 +215,7 @@
           />
         </div>
       </coadmin-form>
-      <q-card-actions>
+      <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-btn label="选择calories" color="primary" @click="$refs.form_calories.select()"/>
         <q-space />

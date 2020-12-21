@@ -29,11 +29,14 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-breadcrumbs v-if="$q.screen.gt.xs" class="q-ml-md">
-          <q-breadcrumbs-el label="Home" />
-          <q-breadcrumbs-el label="Components" />
+        <!--
+        <q-breadcrumbs class="q-ml-md">
+          <q-breadcrumbs-el label="Home" v-if="$q.screen.gt.xs" />
+          <q-breadcrumbs-el label="Components" v-if="$q.screen.gt.xs" />
           <q-breadcrumbs-el label="Breadcrumbs" />
         </q-breadcrumbs>
+        -->
+        <breadcrumb/>
 
         <!-- 右侧工具栏 -->
         <q-space/>
@@ -107,8 +110,8 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-          <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          <q-btn flat dense v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+          <q-btn flat dense v-if="$q.screen.gt.xs" :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
           <q-btn flat dense :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
             <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
@@ -131,14 +134,17 @@
       class="non-selectable"
     >
         <div class="q-pa-sm q-pb-xl">
-          <q-bar class="transparent">
-            <q-space/>
+          <q-toolbar class="transparent">
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
-          </q-bar>
+
+            <q-space/>
+            <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+            <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          </q-toolbar>
 
           <div class="no-wrap">
             <div class="column items-center">
-              <div class="text-h6 q-mb-xs">{{username}}</div>
+              <div class="text-body1 q-mb-xs">{{username}}</div>
               <q-avatar size="80px">
                 <img src="~assets/boy-avatar.jpg">
               </q-avatar>
@@ -147,14 +153,16 @@
                 <q-btn
                   color="primary"
                   label="个人设置"
-                  push
+                  flat
+                  borderless
                   size="sm"
                 />
                 <q-space/>
                 <q-btn
                   color="primary"
                   label="退出登录"
-                  push
+                  flat
+                  borderless
                   size="sm"
                 />
               </q-toolbar>
@@ -352,6 +360,7 @@ import { mapGetters, mapActions } from 'vuex'
 import SideMenu from 'components/SideMenu.vue'
 import PageTagViews from 'components/PageTagViews.vue'
 import BrandColor from 'components/BrandColor.vue'
+import Breadcrumb from 'components/Breadcrumb.vue'
 import routes from '../router/routes.js'
 
 // 演示引入其他图标
@@ -362,7 +371,8 @@ export default {
   components: {
     SideMenu,
     PageTagViews,
-    BrandColor
+    BrandColor,
+    Breadcrumb
   },
   data () {
     return {

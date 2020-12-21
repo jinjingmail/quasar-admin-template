@@ -9,7 +9,7 @@ import BlankLayout from 'layouts/BlankLayout.vue'
  * alwaysShow: true               if set true, will always show the root menu(default is false)
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * redirect: noredirect           if set noredirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)（必须跟'page.vue'中的name完全一致，包括大小写，才能正确keep-alive）
  * meta : {
     （不支持）roles: ['admin','editor']    control the page roles (you can set multiple roles)
@@ -28,11 +28,11 @@ const routes = [
   {
     path: '/',
     component: MainLayout,
-    redirect: '/index',
+    redirect: '/dashboard',
     children: [
       {
-        path: 'index',
-        name: 'Index',
+        path: 'dashboard',
+        name: 'Dashboard',
         component: () => import('pages/Index.vue'),
         meta: { title: '首页', icon: 'home', affix: true, noCache: true }
       }
@@ -116,9 +116,43 @@ const routes = [
       }
     ]
   }, {
+    path: '/crud',
+    component: MainLayout,
+    name: 'CRUD',
+    redirect: 'noredirect',
+    alwaysShow: true,
+    meta: { title: 'CRUD', icon: 'add' },
+    children: [
+      {
+        path: 'pageCrud',
+        name: 'PageCrud',
+        component: () => import('pages/crud/PageCrud.vue'),
+        meta: { title: 'PageCrud', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom',
+        name: 'PageCrudCustom',
+        component: () => import('pages/crud/PageCrudCustom.vue'),
+        meta: { title: 'PageCrudCustom', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom2',
+        name: 'PageCrudCustom2',
+        component: () => import('pages/crud/PageCrudCustom2.vue'),
+        meta: { title: 'PageCrudCustom2', icon: 'add' }
+      },
+      {
+        path: 'pageCrudCustom3',
+        name: 'PageCrudCustom3',
+        component: () => import('pages/crud/PageCrudCustom3.vue'),
+        meta: { title: 'PageCrudCustom3', icon: 'add' }
+      }
+    ]
+  }, {
     path: '/page',
     component: MainLayout,
     name: 'Page',
+    redirect: 'noredirect',
     meta: { title: '页面展示', icon: 'web' },
     children: [
       {
@@ -180,41 +214,10 @@ const routes = [
       }
     ]
   }, {
-    path: '/crud',
-    component: MainLayout,
-    name: 'CRUD',
-    alwaysShow: true,
-    meta: { title: 'CRUD', icon: 'add' },
-    children: [
-      {
-        path: 'pageCrud',
-        name: 'PageCrud',
-        component: () => import('pages/crud/PageCrud.vue'),
-        meta: { title: 'PageCrud', icon: 'add' }
-      },
-      {
-        path: 'pageCrudCustom',
-        name: 'PageCrudCustom',
-        component: () => import('pages/crud/PageCrudCustom.vue'),
-        meta: { title: 'PageCrudCustom', icon: 'add' }
-      },
-      {
-        path: 'pageCrudCustom2',
-        name: 'PageCrudCustom2',
-        component: () => import('pages/crud/PageCrudCustom2.vue'),
-        meta: { title: 'PageCrudCustom2', icon: 'add' }
-      },
-      {
-        path: 'pageCrudCustom3',
-        name: 'PageCrudCustom3',
-        component: () => import('pages/crud/PageCrudCustom3.vue'),
-        meta: { title: 'PageCrudCustom3', icon: 'add' }
-      }
-    ]
-  }, {
     path: '/nested',
     component: MainLayout,
     name: 'Nested',
+    redirect: 'noredirect',
     meta: { title: '嵌套页面', icon: 'clear_all' },
     children: [
       {

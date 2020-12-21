@@ -43,6 +43,7 @@
       map-options
       @input="pageSizeChange"
       :hide-dropdown-icon="!$q.screen.gt.xs"
+      :borderless="!$q.screen.gt.xs"
     />
     <slot name="end" />
   </div>

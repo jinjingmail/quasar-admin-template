@@ -121,9 +121,6 @@ export default {
   },
   watch: {
     '$attrs.value' (val) {
-      /* if (!val) {
-        this.model = null
-      } */
       this.model = val
     },
     model (val, valOld) {
@@ -173,9 +170,9 @@ export default {
   methods: {
     _doClean () {
       this.model = ''
-      if (!this.noClearFocus) {
+      /*if (!this.noClearFocus) {
         this.focus()
-      }
+      }*/
     },
     valueToLabel (value) {
       if (typeof value !== 'number') {

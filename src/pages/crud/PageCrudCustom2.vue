@@ -30,16 +30,15 @@
           <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
         </div>
       </coadmin-form>
-      <q-card-actions align="right">
+      <q-card-actions class="q-pa-md" align="right">
         <q-btn label="确认" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
         <q-btn label="取消" flat v-close-popup/>
       </q-card-actions>
     </coadmin-dialog>
 
-    <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width q-pa-md'>
-      <div class="col">
-        <coadmin-input class="" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+    <div class='row q-gutter-xs full-width q-pa-md'>
+        <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
               input-class="text-center" @clear="crud.resetQuery()">
           <template v-slot:after>
             <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
@@ -48,7 +47,7 @@
             seamless content-style="width:700px; max-width:95vw;">
             <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
               <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" input-style="width:90px"/>
+                <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" clearable/>
                 <coadmin-date-select
                   class="col-12 col-sm-6"
                   form-label="date"
@@ -62,13 +61,12 @@
                 </coadmin-date-select>
               </div>
             </coadmin-form>
-            <q-card-actions align="center">
-              <q-btn label="查询" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+            <q-card-actions class="q-pa-md" align="center">
+              <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
               <q-btn label="关闭" flat v-close-popup />
             </q-card-actions>
           </coadmin-dialog>
         </coadmin-input>
-      </div>
     </div>
 
     <coadmin-table
@@ -94,7 +92,7 @@
           </div>
           <q-space />
 
-          <crud-pagination />
+          <crud-pagination v-if="$q.screen.gt.xs"/>
 
         </div>
       </template>
@@ -103,6 +101,10 @@
         <q-td :props="props">
           <crud-row :data="props.row" type="menu" :permission="permission"/>
         </q-td>
+      </template>
+
+      <template v-if="!$q.screen.gt.xs" v-slot:pagination>
+        <crud-pagination />
       </template>
 
     </coadmin-table>

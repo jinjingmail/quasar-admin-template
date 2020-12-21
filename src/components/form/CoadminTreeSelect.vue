@@ -12,7 +12,7 @@
     v-on="listenersOfInput"
     v-bind="$attrs"
     :disable="disable"
-    :readonly="readonly"
+    :readonly="computedReadonly"
     :no-clear-focus="noClearFocus"
     @input="inputMethod"
   >
@@ -67,6 +67,7 @@ export default {
   props: {
     disable: Boolean,
     readonly: Boolean,
+    useInput: Boolean,
     noClearFocus: {
       type: Boolean,
       default: true
@@ -179,6 +180,13 @@ export default {
     }
   },
   computed: {
+    computedReadonly () {
+      if (!this.useInput || this.readonly) {
+        return true
+      } else {
+        return false
+      }
+    },
     computedInputValue () {
       if (this.selectable) {
         return this.popupTreeSelectedLabel

@@ -30,7 +30,7 @@
           <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
         </div>
       </coadmin-form>
-      <q-card-actions align="right">
+      <q-card-actions class="q-pa-md" align="right">
         <q-btn label="确认" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
         <q-btn label="取消" flat v-close-popup/>
@@ -53,33 +53,29 @@
       <template v-slot:top="props">
         <div class='row q-gutter-xs q-px-xs q-py-md' style="text-align: center;">
           <coadmin-input class=""
-            placeholder="ID" v-model="query.id" content-style="width:100px" clearable no-clear-focus/>
-          <coadmin-input class="" placeholder="名称" v-model="query.name" content-style="width:100px"/>
+            placeholder="ID" v-model="query.id" content-style="width:200px" clearable no-clear-focus/>
+          <coadmin-input class="" placeholder="名称" v-model="query.name" content-style="width:200px"/>
           <coadmin-date-select
-            input-style="width:183px"
+            content-style="width:200px"
             placeholder="日期范围"
             v-model="query.dateRange"
             clearable
             range
             />
           <template v-if="crud.props.queryMore">
-            <coadmin-input class="" placeholder="Fat" v-model="query.fat" clearable>
-              <template v-slot:append>
-                <q-icon name="add" />
-              </template>
-            </coadmin-input>
             <coadmin-date-select
               class=""
-              content-style="width:95px"
+              content-style="width:100px"
               placeholder="日期"
               v-model="query.dateSingle"
               clearable
             />
-            <coadmin-input class="" placeholder="Calories" v-model="query.Calories" />
-            <coadmin-input class="" placeholder="Protein" v-model="query.protein" />
-            <coadmin-input class="" placeholder="Sodium" v-model="query.soldium"/>
-            <coadmin-input class="" placeholder="calcium" v-model="query.calcium" />
-            <coadmin-input class="" placeholder="iron" v-model="query.iron" clearable/>
+            <coadmin-input class="" content-style="width:200px" placeholder="Fat" v-model="query.fat" clearable>
+              <template v-slot:append>
+                <q-icon name="add" />
+              </template>
+            </coadmin-input>
+            <coadmin-input class="" content-style="width:200px" placeholder="Calories" v-model="query.calories" />
             <coadmin-tree-select
               placeholder="Tree多选"
               :nodes="treeData"
@@ -90,6 +86,7 @@
               tree-class="q-pa-sm"
               clearable
               content-style="width:200px"
+              no-input
             >
               <template v-slot:append>
                 <q-icon name="add" />
@@ -105,11 +102,14 @@
               input-debounce="0"
               placeholder="选择巨头"
               content-style="width:200px"
-            >
-              <template v-slot:append>
-                <q-icon name="add"/>
-              </template>
-            </coadmin-select>
+            />
+            <coadmin-select
+              v-model="query.selectSingle"
+              :options="listOptions"
+              clearable
+              placeholder="选择巨头"
+              content-style="width:200px"
+            />
           </template>
           <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
           <q-btn dense label="清空" padding="xs sm" icon="replay" @click="crud.resetQuery()" />
@@ -126,14 +126,20 @@
 
           <q-space />
 
-          <crud-pagination />
+          <crud-pagination v-if="$q.screen.gt.xs"/>
         </div>
       </template>
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" type="menu" :permission="permission"/>
+          <crud-row :data="props.row"
+          :type="$q.screen.gt.xs?'button':'menu'"
+          :permission="permission"/>
         </q-td>
+      </template>
+
+      <template v-slot:pagination>
+        <crud-pagination />
       </template>
 
     </coadmin-table>
