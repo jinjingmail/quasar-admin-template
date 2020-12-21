@@ -1,7 +1,7 @@
 <template>
   <q-breadcrumbs class="q-ml-md">
     <template v-for="(item, index) in levelList">
-      <q-breadcrumbs-el v-if="$q.screen.gt.xs || index === levelList.length - 1"
+      <q-breadcrumbs-el v-if="!mobileLess || $q.screen.gt.xs || index === levelList.length - 1"
         :key="item.path"
         :label="item.meta.title"
         @click.native="handleLink(item, index)"
@@ -13,6 +13,9 @@
 <script>
 import * as pathToRegexp from 'path-to-regexp'
 export default {
+  props: {
+    mobileLess: Boolean
+  },
   data() {
     return {
       levelList: null

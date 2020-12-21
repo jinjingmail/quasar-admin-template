@@ -77,10 +77,7 @@ export default {
     locale: Object,
     subtitle: String,
     title: String,
-    todayBtn: {
-      type: Boolean,
-      default: true
-    },
+    todayBtn: Boolean,
     multiple: Boolean,
     multipleMax: Number,
     range: Boolean,

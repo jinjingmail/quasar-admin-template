@@ -82,10 +82,7 @@ export default {
       type: String,
       default: ' ~ '
     },
-    dateTodayBtn: {
-      type: Boolean,
-      default: true
-    },
+    dateTodayBtn: Boolean,
     dateMask: String,
     dateMinimal: Boolean,
     dateOptions: [Array, Function],

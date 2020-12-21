@@ -138,9 +138,9 @@ export default {
   methods: {
     _doClean () {
       this.model = ''
-      if (!this.noClearFocus) {
+      /*if (!this.noClearFocus) {
         this.focus()
-      }
+      }*/
     },
 
     resetValidation () {

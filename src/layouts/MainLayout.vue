@@ -29,14 +29,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <!--
-        <q-breadcrumbs class="q-ml-md">
-          <q-breadcrumbs-el label="Home" v-if="$q.screen.gt.xs" />
-          <q-breadcrumbs-el label="Components" v-if="$q.screen.gt.xs" />
-          <q-breadcrumbs-el label="Breadcrumbs" />
-        </q-breadcrumbs>
-        -->
-        <breadcrumb/>
+        <breadcrumb mobile-less />
 
         <!-- 右侧工具栏 -->
         <q-space/>

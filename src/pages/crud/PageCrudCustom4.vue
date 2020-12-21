@@ -50,73 +50,23 @@
       selection="multiple"
       :selected.sync="crud.selections"
     >
-      <template v-slot:top="props">
-        <div class='row q-gutter-sm q-px-xs q-py-sm' style="text-align: center;">
-          <coadmin-input class=""
-            placeholder="ID" v-model="query.id" content-style="width:200px" clearable no-clear-focus/>
-          <coadmin-input class="" placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
+      <template v-slot:top-right="props">
+
+        <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
+          <coadmin-input placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
           <coadmin-date-select
             content-style="width:200px"
             placeholder="日期范围"
             v-model="query.dateRange"
             clearable
+            use-input
             range
             />
-          <template v-if="crud.props.queryMore">
-            <coadmin-date-select
-              class=""
-              content-style="width:100px"
-              placeholder="日期"
-              v-model="query.dateSingle"
-              clearable
-            />
-            <coadmin-input class="" content-style="width:200px" placeholder="Fat" v-model="query.fat" clearable>
-              <template v-slot:append>
-                <q-icon name="add" />
-              </template>
-            </coadmin-input>
-            <coadmin-input class="" content-style="width:200px" placeholder="Calories" v-model="query.calories" />
-            <coadmin-tree-select
-              placeholder="Tree多选"
-              :nodes="treeData"
-              node-key="id"
-              label-key="name"
-              :ticked.sync="query.ticked"
-              tick-strategy="leaf-all-only-parent"
-              tree-class="q-pa-sm"
-              clearable
-              content-style="width:200px"
-              no-input
-            >
-              <template v-slot:append>
-                <q-icon name="add" />
-              </template>
-            </coadmin-tree-select>
-            <coadmin-select
-              v-model="query.selectSingle"
-              :options="listOptions"
-              clearable
-              use-input
-              hide-selected
-              fill-input
-              input-debounce="0"
-              placeholder="选择巨头"
-              content-style="width:200px"
-            />
-            <coadmin-select
-              v-model="query.selectSingle"
-              :options="listOptions"
-              clearable
-              placeholder="选择巨头"
-              content-style="width:200px"
-            />
-          </template>
-          <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
-          <q-btn dense label="清空" padding="xs sm" icon="replay" @click="crud.resetQuery()" />
-          <q-btn dense :label="crud.props.queryMore?'更少..':'更多..'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
-        </div>
 
-        <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
+          <div class='col-auto'>
+            <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+          </div>
+          <q-space/>
           <crud-operation :permission="permission" no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
@@ -124,9 +74,6 @@
             </q-btn-dropdown>
           </div>
 
-          <q-space />
-
-          <crud-pagination v-if="$q.screen.gt.xs"/>
         </div>
       </template>
 
