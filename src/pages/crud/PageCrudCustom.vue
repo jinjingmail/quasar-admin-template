@@ -55,6 +55,7 @@
       selection="multiple"
       :selected.sync="crud.selections"
       :filter="filterTable"
+      :selected-rows-label="numOfRows => '选了 ' + numOfRows"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
@@ -162,7 +163,7 @@ export default {
   components: { crudOperation, crudMore, crudPagination, crudRow },
   cruds() {
     // * 默认查询参数：query
-    return CRUD({ query: { name: 'nnn' }, columns, visibleColumns, idField: 'id', title: '演示', url: 'api/demo', crudMethod: { ...crudDemo } })
+    return CRUD({ query: { name: 'nnn' }, columns, visibleColumns, idField: 'id', title: '演示', sort: ['name,asc', 'id,desc'], url: 'api/demo', crudMethod: { ...crudDemo } })
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data () {

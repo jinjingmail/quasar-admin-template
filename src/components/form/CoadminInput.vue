@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     _doClean () {
-      this.model = ''
+      this.model = null
       /*if (!this.noClearFocus) {
         this.focus()
       }*/

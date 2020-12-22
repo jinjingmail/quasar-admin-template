@@ -19,7 +19,7 @@
     :virtual-scroll="computedVirtualScroll"
     :rows-per-page-options="rowsPerPageOptions"
     :no-data-label="noDataLabel"
-    :selected-rows-label="numOfRows => numOfRows+' 已选'"
+    :selected-rows-label="selectedRowsLabel"
   >
     <template v-slot:no-data="prop">
       <div class="full-width row flex-center q-gutter-sm">
@@ -77,6 +77,10 @@ export default {
     noDataLabel: {
       type: String,
       default: '无数据'
+    },
+    selectedRowsLabel: {
+      type: Function,
+      default: (numberOfRows) => numberOfRows + ' 已选'
     },
     stickyHeader: {
       type: Boolean,

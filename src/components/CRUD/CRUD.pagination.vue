@@ -26,8 +26,8 @@
       :boundary-links="false"
       :input='input || !$q.screen.gt.xs'
       @input="crud.pageChangeHandler"
-      :icon-prev="iconPrev"
-      :icon-next="iconNext"
+      :icon-prev="iconPrevPage"
+      :icon-next="iconNextPage"
       :max-pages="$q.screen.gt.xs?maxPages:5"
       :size="dense?undefined:'18px'"
     >
@@ -60,11 +60,11 @@ export default {
       type: Boolean,
       default: true
     },
-    iconPrev: {
+    iconPrevPage: {
       type: String,
       default: 'chevron_left'
     },
-    iconNext: {
+    iconNextPage: {
       type: String,
       default: 'chevron_right'
     },

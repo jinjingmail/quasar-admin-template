@@ -43,12 +43,14 @@
       class="q-pt-none"
       flat
       sticky-last-column
+      :title="crud.status.title"
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
       :loading="crud.loading"
-      selection="multiple"
       :selected.sync="crud.selections"
+      selection="multiple"
+      @row-click="(evt, row, index) => crud.selections = [row]"
     >
       <template v-slot:top-right="props">
 
@@ -132,7 +134,6 @@ export default {
   methods: {
     [CRUD.HOOK.beforeRefresh] () {
       console.log('pageCrud CRUD.HOOK.beforeRefresh')
-      //this.page.size = 3
     }
   }
 }
