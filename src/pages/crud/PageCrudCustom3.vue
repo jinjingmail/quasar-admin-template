@@ -1,5 +1,5 @@
 <!--
-  CRUD/crud.js 最精简的用法
+  CRUD/crud.js 自定义用法：搜索框放到表格正上方
 -->
 <template>
   <div >

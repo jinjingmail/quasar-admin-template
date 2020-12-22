@@ -4,9 +4,9 @@ import qs from 'qs'
  */
 
 export function add(data) {
-  console.log('api demo add.data:', qs.stringify(data, { indices: false }))
+  console.log('api dict add.data:', qs.stringify(data, { indices: false }))
   /* return request({
-    url: 'api/users',
+    url: 'api/dict',
     method: 'post',
     data
   })*/
@@ -18,9 +18,9 @@ export function add(data) {
 }
 
 export function del(ids) {
-  console.log('api demo del.ids:', qs.stringify(ids, { indices: false }))
+  console.log('api dict del.ids:', qs.stringify(ids, { indices: false }))
   /* return request({
-    url: 'api/users',
+    url: 'api/dict',
     method: 'delete',
     data: ids
   })*/
@@ -32,9 +32,9 @@ export function del(ids) {
 }
 
 export function edit(data) {
-  console.log('api demo edit.data:', qs.stringify(data, { indices: false }))
+  console.log('api dict edit.data:', qs.stringify(data, { indices: false }))
   /* return request({
-    url: 'api/users',
+    url: 'api/dict',
     method: 'put',
     data
   })*/

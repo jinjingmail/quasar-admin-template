@@ -1,5 +1,5 @@
 <!--
-  CRUD/crud.js 最精简的用法
+  CRUD/crud.js 自定义用法
 -->
 <template>
   <div >

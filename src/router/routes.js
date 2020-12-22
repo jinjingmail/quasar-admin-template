@@ -152,6 +152,12 @@ const routes = [
         name: 'PageCrudCustom4',
         component: () => import('pages/crud/PageCrudCustom4.vue'),
         meta: { title: 'PageCrudCustom4', icon: 'add' }
+      },
+      {
+        path: 'pageCrudDict',
+        name: 'PageCrudDict',
+        component: () => import('pages/crud/PageCrudDict.vue'),
+        meta: { title: 'PageCrudDict', icon: 'add' }
       }
     ]
   }, {
