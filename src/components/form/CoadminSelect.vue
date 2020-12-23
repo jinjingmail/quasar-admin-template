@@ -10,6 +10,7 @@
       v-model="model"
       ref="select"
       class="col"
+      :no-error-icon="noErrorIcon"
       :input-class="computedInputClass"
       :style="contentStyle"
       :options="optionsInData"
@@ -42,6 +43,7 @@
     v-model="model"
     ref="select"
     :class="computedClass"
+    :no-error-icon="noErrorIcon"
     :input-class="computedInputClass"
     :style="contentStyle"
     :options="optionsInData"
@@ -87,6 +89,10 @@ export default {
       default: 'cancel'
     },
     noClearFocus: Boolean,
+    noErrorIcon: {
+      type: Boolean,
+      default: true
+    },
     options: {
       type: Array,
       default: () => []

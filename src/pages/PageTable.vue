@@ -25,9 +25,10 @@
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly" lazy-rules
-            @blur="$q.notify({message:'名称 blur notify'})"/>
-          <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" lazy-rules ref="form_calories">
+          <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
+            @blur="$q.notify({message:'名称 blur notify'})"
+            :rules="[val => !!val || 'Field is required']"/>
+          <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
             <template v-slot:append>
               <q-icon v-if="!dialogForm.calories" name="search" />
               <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
@@ -42,22 +43,22 @@
               <q-icon name="expand_more" />
             </template>
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" lazy-rules :rules="[
+          <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" :rules="[
               val => !!val || '不能空',
               val => val.length === 11 || '请输入11个字符'
               ]"
               >
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly" lazy-rules></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" lazy-rules>
+          <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
             <q-popup-proxy>
               <q-card>
                 <div >ThisisPopup</div>
               </q-card>
             </q-popup-proxy>
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="iron" label-slot v-model="dialogForm.iron" clearable :disable="dialogFormReadonly" lazy-rules>
+          <coadmin-input class="col-12 col-sm-6" form-label="iron" label-slot v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
             <template v-slot:label>
               <div style="color:red;">iron in slot</div>
             </template>
@@ -173,19 +174,6 @@
 
           <coadmin-date-select
             class="col-12 col-sm-6"
-            form-label="DateRange"
-            v-model="dialogForm.date2"
-            clearable
-            range
-            :disable="dialogFormReadonly"
-            :rules="[val => !!val || 'Field is required']"
-          >
-            <template v-slot:append>
-              <q-icon name="event" />
-            </template>
-          </coadmin-date-select>
-          <coadmin-date-select
-            class="col-12 col-sm-6"
             form-label="Date3 Date3 Date3 Date3 Date3"
             no-ellipsis
             v-model="dialogForm.date3"
@@ -197,6 +185,19 @@
             </template>
           </coadmin-date-select>
 
+          <coadmin-date-select
+            class="col-12 col-sm-6"
+            form-label="DateRange"
+            v-model="dialogForm.date2"
+            clearable
+            range
+            :disable="dialogFormReadonly"
+            :rules="[val => !!val || 'Field is required']"
+          >
+            <template v-slot:append>
+              <q-icon name="event" />
+            </template>
+          </coadmin-date-select>
           <coadmin-tree-select
             class="col-12 col-sm-6"
             form-label="TreeTicked"
