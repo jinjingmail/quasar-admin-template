@@ -121,7 +121,7 @@ const routes = [
     name: 'CRUD',
     redirect: 'noredirect',
     alwaysShow: true,
-    meta: { title: 'CRUD', icon: 'add' },
+    meta: { title: '通用CRUD', icon: 'add' },
     children: [
       {
         path: 'pageCrud',
