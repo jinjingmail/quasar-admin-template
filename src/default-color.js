@@ -16,5 +16,10 @@ module.exports = {
    */
   colorMenuBg: 'rgba(1, 1, 1, 0.75)',
   colorMenuText: 'white',
-  colorMenuBgActive: 'rgba(2, 255, 2, 0.43)'
+  colorMenuBgActive: 'rgba(2, 255, 2, 0.43)',
+  /**
+   * 页面背景色
+   */
+  colorPageBg: 'rgb(238, 238, 238)',
+  colorPageBgDark: 'rgb(41, 41, 41)'
 }

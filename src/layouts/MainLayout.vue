@@ -1,5 +1,5 @@
 <template>
-  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" class="layout-main">
+  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" :class="{'layout-main-bg-image':pageBgImage}" :style="layoutMainStyles">
     <q-header :reveal="!fixedHeader" :elevated="false" :reveal-offset="60" bordered class="coadmin-header" :style="headerStyles">
       <q-toolbar>
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
@@ -157,6 +157,7 @@
                   flat
                   borderless
                   size="sm"
+                  @click="$store.dispatch('user/logout').then(()=>{$router.push('/user/login')})"
                 />
               </q-toolbar>
             </div>
@@ -167,14 +168,14 @@
               <div class="text-subtitle1 ">Settings</div>
               <q-toggle :value="$q.dark.isActive" :val="true" label="DARK模式" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
-              <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
+              <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
-              <q-toggle :value="sidebarTop" :val="true" label="左侧到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
-              <q-toggle :value="sidebarMini" :val="true" label="左侧Mini（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})"/>
-              <q-toggle :value="uniqueOpened" :val="true" label="左侧只展开一个菜单" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
-              <coadmin-input label="左侧宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
+              <q-toggle :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
+              <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})"/>
+              <q-toggle :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
+              <coadmin-input label="左侧菜单宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
               <q-toolbar class="no-padding">
-                <div class="text-subtitle1 ">颜色</div>
+                <div class="text-subtitle1 ">主色调</div>
                 <q-space/>
                 <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
@@ -258,6 +259,37 @@
                     <q-color :value="colorMenuBgActive" @change="value => changeSetting({key:'colorMenuBgActive', value: value})"/>
                   </q-popup-proxy>
                 </q-btn>
+              </div>
+
+              <q-toolbar class="no-padding">
+                  <div class="text-subtitle1 ">页面<q-icon name="help_outline"><q-tooltip>请在PageCrudDict页面查看效果</q-tooltip></q-icon></div>
+                  <q-space/>
+                  <q-btn icon="restore" flat round color="primary">
+                    <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
+                      恢复默认
+                    </q-tooltip>
+                    <q-popup-proxy>
+                      <q-card class="my-card">
+                        <q-card-section class="bg-primary text-white">
+                          <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
+                        </q-card-section>
+                        <q-separator />
+                        <q-card-actions align="right">
+                          <q-btn dense v-close-popup @click="restoreSetting('colorPage')">好的</q-btn>
+                          <q-btn dense v-close-popup flat>取消</q-btn>
+                        </q-card-actions>
+                      </q-card>
+                    </q-popup-proxy>
+                  </q-btn>
+                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              </q-toolbar>
+              <div class="row q-gutter-lg">
+                <q-btn class="col-auto" size="sm" label="背景" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorPageBg" @change="value => changeSetting({key:'colorPageBg', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-checkbox :value="pageBgImage" label="显示背景图" dense @click.native="changeSetting({key:'pageBgImage', value: !pageBgImage})"/>
               </div>
 
             </div>
@@ -418,6 +450,11 @@ export default {
         color: this.colorHeaderText
       }
     },
+    layoutMainStyles () {
+      return {
+        backgroundColor: this.colorPageBg
+      }
+    },
     ...mapGetters('settings', [
       'title',
       'tagsView',
@@ -428,13 +465,15 @@ export default {
       'sidebarWidth',
       'sidebarMini',
       'darkMode',
+      'pageBgImage',
       'colorPrimary',
       'colorHeaderBg1',
       'colorHeaderBg2',
       'colorHeaderText',
       'colorMenuBg',
       'colorMenuText',
-      'colorMenuBgActive'
+      'colorMenuBgActive',
+      'colorPageBg'
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'
@@ -539,16 +578,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout-main {
+.layout-main-bg-image {
   background-image: url("~assets/index.svg");
   background-repeat: no-repeat;
   background-position: center 0px;
   background-size: 100%;
-  background-color: $grey-3;
 }
 
-.body--dark .layout-main {
-  background-color: rgb(41, 41, 41);
+.body--dark .layout-main-bg-image {
 }
 
 .coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {

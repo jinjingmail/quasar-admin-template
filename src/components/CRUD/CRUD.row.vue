@@ -25,6 +25,7 @@
     no-wrap     多个按钮不出现换行
     no-icon
     no-label
+    tooltip
 -->
 <template>
   <q-btn no-wrap v-if="type === 'menu'"
@@ -83,10 +84,15 @@
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView"/>
-    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit"/>
+    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
+      <q-tooltip v-if="tooltip">{{labelView}}</q-tooltip>
+    </q-btn>
+    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+      <q-tooltip v-if="tooltip">{{labelEdit}}</q-tooltip>
+    </q-btn>
     <q-btn v-if="!noDel" :padding="(dense && !noLabel && labelDel)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
+      <q-tooltip v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
         <q-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
           <q-card-section class="bg-primary text-white">
@@ -159,7 +165,7 @@ export default {
     },
     colorDel: {
       type: String,
-      default: 'red-6'
+      default: 'negative'
     },
     labelMenu: {
       type: String,
@@ -198,7 +204,8 @@ export default {
       default: 'delete'
     },
     noIcon: Boolean,
-    noLabel: Boolean
+    noLabel: Boolean,
+    tooltip: Boolean
   },
   data() {
     return {

@@ -38,7 +38,7 @@
     </coadmin-dialog>
 
     <div class='row q-gutter-xs full-width q-pa-md'>
-        <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+        <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
               input-class="text-center" @clear="crud.resetQuery()">
           <template v-slot:after>
             <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>

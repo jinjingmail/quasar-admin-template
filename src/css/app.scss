@@ -1,7 +1,7 @@
 // app global css in SCSS form
 
 /*
-   修改浏览器默认滚动条样式
+   修改浏览器默认滚动条样式 begin
 // https://www.jb51.net/css/728172.html
 // https://zhuanlan.zhihu.com/p/144204013
 */
@@ -30,12 +30,33 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(#101F1C, 1);
 }
+/** 滚动条样式 end **/
+
+/****** 输入框placeholder 颜色变浅一点 begin *******/
+input::-webkit-input-placeholder { 
+  /* WebKit browsers */ 
+  color:$grey-6 !important; 
+} 
+input:-moz-placeholder { 
+  /* Mozilla Firefox 4 to 18 */ 
+  color:$grey-6 !important; 
+} 
+input::-moz-placeholder { 
+  /* Mozilla Firefox 19+ */ 
+  color:$grey-6 !important; 
+} 
+input:-ms-input-placeholder { 
+  /* Internet Explorer 10+ */ 
+  color:$grey-6 !important; 
+}
+/****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
 body {
   // 左侧菜单栏active状态，默认颜色
   --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
 }
+
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
@@ -211,7 +232,7 @@ body {
   }
   /* 验证失败样式 end */
 
-  /* 缩小表格输入框直接的垂直间距 */
+  /* 缩小表格输入框之间的垂直间距 */
   .q-col-gutter-y-md > *,
   .q-col-gutter-md > * {
     padding-top: 14px;

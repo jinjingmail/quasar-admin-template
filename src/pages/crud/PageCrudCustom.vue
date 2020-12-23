@@ -135,6 +135,7 @@
             label-del="删"
             icon-del="delete_sweep"
             no-view
+            tooltip
             msg="真的删？">
             <template v-slot:end>
               <q-btn dense label="导出" />

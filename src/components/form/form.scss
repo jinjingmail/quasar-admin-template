@@ -1,11 +1,14 @@
 @mixin label-left-center-right {
   > label:first-child{
-    padding-top:12px;
+    padding-top:20px;
     padding-right:4px;
+    line-height: 1.1;
+    height: fit-content;
   }
   > label.dense:first-child{
     padding-top:12px;
     line-height: 1.1;
+    height: fit-content;
   }
 }
 

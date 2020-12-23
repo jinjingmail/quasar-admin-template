@@ -60,8 +60,9 @@ const state = {
   sidebarMini: get('setting.sidebarMini', defaultSetting.sidebarMini),
   uniqueOpened: get('setting.uniqueOpened', defaultSetting.uniqueOpened),
   showFooter: get('setting.showFooter', defaultSetting.showFooter),
-
   darkMode: get('setting.darkMode', defaultSetting.darkMode),
+  pageBgImage: get('setting.pageBgImage', defaultSetting.pageBgImage),
+
   colorPrimary: getColor('setting.colorPrimary', null),
   colorPrimaryDark: getColor('setting.colorPrimaryDark', null),
   colorHeaderBg1: getColor('setting.colorHeaderBg1', defaultColor.colorHeaderBg1),
@@ -74,7 +75,9 @@ const state = {
   colorMenuBgDark: getColor('setting.colorMenuBgDark', defaultColor.colorMenuBg),
   colorMenuText: getColor('setting.colorMenuText', defaultColor.colorMenuText),
   colorMenuTextDark: getColor('setting.colorMenuTextDark', defaultColor.colorMenuText),
-  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBgActive)
+  colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBgActive),
+  colorPageBg: getColor('setting.colorPageBg', defaultColor.colorPageBg),
+  colorPageBgDark: getColor('setting.colorPageBgDark', defaultColor.colorPageBgDark)
 }
 
 const getters = {
@@ -93,15 +96,17 @@ const getters = {
   sidebarMini: state => state.sidebarMini,
   uniqueOpened: state => state.uniqueOpened,
   showFooter: state => state.showFooter,
-
   darkMode: state => state.darkMode,
+  pageBgImage: state => state.pageBgImage,
+
   colorPrimary: state => Dark.isActive ? state.colorPrimaryDark : state.colorPrimary,
   colorHeaderBg1: state => Dark.isActive ? state.colorHeaderBg1Dark : state.colorHeaderBg1,
   colorHeaderBg2: state => Dark.isActive ? state.colorHeaderBg2Dark : state.colorHeaderBg2,
   colorHeaderText: state => Dark.isActive ? state.colorHeaderTextDark : state.colorHeaderText,
   colorMenuBg: state => Dark.isActive ? state.colorMenuBgDark : state.colorMenuBg,
   colorMenuText: state => Dark.isActive ? state.colorMenuTextDark : state.colorMenuText,
-  colorMenuBgActive: state => Dark.isActive ? state.colorMenuBgActive : state.colorMenuBgActive
+  colorMenuBgActive: state => Dark.isActive ? state.colorMenuBgActive : state.colorMenuBgActive,
+  colorPageBg: state => Dark.isActive ? state.colorPageBgDark : state.colorPageBg
 }
 
 const mutations = {
@@ -144,6 +149,8 @@ const actions = {
       commit('CHANGE_SETTING', { key: 'colorHeaderBg1', value: (Dark.isActive ? defaultColor.colorHeaderBg1Dark : defaultColor.colorHeaderBg1) })
       commit('CHANGE_SETTING', { key: 'colorHeaderBg2', value: (Dark.isActive ? defaultColor.colorHeaderBg2Dark : defaultColor.colorHeaderBg2) })
       commit('CHANGE_SETTING', { key: 'colorHeaderText', value: (Dark.isActive ? defaultColor.colorHeaderTextDark : defaultColor.colorHeaderText) })
+    } else if (data === 'colorPage') {
+      commit('CHANGE_SETTING', { key: 'colorPageBg', value: (Dark.isActive ? defaultColor.colorPageBgDark : defaultColor.colorPageBg) })
     }
   }
 }

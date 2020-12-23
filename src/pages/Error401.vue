@@ -2,7 +2,7 @@
   <div class="text-center q-pa-md flex flex-center">
     <div>
       <div style="font-size: 20vh">
-        404
+        401
       </div>
 
       <div class="text-h2" style="opacity:.4">
@@ -24,6 +24,6 @@
 
 <script>
 export default {
-  name: 'Error404'
+  name: 'Error401'
 }
 </script>

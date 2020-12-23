@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="layout-user-container">
+  <q-layout :class="{'layout-user-container':pageBgImage}" :style="layoutMainStyles">
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -15,14 +15,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'LoginLayout'
+  name: 'LoginLayout',
+  computed: {
+    layoutMainStyles () {
+      return {
+        backgroundColor: this.colorPageBg
+      }
+    },
+    ...mapGetters('settings', [
+      'colorPageBg',
+      'pageBgImage'
+    ])
+  }
 }
 </script>
 
 <style lang="sass" scoped>
 .layout-user-container
-  background-image: url("~assets/index.svg")
+  background-image: url(~assets/index.svg)
   background-repeat: no-repeat
   background-position: center 0px
   background-size: 100%

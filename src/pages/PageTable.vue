@@ -218,7 +218,6 @@
       </coadmin-form>
       <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
-        <q-btn label="选择calories" color="primary" @click="$refs.form_calories.select()"/>
         <q-space />
         <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
         <q-btn label="Cancel" flat v-close-popup />

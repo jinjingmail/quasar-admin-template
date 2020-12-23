@@ -2,17 +2,19 @@
   <div class="q-gutter-sm q-ma-none">
     <q-btn round style="background-color:#1976D2"
       @click="setBrand('#1976D2')" size="7px"/>
-    <q-btn round color="brown"
+    <q-btn round style="background-color:brown"
       @click="setBrand('brown')" size="7px"/>
-    <q-btn round color="teal"
+    <q-btn round style="background-color:teal"
       @click="setBrand('teal')" size="7px"/>
     <q-btn round style="background-color:#2b2b2b"
       @click="setBrand('#2b2b2b')" size="7px"/>
-    <q-btn round color="indigo"
-      @click="setBrand('indigo')" size="7px"/>
+    <q-btn round style="background-color:rgb(212,0,212)"
+      @click="setBrand('rgb(212,0,212)')" size="7px"/>
     <q-btn round style="background-color:#ff6a00"
       @click="setBrand('#ff6a00')" size="7px"/>
-    <q-btn round color="green" label="M" @click="customColor()"
+    <q-btn round style="background-color:rgb(0,161,80)"
+      @click="setBrand('rgb(0,161,80)')" size="7px"/>
+    <q-btn round color="cyan" label="M" @click="customColor()"
       size="7px">
       <q-popup-proxy>
         <q-color v-model="color"/>
@@ -42,7 +44,6 @@ export default {
       'changeSetting'
     ]),
     setBrand (color) {
-      // colors.setBrand('primary', color)
       this.changeSetting({ key: 'colorPrimary', value: color })
     },
     customColor () {
@@ -51,9 +52,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass" scoped>
-.skin-color
-  padding: 8px
-  border-radius: 50%
-</style>

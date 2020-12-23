@@ -91,7 +91,7 @@ export default {
     },
     colorDel: {
       type: String,
-      default: 'red-6'
+      default: 'negative'
     },
     iconView: {
       type: String,

@@ -11,7 +11,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-module.exports = function (/* ctx */) {
+module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -50,6 +50,11 @@ module.exports = function (/* ctx */) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       publicPath: '/quasar-admin-template/',
+      env: {
+        VUE_APP_BASE_API: ctx.dev
+          ? '/quasar-admin-template'
+          : '/quasar-admin-template'
+      },
 
       // transpile: false,
 

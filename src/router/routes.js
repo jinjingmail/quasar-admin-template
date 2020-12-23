@@ -283,6 +283,13 @@ const routes = [
         meta: { title: '淘宝', icon: 'link' }
       }
     ]
+  }, {
+    path: '/401',
+    component: MainLayout,
+    hidden: true,
+    children: [
+      { path: '', component: () => import('pages/Error401.vue') }
+    ]
   },
 
   // Always leave this as last one,
@@ -290,6 +297,7 @@ const routes = [
   {
     path: '*',
     component: MainLayout,
+    hidden: true,
     children: [
       { path: '', component: () => import('pages/Error404.vue') }
     ]
