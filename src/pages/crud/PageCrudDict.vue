@@ -47,6 +47,7 @@
         <coadmin-table
           ref="table"
           row-key="id"
+          dense
           class="q-pt-sm q-ma-sm"
           :data="crud.data"
           :columns="crud.columns"

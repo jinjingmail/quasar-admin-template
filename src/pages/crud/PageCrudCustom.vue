@@ -48,6 +48,7 @@
       sticky-last-column
       sticky-header
       flat
+      dense
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"

@@ -73,6 +73,7 @@
       ref="table"
       row-key="id"
       class="q-ma-xs"
+      dense
       sticky-last-column
       :data="crud.data"
       :columns="crud.columns"

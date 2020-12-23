@@ -41,6 +41,7 @@
       ref="table"
       row-key="id"
       class="q-pt-sm"
+      flat
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"

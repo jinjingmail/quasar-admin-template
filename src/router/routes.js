@@ -121,13 +121,13 @@ const routes = [
     name: 'CRUD',
     redirect: 'noredirect',
     alwaysShow: true,
-    meta: { title: '通用CRUD', icon: 'add' },
+    meta: { title: 'CRUD', icon: 'add', caption: '通用crud' },
     children: [
       {
         path: 'pageCrud',
         name: 'PageCrud',
         component: () => import('pages/crud/PageCrud.vue'),
-        meta: { title: 'PageCrud', icon: 'add' }
+        meta: { title: 'PageCrud', icon: 'add', caption: '通用crud' }
       },
       {
         path: 'pageCrudCustom',

@@ -68,7 +68,7 @@
                 <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
               </q-card-section>
               <q-separator />
-              <q-card-actions align="right">
+              <q-card-actions align="right" class="q-pa-md">
                 <q-btn dense v-close-popup @click="doDelete">确定</q-btn>
                 <q-btn dense v-close-popup flat>取消</q-btn>
               </q-card-actions>
@@ -93,7 +93,7 @@
             <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
           </q-card-section>
           <q-separator />
-          <q-card-actions align="right">
+          <q-card-actions align="right" class="q-pa-md">
             <q-btn dense v-close-popup @click="doDelete">确定</q-btn>
             <q-btn dense v-close-popup flat>取消</q-btn>
           </q-card-actions>
