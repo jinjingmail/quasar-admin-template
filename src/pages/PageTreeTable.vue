@@ -288,14 +288,6 @@ export default {
       this.dialogData = true
     },
     rowLooooooongButtonClick () {
-    },
-    moveFab (ev) {
-      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
-
-      this.fabPos = [
-        this.fabPos[0] - ev.delta.x,
-        this.fabPos[1] - ev.delta.y
-      ]
     }
   }
 }

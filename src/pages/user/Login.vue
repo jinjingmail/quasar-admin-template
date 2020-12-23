@@ -32,7 +32,7 @@
               dense
               no-error-icon
               v-model.trim="form.username"
-              placeholder="账号"
+              placeholder="账号 admin"
               :rules="[ val => val && val.length > 0 || '请输入用户账号']"
             />
             <q-input
@@ -41,7 +41,7 @@
               no-error-icon
               type="password"
               v-model.trim="form.password"
-              placeholder="密码"
+              placeholder="密码 123456"
               :rules="[ val => val && val.length > 0 || '请输入登录密码']"
             />
             <div class="column q-gutter-y-md q-mt-none">

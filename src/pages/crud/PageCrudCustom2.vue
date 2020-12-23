@@ -72,8 +72,7 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-none"
-      flat
+      class="q-ma-xs"
       sticky-last-column
       :data="crud.data"
       :columns="crud.columns"
@@ -99,7 +98,7 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" type="menu" :permission="permission"/>
+          <crud-row :data="props.row" flat type="menu" label-menu="操作" :permission="permission"/>
         </q-td>
       </template>
 

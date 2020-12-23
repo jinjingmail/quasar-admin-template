@@ -58,13 +58,12 @@
         >
           <template v-slot:top-right="props">
             <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-              <coadmin-input placeholder="名称" v-model="query.name" content-style="width:130px" clearable/>
-              <coadmin-input placeholder="描述" v-model="query.remark" content-style="width:130px" clearable/>
+              <coadmin-input class='col' placeholder="名称、描述" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
               <div class='col-auto'>
-                <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+                <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
               </div>
               <q-space/>
-              <crud-operation :permission="permission" no-label/>
+              <crud-operation :permission="permission" no-view no-edit no-label/>
               <div class="col-auto">
                 <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                   <crud-more :tableSlotTopProps="props" />
@@ -75,12 +74,12 @@
 
           <template v-slot:body-cell-action="props">
             <q-td :props="props">
-              <crud-row :data="props.row" flat :permission="permission"/>
+              <crud-row :data="props.row" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
             </q-td>
           </template>
 
           <template v-slot:pagination>
-            <crud-pagination />
+            <crud-pagination no-persistence-page-size/>
           </template>
 
         </coadmin-table>

@@ -40,7 +40,7 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-none"
+      class="q-pt-none q-ma-sm"
       flat
       sticky-last-column
       :data="crud.data"
@@ -111,8 +111,8 @@
               content-style="width:200px"
             />
           </template>
-          <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
-          <q-btn dense label="清空" padding="xs sm" icon="replay" @click="crud.resetQuery()" />
+          <q-btn dense label="查询" padding="xs sm" color="primary" @click="crud.toQuery" />
+          <q-btn dense label="重置" padding="xs sm" @click="crud.resetQuery()" />
           <q-btn dense :label="crud.props.queryMore?'更少..':'更多..'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
         </div>
 

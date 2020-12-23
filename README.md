@@ -29,10 +29,8 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 
 ```bash
 TODO CoadminOptionGroup 自定义form项的错误提示
-TODO CoadminTable 可以单击某行，一直高亮这一行
 TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
 TODO CoadminTree selected和ticked，可以设置“只选parent，只选leaf”
-TODO CoadminInputXxx 自定义clearable 图标和事件
 
 TODO BUG CoadminSelect use-input的时候，会出现下拉列出的选项空白行的问题
 TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效

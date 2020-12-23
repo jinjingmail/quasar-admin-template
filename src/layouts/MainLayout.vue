@@ -544,6 +544,11 @@ export default {
   background-repeat: no-repeat;
   background-position: center 0px;
   background-size: 100%;
+  background-color: $grey-3;
+}
+
+.body--dark .layout-main {
+  background-color: rgb(41, 41, 41);
 }
 
 .coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {

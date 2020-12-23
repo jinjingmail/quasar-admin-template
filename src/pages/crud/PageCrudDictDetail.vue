@@ -47,7 +47,7 @@
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
-      :title="crud.title"
+      :title="query.dictName"
       :loading="crud.loading"
       selection="multiple"
       :selected.sync="crud.selections"
@@ -55,12 +55,12 @@
     >
       <template v-slot:top-right="props">
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <coadmin-input placeholder="名称" v-model="query.label" content-style="width:200px" clearable/>
+          <coadmin-input class='col-auto' placeholder="名称、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
           <div class='col-auto'>
-            <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+            <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
           </div>
           <q-space/>
-          <crud-operation :permission="permission" no-label/>
+          <crud-operation :permission="permission" no-view no-edit no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />
@@ -71,12 +71,12 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" flat :permission="permission"/>
+          <crud-row :data="props.row" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
         </q-td>
       </template>
 
       <template v-slot:pagination>
-        <crud-pagination />
+        <crud-pagination no-persistence-page-size/>
       </template>
 
     </coadmin-table>
@@ -107,7 +107,7 @@ const columns = [
   { name: 'action', label: '操作', align: 'center' }
 ]
 const visibleColumns = ['label', 'value', 'sort', 'action']
-const defaultForm = { id: null, label: null, value: null, sort: null, dictDetails: [] }
+const defaultForm = { id: null, label: null, value: null, sort: null, dict: { id: null } }
 
 export default {
   name: 'PageCrudDictDetail',
@@ -127,7 +127,7 @@ export default {
   },
   mixins: [presenter(), header(),
     form(function () {
-      return Object.assign({ dict: this.dictId }, defaultForm)
+      return Object.assign({ dict: { id: this.dictId } }, defaultForm)
     }),
     crud()
   ],
