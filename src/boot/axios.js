@@ -9,14 +9,14 @@ import setting from '@/default-setting'
 
 console.log('process.env.VUE_APP_BASE_API=', process.env.VUE_APP_BASE_API)
 // 创建axios实例
-const service = axios.create({
+const axiosInstance = axios.create({
   // baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/quasar-admin-template', // api 的 base_url
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: setting.timeout // 请求超时时间
 })
 
 // request拦截器
-service.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   config => {
     // eslint-disable-next-line dot-notation
     config.headers['Authorization'] = 'xxx-token' // 让每个请求携带自定义token 请根据实际情况自行修改
@@ -29,7 +29,7 @@ service.interceptors.request.use(
 )
 
 // response 拦截器
-service.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   response => {
     return response.data
   },
@@ -92,5 +92,5 @@ service.interceptors.response.use(
   }
 )
 
-Vue.prototype.$axios = service
-// export default service
+Vue.prototype.$axios = axiosInstance
+export { axiosInstance }

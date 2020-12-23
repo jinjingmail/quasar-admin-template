@@ -112,7 +112,7 @@
             />
           </template>
           <q-btn dense label="查询" padding="xs sm" color="primary" @click="crud.toQuery" />
-          <q-btn dense label="重置" padding="xs sm" @click="crud.resetQuery()" />
+          <q-btn dense label="重置" flat @click="crud.resetQuery()" />
           <q-btn dense :label="crud.props.queryMore?'更少..':'更多..'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
         </div>
 
