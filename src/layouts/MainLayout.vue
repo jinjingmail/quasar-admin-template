@@ -309,7 +309,7 @@
         class="sidebar-footer row items-center"
         :style="drawerStyles"
       >
-        <q-btn
+        <q-btn v-if="$q.screen.gt.xs"
           flat
           dense
           round
