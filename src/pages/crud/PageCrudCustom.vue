@@ -76,8 +76,10 @@
               <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
               <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props">
-                  <q-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
-                  <q-separator/>
+                  <template v-slot:start>
+                    <q-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
+                    <q-separator/>
+                  </template>
                 </crud-more>
               </q-btn-dropdown>
             </template>
