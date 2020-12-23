@@ -6,6 +6,10 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 
 问题是一些国内常用的功能和组件，Quasar缺失，这就需要自己二次开发或用其他js库代替。
 
+## 代码仓库
+[Github](https://github.com/jinjingmail/quasar-admin-template)
+[Gitee](https://gitee.com/jinjinge/quasar-admin-template)
+
 ## 主要特点
 - 给个`star`吧
 - 良好的适配移动端小屏幕
