@@ -157,11 +157,11 @@ export default {
     },
     colorView: {
       type: String,
-      default: 'primary'
+      default: 'secondary'
     },
     colorEdit: {
       type: String,
-      default: 'primary'
+      default: 'positive'
     },
     colorDel: {
       type: String,

@@ -79,7 +79,7 @@ export default {
 
     colorView: {
       type: String,
-      default: 'primary'
+      default: 'secondary'
     },
     colorAdd: {
       type: String,
@@ -87,7 +87,7 @@ export default {
     },
     colorEdit: {
       type: String,
-      default: 'primary'
+      default: 'positive'
     },
     colorDel: {
       type: String,
