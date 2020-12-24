@@ -6,8 +6,7 @@ import { LoadingBar } from 'quasar'
 export default async ({ app, router, Vue }) => {
   // Check for protected and guest routes and perform checks
   router.beforeEach((to, from, next) => {
-    LoadingBar.start(200)
-    LoadingBar.increment()
+    LoadingBar.start()
     const protectedRoute = to.matched.some(route => route.meta.auth)
     // Allow guest routes
     if (!protectedRoute) return next()
