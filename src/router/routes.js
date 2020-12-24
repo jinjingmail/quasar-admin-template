@@ -28,11 +28,11 @@ const routes = [
   {
     path: '/',
     component: MainLayout,
-    redirect: '/dashboard',
+    redirect: '/',
     children: [
       {
-        path: 'dashboard',
-        name: 'Dashboard',
+        path: '',
+        name: 'Index',
         component: () => import('pages/Index.vue'),
         meta: { title: '首页', icon: 'home', affix: true, noCache: true }
       }
