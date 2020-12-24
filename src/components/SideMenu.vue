@@ -11,12 +11,12 @@
   >
     <template v-slot:header>
       <q-item-section avatar v-if="item.icon">
-        <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+        <q-icon :style="iconColor2(item.iconColor)" :name="item.icon" :size="level===1?'sm':'sm'"/>
       </q-item-section>
 
       <q-item-section>
         <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
-        <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+        <q-item-label caption v-if="item.caption" :style="captionColor()">{{item.caption}}</q-item-label>
       </q-item-section>
     </template>
 
@@ -31,11 +31,11 @@
       clickable tag="a" target="_blank"
       :href="item.path">
     <q-item-section avatar v-if="item.icon">
-      <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+      <q-icon :style="iconColor2(item.iconColor)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
       <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
-      <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+      <q-item-label caption v-if="item.caption" :style="captionColor()">{{item.caption}}</q-item-label>
     </q-item-section>
   </q-item>
 
@@ -47,11 +47,11 @@
     active-class="coadmin-sidebar-menu-active"
   >
     <q-item-section avatar v-if="item.icon">
-      <q-icon :style="iconColor2(item.icon_color)" :name="item.icon" :size="level===1?'sm':'sm'"/>
+      <q-icon :style="iconColor2(item.iconColor)" :name="item.icon" :size="level===1?'sm':'sm'"/>
     </q-item-section>
     <q-item-section>
       <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
-      <q-item-label caption v-if="item.caption">{{item.caption}}</q-item-label>
+      <q-item-label caption v-if="item.caption" :style="captionColor()">{{item.caption}}</q-item-label>
     </q-item-section>
   </q-item>
 
@@ -98,7 +98,7 @@ export default {
     },
     /*
      * 把 routeItem 转换成如下的简单格式
-     * { path:/yy/xxx, name: xxx, title: xxx, icon: xxx, icon_color:yyy, children: []  }
+     * { path:/yy/xxx, name: xxx, title: xxx, caption: xxx, icon: xxx, iconColor:yyy, children: []  }
      */
     item () {
       const ri = this.routeItem
@@ -107,7 +107,7 @@ export default {
       }
       const meta = ri.meta || {}
       if (!ri.children || ri.children.length === 0) {
-        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, icon_color: meta.icon_color }
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, caption: meta.caption, icon: meta.icon, iconColor: meta.iconColor }
       }
       let allChildHide = true
       for (const child of ri.children) {
@@ -123,15 +123,20 @@ export default {
         const child = ri.children[0]
         const m = child.meta || {}
         if (isExternal(child.path)) {
-          return { path: child.path, name: child.name, title: m.title, icon: m.icon, icon_color: meta.icon_color }
+          return { path: child.path, name: child.name, title: m.title, caption: meta.caption, icon: m.icon, iconColor: meta.iconColor }
         }
-        return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, icon: m.icon, icon_color: meta.icon_color }
+        return { path: path.resolve(this.resolvePath(ri.path), child.path), name: child.name, title: m.title, caption: meta.caption, icon: m.icon, iconColor: meta.iconColor }
       } else {
-        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, icon: meta.icon, icon_color: meta.icon_color, children: ri.children }
+        return { path: this.resolvePath(ri.path), name: ri.name, title: meta.title, caption: meta.caption, icon: meta.icon, iconColor: meta.iconColor, children: ri.children }
       }
     }
   },
   methods: {
+    captionColor () {
+      return {
+        color: 'grey'
+      }
+    },
     randomAlphaNumber () {
       return random() + ''
     },

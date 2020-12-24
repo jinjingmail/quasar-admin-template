@@ -16,7 +16,7 @@ import BlankLayout from 'layouts/BlankLayout.vue'
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     caption: '副标题'             可选
     icon: 'name|img:path|base64' the icon show in the sidebar
-    icon_color: 'text-gray'      不填默认primary
+    iconColor: 'text-grey'      不填默认primary
     noCache: true                if set true, the page will no be cached(default is false)
     affix: true                  if set true, the tag will affix in the tags-view (default is false)
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
@@ -127,7 +127,7 @@ const routes = [
         path: 'pageCrud',
         name: 'PageCrud',
         component: () => import('pages/crud/PageCrud.vue'),
-        meta: { title: 'PageCrud', icon: 'add', caption: '通用crud' }
+        meta: { title: 'PageCrud', icon: 'add' }
       },
       {
         path: 'pageCrudCustom',
@@ -187,7 +187,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add', icon_color: 'yellow' }
+        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有Dialog' }
       }, {
         path: 'pageSearchPopup',
         name: 'PageSearchPopup',
