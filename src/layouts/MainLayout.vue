@@ -371,7 +371,7 @@
           <page-tag-views switch-indicator :class="$q.dark.isActive ? 'pagetagviews-dark' : 'pagetagviews-normal'"/>
         </q-page-sticky>
         <!-- place QPageScroller at end of page -->
-        <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos" style="z-index:$z-fab;">
+        <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos" style="z-index:6;">
           <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
         </q-page-scroller>
       </q-page>

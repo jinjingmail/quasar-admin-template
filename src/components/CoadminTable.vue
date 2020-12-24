@@ -174,15 +174,6 @@ export default {
     }
   },
   methods: {
-    filterDialogShow () {
-      console.log('filterDialogShow')
-      this.filterDialog = true
-    },
-    filterDialogHide () {
-      this.filter = ''
-      this.filterDialog = false
-    },
-
     toggleFullscreen () {
       this.$refs.table.toggleFullscreen()
     },

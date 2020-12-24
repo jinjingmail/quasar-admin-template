@@ -187,7 +187,7 @@ export default {
     },
     noResultsLabel: {
       type: String,
-      default: '无数据'
+      default: '无结果'
     }
   },
   data () {
