@@ -39,10 +39,10 @@
     <slot name="end" />
     <coadmin-dialog ref="dialogDelete" no-max title="删除" content-style="width:250px; max-width:95vw;">
       <q-card-section>
-        <div class="text-body1">删除选中的{{crud.selections.length}}条数据?</div>
+        <div class="text-body1">删除选中的 {{crud.selections.length}} 条数据?</div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
-        <q-btn label="确认" v-close-popup icon="check" color="primary" @click="doDelete(crud.selections)" />
+        <q-btn label="是的" v-close-popup icon="check" color="primary" @click="doDelete(crud.selections)" />
         <q-btn label="取消" v-close-popup flat />
       </q-card-actions>
     </coadmin-dialog>
