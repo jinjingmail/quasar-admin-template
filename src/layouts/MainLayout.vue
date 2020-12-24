@@ -348,7 +348,7 @@
           @click="leftDrawerMiniClick"
           :icon="`${leftDrawerMini?'format_indent_increase':'format_indent_decrease'}`"
           aria-label="Menu"
-          size="sm"
+          size="md"
         />
       </div>
     </q-drawer>
@@ -624,5 +624,5 @@ export default {
     right: 0
     bottom: 0
     height: 45px
-    padding-left: 13.5px
+    padding-left: 11px
 </style>
