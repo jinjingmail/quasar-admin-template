@@ -12,14 +12,14 @@
 
 ::-webkit-scrollbar-track {
   width: 6px;
-  background: rgba(#101F1C, 0.1);
+  background: rgba(#787a7a, 0.3);
   -webkit-border-radius: 2em;
   -moz-border-radius: 2em;
   border-radius: 2em;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(#101F1C, 0.5);
+  background-color: rgba(#787a7a, 0.4);
   background-clip: padding-box;
   min-height: 28px;
   -webkit-border-radius: 2em;
@@ -28,7 +28,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(#101F1C, 0.7);
+  background-color: rgba(#787a7a, 0.7);
 }
 /** 滚动条样式 end **/
 
