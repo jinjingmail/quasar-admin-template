@@ -24,8 +24,6 @@
   <div class="col-auto q-pl-none q-gutter-sm no-wrap">
     <!--左侧插槽-->
     <slot name="start" />
-    <q-btn :dense="dense" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
-      :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <q-btn :dense="dense" :padding="(dense && computedLabelView)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorView" :icon="computedIconView" :label="computedLabelView" v-if="!noView && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
     <q-btn :dense="dense" :padding="(dense && computedLabelEdit)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
@@ -35,6 +33,8 @@
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
+    <q-btn :dense="dense" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <!--右侧插槽-->
     <slot name="end" />
     <coadmin-dialog ref="dialogDelete" no-max title="删除" content-style="width:250px; max-width:95vw;">

@@ -98,7 +98,7 @@ const routes = [
         path: 'index',
         name: 'PageNeedLogin',
         component: () => import('pages/PageNeedLogin.vue'),
-        meta: { auth: true, title: '登录后才能访问', icon: 'how_to_reg' }
+        meta: { auth: true, title: '需要登录的页面', icon: 'how_to_reg' }
       }
     ]
   }, {
@@ -121,7 +121,7 @@ const routes = [
     name: 'CRUD',
     redirect: 'noredirect',
     alwaysShow: true,
-    meta: { title: 'CRUD', icon: 'add', caption: '通用crud' },
+    meta: { title: 'CRUD.js', icon: 'add', caption: '通用 crud.js' },
     children: [
       {
         path: 'pageCrud',
