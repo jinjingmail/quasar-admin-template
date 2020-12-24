@@ -70,8 +70,8 @@
               </q-card-section>
               <q-separator />
               <q-card-actions align="right" class="q-pa-md">
-                <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
                 <q-btn dense v-close-popup flat>取消</q-btn>
+                <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
               </q-card-actions>
             </q-card>
           </q-popup-proxy>
@@ -100,8 +100,8 @@
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
-            <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
             <q-btn dense v-close-popup flat>取消</q-btn>
+            <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
           </q-card-actions>
         </q-card>
       </q-popup-proxy>

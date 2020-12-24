@@ -35,9 +35,9 @@
         </div>
       </coadmin-form>
       <q-card-actions class="q-pa-md" align="right">
+        <q-btn label="取消" flat v-close-popup/>
         <q-btn label="保存" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
-        <q-btn label="取消" flat v-close-popup/>
       </q-card-actions>
     </coadmin-dialog>
 

@@ -42,8 +42,8 @@
         <div class="text-body1">删除选中的 {{crud.selections.length}} 条数据?</div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
-        <q-btn label="是的" v-close-popup icon="check" color="primary" @click="doDelete(crud.selections)" />
         <q-btn label="取消" v-close-popup flat />
+        <q-btn label="是的" v-close-popup icon="check" color="primary" @click="doDelete(crud.selections)" />
       </q-card-actions>
     </coadmin-dialog>
   </div>

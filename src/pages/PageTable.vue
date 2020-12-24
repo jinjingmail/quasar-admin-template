@@ -219,8 +219,8 @@
       <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-space />
-        <q-btn label="提交" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
-        <q-btn label="Cancel" flat v-close-popup />
+        <q-btn label="取消" flat v-close-popup />
+        <q-btn label="保存" icon="check" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
       </q-card-actions>
     </coadmin-dialog>
 
