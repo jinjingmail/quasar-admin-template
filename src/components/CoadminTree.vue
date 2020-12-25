@@ -3,6 +3,7 @@
     toolbar:         过滤界面
   增加属性：
     selectable：    是否可以使用 selected 属性
+    no-toolbar
     no-filter：     是否显示过滤输入框
     no-expand-btn： 是否显示展开按钮
     no-ticked-expand: 是否自动展开ticked的节点
@@ -24,7 +25,7 @@
 -->
 <template>
   <q-card flat>
-    <slot name="toolbar">
+    <slot name="toolbar" v-if="!noToolbar">
       <q-toolbar v-if="!noFilter || !noExpandBtn">
         <div class="row full-width">
           <q-input v-if="!noFilter"
@@ -165,10 +166,8 @@ export default {
       type: String,
       default: '过滤...'
     },
-    noFilter: {
-      type: Boolean,
-      default: false
-    },
+    noToolbar: Boolean,
+    noFilter: Boolean,
     expandBtnIconMore: {
       type: String,
       default: 'unfold_more'
@@ -177,10 +176,7 @@ export default {
       type: String,
       default: 'unfold_less'
     },
-    noExpandBtn: {
-      type: Boolean,
-      default: false
-    },
+    noExpandBtn: Boolean,
     noNodesLabel: {
       type: String,
       default: '无数据'

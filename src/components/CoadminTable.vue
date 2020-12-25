@@ -117,12 +117,10 @@ export default {
       this.showLoading = false
       if (valNew) {
         if (this.loadingDelay <= 0) {
-          this.showLoading = true
+          this.showLoading = this.loading
         } else {
           setTimeout(() => {
-            if (this.loading) {
-              this.showLoading = true
-            }
+            this.showLoading = this.loading
           }, this.loadingDelay)
         }
       }

@@ -1,11 +1,15 @@
 // import something here
 import { LoadingBar } from 'quasar'
+import Setting from '@/default-setting'
 
 // "async" is optional;
 // more info on params: https://quasar.dev/quasar-cli/cli-documentation/boot-files#Anatomy-of-a-boot-file
 export default ({ app, router, store, Vue }) => {
   // Check for protected and guest routes and perform checks
   router.beforeEach((to, from, next) => {
+    if (to.meta.title) {
+      document.title = to.meta.title + ' - ' + Setting.title
+    }
     LoadingBar.start()
     const protectedRoute = to.matched.some(route => route.meta.auth)
     // Allow guest routes
