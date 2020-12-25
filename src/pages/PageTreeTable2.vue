@@ -14,37 +14,12 @@
             node-key="id"
             label-key="label"
             :nodes="treeDatas"
-            :filter="treeDatasFilter"
-            :filter-method="treeDatasFilterMethod"
+            filter-key-like="nameLetter"
+            filter-key-equal="id"
             :selected.sync="treeNodeSelected"
             selected-color="purple"
             selectable
           >
-            <template v-slot:toolbar>
-              <q-toolbar flat>
-                <div class="row full-width">
-                  <q-input
-                    ref="filter"
-                    dense
-                    v-model="treeDatasFilter"
-                    label="Filter..."
-                    class="col-8"
-                  >
-                    <template v-slot:append>
-                      <q-icon v-if="treeDatasFilter !== ''" name="clear" class="cursor-pointer" @click="treeDatasFilterReset" />
-                    </template>
-                  </q-input>
-
-                  <q-space/>
-
-                  <q-btn class="col-auto"
-                    dense
-                    :icon="treeDatasExpanded?'unfold_more':'unfold_less'"
-                    @click="(treeDatasExpanded=!treeDatasExpanded)?$refs.tree.collapseAll():$refs.tree.expandAll()"
-                  />
-                </div>
-              </q-toolbar>
-            </template>
             <template v-slot:default-header="prop">
               <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
             </template>
@@ -81,7 +56,6 @@ export default {
     return {
       splitter: 250,
       treeNodeSelected: null,
-      treeDatasFilter: '',
       treeDatasExpanded: true,
 
       text: '',
@@ -132,14 +106,6 @@ export default {
     }
   },
   methods: {
-    treeDatasFilterReset () {
-      this.treeDatasFilter = ''
-      this.$refs.filter.focus()
-    },
-    treeDatasFilterMethod (node, filter) {
-      const filt = filter.toLowerCase()
-      return (node.name && node.name.toLowerCase().indexOf(filt) > -1) || (node.nameLetter && node.nameLetter.toLowerCase().indexOf(filt) > -1)
-    },
     getTreeDatasByPid (treeDataList, pid) {
       if (!treeDataList) {
         return null
@@ -167,14 +133,6 @@ export default {
       this.dialogData = true
     },
     rowLooooooongButtonClick () {
-    },
-    moveFab (ev) {
-      this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
-
-      this.fabPos = [
-        this.fabPos[0] - ev.delta.x,
-        this.fabPos[1] - ev.delta.y
-      ]
     }
   }
 }

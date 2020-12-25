@@ -26,7 +26,7 @@
 <template>
   <q-card flat>
     <slot name="toolbar" v-if="!noToolbar">
-      <q-toolbar v-if="!noFilter || !noExpandBtn">
+      <q-toolbar>
         <div class="row full-width">
           <q-input v-if="!noFilter"
             ref="filter"
