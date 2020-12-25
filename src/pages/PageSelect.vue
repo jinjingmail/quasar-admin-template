@@ -1,5 +1,5 @@
 <template>
-  <div class="coadmin-page q-pa-sm">
+  <div class="q-pa-sm">
     <div class="q-gutter-md">
       <q-badge color="secondary" multi-line>
         Model: "{{ model }}"
