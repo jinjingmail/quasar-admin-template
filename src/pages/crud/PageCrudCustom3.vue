@@ -133,6 +133,7 @@
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
           <crud-row :data="props.row"
+          no-add
           :type="$q.screen.gt.xs?'button':'menu'"
           :permission="permission"/>
         </q-td>

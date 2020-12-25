@@ -75,7 +75,7 @@
 
           <template v-slot:body-cell-action="props">
             <q-td :props="props">
-              <crud-row :data="props.row" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
+              <crud-row :data="props.row" no-add flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
             </q-td>
           </template>
 
@@ -153,6 +153,7 @@ export default {
     dictRowClick (evt, row, index) {
       this.crud.selections = [row]
       this.$refs.dictDetail.dictId = row.id
+      this.$refs.dictDetail.query.dictId = row.id
       this.$refs.dictDetail.query.dictName = row.name
       this.$refs.dictDetail.crud.toQuery()
     }

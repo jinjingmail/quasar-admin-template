@@ -3,6 +3,8 @@
     start
     end
   属性：
+    data
+    data-add
     permission
 
     dense
@@ -19,9 +21,10 @@
     label-menu
     icon-menu / icon-menu-open
 
-    color-edit / color-view / color-del
-    label-view / label-edit / label-del
-    icon-edit / icon-view / icon-del
+    color-edit / color-view / color-del / color-add
+    label-view / label-edit / label-del / label-add
+    icon-edit / icon-view / icon-del / icon-add
+    no-edit / no-view / no-del / no-add
     no-wrap     多个按钮不出现换行
     no-icon
     no-label
@@ -77,6 +80,15 @@
           </q-popup-proxy>
         </q-item>
 
+        <q-item clickable :class="'text-' + colorAdd" :dense="computedDenseMenu" @click="crud.toAdd(dataAdd)" v-if="!noAdd">
+          <q-item-section avatar v-if="computedIconAdd">
+            <q-icon :name="computedIconAdd" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label :color="colorAdd">{{labelAdd}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
         <slot name="end" />
       </q-list>
     </q-menu>
@@ -106,6 +118,11 @@
         </q-card>
       </q-popup-proxy>
     </q-btn>
+
+    <q-btn @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+      <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
+    </q-btn>
+
     <slot name="end" />
   </div>
 </template>
@@ -119,6 +136,9 @@ export default {
       type: Object,
       required: true
     },
+    dataAdd: {
+      type: Object
+    },
     permission: {
       type: Object,
       required: true
@@ -126,6 +146,7 @@ export default {
     noView: Boolean,
     noEdit: Boolean,
     noDel: Boolean,
+    noAdd: Boolean,
     msg: {
       type: String,
       default: '确定删除本条数据？'
@@ -167,6 +188,10 @@ export default {
       type: String,
       default: 'negative'
     },
+    colorAdd: {
+      type: String,
+      default: 'primary'
+    },
     labelMenu: {
       type: String,
       default: ''
@@ -182,6 +207,10 @@ export default {
     labelDel: {
       type: String,
       default: '删除'
+    },
+    labelAdd: {
+      type: String,
+      default: '新增'
     },
     iconMenu: {
       type: String,
@@ -202,6 +231,10 @@ export default {
     iconDel: {
       type: String,
       default: 'delete'
+    },
+    iconAdd: {
+      type: String,
+      default: 'add'
     },
     noIcon: Boolean,
     noLabel: Boolean,
@@ -231,6 +264,13 @@ export default {
     computedIconDel () {
       if (this.iconDel && !this.noIcon) {
         return this.iconDel
+      } else {
+        return undefined
+      }
+    },
+    computedIconAdd () {
+      if (this.iconAdd && !this.noIcon) {
+        return this.iconAdd
       } else {
         return undefined
       }

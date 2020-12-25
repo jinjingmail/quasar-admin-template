@@ -99,7 +99,7 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" flat type="menu" label-menu="操作" :permission="permission"/>
+          <crud-row :data="props.row" no-add flat type="menu" label-menu="操作" :permission="permission"/>
         </q-td>
       </template>
 

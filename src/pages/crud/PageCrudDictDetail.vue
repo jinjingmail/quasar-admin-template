@@ -73,7 +73,7 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
+          <crud-row :data="props.row" :data-add="{sort: props.row.sort}" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
         </q-td>
       </template>
 
@@ -109,7 +109,7 @@ const columns = [
   { name: 'action', label: '操作', align: 'center' }
 ]
 const visibleColumns = ['label', 'value', 'sort', 'action']
-const defaultForm = { id: null, label: null, value: null, sort: null, dict: { id: null } }
+const defaultForm = { id: null, label: null, value: null, sort: null }
 
 export default {
   name: 'PageCrudDictDetail',
@@ -119,7 +119,7 @@ export default {
       columns,
       visibleColumns,
       idField: 'id',
-      query: { dictName: '' },
+      query: { dictName: '', dictId: null },
       title: '字典详情',
       sort: ['sort,asc', 'id,desc'],
       url: 'api/dictDetail',

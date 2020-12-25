@@ -134,7 +134,7 @@
             color-edit='green'
             label-del="删"
             icon-del="delete_sweep"
-            no-view
+            no-add
             tooltip
             msg="真的删？">
             <template v-slot:end>
