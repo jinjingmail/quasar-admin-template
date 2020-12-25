@@ -12,7 +12,7 @@
           v-if="$q.screen.gt.xs"
         >
           <div class="absolute-bottom-left text-subtitle2 text-center">
-            {{$q.version}}
+            Based on Quasar {{$q.version}}
           </div>
         </q-img>
 

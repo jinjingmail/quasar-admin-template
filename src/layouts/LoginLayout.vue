@@ -4,11 +4,14 @@
       <router-view />
     </q-page-container>
     <q-footer
+      bordered
       class="flex items-center justify-between footer"
+      :style="'background-color: ' + colorPageBg"
+      :class="$q.dark.isActive?'text-white':'text-dark'"
     >
       <div>
-        <span>© 2020 Quasar v{{$q.version}}.</span>
-        <span class="q-ml-sm">Created by xxx</span>
+        <span>© 2020 Company</span>
+        <span class="q-ml-sm">Created by Jinjin</span>
       </div>
     </q-footer>
   </q-layout>

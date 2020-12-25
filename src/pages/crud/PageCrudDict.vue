@@ -11,9 +11,9 @@
       @before-hide="crud.cancelCU"
       content-style="width:600px; max-width:95vw;"
     >
-      <coadmin-form ref="form" label-width="large" label-position="center" class="q-pa-md">
+      <coadmin-form ref="form" label-width="small" label-position="right" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID">
+          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
             <q-field dense borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">{{form.id}}</div>
@@ -142,6 +142,14 @@ export default {
     }
   },
   methods: {
+    // 获取数据前设置好接口地址
+    [CRUD.HOOK.beforeRefresh]() {
+      if (this.$refs.dictDetail) {
+        this.$refs.dictDetail.dictId = null
+        this.$refs.dictDetail.query.dictName = ''
+      }
+      return true
+    },
     dictRowClick (evt, row, index) {
       this.crud.selections = [row]
       this.$refs.dictDetail.dictId = row.id

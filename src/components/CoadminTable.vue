@@ -4,7 +4,8 @@
     sticky-header
     sticky-first-column
     sticky-last-column
-    loading-spinner     'cycle', 'gears', 'ios', 'ball', 'dots'
+    loading-delay        多少ms后开始显示 loading-spinner
+    loading-spinner      '', 'cycle', 'gears', 'ios', 'ball', 'dots' 【提示：loading-spinner=''，则使用q-table默认loading】
 -->
 <template>
   <q-table
@@ -40,17 +41,16 @@
       <slot name="pagination"/>
     </template>
 
-    <template v-slot:loading>
-      <slot name="loading">
-        <q-inner-loading showing color="primary" style="z-index:5">
-          <q-spinner-gears v-if="loadingSpinner === 'gears'" size="60px" color="primary" />
-          <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="60px" color="primary" />
-          <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="60px" color="primary" />
-          <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="60px" color="primary" />
-          <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="60px" color="primary" />
-          <q-spinner-gears v-else size="60px" color="primary" />
-        </q-inner-loading>
-      </slot>
+    <!-- loadingSpinner 明确为空或者自定义了slot:loading，则忽略 -->
+    <template v-slot:loading v-if="showLoading && loadingSpinner && !$slots['loading']">
+      <q-inner-loading showing color="primary" style="z-index:5">
+        <q-spinner-gears v-if="loadingSpinner === 'gears'" size="60px" color="primary" />
+        <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="60px" color="primary" />
+        <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="60px" color="primary" />
+        <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="60px" color="primary" />
+        <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="60px" color="primary" />
+        <q-spinner-gears v-else size="60px" color="primary" />
+      </q-inner-loading>
     </template>
 
   </q-table>
@@ -92,18 +92,37 @@ export default {
     loadingSpinner: {
       type: String,
       default: 'gears',
-      validator: v => ['cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
+      validator: v => ['', 'cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
+    },
+    loadingDelay: {
+      type: Number,
+      default: 500
     }
   },
   data () {
     return {
-      isFullscreen: undefined
+      isFullscreen: undefined,
+      showLoading: false
     }
   },
   created () {
     this.isFullscreen = this.fullscreen
   },
   mounted () {
+  },
+  watch: {
+    '$attrs.loading' (valNew) {
+      this.showLoading = false
+      if (valNew) {
+        if (this.loadingDelay <= 0) {
+          this.showLoading = true
+        } else {
+          setTimeout(() => {
+            this.showLoading = true
+          }, this.loadingDelay)
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters('settings', [

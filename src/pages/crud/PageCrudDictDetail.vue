@@ -11,9 +11,9 @@
       @before-hide="crud.cancelCU"
       content-style="width:600px; max-width:95vw;"
     >
-      <coadmin-form ref="form" label-width="large" label-position="center" class="q-pa-md">
+      <coadmin-form ref="form" label-width="small" label-position="right" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID">
+          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
             <q-field dense borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">{{form.id}}</div>
@@ -50,6 +50,7 @@
       :visible-columns="crud.visibleColumns"
       :title="query.dictName"
       :loading="crud.loading"
+      :loading-delay="1000"
       selection="multiple"
       :selected.sync="crud.selections"
       @row-click="(evt, row, index) => crud.selections = [row]"
@@ -61,7 +62,7 @@
             <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
           </div>
           <q-space/>
-          <crud-operation :permission="permission" no-view no-edit no-label/>
+          <crud-operation :permission="permission" :no-add="!dictId" no-view no-edit no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />
@@ -135,9 +136,9 @@ export default {
   data () {
     return {
       permission: {
-        add: ['admin', 'dictDetail:add'],
-        edit: ['admin', 'dictDetail:edit'],
-        del: ['admin', 'dictDetail:del']
+        add: ['admin', 'dict:add'],
+        edit: ['admin', 'dict:edit'],
+        del: ['admin', 'dict:del']
       },
       dictId: null
     }
