@@ -96,13 +96,13 @@
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
+    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
       <q-tooltip :delay="550" v-if="tooltip">{{labelView}}</q-tooltip>
     </q-btn>
-    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
       <q-tooltip :delay="550" v-if="tooltip">{{labelEdit}}</q-tooltip>
     </q-btn>
-    <q-btn v-if="!noDel" :padding="(dense && !noLabel && labelDel)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    <q-btn v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
@@ -119,7 +119,7 @@
       </q-popup-proxy>
     </q-btn>
 
-    <q-btn @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+    <q-btn @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
       <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
     </q-btn>
 
