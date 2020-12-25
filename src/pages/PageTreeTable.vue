@@ -8,9 +8,9 @@
       emit-immediately
     >
       <template v-slot:before>
-        <div class="q-pa-xs">
           <coadmin-tree
             ref="tree"
+            class="q-mr-sm"
             node-key="id"
             label-key="label"
             :nodes="treeDatas"
@@ -25,7 +25,6 @@
               <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
             </template>
           </coadmin-tree>
-        </div>
       </template>
 
       <template v-if="$q.screen.xs" v-slot:separator>
@@ -33,9 +32,8 @@
       </template>
 
       <template v-slot:after>
-        <div class="q-pa-xs">
           <q-table
-            class="coadmin-table"
+            class="coadmin-table q-ml-sm"
             flat
             :wrap-cells="false"
             :data="treeDatasSelected"
@@ -159,7 +157,6 @@
               <q-inner-loading showing color="primary" />
             </template>
           </q-table>
-        </div>
       </template>
     </q-splitter>
 

@@ -8,23 +8,22 @@
       emit-immediately
     >
       <template v-slot:before>
-        <div class="q-pa-xs">
-          <coadmin-tree
-            ref="tree"
-            node-key="id"
-            label-key="label"
-            :nodes="treeDatas"
-            filter-key-like="nameLetter"
-            filter-key-equal="id"
-            :selected.sync="treeNodeSelected"
-            selected-color="purple"
-            selectable
-          >
-            <template v-slot:default-header="prop">
-              <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
-            </template>
-          </coadmin-tree>
-        </div>
+        <coadmin-tree
+          ref="tree"
+          class="q-mr-sm"
+          node-key="id"
+          label-key="label"
+          :nodes="treeDatas"
+          filter-key-like="nameLetter"
+          filter-key-equal="id"
+          :selected.sync="treeNodeSelected"
+          selected-color="purple"
+          selectable
+        >
+          <template v-slot:default-header="prop">
+            <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
+          </template>
+        </coadmin-tree>
       </template>
 
       <template v-if="$q.screen.xs" v-slot:separator>
@@ -32,9 +31,7 @@
       </template>
 
       <template v-slot:after>
-        <div class="q-pa-sm">
-          <coadmin-tree-table :columns="columns" :data="treeDatasSelected"/>
-        </div>
+          <coadmin-tree-table class="q-ml-sm" :columns="columns" :data="treeDatasSelected"/>
       </template>
     </q-splitter>
 

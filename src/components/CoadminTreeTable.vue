@@ -1,39 +1,37 @@
 <template>
-    <span>
-        <q-markup-table :separator="separator" :dense="dense" :dark="dark" :flat="flat" :bordered="bordered"
-                        :square="square" :class="classes">
-            <thead>
-            <tr>
-                <th v-for="(col, index) in columns" @click="col.sortable?sortBy(col):null"  :class="'text-'+col.align" :Key="index">
-                    {{col.label}}
-                    <q-icon v-if="col.sorted" :name="col.sortDirection=='asc'?'arrow_upward':'arrow_downward'"></q-icon>
-                </th>
+    <q-markup-table :separator="separator" :dense="dense" :dark="dark" :flat="flat" :bordered="bordered"
+                    :square="square" :class="classes">
+        <thead>
+        <tr>
+            <th v-for="(col, index) in columns" @click="col.sortable?sortBy(col):null"  :class="'text-'+col.align" :Key="index">
+                {{col.label}}
+                <q-icon v-if="col.sorted" :name="col.sortDirection=='asc'?'arrow_upward':'arrow_downward'"></q-icon>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+            <template v-for="(item ,index)  in (arrayTreeObj)">
+            <tr :key="index" v-if="hasDefaultSlot" >
+                <slot name="body" v-bind:item="item" v-bind:toggle="toggle" v-bind:setPadding="setPadding"
+                    v-bind:iconName="iconName">
+                </slot>
             </tr>
-            </thead>
-            <tbody>
-                <template v-for="(item ,index)  in (arrayTreeObj)">
-                <tr :key="index" v-if="hasDefaultSlot" >
-                    <slot name="body" v-bind:item="item" v-bind:toggle="toggle" v-bind:setPadding="setPadding"
-                        v-bind:iconName="iconName">
-                    </slot>
-                </tr>
-                </template>
-                <template v-for="(item ,index)  in (arrayTreeObj)" >
-                <tr :key="index" v-if="!hasDefaultSlot">
-    <!--                <td data-th="Name" @click="col_index==0?toggle(item):{}" v-for="col,col_index in columns">-->
-                    <td data-th="Name" v-for="(col,col_index) in columns" :class="'text-'+col.align" :key="col_index">
-                        <div v-bind:style="col_index==0?setPadding(item):{'padding-left':'30px'}"
-                            :class="hasChildren(item)?'q-pl-lg':''">
-                            <q-btn @click="col_index==0?toggle(item):{}"  v-if="hasChildren(item) && col_index==0" :icon="iconName(item)" flat dense>
-                            </q-btn>
-                            <span class="q-ml-sm">{{item[col.field]}}</span>
-                        </div>
-                    </td>
-                </tr>
-                </template>
-            </tbody>
-        </q-markup-table>
-    </span>
+            </template>
+            <template v-for="(item ,index)  in (arrayTreeObj)" >
+            <tr :key="index" v-if="!hasDefaultSlot">
+<!--                <td data-th="Name" @click="col_index==0?toggle(item):{}" v-for="col,col_index in columns">-->
+                <td data-th="Name" v-for="(col,col_index) in columns" :class="'text-'+col.align" :key="col_index">
+                    <div v-bind:style="col_index==0?setPadding(item):{'padding-left':'30px'}"
+                        :class="hasChildren(item)?'q-pl-lg':''">
+                        <q-btn @click="col_index==0?toggle(item):{}"  v-if="hasChildren(item) && col_index==0" :icon="iconName(item)" flat dense>
+                        </q-btn>
+                        <span class="q-ml-sm">{{item[col.field]}}</span>
+                    </div>
+                </td>
+            </tr>
+            </template>
+        </tbody>
+    </q-markup-table>
 </template>
 
 <script>
