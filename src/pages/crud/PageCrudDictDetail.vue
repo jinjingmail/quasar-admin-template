@@ -20,7 +20,7 @@
               </template>
             </q-field>
           </coadmin-form-item>
-          <coadmin-input class="col-12" form-label="label" v-model="form.label" :disable="!!crud.status.view" :rules="[
+          <coadmin-input class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
@@ -57,7 +57,7 @@
     >
       <template v-slot:top-right="props">
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <coadmin-input class='col-auto' placeholder="名称、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
+          <coadmin-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
           <div class='col-auto'>
             <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
           </div>
@@ -73,7 +73,7 @@
 
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
-          <crud-row :data="props.row" :data-add="{sort: props.row.sort}" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
+          <crud-row :data="props.row" :data-add="{sort: props.row.sort+10}" flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
         </q-td>
       </template>
 
@@ -98,7 +98,7 @@ const columns = [
   {
     name: 'label',
     field: 'label',
-    label: '名称',
+    label: '标签',
     required: true,
     align: 'left',
     format: val => `${val}`,
@@ -109,7 +109,7 @@ const columns = [
   { name: 'action', label: '操作', align: 'center' }
 ]
 const visibleColumns = ['label', 'value', 'sort', 'action']
-const defaultForm = { id: null, label: null, value: null, sort: null }
+const defaultForm = { id: null, label: null, value: null, sort: 10 }
 
 export default {
   name: 'PageCrudDictDetail',

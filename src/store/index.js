@@ -21,16 +21,17 @@ const modules = {
  * async/await or return a Promise which resolves
  * with the Store instance.
  */
+console.log('create store')
+const Store = new Vuex.Store({
+  modules,
+
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEV
+})
 
 export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules,
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  })
-
+  console.log('init store')
   // Automatically run the `init` action if available for every module.
   for (const moduleName of Object.keys(modules)) {
     if (modules[moduleName].actions.init) {
@@ -40,3 +41,5 @@ export default function (/* { ssrContext } */) {
 
   return Store
 }
+
+export { Store }

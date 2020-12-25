@@ -1,6 +1,7 @@
 import qs from 'qs'
 import { data } from '@/data/test.js'
 import dicts from '@/data/dicts.js'
+// import request from '@/utils/request'
 
 export function initData(url, params) {
   /*
