@@ -158,10 +158,23 @@
           <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
             <q-field dense borderless>
               <template v-slot:control>
+                <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
+              </template>
+            </q-field>
+          </coadmin-form-item>
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
+            <q-field dense borderless>
+              <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
-
+          </coadmin-form-item>
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
+            <q-field dense borderless>
+              <template v-slot:control>
+                <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
+              </template>
+            </q-field>
           </coadmin-form-item>
           <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-position="right" label-width="fit-content">
             <div class="row q-gutter-none">

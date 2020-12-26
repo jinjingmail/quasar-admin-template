@@ -79,10 +79,21 @@ export default {
     } else {
       this.optionsTranslated = this.options.map(o => { return { label: o[this.labelKey], value: o[this.valueKey] } })
     }
-    if ((this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle') && !this.$attrs.value) {
+    const value = this.$attrs.value
+
+    if (!(value === false || value === 0 || !value) && (this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle')) {
       this.model = []
     } else {
-      this.model = this.$attrs.value
+      const opt0 = this.optionsTranslated[0]
+      if (typeof opt0[this.valueKey] === 'string') {
+        if (!(value === null || value === undefined || typeof value === 'object')) {
+          this.model = value + ''
+        } else {
+          this.model = value
+        }
+      } else {
+        this.model = value
+      }
     }
   },
   mounted () {
