@@ -23,7 +23,7 @@ export function initData(url, params) {
         totalElements: content.length,
         content: content.slice((page) * size, (page) * size + size)
       })
-    }, 500)
+    }, 700)
   })
 }
 
@@ -40,7 +40,7 @@ export function download(url, params) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
-    }, 500)
+    }, 700)
   })
 }
 

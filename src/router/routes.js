@@ -133,7 +133,7 @@ const routes = [
         path: 'pageCrudCustom',
         name: 'PageCrudCustom',
         component: () => import('pages/crud/PageCrudCustom.vue'),
-        meta: { title: 'PageCrudCustom', icon: 'add' }
+        meta: { title: 'PageCrudCustom', icon: 'add', caption: '演示Crud自定义属性' }
       },
       {
         path: 'pageCrudCustom2',
@@ -157,7 +157,7 @@ const routes = [
         path: 'pageCrudDict',
         name: 'PageCrudDict',
         component: () => import('pages/crud/PageCrudDict.vue'),
-        meta: { title: 'PageCrudDict', icon: 'add' }
+        meta: { title: 'PageCrudDict', icon: 'add', caption: '演示字典管理' }
       }
     ]
   }, {
@@ -187,7 +187,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有form表单演示' }
+        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有Form表单演示' }
       }, {
         path: 'pageSearchPopup',
         name: 'PageSearchPopup',
@@ -197,7 +197,7 @@ const routes = [
         path: 'pageSearchDialog',
         name: 'PageSearchDialog',
         component: () => import('pages/PageSearchDialog.vue'),
-        meta: { title: 'PageSearchDialog', icon: 'add' }
+        meta: { title: 'PageSearchDialog', icon: 'add', caption: '演示Dialog搜索框' }
       }, {
         path: 'pageTableNoData',
         name: 'pageTableNoData',
@@ -222,7 +222,7 @@ const routes = [
         path: 'pageTreeSelect',
         name: 'PageTreeSelect',
         component: () => import('pages/PageTreeSelect.vue'),
-        meta: { title: 'PageTreeSelect', icon: 'add' }
+        meta: { title: 'PageTreeSelect', icon: 'add', caption: '演示Tree组件的各种情况' }
       }
     ]
   }, {

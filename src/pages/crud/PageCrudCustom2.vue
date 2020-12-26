@@ -42,8 +42,10 @@
           </template>
           <coadmin-dialog ref="searchPopup"
             seamless content-style="width:700px; max-width:95vw;">
-            <coadmin-form ref="searchform" label-width="small" label-align="right" class="q-pa-md">
-              <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
+            <coadmin-form ref="searchform"
+              label-width="small"
+              label-align="right"
+              class="q-pa-md row q-col-gutter-x-lg q-col-gutter-y-md">
                 <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" clearable/>
                 <coadmin-date-select
                   class="col-12 col-sm-6"
@@ -56,7 +58,6 @@
                     <q-icon name="event" />
                   </template>
                 </coadmin-date-select>
-              </div>
             </coadmin-form>
             <q-card-actions class="q-pa-md" align="center">
               <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
