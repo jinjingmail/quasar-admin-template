@@ -1,7 +1,9 @@
 <!--
   增加插槽：
   增加属性：
-    参考 props 定义
+    公共属性参考 formMixin.js
+    filter-key-equal
+    filter-key-like
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
@@ -21,9 +23,12 @@
       :outlined="outlined"
       :disable="disable"
       :readonly="readonly"
+      hide-dropdown-icon
       @filter="_filterFn"
       @mouseover.native="hover=true"
       @mouseleave.native="hover=false"
+      @popup-show="_popupshow"
+      @popup-hide="_popuphide"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
@@ -32,10 +37,14 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
       <template v-slot:append>
+        <slot name="append" />
         <template v-if="clearable && hover && !!model && !disable">
           <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
         </template>
-        <slot v-else name="append"/>
+        <template v-else>
+          <q-icon :style="popupShow?'transform: rotate(180deg)':''" :name="dropdownIcon" v-if="!hideDropdownIcon"
+            @click="popupShow?$refs.select.hidePopup():$refs.select.showPopup()"/>
+        </template>
       </template>
     </q-select>
   </div>
@@ -54,9 +63,12 @@
     :outlined="outlined"
     :disable="disable"
     :readonly="readonly"
+    hide-dropdown-icon
     @filter="_filterFn"
     @mouseover.native="hover=true"
     @mouseleave.native="hover=false"
+    @popup-show="_popupshow"
+    @popup-hide="_popuphide"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -66,10 +78,14 @@
     </template>
 
     <template v-slot:append>
+      <slot name="append" />
       <template v-if="clearable && hover && !!model && !disable">
         <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
       </template>
-      <slot v-else name="append"/>
+      <template v-else>
+        <q-icon :style="popupShow?'transform: rotate(180deg)':''" :name="dropdownIcon" v-if="!hideDropdownIcon"
+          @click="popupShow?$refs.select.hidePopup():$refs.select.showPopup()"/>
+      </template>
     </template>
 
   </q-select>
@@ -89,6 +105,11 @@ export default {
       default: 'cancel'
     },
     noClearFocus: Boolean,
+    dropdownIcon: {
+      type: String,
+      default: 'arrow_drop_down'
+    },
+    hideDropdownIcon: Boolean,
     noErrorIcon: {
       type: Boolean,
       default: true
@@ -101,10 +122,7 @@ export default {
       type: Boolean,
       default: true
     },
-    noFilter: {
-      type: Boolean,
-      default: false
-    },
+    noFilter: Boolean,
     filterKeyLike: {
       type: String,
       default: null
@@ -119,7 +137,8 @@ export default {
     return {
       hover: false,
       model: null,
-      optionsInData: this.options
+      optionsInData: this.options,
+      popupShow: false
     }
   },
   created () {
@@ -140,7 +159,7 @@ export default {
     },
     model (val, valOld) {
       if (this.$listeners['value-label']) {
-        this.$emit('value-label', this.valueToLabel(val))
+        this.$emit('value-label', this._valueToLabel(val))
       }
       if (!this.disable) {
         if (!val) {
@@ -180,16 +199,22 @@ export default {
       )
     }
   },
-  mounted () {
-  },
   methods: {
+    _popupshow (evt) {
+      this.popupShow = true
+      this.$emit('popup-show', evt)
+    },
+    _popuphide (evt) {
+      this.popupShow = false
+      this.$emit('popup-hide', evt)
+    },
     _doClean () {
       this.model = null
       /*if (!this.noClearFocus) {
         this.focus()
       }*/
     },
-    valueToLabel (value) {
+    _valueToLabel (value) {
       if (typeof value !== 'number') {
         if (!value || value.length === 0) {
           return null
@@ -199,7 +224,7 @@ export default {
         const optionLabelKey = (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
         const optionValueKey = (this.$attrs['option-value'] === undefined) ? 'value' : this.$attrs['option-value']
         if (this.$attrs['emit-value'] !== '' && !this.$attrs['emit-value']) {
-          value = this.transMapToValue(value, optionValueKey)
+          value = this._transMapToValue(value, optionValueKey)
         }
         const labels = []
         if (this.$attrs.multiple === '' || this.$attrs.multiple) {
@@ -223,7 +248,7 @@ export default {
         return value
       }
     },
-    transMapToValue (mapValue, valueKey) {
+    _transMapToValue (mapValue, valueKey) {
       if (mapValue.length !== undefined) {
         const values = []
         for (const v of mapValue) {

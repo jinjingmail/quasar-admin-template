@@ -121,7 +121,11 @@
             placeholder="选择巨头"
             :options="listOptions"
             :rules="[val => !!val || 'Field is required']"
-          />
+          >
+            <template v-slot:append>
+              <q-icon name="add"/>
+            </template>
+          </coadmin-select>
           <coadmin-field
             class="col-12 col-sm-6"
             form-label="options"
