@@ -28,9 +28,6 @@ export default {
     return {
     }
   },
-  mounted () {
-    console.log('coadmin.form labelStyle=', this.labelStyle)
-  },
   methods: {
     validate (shouldFocus) {
       return this.$refs.form.validate(shouldFocus)

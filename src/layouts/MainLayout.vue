@@ -194,7 +194,7 @@
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
                         <q-separator />
-                        <q-card-actions align="right" class="q-pa-lg">
+                        <q-card-actions align="right" class="q-pa-md">
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorHeader')">是的</q-btn>
                         </q-card-actions>
@@ -234,7 +234,7 @@
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
                         <q-separator />
-                        <q-card-actions align="right" class="q-pa-lg">
+                        <q-card-actions align="right" class="q-pa-md">
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorMenu')">是的</q-btn>
                         </q-card-actions>
@@ -274,7 +274,7 @@
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
                         <q-separator />
-                        <q-card-actions align="right" class="q-pa-lg">
+                        <q-card-actions align="right" class="q-pa-md">
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorPage')">是的</q-btn>
                         </q-card-actions>
