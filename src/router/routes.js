@@ -187,7 +187,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有Dialog' }
+        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有form表单演示' }
       }, {
         path: 'pageSearchPopup',
         name: 'PageSearchPopup',

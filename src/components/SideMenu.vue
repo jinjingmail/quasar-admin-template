@@ -134,7 +134,7 @@ export default {
   methods: {
     captionColor () {
       return {
-        color: 'grey'
+        color: 'yellow'
       }
     },
     randomAlphaNumber () {

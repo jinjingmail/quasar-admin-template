@@ -44,13 +44,12 @@
       </div>
       <q-separator />
       <coadmin-form ref="dialogForm"
-          @submit="onDialogFormSubmit"
-          :label-top="labelTop"
-          :label-align="labelAlign"
-          :label-width="labelWidth"
-          :label-style="labelStyle"
-          class="q-pa-md">
-        <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
+        @submit="onDialogFormSubmit"
+        :label-top="labelTop"
+        :label-align="labelAlign"
+        :label-width="labelWidth"
+        :label-style="labelStyle"
+        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
           <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
@@ -164,7 +163,7 @@
             form-label="TOP"
             label-top
             today-btn
-            :minimal="false"
+            minimal
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           />
@@ -254,7 +253,6 @@
             clearable
             :rules="[val => !!val || 'Field is required']"
           />
-        </div>
       </coadmin-form>
       <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>

@@ -11,14 +11,12 @@
       @before-hide="crud.cancelCU"
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="form" label-width="small" label-align="center" class="q-pa-md">
-        <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID">
-            <q-field dense borderless>
-              <template v-slot:control>
-                <div class="self-center full-width no-outline" tabindex="0">{{form.id}}</div>
-              </template>
-            </q-field>
+      <coadmin-form ref="form"
+        label-width="small"
+        label-align="center"
+        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
+          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
+            <div class="q-mt-xs">{{form.id}}</div>
           </coadmin-form-item>
           <coadmin-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
@@ -28,7 +26,6 @@
             </template>
           </coadmin-input>
           <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
-        </div>
       </coadmin-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
