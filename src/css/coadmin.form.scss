@@ -1,0 +1,91 @@
+.form-label > label:first-child {
+  color: var(--q-color-primary);
+  font-weight: bold;
+}
+
+@mixin label-left-center-right {
+  > label:first-child{
+    margin-top:15px;
+    margin-right:12px;
+    line-height: 1.1;
+    height: fit-content;
+  }
+  > label.dense:first-child{
+    margin-top:7px;
+    line-height: 1.1;
+    height: fit-content;
+  }
+}
+
+.label-top .form-label{
+  display: block;
+}
+div.label-top.form-label{
+  display: block;
+}
+
+.form-label {
+  display:flex;
+  @include label-left-center-right;
+}
+.label-fit-content .form-label > label:first-child{
+  width:auto;
+}
+div.label-fit-content.form-label > label:first-child{
+  width:auto;
+}
+.label-xsmall .form-label > label:first-child {
+  width:50px;
+}
+div.label-xsmall.form-label > label:first-child {
+  width:50px;
+}
+.label-small .form-label > label:first-child {
+  width:70px;
+}
+div.label-small.form-label > label:first-child {
+  width:70px;
+}
+.label-medium .form-label > label:first-child {
+  width:90px;
+}
+div.label-medium.form-label > label:first-child {
+  width:90px;
+}
+.label-large .form-label > label:first-child {
+  width:110px;
+}
+div.label-large.form-label > label:first-child {
+  width:110px;
+}
+.label-xlarge .form-label > label:first-child {
+  width:150px;
+}
+div.label-xlarge.form-label > label:first-child {
+  width:150px;
+}
+.label-xxlarge .form-label > label:first-child {
+  width:200px;
+}
+div.label-xxlarge.form-label > label:first-child {
+  width:200px;
+}
+
+.label-left .form-label > label:first-child {
+  text-align:left;
+}
+div.label-left.form-label > label:first-child {
+  text-align:left;
+}
+.label-center .form-label > label:first-child {
+  text-align:center;
+}
+div.label-center.form-label > label:first-child {
+  text-align:center;
+}
+.label-right .form-label > label:first-child {
+  text-align:right;
+}
+div.label-right.form-label > label:first-child {
+  text-align:right;
+}

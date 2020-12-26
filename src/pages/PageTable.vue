@@ -17,11 +17,39 @@
 
     <coadmin-dialog
       ref="formDialog"
-      title="对话框"
+      title="表单演示"
       no-backdrop-dismiss
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-align="left" label-width="medium" class="q-pa-md">
+      <div class="q-ma-md ">
+        <div class="row q-gutter-sm">
+          <q-checkbox v-model="labelTop" label="label-top" />
+          <q-input dense outlined v-model.lazy="labelStyle" placeholder="label-style" style="width:280px"/>
+        </div>
+        <div class="q-gutter-sm">
+          <q-radio v-model="labelAlign" val="auto" label="auto" />
+          <q-radio v-model="labelAlign" val="left" label="left" />
+          <q-radio v-model="labelAlign" val="center" label="center" />
+          <q-radio v-model="labelAlign" val="right" label="right" />
+        </div>
+        <div class="q-gutter-sm">
+          <q-radio v-model="labelWidth" val="fit-content" label="fit-content" />
+          <q-radio v-model="labelWidth" val="xsmall" label="xsmall" />
+          <q-radio v-model="labelWidth" val="small" label="small" />
+          <q-radio v-model="labelWidth" val="medium" label="medium" />
+          <q-radio v-model="labelWidth" val="large" label="large" />
+          <q-radio v-model="labelWidth" val="xlarge" label="xlarge" />
+          <q-radio v-model="labelWidth" val="xxlarge" label="xxlarge" />
+        </div>
+      </div>
+      <q-separator />
+      <coadmin-form ref="dialogForm"
+          @submit="onDialogFormSubmit"
+          :label-top="labelTop"
+          :label-align="labelAlign"
+          :label-width="labelWidth"
+          :label-style="labelStyle"
+          class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
@@ -49,8 +77,8 @@
               ]"
               >
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="protein" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="protein" label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="sodium" label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
           <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
             <q-popup-proxy>
               <q-card>
@@ -133,15 +161,14 @@
           <coadmin-date
             v-model="selectDate"
             class="col-12 col-sm-6"
-            form-label="date"
+            form-label="TOP"
             label-top
-            label-align="left"
             today-btn
             :minimal="false"
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-input class="col-12 col-sm-6" form-label="dateinput" no-ellipsis label-align="right" mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
+          <coadmin-input class="col-12 col-sm-6" form-label="LEFT" label-align="left" label-width="large" no-ellipsis mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
             <q-popup-proxy
               ref="popupDateinput"
             >
@@ -175,7 +202,7 @@
             语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
             </div>
           </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-align="right" label-width="fit-content">
+          <coadmin-form-item class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
             <div class="row q-gutter-none">
               <q-radio v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
               <q-radio v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
@@ -186,7 +213,7 @@
 
           <coadmin-date-select
             class="col-12 col-sm-6"
-            form-label="Date3 Date3 Date3 Date3 Date3"
+            form-label="no-ellipsis no-ellipsis no-ellipsis no-ellipsis"
             no-ellipsis
             v-model="dialogForm.date3"
             :disable="dialogFormReadonly"
@@ -201,6 +228,7 @@
             class="col-12 col-sm-6"
             form-label="DateRange"
             v-model="dialogForm.date2"
+            label-style="color:grey"
             clearable
             range
             :disable="dialogFormReadonly"
@@ -371,6 +399,10 @@ export default {
   name: 'PageTable',
   data () {
     return {
+      labelTop: false,
+      labelAlign: 'right',
+      labelWidth: 'medium',
+      labelStyle: '',
       text: '',
       textSearch: '',
       shape: '',
@@ -428,7 +460,7 @@ export default {
   },
   watch: {
     '$q.screen.gt.xs' (val) {
-      console.log('$q.screen.gt.xs=' + this.$q.screen.gt.xs + ', val=' + val)
+      console.log('$q.screen.gt.xs=' + val)
     }
   },
   created () {

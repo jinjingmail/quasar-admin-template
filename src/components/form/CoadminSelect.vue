@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-select
       v-model="model"
       ref="select"
@@ -335,7 +335,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import './form.scss'
-</style>

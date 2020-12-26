@@ -193,6 +193,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-@import './form.scss'
-</style>
