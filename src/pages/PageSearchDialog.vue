@@ -18,19 +18,6 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
-            <q-btn dense color="primary" icon="add" />
-            <q-btn dense color="primary" icon="edit" v-if="!(selected.length!==1)"/>
-            <q-btn dense color="primary" icon="delete" v-if="!(selected.length===0)"/>
-            <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
-              <div class="row no-wrap q-pa-sm">
-                <div class="column">
-                  <q-btn label="打开Coadmin对话框" @click="$refs.formDialog.show()"></q-btn>
-                </div>
-              </div>
-            </q-btn-dropdown>
-          </div>
-
           <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" filled clearable placeholder="查询"
             input-class="text-center">
             <template v-slot:after>
@@ -274,41 +261,6 @@
           <div>
             <q-badge color="purple" :label="props.value" />
           </div>
-        </q-td>
-      </template>
-
-      <template v-slot:body-cell-action="props">
-        <q-td :props="props">
-          <q-btn-dropdown label="" dense flat>
-            <q-list>
-              <q-item clickable v-close-popup dense @click="rowViewClick(props.row)">
-                <q-item-section>
-                  <q-item-label>查看</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item clickable v-close-popup dense @click="rowEditClick(props.row)">
-                <q-item-section>
-                  <q-item-label>修改</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-item clickable v-close-popup dense @click="rowDelClick(props.row)">
-                <q-item-section>
-                  <q-item-label>删除</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-separator />
-
-              <q-item clickable v-close-popup dense @click="rowLooooooongButtonClick()">
-                <q-item-section>
-                  <q-item-label>一个长长的按钮</q-item-label>
-                </q-item-section>
-              </q-item>
-
-            </q-list>
-          </q-btn-dropdown>
         </q-td>
       </template>
 

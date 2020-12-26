@@ -48,12 +48,41 @@
       :selected.sync="crud.selections"
     >
       <template v-slot:top="props">
-        <div class='row q-gutter-sm q-px-xs q-py-sm' style="text-align: center;">
+        <div class="q-ma-none">
+          <div class="row q-gutter-sm">
+            <q-checkbox v-model="labelTop" label="label-top" />
+            <q-input dense outlined v-model.lazy="labelStyle" placeholder="label-style" style="width:280px"/>
+          </div>
+          <div class="q-gutter-sm">
+            <q-radio v-model="labelAlign" val="auto" label="auto" />
+            <q-radio v-model="labelAlign" val="left" label="left" />
+            <q-radio v-model="labelAlign" val="center" label="center" />
+            <q-radio v-model="labelAlign" val="right" label="right" />
+          </div>
+          <div class="q-gutter-sm">
+            <q-radio v-model="labelWidth" val="fit-content" label="fit-content" />
+            <q-radio v-model="labelWidth" val="xsmall" label="xsmall" />
+            <q-radio v-model="labelWidth" val="small" label="small" />
+            <q-radio v-model="labelWidth" val="medium" label="medium" />
+            <q-radio v-model="labelWidth" val="large" label="large" />
+            <q-radio v-model="labelWidth" val="xlarge" label="xlarge" />
+            <q-radio v-model="labelWidth" val="xxlarge" label="xxlarge" />
+          </div>
+        </div>
+        <q-separator />
+
+        <coadmin-form class='row q-gutter-sm q-px-xs q-py-sm'
+          :label-top="labelTop"
+          :label-align="labelAlign"
+          :label-width="labelWidth"
+          :label-style="labelStyle"
+        >
           <coadmin-input class=""
             placeholder="ID" v-model="query.id" content-style="width:200px" clearable no-clear-focus/>
-          <coadmin-input class="" placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
+          <coadmin-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
           <coadmin-date-select
             content-style="width:200px"
+            form-label="日期范围"
             placeholder="日期范围"
             v-model="query.dateRange"
             clearable
@@ -111,7 +140,7 @@
           <q-btn dense label="查询" padding="xs sm" color="primary" @click="crud.toQuery" />
           <q-btn dense label="重置" flat @click="crud.resetQuery()" />
           <q-btn dense :label="crud.props.queryMore?'更少..':'更多..'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
-        </div>
+        </coadmin-form>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <crud-operation :permission="permission" no-label/>
@@ -165,6 +194,10 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data () {
     return {
+      labelTop: false,
+      labelAlign: 'right',
+      labelWidth: 'medium',
+      labelStyle: '',
       permission: {
         add: ['admin', 'user:add'],
         edit: ['admin', 'user:edit'],
@@ -183,7 +216,6 @@ export default {
   methods: {
     [CRUD.HOOK.beforeRefresh] () {
       console.log('pageCrud CRUD.HOOK.beforeRefresh')
-      //this.page.size = 3
     }
   }
 }

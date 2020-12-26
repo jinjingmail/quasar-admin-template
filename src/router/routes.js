@@ -121,7 +121,7 @@ const routes = [
     name: 'CRUD',
     redirect: 'noredirect',
     alwaysShow: true,
-    meta: { title: 'CRUD.js', icon: 'add', caption: '通用 crud.js' },
+    meta: { title: 'CRUD.js 页面', icon: 'add', caption: '通用 crud.js' },
     children: [
       {
         path: 'pageCrud',
@@ -145,7 +145,7 @@ const routes = [
         path: 'pageCrudCustom3',
         name: 'PageCrudCustom3',
         component: () => import('pages/crud/PageCrudCustom3.vue'),
-        meta: { title: 'PageCrudCustom3', icon: 'add' }
+        meta: { title: 'PageCrudCustom3', icon: 'add', caption: '演示自定义搜索栏' }
       },
       {
         path: 'pageCrudCustom4',
@@ -165,7 +165,7 @@ const routes = [
     component: MainLayout,
     name: 'Page',
     redirect: 'noredirect',
-    meta: { title: '页面展示', icon: 'web' },
+    meta: { title: '其他页面', icon: 'web' },
     children: [
       {
         path: 'page1',
@@ -187,7 +187,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '含有Form表单演示' }
+        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '演示自定义表单' }
       }, {
         path: 'pageSearchPopup',
         name: 'PageSearchPopup',

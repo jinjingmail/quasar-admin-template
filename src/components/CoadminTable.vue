@@ -98,7 +98,7 @@ export default {
     },
     loadingDelay: {
       type: Number,
-      default: 500
+      default: 300
     }
   },
   data () {

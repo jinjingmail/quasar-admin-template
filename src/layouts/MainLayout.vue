@@ -104,7 +104,7 @@
             </q-menu>
           </q-btn>
           <q-btn flat dense v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-          <q-btn flat dense v-if="$q.screen.gt.xs" :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
           <q-btn flat dense :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
             <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
