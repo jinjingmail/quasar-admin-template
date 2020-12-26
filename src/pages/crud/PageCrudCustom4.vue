@@ -11,7 +11,7 @@
       @before-hide="crud.cancelCU"
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="form" label-width="small" label-position="center" class="q-pa-md">
+      <coadmin-form ref="form" label-width="small" label-align="center" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-form-item class="col-12" form-label="ID">
             <q-field dense borderless>

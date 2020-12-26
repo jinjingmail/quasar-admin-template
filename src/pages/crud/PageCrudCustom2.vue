@@ -11,7 +11,7 @@
       @before-hide="crud.cancelCU"
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="form" label-width="small" label-position="center" class="q-pa-md">
+      <coadmin-form ref="form" label-width="small" label-align="center" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-form-item class="col-12" form-label="ID">
             <q-field dense borderless>
@@ -45,7 +45,7 @@
           </template>
           <coadmin-dialog ref="searchPopup"
             seamless content-style="width:700px; max-width:95vw;">
-            <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
+            <coadmin-form ref="searchform" label-width="small" label-align="right" class="q-pa-md">
               <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
                 <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" clearable/>
                 <coadmin-date-select

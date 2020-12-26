@@ -1,3 +1,4 @@
+/*
 @mixin label-left-center-right {
   > label:first-child{
     padding-top:15px;
@@ -10,7 +11,7 @@
     line-height: 1.1;
     height: fit-content;
   }
-}
+}*/
 
 .form-label > label:first-child {
   color: var(--q-color-primary);
@@ -19,12 +20,13 @@
 .label-top.form-label {
   display: block !important;
 }
+/*
 .label-left.form-label,
 .label-center.form-label,
 .label-right.form-label {
   display: flex !important;
   @include label-left-center-right;
-}
+}*/
 .form-label {
   &.label-top > label:first-child {
     text-align: left;
@@ -61,7 +63,7 @@
     width:200px !important;
   }
 }
-
+/*
 .label-custom {
   ::v-deep {
     .form-label {
@@ -140,3 +142,4 @@
     }
   }
 }
+*/

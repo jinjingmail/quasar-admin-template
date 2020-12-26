@@ -81,7 +81,7 @@ export default {
     }
     const value = this.$attrs.value
 
-    if (!(value === false || value === 0 || !value) && (this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle')) {
+    if (!(value === false || value === 0 || !!value) && (this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle')) {
       this.model = []
     } else {
       if (this.optionsTranslated && this.optionsTranslated.length === 0) {

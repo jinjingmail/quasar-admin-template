@@ -2,11 +2,12 @@ export default {
   props: {
     labelWidth: {
       type: String,
-      validator: v => ['auto'/* label字符串有多长就占用多长 */, 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge', 'fit-content'].includes(v)
+      validator: v => ['auto', 'xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge', 'fit-content'].includes(v)
     },
-    labelPosition: {
+    labelTop: Boolean,
+    labelAlign: { // label-align
       type: String,
-      validator: v => ['auto', 'top', 'left', 'right', 'center'].includes(v)
+      validator: v => ['auto', 'left', 'right', 'center'].includes(v)
     },
     formLabel: String,
     outlined: {
@@ -32,18 +33,18 @@ export default {
   computed: {
     computedClass () {
       let cls = ''
-      if (!this.labelPosition) {
-        return cls
+      if (this.labelAlign) {
+        if (this.labelAlign === 'left' || this.labelAlign === 'center' || this.labelAlign === 'right') {
+          //cls += ' label-custom label-' + this.labelAlign
+          cls += ' label-' + this.labelAlign
+        }
       }
-      if (this.labelPosition === 'left' || this.labelPosition === 'center' || this.labelPosition === 'right') {
-        cls += ' label-custom label-' + this.labelPosition
+      if (this.labelTop) {
+        cls += ' label-top'
+      } else {
         if (this.labelWidth) {
           cls += ' label-' + this.labelWidth
-        } else {
-          cls += ' label-small'
         }
-      } else {
-        cls += ' label-top'
       }
       return cls
     }

@@ -35,7 +35,7 @@
             <q-popup-proxy breakpoint="500" ref="searchPopup">
               <q-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>
-                  <coadmin-form ref="searchform" label-width="small" label-position="right">
+                  <coadmin-form ref="searchform" label-width="small" label-align="right">
                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
                       <coadmin-tree-select
                         ref="treeInputMultiple"
@@ -157,7 +157,7 @@
                           </div>
                         </template>
                       </coadmin-field>
-                      <coadmin-input class="col-12 col-sm-6" label-position="right"
+                      <coadmin-input class="col-12 col-sm-6" label-align="right"
                         mask="####-##-##"
                         placeholder="####-##-##" form-label="dateinput"
                         v-model="query.date" >

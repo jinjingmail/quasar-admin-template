@@ -21,7 +21,7 @@
       no-backdrop-dismiss
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-position="right" label-width="medium" class="q-pa-md">
+      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-align="left" label-width="medium" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
@@ -134,13 +134,14 @@
             v-model="selectDate"
             class="col-12 col-sm-6"
             form-label="date"
-            label-position="top"
+            label-top
+            label-align="left"
             today-btn
             :minimal="false"
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-input class="col-12 col-sm-6" form-label="dateinput" no-ellipsis label-position="right" mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
+          <coadmin-input class="col-12 col-sm-6" form-label="dateinput" no-ellipsis label-align="right" mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
             <q-popup-proxy
               ref="popupDateinput"
             >
@@ -174,7 +175,7 @@
             语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
             </div>
           </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-position="right" label-width="fit-content">
+          <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-align="right" label-width="fit-content">
             <div class="row q-gutter-none">
               <q-radio v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
               <q-radio v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />

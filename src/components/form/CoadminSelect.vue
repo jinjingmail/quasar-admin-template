@@ -123,7 +123,16 @@ export default {
     }
   },
   created () {
-    this.model = this.$attrs.value
+    const value = this.model = this.$attrs.value
+    if (this.$attrs.multiple) {
+      if (value == null) {
+        this.model = []
+      } else {
+        this.model = value
+      }
+    } else {
+      this.model = value
+    }
   },
   watch: {
     '$attrs.value' (val) {

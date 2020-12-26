@@ -51,7 +51,7 @@
               :loading="loading"
               loading-spinner="dots"
               seamless>
-              <coadmin-form ref="searchform" label-width="small" label-position="right" class="q-pa-md">
+              <coadmin-form ref="searchform" label-width="small" label-align="right" class="q-pa-md">
                 <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
                   <coadmin-tree-select
                     class="col-12 col-sm-6"
@@ -177,7 +177,7 @@
                       </div>
                     </template>
                   </coadmin-field>
-                  <coadmin-input class="col-12 col-sm-6" label-position="right"
+                  <coadmin-input class="col-12 col-sm-6" label-align="right"
                     mask="####-##-##"
                     placeholder="####-##-##" form-label="dateinput"
                     v-model="query.date" >
