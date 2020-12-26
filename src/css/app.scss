@@ -60,6 +60,7 @@ body {
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
+.coadmin-form,
 .coadmin-popup,
 .coadmin-dialog {
   // 按钮高度缩小
@@ -68,7 +69,7 @@ body {
   }
   .q-field--dense .q-field__control, 
   .q-field--dense .q-field__marginal {
-    height: 35px;
+    height: 33px;
   }
   .q-tab {
     padding: 0 5px 0 12px;

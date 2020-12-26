@@ -21,7 +21,7 @@
       no-backdrop-dismiss
       content-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-position="left" label-width="medium" class="q-pa-md">
+      <coadmin-form ref="dialogForm" @submit="onDialogFormSubmit" label-position="right" label-width="medium" class="q-pa-md">
         <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
@@ -58,11 +58,6 @@
               </q-card>
             </q-popup-proxy>
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="iron" label-slot v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
-            <template v-slot:label>
-              <div style="color:red;">iron in slot</div>
-            </template>
-          </coadmin-input>
           <coadmin-select
             class="col-12 col-sm-6"
             form-label="protein5"
@@ -81,7 +76,9 @@
             emit-value
             map-options
           />
-          <coadmin-select
+          <coadmin-input :dense="false" class="col-12 col-sm-6" form-label="iron" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
+          </coadmin-input>
+          <coadmin-select :dense="false"
             v-model="selectModel"
             form-label="protein2"
             class="col-12 col-sm-6"
@@ -136,8 +133,8 @@
           <coadmin-date
             v-model="selectDate"
             class="col-12 col-sm-6"
-            label-position="top"
             form-label="date"
+            label-position="top"
             today-btn
             :minimal="false"
             :disable="dialogFormReadonly"
@@ -155,26 +152,27 @@
               </q-icon>
             </template>
           </coadmin-input>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
-            <q-field dense borderless>
-              <template v-slot:control>
-                <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
-              </template>
-            </q-field>
-          </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formField">
             <q-field dense borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
           </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formlabel">
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formField">
             <q-field dense borderless>
               <template v-slot:control>
-                <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
+                <div class="self-center full-width no-outline" tabindex="0">作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
+          </coadmin-form-item>
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formtext">
+            <div class="q-pt-xs">语句用于基于不同条件执行不同动作</div>
+          </coadmin-form-item>
+          <coadmin-form-item class="col-12 col-sm-6" form-label="formtext">
+            <div class="q-pt-xs">
+            语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
+            </div>
           </coadmin-form-item>
           <coadmin-form-item class="col-12 col-sm-6" form-label="shape" label-position="right" label-width="fit-content">
             <div class="row q-gutter-none">

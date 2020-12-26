@@ -9,7 +9,7 @@
     <q-option-group
       v-model="model"
       ref="optionGroup"
-      class="col q-py-sm"
+      class="col q-py-xs"
       v-bind="$attrs"
       v-on="listeners"
       :options="optionsTranslated"
@@ -28,7 +28,7 @@
   <q-option-group v-else
     v-model="model"
     ref="optionGroup"
-    class="q-py-sm"
+    class="q-py-xs"
     :class="computedClass"
     v-bind="$attrs"
     v-on="listeners"
@@ -84,6 +84,10 @@ export default {
     if (!(value === false || value === 0 || !value) && (this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle')) {
       this.model = []
     } else {
+      if (this.optionsTranslated && this.optionsTranslated.length === 0) {
+        this.model = value
+        return
+      }
       const opt0 = this.optionsTranslated[0]
       if (typeof opt0[this.valueKey] === 'string') {
         if (!(value === null || value === undefined || typeof value === 'object')) {
