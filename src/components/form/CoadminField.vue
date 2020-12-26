@@ -8,7 +8,7 @@
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-field
       ref="field"
-      class="col"
+      class="col coadmin-field"
       :style="contentStyle"
       v-bind="$attrs"
       v-on="listeners"
@@ -27,6 +27,7 @@
   </div>
   <q-field v-else
     ref="field"
+    class="coadmin-field"
     :class="computedClass"
     :style="contentStyle"
     v-bind="$attrs"

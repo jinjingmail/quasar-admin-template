@@ -11,7 +11,7 @@
     <q-select
       v-model="model"
       ref="select"
-      class="col"
+      class="col coadmin-select"
       :no-error-icon="noErrorIcon"
       :input-class="computedInputClass"
       :style="contentStyle"
@@ -51,6 +51,7 @@
   <q-select v-else
     v-model="model"
     ref="select"
+    class="coadmin-select"
     :class="computedClass"
     :no-error-icon="noErrorIcon"
     :input-class="computedInputClass"

@@ -12,7 +12,7 @@
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"  :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-input
       v-model="model"
-      class="col"
+      class="col coadmin-input"
       :class="contentClass"
       :style="contentStyle"
       ref="input"
@@ -41,6 +41,7 @@
   <q-input v-else
     ref="input"
     v-model="model"
+    class="coadmin-input"
     :class="{computedClass, contentClass}"
     :style="contentStyle"
     v-bind="$attrs"

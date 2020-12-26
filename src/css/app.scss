@@ -57,43 +57,52 @@ body {
   --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
 }
 
+.coadmin-input,
+.coadmin-select,
+.coadmin-field,
+.coadmin-option-group,
+.coadmin-form-item {
+  // 按钮高度缩小
+  .q-field__control,
+  .q-field__marginal {
+    height: 45px;
+  }
+  &.q-field--dense .q-field__control, 
+  &.q-field--dense .q-field__marginal {
+    height: 33px;
+  }
+  &.q-field--auto-height .q-field__control,
+  &.q-field--auto-height .q-field__native {
+    // min-height: 45px;
+    min-height: auto;
+  }
+  &.q-field--auto-height.q-field--dense .q-field__control,
+  &.q-field--auto-height.q-field--dense .q-field__native {
+    // min-height: 35px;
+    min-height: auto;
+  }
+  &.q-field__label {
+    top: 15px;
+  }
+  &.q-field--dense .q-field__label {
+    top: 8px;
+  }
+}
+
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
 .coadmin-form,
 .coadmin-popup,
 .coadmin-dialog {
-  // 按钮高度缩小
-  .q-field__control, .q-field__marginal {
-    height: 45px;
-  }
-  .q-field--dense .q-field__control, 
-  .q-field--dense .q-field__marginal {
-    height: 33px;
-  }
   .q-tab {
     padding: 0 5px 0 12px;
   }
   .q-tabs--dense .q-tab {
     min-height: 32px;
   }
-  .q-field--auto-height .q-field__control,
-  .q-field--auto-height .q-field__native {
-    // min-height: 45px;
-    min-height: auto;
-  }
-  .q-field--auto-height.q-field--dense .q-field__control,
-  .q-field--auto-height.q-field--dense .q-field__native {
-    // min-height: 35px;
-    min-height: auto;
-  }
-  .q-field__label {
-    top: 15px;
-  }
-  .q-field--dense .q-field__label {
-    top: 8px;
-  }
 }
+
 /* 修改全局样式 END */
 
 .coadmin-sidebar {

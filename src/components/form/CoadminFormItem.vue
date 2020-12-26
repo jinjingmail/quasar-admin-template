@@ -4,9 +4,9 @@
     参考 props 定义
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
+  <div v-if="formLabel" :class="computedClass" class="q-pt-sm form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
-    <div class="col">
+    <div class="col coadmin-form-item">
       <slot />
     </div>
   </div>

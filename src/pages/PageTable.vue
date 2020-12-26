@@ -24,7 +24,7 @@
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
           <q-checkbox v-model="labelTop" label="label-top" />
-          <q-input dense outlined v-model.lazy="labelStyle" placeholder="label-style" style="width:280px"/>
+          <coadmin-input v-model.lazy="labelStyle" placeholder="label-style" style="width:255px"/>
         </div>
         <div class="q-gutter-sm">
           <q-radio v-model="labelAlign" val="auto" label="auto" />
