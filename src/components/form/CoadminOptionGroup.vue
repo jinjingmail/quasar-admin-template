@@ -4,12 +4,12 @@
     参考 props 定义
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
+  <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"><slot name="form-label">{{formLabel}}</slot></label>
     <q-option-group
       v-model="model"
       ref="optionGroup"
-      class="col q-pt-xs"
+      class="col q-py-sm"
       v-bind="$attrs"
       v-on="listeners"
       :options="optionsTranslated"
@@ -28,7 +28,7 @@
   <q-option-group v-else
     v-model="model"
     ref="optionGroup"
-    class="q-pt-sm"
+    class="q-py-sm"
     :class="computedClass"
     v-bind="$attrs"
     v-on="listeners"

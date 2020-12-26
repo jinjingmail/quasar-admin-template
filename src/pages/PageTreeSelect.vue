@@ -2,7 +2,7 @@
   <div class="">
     <q-card class="q-pa-md q-gutter-sm">
       <coadmin-tree-select
-        placeholder="leaf"
+        placeholder="leaf（只有叶子节点）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -16,7 +16,7 @@
       />
 
       <coadmin-tree-select
-        placeholder="strict"
+        placeholder="strict（选谁是谁）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -30,7 +30,7 @@
         clearable
       />
       <coadmin-tree-select
-        placeholder="leaf-any-with-parent"
+        placeholder="leaf-any-with-parent（任意叶子节点选中就包含父节点）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -45,7 +45,7 @@
       />
 
       <coadmin-tree-select
-        placeholder="leaf-all-only-parent"
+        placeholder="leaf-all-only-parent（选中所有叶子节点就只包含父节点）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -59,7 +59,7 @@
       />
 
       <coadmin-tree-select
-        placeholder="leaf-all-with-parent"
+        placeholder="leaf-all-with-parent（选中所有叶子节点就包含父节点）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -73,7 +73,7 @@
       />
 
       <coadmin-tree-select
-        placeholder="select"
+        placeholder="（单选）"
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
