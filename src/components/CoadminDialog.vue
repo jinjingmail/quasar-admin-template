@@ -1,5 +1,4 @@
 <!--
-  重新定义QDialog组件，主要是为了增加拖拽功能，和默认标题栏
   增加插槽：
     header_left
     header_right
@@ -28,7 +27,7 @@
       v-on="$listeners"
       @before-show="_beforeShow"
   >
-    <q-card ref="card" :style="contentStyle" :class="contentClass" :id="uuid">
+    <coadmin-card ref="card" :style="contentStyle" :class="contentClass" :id="uuid">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
           <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
@@ -66,7 +65,7 @@
           <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="50px" color="primary" />
           <q-spinner-gears v-else size="50px" color="primary" />
       </q-inner-loading>
-    </q-card>
+    </coadmin-card>
   </q-dialog>
 </template>
 
