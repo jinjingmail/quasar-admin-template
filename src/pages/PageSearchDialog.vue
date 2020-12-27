@@ -99,9 +99,9 @@
                   <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
                   <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
                     <q-popup-proxy breakpoint="0">
-                      <q-card>
+                      <coadmin-card>
                         <div >ThisisPopup</div>
-                      </q-card>
+                      </coadmin-card>
                     </q-popup-proxy>
                   </coadmin-input>
                   <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" label-slot v-model="query.iron" clearable >

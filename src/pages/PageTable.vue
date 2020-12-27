@@ -80,9 +80,9 @@
           <coadmin-input class="col-12 col-sm-6" form-label="sodium" label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
           <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
             <q-popup-proxy>
-              <q-card>
+              <coadmin-card>
                 <div >ThisisPopup</div>
-              </q-card>
+              </coadmin-card>
             </q-popup-proxy>
           </coadmin-input>
           <coadmin-select

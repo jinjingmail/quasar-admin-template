@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <q-card class="q-pa-md q-gutter-sm">
+    <coadmin-card class="q-pa-md q-gutter-sm">
       <coadmin-tree-select
         placeholder="leaf（只有叶子节点）"
         node-key="id"
@@ -85,7 +85,7 @@
         selectable
       />
 
-    </q-card>
+    </coadmin-card>
   </div>
 </template>
 

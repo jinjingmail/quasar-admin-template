@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-center">
-    <q-card
+    <coadmin-card
       class="login-wrapper shadow-24"
       :bordered="false"
     >
@@ -97,7 +97,7 @@
           color="primary"
         />
       </q-inner-loading>
-    </q-card>
+    </coadmin-card>
   </q-page>
 </template>
 

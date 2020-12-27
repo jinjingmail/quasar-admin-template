@@ -189,7 +189,7 @@
                       恢复默认
                     </q-tooltip>
                     <q-popup-proxy>
-                      <q-card class="my-card" style="width:240px; ">
+                      <coadmin-card class="my-card" style="width:240px; ">
                         <q-card-section class="bg-secondary text-white">
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
@@ -198,7 +198,7 @@
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorHeader')">是的</q-btn>
                         </q-card-actions>
-                      </q-card>
+                      </coadmin-card>
                     </q-popup-proxy>
                   </q-btn>
                   <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
@@ -229,7 +229,7 @@
                       恢复默认
                     </q-tooltip>
                     <q-popup-proxy>
-                      <q-card class="my-card" style="width:240px; ">
+                      <coadmin-card class="my-card" style="width:240px; ">
                         <q-card-section class="bg-secondary text-white">
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
@@ -238,7 +238,7 @@
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorMenu')">是的</q-btn>
                         </q-card-actions>
-                      </q-card>
+                      </coadmin-card>
                     </q-popup-proxy>
                   </q-btn>
                   <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
@@ -269,7 +269,7 @@
                       恢复默认
                     </q-tooltip>
                     <q-popup-proxy>
-                      <q-card class="my-card" style="width:240px; ">
+                      <coadmin-card class="my-card" style="width:240px; ">
                         <q-card-section class="bg-secondary text-white">
                           <div class="text-subtitle1 text-no-wrap">恢复默认？</div>
                         </q-card-section>
@@ -278,7 +278,7 @@
                           <q-btn v-close-popup flat>取消</q-btn>
                           <q-btn v-close-popup color="secondary" icon="check" @click="restoreSetting('colorPage')">是的</q-btn>
                         </q-card-actions>
-                      </q-card>
+                      </coadmin-card>
                     </q-popup-proxy>
                   </q-btn>
                   <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>

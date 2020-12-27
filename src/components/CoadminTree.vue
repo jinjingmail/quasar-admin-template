@@ -26,7 +26,7 @@
     @selected-label -> function(label)：以label的形式输出selected的数据
 -->
 <template>
-  <q-card flat>
+  <coadmin-card flat>
     <slot name="toolbar" v-if="!noToolbar">
       <q-toolbar>
         <div class="row full-width">
@@ -112,7 +112,7 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
-  </q-card>
+  </coadmin-card>
 </template>
 
 <script>

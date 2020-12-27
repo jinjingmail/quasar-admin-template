@@ -67,7 +67,7 @@
             <q-item-label :color="colorDel">{{labelDel}}</q-item-label>
           </q-item-section>
           <q-popup-proxy>
-            <q-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
+            <coadmin-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
               <q-card-section class="bg-primary text-white">
                 <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
               </q-card-section>
@@ -76,7 +76,7 @@
                 <q-btn dense v-close-popup flat>取消</q-btn>
                 <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
               </q-card-actions>
-            </q-card>
+            </coadmin-card>
           </q-popup-proxy>
         </q-item>
 
@@ -106,7 +106,7 @@
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
-        <q-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
+        <coadmin-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
           <q-card-section class="bg-primary text-white">
             <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
           </q-card-section>
@@ -115,7 +115,7 @@
             <q-btn dense v-close-popup flat>取消</q-btn>
             <q-btn dense v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
           </q-card-actions>
-        </q-card>
+        </coadmin-card>
       </q-popup-proxy>
     </q-btn>
 

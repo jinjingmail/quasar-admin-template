@@ -20,7 +20,7 @@
 
           <coadmin-input class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
-              <q-card style="width:550px; max-width:95vw;" class="coadmin-popup">
+              <coadmin-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>
                   <coadmin-form ref="searchform" label-width="small" label-align="right">
                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
@@ -81,9 +81,9 @@
                       <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
                       <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
                         <q-popup-proxy breakpoint="0">
-                          <q-card>
+                          <coadmin-card>
                             <div >ThisisPopup</div>
-                          </q-card>
+                          </coadmin-card>
                         </q-popup-proxy>
                       </coadmin-input>
                       <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" label-slot v-model="query.iron" clearable >
@@ -194,7 +194,7 @@
                   <q-btn label="关闭" flat v-close-popup />
                 </q-card-actions>
 
-              </q-card>
+              </coadmin-card>
             </q-popup-proxy>
             <template v-slot:after>
               <q-btn dense  color="primary" icon="search" @click="doQuery"/>

@@ -7,7 +7,7 @@
       persistent
       :no-esc-dismiss="false"
     >
-      <q-card id="dragableDialog" v-drag="{dragOutY:45}"
+      <coadmin-card id="dragableDialog" v-drag="{dragOutY:45}"
         style="max-width:none;"
       >
         <q-toolbar>
@@ -47,7 +47,7 @@
           <q-btn flat label="Decline" color="primary" v-close-popup />
           <q-btn label="Accept" color="primary" v-close-popup />
         </q-card-actions>
-      </q-card>
+      </coadmin-card>
     </q-dialog>
 
     <coadmin-table
