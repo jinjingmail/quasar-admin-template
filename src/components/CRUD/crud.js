@@ -1,5 +1,6 @@
 import { initData, download } from '@/api/data'
 import { parseTime, downloadFile } from '@/utils/index'
+import Setting from '@/default-setting'
 import Vue from 'vue'
 
 /**
@@ -104,7 +105,7 @@ function CRUD(options) {
       // 页码
       page: 0,
       // 每页数据条数
-      size: 10,
+      size: Setting.pageSize,
       // 总数据条数
       total: 0
     },
