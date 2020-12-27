@@ -21,7 +21,8 @@
 <template>
   <q-dialog
       ref="dialog"
-      class="coadmin-dialog"
+      :content-class="computedContentClass"
+      :content-style="settingDialogStyle"
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
@@ -70,13 +71,12 @@
 </template>
 
 <script>
-import { random } from '../utils/index'
-// import { QDialog } from 'quasar'
+import { random } from '@/utils/index'
+import Setting from '@/default-setting'
 
 export default {
   name: 'CoadminDialog',
   inheritAttrs: false,
-  // mixins: [QDialog],
   props: {
     title: {
       type: String,
@@ -130,6 +130,25 @@ export default {
       tempStyleMaxWidth: null,
       tempStyleLeft: null,
       tempStyleTop: null
+    }
+  },
+  computed: {
+    computedContentClass () {
+      return this.settingDialogClass + ' .coadmin-dialog'
+    },
+    settingDialogClass () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.dialogClass
+      } else {
+        return Setting.dialogClassMobile
+      }
+    },
+    settingDialogStyle () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.dialogStyle
+      } else {
+        return Setting.dialogStyleMobile
+      }
     }
   },
   created () {

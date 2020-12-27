@@ -1,6 +1,6 @@
 module.exports = {
 
-  /***************               界面配置 begin             ***************/
+  /***************               界面配置 begin           ***************/
   /**
    * @description 网站标题
    */
@@ -41,10 +41,63 @@ module.exports = {
    * 是否显示页面背景图
    */
   pageBgImage: true,
-
   /***************               界面配置 end             ***************/
 
-  /***************               鉴权配置 begin             ***************/
+  /***************               特殊配置 begin           ***************/
+  /*******
+   * 间距参考： https://quasar.dev/style/spacing
+   * 间距参考： https://quasar.dev/style/breakpoints
+   * 颜色参考： https://quasar.dev/style/color-palette
+   */
+  /**
+   * Page样式:
+   * 颜色：
+   *  bg-teal
+   * 边距：
+   *  q-pa-md
+   *  q-ma-md
+   */
+  pageClass: 'q-pa-sm ',
+  pageClassMobile: '',
+  pageStyle: '',
+  pageStyleMobile: '',
+  /**
+   * Table样式
+   * 背景颜色：
+   *  bg-teal
+   * 边距：
+   *  q-pa-md
+   *  q-ma-md
+   * 分隔线：
+   *  q-table--horizontal-separator
+   *  q-table--vertical-separator
+   *  q-table--cell-separator
+   *  q-table--none-separator
+   * 边框：
+   *  q-table--bordered
+   * 无阴影：
+   *  q-table--flat
+   * 无圆角：
+   *  q-table--square
+   */
+  tableClass: 'q-table--square',
+  tableClassMobile: 'q-table--flat q-table--square',
+  tableStyle: '',
+  tableStyleMobile: '',
+  /**
+   * Dialog样式
+   * 背景墙颜色：
+   *  bg-teal
+   * 背景墙颜色（含半透明），设置到 dialogStyle:
+   *  background:#3d1d1d52
+   */
+  dialogClass: '',
+  dialogClassMobile: '',
+  dialogStyle: '',
+  dialogStyleMobile: '',
+  /***************               特殊配置 end             ***************/
+
+  /***************               鉴权配置 begin           ***************/
   /**
    * @description 记住密码状态下的token在Cookie中存储的天数，默认1天
    */

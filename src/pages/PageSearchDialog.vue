@@ -2,8 +2,8 @@
   <div >
     <coadmin-table
       row-key="id"
-      flat
       class="q-pa-sm "
+      bordered
       stickyHeader
       stickyLastColumn
       :data="data"
@@ -36,6 +36,7 @@
               content-style="width:700px; max-width:95vw;"
               :loading="loading"
               loading-spinner="dots"
+              square
               seamless>
               <coadmin-form ref="searchform" label-width="small" label-align="right" class="q-pa-md">
                 <div class="row q-col-gutter-x-lg q-col-gutter-y-md">

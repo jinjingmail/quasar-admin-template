@@ -170,8 +170,8 @@
               <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
-              <q-toggle :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})"/>
-              <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})"/>
+              <q-toggle :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})" v-if="$q.screen.gt.xs"/>
+              <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})" v-if="$q.screen.gt.xs"/>
               <q-toggle :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <coadmin-input label="左侧菜单宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
               <q-toolbar class="no-padding">
@@ -358,7 +358,7 @@
         :style="(tagsView && tagsViewTop)?'padding-top: 36px;':((tagsView && !tagsViewTop)?'padding-bottom: 36px':'')"
       >
         <keep-alive :include="cachedViews">
-          <router-view class="coadmin-page" />
+          <router-view class="coadmin-page" :class="settingPageClass" :style="settingPageStyle"/>
         </keep-alive>
 
         <!-- place QPageSticky at end of page -->
@@ -386,7 +386,8 @@ import SideMenu from 'components/SideMenu.vue'
 import PageTagViews from 'components/PageTagViews.vue'
 import BrandColor from 'components/BrandColor.vue'
 import Breadcrumb from 'components/Breadcrumb.vue'
-import routes from '../router/routes.js'
+import routes from '@/router/routes.js'
+import Setting from '@/default-setting'
 
 // 演示引入其他图标
 import { mdiCallMade } from '@quasar/extras/mdi-v5'
@@ -428,6 +429,20 @@ export default {
     }
   },
   computed: {
+    settingPageClass () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.pageClass
+      } else {
+        return Setting.pageClassMobile
+      }
+    },
+    settingPageStyle () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.pageStyle
+      } else {
+        return Setting.pageStyleMobile
+      }
+    },
     drawerStyles () {
       return {
         backgroundColor: this.colorMenuBg,
