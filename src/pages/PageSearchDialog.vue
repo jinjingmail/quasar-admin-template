@@ -2,7 +2,6 @@
   <div >
     <coadmin-table
       row-key="id"
-      dense
       flat
       class="q-pa-sm "
       stickyHeader

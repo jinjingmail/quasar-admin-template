@@ -168,22 +168,6 @@ const routes = [
     meta: { title: '其他页面', icon: 'web' },
     children: [
       {
-        path: 'page1',
-        name: 'Page1',
-        component: () => import('pages/Page1.vue'),
-        meta: { title: 'Page1', icon: 'add' }
-      }, {
-        path: 'page2',
-        name: 'page2',
-        hidden: true,
-        component: () => import('pages/page2.vue'),
-        meta: { title: 'page2', icon: 'add' }
-      }, {
-        path: 'page3',
-        name: 'page3',
-        component: () => import('pages/page3.vue'),
-        meta: { title: 'page3', icon: 'add' }
-      }, {
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
@@ -212,12 +196,7 @@ const routes = [
         path: 'pageTreeTable2',
         name: 'PageTreeTable2',
         component: () => import('pages/PageTreeTable2.vue'),
-        meta: { title: 'pageTreeTable2', icon: 'add' }
-      }, {
-        path: 'pageSelect',
-        name: 'PageSelect',
-        component: () => import('pages/PageSelect.vue'),
-        meta: { title: 'PageSelect', icon: 'add' }
+        meta: { title: 'pageTreeTable2', icon: 'add', caption: '一个简单的树表' }
       }, {
         path: 'pageTreeSelect',
         name: 'PageTreeSelect',
