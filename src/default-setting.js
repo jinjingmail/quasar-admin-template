@@ -86,9 +86,9 @@ module.exports = {
   tableStyleMobile: '',
   /**
    * Dialog样式
-   * 背景墙颜色：
+   * 使用 dialogClass 设置背景墙颜色：
    *  bg-teal
-   * 背景墙颜色（含半透明），设置到 dialogStyle:
+   * 使用 dialogStyle 设置背景墙颜色（含半透明）:
    *  background:#3d1d1d52
    */
   dialogClass: '',
