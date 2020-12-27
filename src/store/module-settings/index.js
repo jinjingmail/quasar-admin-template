@@ -21,11 +21,31 @@ function set (key, value) {
       } else {
         Dark.set(false)
       }
-      const colorPrimary = getters.colorPrimary(state)
-      if (colorPrimary) colors.setBrand('primary', colorPrimary)
+      /*
+       * dark模式要切换css变量值
+       */
+      loadColorToDom()
     }
   }
 }
+
+function loadColorToDom() {
+  let color = getters.colorPrimary(state)
+  if (color) colors.setBrand('primary', color)
+
+  color = getters.colorMenuBgActive(state)
+  if (color) colors.setBrand('menu-bg-active', color)
+
+  color = getters.colorPageBg(state)
+  if (color) colors.setBrand('page-bg', color)
+
+  color = getters.colorTableBg(state)
+  if (color) colors.setBrand('table-bg', color)
+
+  color = getters.colorOtherBg(state)
+  if (color) colors.setBrand('other-bg', color)
+}
+
 function getColor (key, default_ = null) {
   const v = LocalStorage.getItem(key)
   if (v != null) {
@@ -41,6 +61,15 @@ function setColor (key, value) {
   }
   if (key.startsWith('setting.colorMenuBgActive')) {
     colors.setBrand('menu-bg-active', value)
+  }
+  if (key.startsWith('setting.colorPageBg')) {
+    colors.setBrand('page-bg', value)
+  }
+  if (key.startsWith('setting.colorTableBg')) {
+    colors.setBrand('table-bg', value)
+  }
+  if (key.startsWith('setting.colorOtherBg')) {
+    colors.setBrand('other-bg', value)
   }
 }
 
@@ -76,8 +105,13 @@ const state = {
   colorMenuText: getColor('setting.colorMenuText', defaultColor.colorMenuText),
   colorMenuTextDark: getColor('setting.colorMenuTextDark', defaultColor.colorMenuText),
   colorMenuBgActive: getColor('setting.colorMenuBgActive', defaultColor.colorMenuBgActive),
+  colorMenuBgActiveDark: getColor('setting.colorMenuBgActiveDark', defaultColor.colorMenuBgActive),
   colorPageBg: getColor('setting.colorPageBg', defaultColor.colorPageBg),
-  colorPageBgDark: getColor('setting.colorPageBgDark', defaultColor.colorPageBgDark)
+  colorPageBgDark: getColor('setting.colorPageBgDark', defaultColor.colorPageBgDark),
+  colorTableBg: getColor('setting.colorTableBg', defaultColor.colorTableBg),
+  colorTableBgDark: getColor('setting.colorTableBgDark', defaultColor.colorTableBgDark),
+  colorOtherBg: getColor('setting.colorOtherBg', defaultColor.colorOtherBg),
+  colorOtherBgDark: getColor('setting.colorOtherBgDark', defaultColor.colorOtherBgDark)
 }
 
 const getters = {
@@ -105,8 +139,10 @@ const getters = {
   colorHeaderText: state => Dark.isActive ? state.colorHeaderTextDark : state.colorHeaderText,
   colorMenuBg: state => Dark.isActive ? state.colorMenuBgDark : state.colorMenuBg,
   colorMenuText: state => Dark.isActive ? state.colorMenuTextDark : state.colorMenuText,
-  colorMenuBgActive: state => Dark.isActive ? state.colorMenuBgActive : state.colorMenuBgActive,
-  colorPageBg: state => Dark.isActive ? state.colorPageBgDark : state.colorPageBg
+  colorMenuBgActive: state => Dark.isActive ? state.colorMenuBgActiveDark : state.colorMenuBgActive,
+  colorPageBg: state => Dark.isActive ? state.colorPageBgDark : state.colorPageBg,
+  colorTableBg: state => Dark.isActive ? state.colorTableBgDark : state.colorTableBg,
+  colorOtherBg: state => Dark.isActive ? state.colorOtherBgDark : state.colorOtherBg
 }
 
 const mutations = {
@@ -127,15 +163,19 @@ const mutations = {
 const actions = {
   init ({ commit }) {
     console.log('do setting init')
+    /*
+     * 通过commit darkmode，间接更新颜色css变量
+     */
     if (getters.darkMode(state)) {
       commit('CHANGE_SETTING', { key: 'darkMode', value: true })
     } else {
       commit('CHANGE_SETTING', { key: 'darkMode', value: false })
     }
+    /*
     if (getters.colorMenuBgActive(state)) {
       const color = getters.colorMenuBgActive(state)
       commit('CHANGE_SETTING', { key: 'colorMenuBgActive', value: color })
-    }
+    }*/
   },
   changeSetting ({ commit }, data) {
     commit('CHANGE_SETTING', data)
@@ -151,6 +191,10 @@ const actions = {
       commit('CHANGE_SETTING', { key: 'colorHeaderText', value: (Dark.isActive ? defaultColor.colorHeaderTextDark : defaultColor.colorHeaderText) })
     } else if (data === 'colorPage') {
       commit('CHANGE_SETTING', { key: 'colorPageBg', value: (Dark.isActive ? defaultColor.colorPageBgDark : defaultColor.colorPageBg) })
+      commit('CHANGE_SETTING', { key: 'colorTableBg', value: (Dark.isActive ? defaultColor.colorTableBgDark : defaultColor.colorTableBg) })
+      commit('CHANGE_SETTING', { key: 'colorOtherBg', value: (Dark.isActive ? defaultColor.colorOtherBgDark : defaultColor.colorOtherBg) })
+    } else {
+      console.log('unknown restoreSetting:', data)
     }
   }
 }

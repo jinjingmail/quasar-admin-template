@@ -18,8 +18,18 @@ module.exports = {
   colorMenuText: 'white',
   colorMenuBgActive: 'rgba(2, 255, 2, 0.43)',
   /**
-   * 页面背景色
+   * 页面背景墙底色
    */
   colorPageBg: 'rgb(238, 238, 238)',
-  colorPageBgDark: 'rgb(41, 41, 41)'
+  colorPageBgDark: 'rgb(41, 41, 41)',
+  /**
+   * Table表格页面的背景颜色
+   */
+  colorTableBg: '#fff',
+  colorTableBgDark: 'var(--q-color-dark)',
+  /**
+   * Table 以外 Dialog，Card，Menu等的组件背景颜色
+   */
+  colorOtherBg: '#fff',
+  colorOtherBgDark: '#2d2d2d'
 }

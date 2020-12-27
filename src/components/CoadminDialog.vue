@@ -114,7 +114,7 @@ export default {
     },
     contentClass: {
       type: String,
-      default: ''
+      default: undefined
     },
     contentStyle: {
       type: String,

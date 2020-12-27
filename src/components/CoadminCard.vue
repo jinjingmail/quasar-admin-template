@@ -8,7 +8,7 @@
     ref="card"
     v-bind="$attrs"
     v-on="$listeners"
-    class="coadmin-card"
+    class="coadmin-card custom-other-bg"
     >
     <slot />
   </q-card>

@@ -11,6 +11,7 @@
         <coadmin-tree
           ref="tree"
           class="q-mr-sm"
+          style="background-color:var(--q-color-table-bg)"
           node-key="id"
           label-key="label"
           :nodes="treeDatas"
@@ -31,7 +32,11 @@
       </template>
 
       <template v-slot:after>
-          <coadmin-tree-table class="q-ml-sm" :columns="columns" :data="treeDatasSelected"/>
+          <coadmin-tree-table
+            class="q-ml-sm"
+            style="background-color:var(--q-color-table-bg)"
+            :columns="columns"
+            :data="treeDatasSelected"/>
       </template>
     </q-splitter>
 

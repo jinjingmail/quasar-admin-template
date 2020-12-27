@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-md">
+  <div>
     <div class="row q-mb-md q-col-gutter-md">
       <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 box_1">
         <q-card class="shadow">

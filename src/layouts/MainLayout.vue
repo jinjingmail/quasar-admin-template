@@ -1,5 +1,22 @@
 <template>
-  <q-layout :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'" :class="{'layout-main-bg-image':pageBgImage}" :style="layoutMainStyles">
+  <q-layout
+    :view="sidebarTop?'lHh LpR lFf':'hHh LpR lFf'"
+    :class="{'layout-main-bg-image':pageBgImage}"
+    class='custom-page-bg'>
+    <coadmin-dialog
+      v-model="testDialog"
+      title="效果预览"
+      icon="colorize"
+      seamless
+      content-style="width:240px"
+      >
+      <q-card-section>
+        <div class="text-body2">本对话框用于预览颜色设置效果</div>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn dense label="关闭" flat v-close-popup />
+      </q-card-actions>
+    </coadmin-dialog>
     <q-header :reveal="!fixedHeader" :elevated="false" :reveal-offset="60" bordered class="coadmin-header" :style="headerStyles">
       <q-toolbar>
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
@@ -126,7 +143,7 @@
       :breakpoint="599"
       class="non-selectable"
     >
-        <div class="q-pa-sm q-pb-xl">
+        <div class="q-pa-sm q-pb-xl custom-other-bg">
           <q-toolbar class="transparent">
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
 
@@ -262,7 +279,7 @@
               </div>
 
               <q-toolbar class="no-padding">
-                  <div class="text-subtitle1 ">页面<q-icon name="help_outline"><q-tooltip>请在PageCrudDict页面查看效果</q-tooltip></q-icon></div>
+                  <div class="text-subtitle1 ">页面<q-icon name="help_outline"><q-tooltip>请在PageCrudDict页面查看效果，分页设置为5条/页</q-tooltip></q-icon></div>
                   <q-space/>
                   <q-btn icon="restore" flat round color="primary">
                     <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
@@ -284,9 +301,19 @@
                   <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <div class="row q-gutter-lg">
-                <q-btn class="col-auto" size="sm" label="背景" color="primary">
+                <q-btn class="col-auto" size="sm" label="背景底色" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorPageBg" @change="value => changeSetting({key:'colorPageBg', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="Table背景" color="primary">
+                  <q-popup-proxy>
+                    <q-color :value="colorTableBg" @change="value => changeSetting({key:'colorTableBg', value: value})"/>
+                  </q-popup-proxy>
+                </q-btn>
+                <q-btn class="col-auto" size="sm" label="其它背景" color="primary" @click="testDialog=true">
+                  <q-popup-proxy>
+                    <q-color :value="colorOtherBg" @change="value => changeSetting({key:'colorOtherBg', value: value})"/>
                   </q-popup-proxy>
                 </q-btn>
                 <q-checkbox :value="pageBgImage" label="显示背景图" dense @click.native="changeSetting({key:'pageBgImage', value: !pageBgImage})"/>
@@ -402,6 +429,7 @@ export default {
   },
   data () {
     return {
+      testDialog: false,
       miniState: false,
       leftDrawerMini: false,
       leftDrawerOpen: false,
@@ -465,11 +493,6 @@ export default {
         color: this.colorHeaderText
       }
     },
-    layoutMainStyles () {
-      return {
-        backgroundColor: this.colorPageBg
-      }
-    },
     ...mapGetters('settings', [
       'title',
       'tagsView',
@@ -488,7 +511,9 @@ export default {
       'colorMenuBg',
       'colorMenuText',
       'colorMenuBgActive',
-      'colorPageBg'
+      'colorPageBg',
+      'colorTableBg',
+      'colorOtherBg'
     ]),
     ...mapGetters('tagviews', [
       'cachedViews'

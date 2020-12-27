@@ -10,7 +10,7 @@
       <template v-slot:before>
           <coadmin-tree
             ref="tree"
-            class="q-mr-sm"
+            class="q-mr-sm custom-table-bg"
             node-key="id"
             label-key="label"
             :nodes="treeDatas"
@@ -33,7 +33,7 @@
 
       <template v-slot:after>
           <q-table
-            class="coadmin-table q-ml-sm"
+            class="coadmin-table q-ml-sm custom-table-bg"
             flat
             :wrap-cells="false"
             :data="treeDatasSelected"

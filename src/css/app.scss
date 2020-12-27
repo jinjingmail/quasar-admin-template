@@ -54,7 +54,7 @@ input:-ms-input-placeholder {
 /* 修改全局样式 BEGIN */
 body {
   // 左侧菜单栏active状态，默认颜色
-  --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
+  // --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
 }
 
 .coadmin-input,
@@ -105,6 +105,16 @@ body {
 }
 
 /* 修改全局样式 END */
+
+.custom-page-bg {
+  background-color: var(--q-color-page-bg) ;
+}
+.custom-other-bg {
+  background-color: var(--q-color-other-bg) ;
+}
+.custom-table-bg {
+  background-color: var(--q-color-table-bg) ;
+}
 
 .coadmin-sidebar {
   &-menu-active {
@@ -180,7 +190,8 @@ body {
 .q-dialog {
   &.q-dark,
   .q-dark {
-    background-color: #2d2d2d;  // $grey-9;
+    //background-color: #2d2d2d;  // $grey-9;
+    background-color: var(--q-color-other-bg);
   }
 
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
@@ -198,7 +209,8 @@ body {
 .coadmin-popup {
   &.q-dark,
   .q-dark {
-    background-color: #2d2d2d;  // $grey-9;
+    //background-color: #2d2d2d;  // $grey-9;
+    background-color: var(--q-color-other-bg);
   }
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
   .q-dialog__inner--minimized {
@@ -260,12 +272,14 @@ body {
   &.q-dark .q-table__top,
   &.q-dark .q-table__bottom,
   &.q-dark thead tr:first-child th {/* bg color is important for th; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th {/* bg color is important for th; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   thead tr th {
     position: sticky;
@@ -287,12 +301,14 @@ body {
   &.q-dark td:first-child,
   &.q-dark thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
-    background-color: $dark;
+    //background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   td:first-child,
   thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
-    background-color: #fff;
+    //background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   th:first-child,
   td:first-child {
@@ -306,13 +322,15 @@ body {
   &.q-dark td:last-child,
   &.q-dark thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
-    background-color: $dark;
+    //background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
 
   td:last-child,
   thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
-    background-color: #fff;
+    //background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   th:last-child,
   td:last-child {
@@ -330,12 +348,14 @@ body {
   &.q-dark td:first-child,
   &.q-dark thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   td:first-child,
   thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   th:first-child,
   td:first-child {
@@ -348,12 +368,14 @@ body {
   &.q-dark td:last-child,
   &.q-dark thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   td:last-child,
   thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   th:last-child,
   td:last-child {
@@ -371,12 +393,14 @@ body {
   &.q-dark td:first-child,
   &.q-dark tr th {
     /* bg color is important for td; just specify one */
-    background-color: $dark;
+    //background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   tr th,
   td:first-child {
     /* bg color is important for td; just specify one */
-    background-color: #fff;
+    //background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   tr th {
     position: sticky;
@@ -419,12 +443,14 @@ body {
   &.q-dark td:last-child,
   &.q-dark tr th {
     /* bg color is important for td; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   tr th,
   td:last-child {
     /* bg color is important for td; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   tr th {
     position: sticky;
@@ -469,23 +495,27 @@ body {
   &.q-dark td:first-child,
   &.q-dark tr th {
     /* bg color is important for td; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   tr th,
   td:first-child {
     /* bg color is important for td; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
 
   &.q-dark td:last-child,
   &.q-dark tr th {
     /* bg color is important for td; just specify one */
-    background-color: $dark;
+    // background-color: $dark;
+    background-color: var(--q-color-table-bg);
   }
   tr th,
   td:last-child {
     /* bg color is important for td; just specify one */
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--q-color-table-bg);
   }
   tr th {
     position: sticky;

@@ -4,6 +4,7 @@
     dense
     align="left"
     class="full-width"
+    content-class="custom-table-bg"
     :breakpoint="0"
     :inline-label="true"
     outside-arrows

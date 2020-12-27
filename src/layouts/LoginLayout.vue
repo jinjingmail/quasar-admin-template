@@ -1,12 +1,11 @@
 <template>
-  <q-layout :class="{'layout-user-container':pageBgImage}" :style="layoutMainStyles">
+  <q-layout :class="{'layout-user-container':pageBgImage}" class="custom-page-bg">
     <q-page-container>
       <router-view class="coadmin-page" />
     </q-page-container>
     <q-footer
       bordered
-      class="flex items-center justify-between footer"
-      :style="'background-color: ' + colorPageBg"
+      class="flex items-center justify-between footer custom-page-bg"
       :class="$q.dark.isActive?'text-white':'text-dark'"
     >
       <div>
@@ -23,13 +22,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'LoginLayout',
   computed: {
-    layoutMainStyles () {
-      return {
-        backgroundColor: this.colorPageBg
-      }
-    },
     ...mapGetters('settings', [
-      'colorPageBg',
       'pageBgImage'
     ])
   }

@@ -12,6 +12,7 @@
     ref="table"
     class="coadmin-table"
     :class="computedClass"
+    card-class="custom-table-bg"
     :style="computedStyle"
     v-bind="$attrs"
     v-on="listeners"
