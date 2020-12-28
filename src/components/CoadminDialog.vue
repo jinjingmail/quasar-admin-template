@@ -21,15 +21,15 @@
 -->
 <template>
   <q-dialog
-      ref="dialog"
-      :content-class="'coadmin-dialog ' + contentClass"
-      :content-style="contentStyle"
-      :maximized="maxscreen"
-      v-bind="$attrs"
-      v-on="$listeners"
-      @before-show="_beforeShow"
+    ref="dialog"
+    :content-class="'coadmin-dialog ' + contentClass"
+    :content-style="contentStyle"
+    :maximized="maxscreen"
+    v-bind="$attrs"
+    v-on="$listeners"
+    @before-show="_beforeShow"
   >
-    <coadmin-card ref="card" :style="contentStyle" :class="contentClass" :id="uuid">
+    <coadmin-card ref="card" :style="computedCardStyle" :class="computedCardClass" :id="uuid">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
           <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
@@ -147,9 +147,6 @@ export default {
     }
   },
   computed: {
-    computedContentClass () {
-      return this.settingDialogClass + ' .coadmin-dialog'
-    },
     settingDialogClass () {
       if (this.$q.screen.gt.xs) {
         return Setting.dialogClass
@@ -162,6 +159,20 @@ export default {
         return Setting.dialogStyle
       } else {
         return Setting.dialogStyleMobile
+      }
+    },
+    computedCardClass () {
+      return this.settingDialogClass + ' ' + this.cardClass
+    },
+    computedCardStyle () {
+      if (this.settingDialogStyle && this.cardStyle) {
+        return this.settingDialogStyle + ';' + this.cardStyle
+      } else if (this.cardStyle) {
+        return this.cardStyle
+      } else if (this.settingDialogStyle) {
+        return this.settingDialogStyle
+      } else {
+        return ''
       }
     }
   },

@@ -9,7 +9,7 @@
       :title="crud.status.title"
       no-backdrop-dismiss
       @before-hide="crud.cancelCU"
-      content-style="width:600px; max-width:95vw;"
+      card-style="width:600px; max-width:95vw;"
     >
       <coadmin-form ref="form"
         label-width="small"

@@ -32,7 +32,7 @@
             </template>
 
             <coadmin-dialog ref="searchPopup"
-              content-style="width:700px; max-width:95vw;"
+              card-style="width:700px; max-width:95vw;"
               :loading="loading"
               loading-spinner="dots"
               square

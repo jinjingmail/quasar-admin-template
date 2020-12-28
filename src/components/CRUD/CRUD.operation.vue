@@ -37,7 +37,7 @@
       :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <!--右侧插槽-->
     <slot name="end" />
-    <coadmin-dialog ref="dialogDelete" no-max title="删除" content-style="width:250px; max-width:95vw;">
+    <coadmin-dialog ref="dialogDelete" no-max title="删除" card-style="width:250px; max-width:95vw;">
       <q-card-section>
         <div class="text-body1">删除选中的 {{crud.selections.length}} 条数据?</div>
       </q-card-section>

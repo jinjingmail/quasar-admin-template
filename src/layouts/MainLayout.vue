@@ -8,7 +8,7 @@
       title="效果预览"
       icon="colorize"
       seamless
-      content-style="width:240px"
+      card-style="width:240px"
       >
       <q-card-section>
         <div class="text-body2">本对话框用于预览颜色设置效果</div>

@@ -9,7 +9,7 @@
       :title="crud.status.title"
       no-backdrop-dismiss
       @before-hide="crud.cancelCU"
-      content-style="width:800px; max-width:95vw;"
+      card-style="width:800px; max-width:95vw;"
     >
       <coadmin-form ref="form"
         label-width="small"
@@ -41,7 +41,7 @@
             <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
           </template>
           <coadmin-dialog ref="searchPopup"
-            seamless content-style="width:700px; max-width:95vw;">
+            seamless card-style="width:700px; max-width:95vw;">
             <coadmin-form ref="searchform"
               label-width="small"
               label-align="right"

@@ -19,7 +19,7 @@
       ref="formDialog"
       title="表单演示"
       no-backdrop-dismiss
-      content-style="width:800px; max-width:95vw;"
+      card-style="width:800px; max-width:95vw;"
     >
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
