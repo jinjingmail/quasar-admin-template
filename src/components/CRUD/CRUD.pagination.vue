@@ -8,17 +8,18 @@
     icon-next
     input
     max-pages
-    no-persistence-page-size
+    no-persistence-page-size  不持久存储pagesize到浏览器缓存
+    no-page-if-only-one-page  拢共只有一页时就不显示分页栏了
 -->
 <template>
   <div class="row">
     <slot name="start" />
-    <q-field dense borderless class="col-auto">
+    <coadmin-field dense borderless :outlined="false" class="col-auto">
       <template v-slot:control>
         <div class="self-center full-width no-outline" tabindex="0">共{{page.total}}条</div>
       </template>
-    </q-field>
-    <q-pagination
+    </coadmin-field>
+    <q-pagination v-if="!noPageIfOnlyOnePage"
       :value="page.page"
       class="col-auto"
       :max="pageMax"
@@ -32,9 +33,8 @@
       :size="dense?undefined:'18px'"
     >
     </q-pagination>
-    <q-select
+    <coadmin-select v-if="!noPageIfOnlyOnePage"
       class="col-auto"
-      standout
       :dense="dense"
       :options-dense="dense"
       :value="page.size"
@@ -43,7 +43,8 @@
       map-options
       @input="pageSizeChange"
       :hide-dropdown-icon="!$q.screen.gt.xs"
-      :borderless="!$q.screen.gt.xs"
+      :outlined="$q.screen.gt.xs"
+      borderless
     />
     <slot name="end" />
   </div>
@@ -73,7 +74,8 @@ export default {
       type: Number,
       default: 6
     },
-    noPersistencePageSize: Boolean
+    noPersistencePageSize: Boolean,
+    noPageIfOnlyOnePage: Boolean
   },
   data () {
     return {
