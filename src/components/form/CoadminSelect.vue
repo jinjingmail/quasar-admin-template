@@ -159,7 +159,8 @@ export default {
   watch: {
     '$attrs.value' (val) {
       this.model = val
-    },
+    }
+    /*,
     model (val, valOld) {
       if (this.$listeners['value-label']) {
         this.$emit('value-label', this._valueToLabel(val))
@@ -170,7 +171,7 @@ export default {
           this.$emit('input', val)
         }
       }
-    }
+    }*/
   },
   computed: {
     computedInputClass () {
@@ -189,7 +190,8 @@ export default {
         {
           input: function (value) {
             if (!vm.disable) {
-              vm.$emit('input', value)
+              //vm.$emit('input', value)
+              vm._modelChange(value)
             }
           }
           /*
@@ -203,6 +205,17 @@ export default {
     }
   },
   methods: {
+    _modelChange (valNew, valOld) {
+      if (this.$listeners['value-label']) {
+        this.$emit('value-label', this._valueToLabel(valNew))
+      }
+      if (!valNew) {
+        this.$emit('clear', valOld)
+      }
+      if (!this.disable) {
+        this.$emit('input', valNew)
+      }
+    },
     _popupshow (evt) {
       this.popupShow = true
       this.$emit('popup-show', evt)
@@ -212,7 +225,9 @@ export default {
       this.$emit('popup-hide', evt)
     },
     _doClean () {
+      const old = this.model
       this.model = null
+      this._modelChange(this.model, old)
       /*if (!this.noClearFocus) {
         this.focus()
       }*/

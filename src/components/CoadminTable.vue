@@ -32,10 +32,11 @@
       <slot :name="slotName" v-bind="prop"/>
     </template>
 
-    <!-- 添加pagination slot，以便页面没有分页时q-table显示默认的分页信息 -->
+    <!-- 添加pagination slot，以便页面没有分页时q-table显示默认的分页信息
     <template v-slot:pagination>
       <slot name="pagination"/>
     </template>
+     -->
 
     <!-- loadingSpinner 明确为空或者自定义了slot:loading，则忽略 -->
     <template v-slot:loading v-if="showLoading && loadingSpinner && !$slots['loading']">
