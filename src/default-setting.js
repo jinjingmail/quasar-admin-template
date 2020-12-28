@@ -52,7 +52,7 @@ module.exports = {
   /**
    * Page样式:
    * 颜色：
-   *  bg-teal  // 提示：这里仅是一个用法示例，请在 default-color.js 中设置颜色，可以设置正常模式和dark模式（下同）
+   *  bg-teal  // 提示：颜色仅为用法示例，不推荐在这里配置颜色。请在 default-color.js 中设置颜色，可以设置正常模式和dark模式（下同）
    * 边距：
    *  q-pa-md
    *  q-ma-md
@@ -77,7 +77,7 @@ module.exports = {
    */
   tableClass: 'q-pa-xs',
   tableStyle: '',
-  tableClassMobile: 'q-pa-xs q-table--flat q-table--square',
+  tableClassMobile: 'q-table--flat q-table--square',
   tableStyleMobile: '',
   /**
    * Dialog样式

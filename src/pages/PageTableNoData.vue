@@ -51,7 +51,7 @@
     </q-dialog>
 
     <coadmin-table
-      class="q-pa-sm"
+      class=""
       dense
       :wrap-cells="false"
       :data="data"

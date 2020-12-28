@@ -2,7 +2,7 @@
   <div >
     <coadmin-table
       row-key="id"
-      class="q-pa-sm "
+      class=""
       stickyHeader
       stickyLastColumn
       :data="data"

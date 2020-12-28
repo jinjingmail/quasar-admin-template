@@ -32,8 +32,8 @@
       </template>
 
       <template v-slot:after>
-          <q-table
-            class="coadmin-table q-ml-sm custom-table-bg"
+          <coadmin-table
+            class="q-ml-sm"
             flat
             :wrap-cells="false"
             :data="treeDatasSelected"
@@ -112,7 +112,7 @@
             <template v-slot:loading>
               <q-inner-loading showing color="primary" />
             </template>
-          </q-table>
+          </coadmin-table>
       </template>
     </q-splitter>
 

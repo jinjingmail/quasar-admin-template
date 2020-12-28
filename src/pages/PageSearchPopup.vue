@@ -4,7 +4,7 @@
       row-key="id"
       dense
       flat
-      class="q-pa-sm "
+      class=""
       separator="cell"
       :data="data"
       :columns="columns"

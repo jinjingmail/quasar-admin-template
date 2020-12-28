@@ -45,7 +45,7 @@
           ref="table"
           row-key="id"
           dense
-          class="q-mr-sm"
+          :class="$q.screen.gt.xs?'q-mr-sm':''"
           :data="crud.data"
           :columns="crud.columns"
           :visible-columns="crud.visibleColumns"
@@ -88,7 +88,7 @@
       </template>
 
       <template v-slot:after>
-        <dict-detail ref="dictDetail" class="q-ml-sm"/>
+        <dict-detail ref="dictDetail" :class="$q.screen.gt.xs?'q-ml-sm':''"/>
       </template>
     </q-splitter>
   </div>

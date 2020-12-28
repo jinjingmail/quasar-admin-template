@@ -125,6 +125,13 @@ export default {
     computedSeparator () {
       return this.separator
     },
+    settingPageClass () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.pageClass
+      } else {
+        return Setting.pageClassMobile
+      }
+    },
     settingTableClass () {
       if (this.$q.screen.gt.xs) {
         return Setting.tableClass
@@ -178,25 +185,25 @@ export default {
             sub += '- 2px '
           }
           // TODO 这段代码需要使用自动计算dom高度的方法来代替
-          if (this._contains(Setting.pageClass, ['q-pa-xs', 'q-ma-xs', 'q-py-xs', 'q-my-xs'])) {
+          if (this._contains(this.settingPageClass, ['q-pa-xs', 'q-ma-xs', 'q-py-xs', 'q-my-xs'])) {
             sub += '- 5px '
-          } else if (this._contains(Setting.pageClass, ['q-pt-xs', 'q-pb-xs', 'q-mt-xs', 'q-mb-xs'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pt-xs', 'q-pb-xs', 'q-mt-xs', 'q-mb-xs'])) {
             sub += '- 2px '
-          } else if (this._contains(Setting.pageClass, ['q-pa-sm', 'q-ma-sm', 'q-py-sm', 'q-my-sm'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pa-sm', 'q-ma-sm', 'q-py-sm', 'q-my-sm'])) {
             sub += '- 13px '
-          } else if (this._contains(Setting.pageClass, ['q-pt-sm', 'q-pb-sm', 'q-mt-sm', 'q-mb-sm'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pt-sm', 'q-pb-sm', 'q-mt-sm', 'q-mb-sm'])) {
             sub += '- 6px '
-          } else if (this._contains(Setting.pageClass, ['q-pa-md', 'q-ma-md', 'q-py-md', 'q-my-md'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pa-md', 'q-ma-md', 'q-py-md', 'q-my-md'])) {
             sub += '- 30px '
-          } else if (this._contains(Setting.pageClass, ['q-pt-md', 'q-pb-md', 'q-mt-md', 'q-mb-md'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pt-md', 'q-pb-md', 'q-mt-md', 'q-mb-md'])) {
             sub += '- 15px '
-          } else if (this._contains(Setting.pageClass, ['q-pa-lg', 'q-ma-lg', 'q-py-lg', 'q-my-lg'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pa-lg', 'q-ma-lg', 'q-py-lg', 'q-my-lg'])) {
             sub += '- 45px '
-          } else if (this._contains(Setting.pageClass, ['q-pt-lg', 'q-pb-lg', 'q-mt-lg', 'q-mb-lg'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pt-lg', 'q-pb-lg', 'q-mt-lg', 'q-mb-lg'])) {
             sub += '- 23px '
-          } else if (this._contains(Setting.pageClass, ['q-pa-xl', 'q-ma-xl', 'q-py-xl', 'q-my-xl'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pa-xl', 'q-ma-xl', 'q-py-xl', 'q-my-xl'])) {
             sub += '- 93px '
-          } else if (this._contains(Setting.pageClass, ['q-pt-xl', 'q-pb-xl', 'q-mt-xl', 'q-mb-xl'])) {
+          } else if (this._contains(this.settingPageClass, ['q-pt-xl', 'q-pb-xl', 'q-mt-xl', 'q-mb-xl'])) {
             sub += '- 47px '
           }
           height = 'calc(100vh ' + sub + ')'

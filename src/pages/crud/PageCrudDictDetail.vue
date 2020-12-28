@@ -74,7 +74,9 @@
       </template>
 
       <template v-slot:pagination>
-        <crud-pagination no-persistence-page-size/>
+        <crud-pagination
+          no-persistence-page-size
+          no-page-if-only-one-page/>
       </template>
 
     </coadmin-table>
