@@ -10,25 +10,24 @@
         </tr>
         </thead>
         <tbody>
-            <template v-for="(item ,index)  in (arrayTreeObj)">
-            <tr :key="index" v-if="hasDefaultSlot" >
-                <slot name="body" v-bind:item="item" v-bind:toggle="toggle" v-bind:setPadding="setPadding"
-                    v-bind:iconName="iconName">
-                </slot>
-            </tr>
+            <template v-if="hasDefaultSlot" >
+                <tr :key="index" v-for="(item ,index)  in (arrayTreeObj)">
+                    <slot name="body" v-bind:item="item" v-bind:toggle="toggle" v-bind:setPadding="setPadding"
+                        v-bind:iconName="iconName">
+                    </slot>
+                </tr>
             </template>
-            <template v-for="(item ,index)  in (arrayTreeObj)" >
-            <tr :key="index" v-if="!hasDefaultSlot">
-<!--                <td data-th="Name" @click="col_index==0?toggle(item):{}" v-for="col,col_index in columns">-->
-                <td data-th="Name" v-for="(col,col_index) in columns" :class="'text-'+col.align" :key="col_index">
-                    <div v-bind:style="col_index==0?setPadding(item):{'padding-left':'30px'}"
-                        :class="hasChildren(item)?'q-pl-lg':''">
-                        <q-btn @click="col_index==0?toggle(item):{}"  v-if="hasChildren(item) && col_index==0" :icon="iconName(item)" flat dense>
-                        </q-btn>
-                        <span class="q-ml-sm">{{item[col.field]}}</span>
-                    </div>
-                </td>
-            </tr>
+            <template v-if="!hasDefaultSlot">
+                <tr :key="index" v-for="(item ,index)  in (arrayTreeObj)" >
+                    <td data-th="Name" v-for="(col,col_index) in columns" :class="'text-'+col.align" :key="col_index">
+                        <div v-bind:style="col_index==0?setPadding(item):{'padding-left':'30px'}"
+                            :class="hasChildren(item)?'q-pl-lg':''">
+                            <q-btn @click="col_index==0?toggle(item):{}"  v-if="hasChildren(item) && col_index==0" :icon="iconName(item)" flat dense>
+                            </q-btn>
+                            <span class="q-ml-sm">{{item[col.field]}}</span>
+                        </div>
+                    </td>
+                </tr>
             </template>
         </tbody>
     </q-markup-table>
@@ -37,7 +36,7 @@
 <script>
 /* eslint-disable */
 export default {
-    name: "CoadminTreeTable",
+    name: "CoadminTreeMarkupTable",
     props: ['data', 'columns', 'separator', 'dense', 'dark', 'flat', 'bordered', 'square','classes','defaultExpandAll'],
     data: function () {
         return {

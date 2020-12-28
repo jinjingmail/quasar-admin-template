@@ -32,7 +32,7 @@
       </template>
 
       <template v-slot:after>
-          <coadmin-tree-table
+          <coadmin-tree-markup-table
             class="q-ml-sm"
             style="background-color:var(--q-color-table-bg)"
             :columns="columns"
@@ -46,13 +46,13 @@
 <script>
 import depts from '../data/depts.js'
 import CoadminTree from 'components/CoadminTree.vue'
-import CoadminTreeTable from 'components/CoadminTreeTable.vue'
+import CoadminTreeMarkupTable from 'components/CoadminTreeMarkupTable.vue'
 
 export default {
   name: 'PageTreeTable2',
   components: {
     CoadminTree,
-    CoadminTreeTable
+    CoadminTreeMarkupTable
   },
   data () {
     return {
