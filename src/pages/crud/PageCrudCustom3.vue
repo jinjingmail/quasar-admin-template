@@ -37,7 +37,7 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-none q-ma-sm"
+      class="q-pa-sm"
       flat
       sticky-last-column
       :data="crud.data"

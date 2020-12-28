@@ -57,9 +57,9 @@ module.exports = {
    *  q-pa-md
    *  q-ma-md
    */
-  pageClass: 'q-pa-sm',
-  pageClassMobile: '',
+  pageClass: 'q-pa-sm', // PC等大屏幕使用（下同）
   pageStyle: '',
+  pageClassMobile: '', // 手机等小屏幕使用（下同）
   pageStyleMobile: '',
   /**
    * Table样式
@@ -80,9 +80,9 @@ module.exports = {
    * 无圆角：
    *  q-table--square
    */
-  tableClass: '',
-  tableClassMobile: 'q-table--flat q-table--square',
+  tableClass: 'q-pa-xs',
   tableStyle: '',
+  tableClassMobile: 'q-pa-xs q-table--flat q-table--square',
   tableStyleMobile: '',
   /**
    * Dialog样式
@@ -92,8 +92,8 @@ module.exports = {
    *  background:#3d1d1d52
    */
   dialogClass: '',
-  dialogClassMobile: '',
   dialogStyle: '',
+  dialogClassMobile: '',
   dialogStyleMobile: '',
   /***************               特殊配置 end             ***************/
 
