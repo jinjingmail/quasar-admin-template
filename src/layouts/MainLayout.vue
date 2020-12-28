@@ -142,8 +142,9 @@
       :width="260"
       :breakpoint="599"
       class="non-selectable"
+      content-class="custom-other-bg"
     >
-        <div class="q-pa-sm q-pb-xl custom-other-bg">
+        <div class="q-pa-sm q-pb-xl">
           <q-toolbar class="transparent">
             <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
 

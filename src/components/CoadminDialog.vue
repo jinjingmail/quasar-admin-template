@@ -13,15 +13,17 @@
     no-close
     close-method
     icon
-    content-style
     content-class
+    content-style
+    card-class
+    card-style
     ...
 -->
 <template>
   <q-dialog
       ref="dialog"
-      :content-class="computedContentClass"
-      :content-style="settingDialogStyle"
+      :content-class="'coadmin-dialog ' + contentClass"
+      :content-style="contentStyle"
       :maximized="maxscreen"
       v-bind="$attrs"
       v-on="$listeners"
@@ -49,8 +51,13 @@
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
-            <q-btn v-if="!noMax" flat round dense :icon="maxscreen?icon_max_exit:icon_max" @click="toggleMaxScreen()"/>
-            <q-btn v-if="!noClose" flat round dense :icon="icon_close?icon_close:'close'" @click="closeMethod?closeMethod():$refs.dialog.hide()"/>
+            <q-btn v-if="!noMax" flat round dense
+              :icon="maxscreen?icon_max_exit:icon_max"
+              @click="toggleMaxScreen()"/>
+
+            <q-btn v-if="!noClose" flat round dense
+              :icon="icon_close?icon_close:'close'"
+              @click="closeMethod?closeMethod():$refs.dialog.hide()"/>
           </slot>
         </q-toolbar>
       </q-card-section>
@@ -114,11 +121,19 @@ export default {
     },
     contentClass: {
       type: String,
-      default: undefined
+      default: ''
     },
     contentStyle: {
       type: String,
-      default: undefined
+      default: ''
+    },
+    cardClass: {
+      type: String,
+      default: ''
+    },
+    cardStyle: {
+      type: String,
+      default: ''
     }
   },
   data () {

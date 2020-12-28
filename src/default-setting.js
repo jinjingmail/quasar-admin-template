@@ -52,7 +52,7 @@ module.exports = {
   /**
    * Page样式:
    * 颜色：
-   *  bg-teal
+   *  bg-teal  // 提示：这里仅是一个用法示例，请在 default-color.js 中设置颜色，可以设置正常模式和dark模式（下同）
    * 边距：
    *  q-pa-md
    *  q-ma-md
@@ -86,9 +86,9 @@ module.exports = {
   tableStyleMobile: '',
   /**
    * Dialog样式
-   * 使用 dialogClass 设置背景墙颜色：
+   * 使用 dialogClass 设置背景色：
    *  bg-teal
-   * 使用 dialogStyle 设置背景墙颜色（含半透明）:
+   * 使用 dialogStyle 设置背景色（含半透明）:
    *  background:#3d1d1d52
    */
   dialogClass: '',
