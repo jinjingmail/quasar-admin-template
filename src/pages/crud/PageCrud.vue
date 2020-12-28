@@ -37,14 +37,12 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-sm"
-      flat
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
       :loading="crud.loading"
-      selection="multiple"
       :selected.sync="crud.selections"
+      selection="multiple"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>

@@ -22,6 +22,7 @@
     :rows-per-page-options="rowsPerPageOptions"
     :no-data-label="noDataLabel"
     :selected-rows-label="selectedRowsLabel"
+    :separator="computedSeparator"
   >
     <template v-slot:no-data="prop">
       <div class="full-width row flex-center q-gutter-sm">
@@ -70,6 +71,7 @@ export default {
       type: Array,
       default: () => [0]
     },
+    separator: String,
     virtualScroll: Boolean,
     fullscreen: Boolean,
     noDataLabel: {
@@ -123,6 +125,9 @@ export default {
     ...mapGetters('settings', [
       'tagsView'
     ]),
+    computedSeparator () {
+      return this.separator
+    },
     settingTableClass () {
       if (this.$q.screen.gt.xs) {
         return Setting.tableClass

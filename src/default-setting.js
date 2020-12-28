@@ -68,11 +68,6 @@ module.exports = {
    * 边距：
    *  q-pa-md
    *  q-ma-md
-   * 分隔线：
-   *  q-table--horizontal-separator
-   *  q-table--vertical-separator
-   *  q-table--cell-separator
-   *  q-table--none-separator
    * 边框：
    *  q-table--bordered
    * 无阴影：
