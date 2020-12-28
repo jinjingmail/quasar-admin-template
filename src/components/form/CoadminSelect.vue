@@ -167,8 +167,8 @@ export default {
       if (!this.disable) {
         if (!val) {
           this.$emit('clear', valOld)
+          this.$emit('input', val)
         }
-        this.$emit('input', val)
       }
     }
   },
@@ -187,11 +187,11 @@ export default {
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          /*input: function (value) {
+          input: function (value) {
             if (!vm.disable) {
               vm.$emit('input', value)
             }
-          }*/
+          }
           /*
           filter: function (inputValue, doneFn, abortFn) {
             if (vm.noFilter) {

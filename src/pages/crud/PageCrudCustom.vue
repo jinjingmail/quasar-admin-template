@@ -41,7 +41,6 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-pt-sm"
       sticky-last-column
       sticky-header
       flat
@@ -50,11 +49,11 @@
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
       :loading="crud.loading"
-      selection="multiple"
+      selection="single"
       :selected.sync="crud.selections"
       :filter="filterTable"
       :selected-rows-label="numOfRows => '选了 ' + numOfRows"
-      @row-clickx="(evt, row, index) => crud.selections = [row]"
+      @row-click="(evt, row, index) => crud.selections = [row]"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
