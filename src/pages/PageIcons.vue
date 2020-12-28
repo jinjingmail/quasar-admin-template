@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div>
     <div class="q-gutter-md">
         <q-btn v-for="item in iconsList" :key="item.name" size="md" flat text-color="primary">
           <q-icon :name="item.name">

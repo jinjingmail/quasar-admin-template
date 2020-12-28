@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sm">
+  <div class="">
     <coadmin-table
       title="Invoices"
       flat

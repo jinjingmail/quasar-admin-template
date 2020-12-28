@@ -57,7 +57,7 @@ module.exports = {
    *  q-pa-md
    *  q-ma-md
    */
-  pageClass: 'q-pa-sm ',
+  pageClass: 'q-pa-sm',
   pageClassMobile: '',
   pageStyle: '',
   pageStyleMobile: '',
@@ -80,7 +80,7 @@ module.exports = {
    * 无圆角：
    *  q-table--square
    */
-  tableClass: 'q-table--square',
+  tableClass: '',
   tableClassMobile: 'q-table--flat q-table--square',
   tableStyle: '',
   tableStyleMobile: '',

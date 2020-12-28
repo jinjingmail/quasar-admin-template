@@ -1,5 +1,5 @@
 <template>
-  <div class="coadmin-page q-pa-sm q-gutter-sm">
+  <div class="">
 
     <q-splitter
       v-model="splitter"

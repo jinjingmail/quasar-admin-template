@@ -3,7 +3,6 @@
     <coadmin-table
       row-key="id"
       class="q-pa-sm "
-      bordered
       stickyHeader
       stickyLastColumn
       :data="data"

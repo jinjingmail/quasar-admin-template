@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sm">
+  <div>
 
     <q-dialog v-model="dialogData"
       content-class="coadmin-dialog"

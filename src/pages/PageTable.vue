@@ -269,8 +269,6 @@
     <coadmin-table
       row-key="id"
       dense
-      flat
-      class="q-pa-none"
       stickyHeader
       :data="data"
       :columns="columns"

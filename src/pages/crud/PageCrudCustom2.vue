@@ -70,7 +70,7 @@
     <coadmin-table
       ref="table"
       row-key="id"
-      class="q-ma-xs"
+      class=""
       dense
       sticky-last-column
       :data="crud.data"
