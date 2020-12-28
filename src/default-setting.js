@@ -86,7 +86,7 @@ module.exports = {
    * 使用 dialogStyle 设置背景色（含半透明）:
    *  background:#3d1d1d52
    */
-  dialogClass: '',
+  dialogClass: 'q-pa-sm',
   dialogStyle: '',
   dialogClassMobile: '',
   dialogStyleMobile: '',

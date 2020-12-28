@@ -114,9 +114,9 @@
                   />
               </coadmin-form>
               <q-card-actions class="q-pa-md" align="center">
+                <q-btn label="关闭" flat v-close-popup />
                 <q-btn label="查询(不关闭)" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
-                <q-btn label="关闭" flat v-close-popup />
               </q-card-actions>
             </coadmin-dialog>
           </coadmin-input>
