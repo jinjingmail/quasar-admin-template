@@ -4,7 +4,7 @@
     sticky-header
     sticky-first-column
     sticky-last-column
-    loading-delay        多少ms后开始显示 loading-spinner
+    loading-delay        多少ms后开始显示 loading 状态
     loading-spinner      '', 'cycle', 'gears', 'ios', 'ball', 'dots' 【提示：loading-spinner=''，则使用q-table默认loading】
 -->
 <template>
@@ -21,18 +21,10 @@
     :virtual-scroll="computedVirtualScroll"
     :rows-per-page-options="rowsPerPageOptions"
     :no-data-label="noDataLabel"
+    :no-results-label="noResultsLabel"
     :selected-rows-label="selectedRowsLabel"
     :separator="computedSeparator"
   >
-    <template v-slot:no-data="prop">
-      <div class="full-width row flex-center q-gutter-sm">
-        <q-icon size="1.4em" :name="prop.filter ? 'filter_b_and_w' : prop.icon" />
-        <span style="font-size:1.4em">
-          {{ prop.message }}
-        </span>
-      </div>
-    </template>
-
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
@@ -40,6 +32,7 @@
       <slot :name="slotName" v-bind="prop"/>
     </template>
 
+    <!-- 添加pagination slot，以便页面没有分页时q-table显示默认的分页信息 -->
     <template v-slot:pagination>
       <slot name="pagination"/>
     </template>
@@ -77,6 +70,10 @@ export default {
     noDataLabel: {
       type: String,
       default: '无数据'
+    },
+    noResultsLabel: {
+      type: String,
+      default: '无结果'
     },
     selectedRowsLabel: {
       type: Function,

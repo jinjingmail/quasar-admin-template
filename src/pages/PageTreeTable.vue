@@ -81,57 +81,13 @@
                   <q-btn-dropdown auto-close outline dense no-icon-animation class="btn-dropdown-hide-droparrow" color="primary" icon="apps">
                     <div class="row no-wrap q-pa-sm">
                       <div class="column">
-                        <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
+                        <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" :disable="item.required"/>
                       </div>
                     </div>
                   </q-btn-dropdown>
                 </q-btn-group>
 
               </q-toolbar>
-            </template>
-
-            <template v-slot:body-cell-action="props">
-              <q-td :props="props">
-                <q-btn-dropdown label="" dense flat>
-                  <q-list>
-                    <q-item clickable v-close-popup dense @click="rowViewClick(props.row)">
-                      <q-item-section>
-                        <q-item-label>查看</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item clickable v-close-popup dense>
-                      <q-item-section>
-                        <q-item-label>修改</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-item clickable v-close-popup dense>
-                      <q-item-section>
-                        <q-item-label>删除</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                    <q-separator />
-
-                    <q-item clickable v-close-popup dense @click="rowLooooooongButtonClick()">
-                      <q-item-section>
-                        <q-item-label>一个长长的按钮</q-item-label>
-                      </q-item-section>
-                    </q-item>
-
-                  </q-list>
-                </q-btn-dropdown>
-              </q-td>
-            </template>
-
-            <template v-slot:no-data="{ icon, message, filter }">
-              <div class="full-width row flex-center text-accent q-gutter-sm">
-                <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
-                <span style="font-size:2em">
-                  {{ message }}
-                </span>
-              </div>
             </template>
 
             <template v-slot:pagination>
@@ -189,10 +145,10 @@ export default {
       dialogData: false,
       dialogFullscreen: false,
       selected: [],
-      visibleColumns: ['id', 'name', 'sort', 'enabled'],
+      visibleColumns: ['id', 'name', 'sort', 'enabled', 'action'],
       columns: [
-        { name: 'id', label: 'ID', field: 'id', sortable: true },
-        { name: 'pid', label: 'PID', field: 'pid', sortable: true },
+        { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
+        { name: 'pid', label: 'PID', field: 'pid', sortable: true, align: 'left' },
         {
           name: 'name',
           field: 'name',
@@ -202,9 +158,10 @@ export default {
           format: val => `${val}`,
           sortable: true
         },
-        { name: 'sort', field: 'sort', label: 'sort' },
-        { name: 'enabled', field: 'enabled', label: 'enabled' },
-        { name: 'treeNames', field: 'treeNames', label: 'treeNames', align: 'left' }
+        { name: 'sort', field: 'sort', label: 'sort', align: 'left' },
+        { name: 'enabled', field: 'enabled', label: 'enabled', align: 'left' },
+        { name: 'treeNames', field: 'treeNames', label: 'treeNames', align: 'left' },
+        { name: 'action', field: 'action', label: 'action', align: 'center' }
       ]
     }
   },
@@ -225,6 +182,9 @@ export default {
     }
   },
   methods: {
+    fff (props) {
+      console.log('props=', props)
+    },
     getTreeDatasByPid (treeDataList, pid) {
       if (!treeDataList) {
         return null
@@ -250,8 +210,6 @@ export default {
     },
     rowViewClick (row) {
       this.dialogData = true
-    },
-    rowLooooooongButtonClick () {
     }
   }
 }

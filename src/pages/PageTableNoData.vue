@@ -105,6 +105,15 @@
         </q-toolbar>
       </template>
 
+      <template v-slot:no-data="{ icon, message, filter }">
+        <div class="full-width row flex-center text-accent q-gutter-sm">
+          <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
+          <span style="font-size:2em">
+            {{ message }}
+          </span>
+        </div>
+      </template>
+
       <template v-slot:body-cell-name="props">
         <q-td :props="props">
           <div>
