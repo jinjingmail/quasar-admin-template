@@ -36,7 +36,7 @@
             dense
             v-model="filterInput"
             :placeholder="filterPlaceholder"
-            class="col-8"
+            class="col"
           >
             <template v-slot:append>
               <q-icon v-if="filterInput !== ''" name="clear" class="cursor-pointer" @click="filterReset" />

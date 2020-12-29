@@ -10,7 +10,8 @@
       <template v-slot:before>
           <coadmin-tree
             ref="tree"
-            class="q-mr-sm custom-table-bg"
+            class=" custom-table-bg"
+            :class="$q.screen.gt.xs?'q-mr-sm':''"
             node-key="id"
             label-key="label"
             :nodes="treeDatas"
@@ -33,7 +34,7 @@
 
       <template v-slot:after>
           <coadmin-table
-            class="q-ml-sm"
+            :class="$q.screen.gt.xs?'q-ml-sm':''"
             flat
             dense
             tree-table

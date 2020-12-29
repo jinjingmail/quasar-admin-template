@@ -36,7 +36,7 @@
 
     <q-splitter
       v-model="splitter"
-      unit="%"
+      unit="px"
       :horizontal="$q.screen.xs"
       emit-immediately
     >
@@ -130,7 +130,7 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data () {
     return {
-      splitter: 50,
+      splitter: 600,
       permission: {
         add: ['admin', 'dict:add'],
         edit: ['admin', 'dict:edit'],

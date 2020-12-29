@@ -73,7 +73,7 @@
                 v-if="props.row.__has_child"
                 dense
                 padding="none"
-                style="margin-top:-3px; margin-right:2px;"
+                style="margin-top:-3px; margin-right:0px;"
                 :style="expandStyle"
                 :size="expandSize"
                 :flat="expandFlat"
