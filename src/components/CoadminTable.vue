@@ -68,7 +68,6 @@
           <q-td v-else :key="col.name" :props="props">
             <template v-if="_isExpandColumn(col.name)">
               <span :style="_expandSpaceStyle(props)" style="display:inline-block">
-                &nbsp;
               </span>
               <q-btn
                 v-if="props.row.__has_child"

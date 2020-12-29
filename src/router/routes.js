@@ -193,6 +193,11 @@ const routes = [
         component: () => import('pages/PageTreeTable.vue'),
         meta: { title: 'pageTreeTable', icon: 'add', noCache: false, caption: '基于q-table的多功能树表' }
       }, {
+        path: 'pageTreeTableCustom',
+        name: 'PageTreeTableCustom',
+        component: () => import('pages/PageTreeTableCustom.vue'),
+        meta: { title: 'pageTreeTableCustom', icon: 'add' }
+      }, {
         path: 'pageTreeMarkupTable',
         name: 'PageTreeMarkupTable',
         component: () => import('pages/PageTreeMarkupTable.vue'),

@@ -35,10 +35,15 @@
           <coadmin-table
             class="q-ml-sm"
             flat
-            dense
             tree-table
             tree-children-key="children"
-            expand-flat
+            :expand-width="20"
+            expand-key="enabled"
+            expand-size="md"
+            expand-style="margin-right:10px; color: red; background: yellow;"
+            expand-icon="add"
+            expand-icon-fold="remove"
+            expand-without-label
             :wrap-cells="false"
             :data="treeDatasSelected"
             :columns="columns"
@@ -51,6 +56,7 @@
             selection="multiple"
             :selected.sync="selected"
             :loading="loading"
+            @row-click="(evt, row, index) => selected=[row]"
           >
             <template v-slot:top="props">
               <div class='row q-col-gutter-x-md q-col-gutter-y-xs' style="width:100%;">
@@ -94,6 +100,13 @@
               </q-toolbar>
             </template>
 
+            <template v-slot:body-cell-sort="props">
+              <!-- key 必须指定，否则会工作不正常 -->
+              <q-td key="sort" :props="props">
+                <q-badge color="teal-4">{{props.row.sort}}</q-badge>
+              </q-td>
+            </template>
+
             <template v-slot:pagination>
               <q-pagination
                 v-model="currentPage"
@@ -128,7 +141,7 @@ import depts from '../data/depts.js'
 import CoadminTree from 'components/CoadminTree.vue'
 
 export default {
-  name: 'PageTreeTable',
+  name: 'PageTreeTableCustom',
   components: {
     CoadminTree
   },
@@ -151,8 +164,8 @@ export default {
       selected: [],
       visibleColumns: ['name', 'sort', 'enabled', 'action'],
       columns: [
-        { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
-        { name: 'pid', label: 'PID', field: 'pid', sortable: true, align: 'left' },
+        { name: 'id', label: 'ID', field: 'id', sortable: true },
+        { name: 'pid', label: 'PID', field: 'pid', sortable: true },
         {
           name: 'name',
           field: 'name',
@@ -162,8 +175,8 @@ export default {
           format: val => `${val}`,
           sortable: true
         },
-        { name: 'sort', field: 'sort', label: 'sort', align: 'left' },
-        { name: 'enabled', field: 'enabled', label: 'enabled', align: 'left' },
+        { name: 'sort', field: 'sort', label: 'sort' },
+        { name: 'enabled', field: 'enabled', label: 'enabled' },
         { name: 'treeNames', field: 'treeNames', label: 'treeNames', align: 'left' },
         { name: 'action', field: 'action', label: 'action', align: 'center' }
       ]
