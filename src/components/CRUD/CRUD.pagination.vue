@@ -105,11 +105,11 @@ export default {
       'pageSize'
     ]),
     computedNoPageIfOnlyOnePage () {
-      if (!this.noPageIfOnlyOnePage) {
-        return false
-      }
-      if (this.page.size >= this.page.total) {
-        return true
+      if (this.noPageIfOnlyOnePage) {
+        // 有一种情况：后台返回的数据，大于 page.size
+        if (this.page.size >= this.page.total || (this.crud.data && this.crud.data.length >= this.page.total)) {
+          return true
+        }
       }
       return false
     },
