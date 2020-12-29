@@ -43,8 +43,12 @@
           <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
         </template>
         <template v-else>
-          <q-icon :style="popupShow?'transform: rotate(180deg)':''" :name="dropdownIcon" v-if="!hideDropdownIcon"
-            @click="popupShow?$refs.select.hidePopup():$refs.select.showPopup()"/>
+          <q-icon
+            v-if="!hideDropdownIcon"
+            class="cursor-pointer"
+            :style="popupShow?'transform: rotate(180deg)':''"
+            :name="dropdownIcon"
+            @click="_doCustomCursorClick()"/>
         </template>
       </template>
     </q-select>
@@ -86,8 +90,12 @@
         <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
       </template>
       <template v-else>
-        <q-icon :style="popupShow?'transform: rotate(180deg)':''" :name="dropdownIcon" v-if="!hideDropdownIcon"
-          @click="popupShow?$refs.select.hidePopup():$refs.select.showPopup()"/>
+        <q-icon
+          v-if="!hideDropdownIcon"
+          class="cursor-pointer"
+          :style="popupShow?'transform: rotate(180deg)':''"
+          :name="dropdownIcon"
+          @click="_doCustomCursorClick()"/>
       </template>
     </template>
 
@@ -205,6 +213,17 @@ export default {
     }
   },
   methods: {
+    _doCustomCursorClick () {
+      console.log('use-input=', this.$attrs['use-input'])
+      // eslint-disable-next-line eqeqeq
+      if (this.$attrs['use-input'] != undefined) {
+        if (this.popupShow) {
+          this.$refs.select.hidePopup()
+        } else {
+          this.$refs.select.showPopup()
+        }
+      }
+    },
     _modelChange (valNew, valOld) {
       if (this.$listeners['value-label']) {
         this.$emit('value-label', this._valueToLabel(valNew))

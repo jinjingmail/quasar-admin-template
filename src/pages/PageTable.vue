@@ -103,18 +103,18 @@
             emit-value
             map-options
           />
-          <coadmin-input :dense="false" class="col-12 col-sm-6" form-label="iron" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
+          <coadmin-input :dense="false" class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
           </coadmin-input>
-          <coadmin-select :dense="false"
+          <coadmin-select
+            :dense="false"
             v-model="selectModel"
-            form-label="protein2"
+            form-label="big select"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             clearable
             options-dense
             outlined
             use-input
-            input-class="abc"
             hide-selected
             fill-input
             input-debounce="0"
