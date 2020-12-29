@@ -49,7 +49,7 @@ import CoadminTree from 'components/CoadminTree.vue'
 import CoadminTreeMarkupTable from 'components/CoadminTreeMarkupTable.vue'
 
 export default {
-  name: 'PageTreeTable2',
+  name: 'PageTreeMarkupTable',
   components: {
     CoadminTree,
     CoadminTreeMarkupTable

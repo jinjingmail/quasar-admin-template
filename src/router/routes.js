@@ -191,12 +191,12 @@ const routes = [
         path: 'pageTreeTable',
         name: 'PageTreeTable',
         component: () => import('pages/PageTreeTable.vue'),
-        meta: { title: 'pageTreeTable', icon: 'add', noCache: false }
+        meta: { title: 'pageTreeTable', icon: 'add', noCache: false, caption: '基于q-table的多功能树表' }
       }, {
-        path: 'pageTreeTable2',
-        name: 'PageTreeTable2',
-        component: () => import('pages/PageTreeTable2.vue'),
-        meta: { title: 'pageTreeTable2', icon: 'add', caption: '一个简单的树表' }
+        path: 'pageTreeMarkupTable',
+        name: 'PageTreeMarkupTable',
+        component: () => import('pages/PageTreeMarkupTable.vue'),
+        meta: { title: 'pageTreeMarkupTable', icon: 'add', caption: '基于q-markup-table的简单树表' }
       }, {
         path: 'pageTreeSelect',
         name: 'PageTreeSelect',

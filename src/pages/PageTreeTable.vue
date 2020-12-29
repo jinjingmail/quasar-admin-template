@@ -35,6 +35,9 @@
           <coadmin-table
             class="q-ml-sm"
             flat
+            tree-table
+            expand-flat
+            expand-style="margin-right:5px"
             :wrap-cells="false"
             :data="treeDatasSelected"
             :columns="columns"
@@ -145,7 +148,7 @@ export default {
       dialogData: false,
       dialogFullscreen: false,
       selected: [],
-      visibleColumns: ['id', 'name', 'sort', 'enabled', 'action'],
+      visibleColumns: ['name', 'sort', 'enabled', 'action'],
       columns: [
         { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
         { name: 'pid', label: 'PID', field: 'pid', sortable: true, align: 'left' },
