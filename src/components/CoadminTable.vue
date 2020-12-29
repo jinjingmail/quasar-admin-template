@@ -103,8 +103,6 @@ export default {
   created () {
     this.isFullscreen = this.fullscreen
   },
-  mounted () {
-  },
   watch: {
     loading (valNew) {
       this.showLoading = false

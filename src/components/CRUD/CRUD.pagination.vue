@@ -19,7 +19,7 @@
         <div class="self-center full-width no-outline" tabindex="0">共{{page.total}}条</div>
       </template>
     </coadmin-field>
-    <q-pagination v-if="!noPageIfOnlyOnePage"
+    <q-pagination v-if="!computedNoPageIfOnlyOnePage"
       :value="page.page"
       class="col-auto"
       :max="pageMax"
@@ -33,7 +33,7 @@
       :size="dense?undefined:'18px'"
     >
     </q-pagination>
-    <coadmin-select v-if="!noPageIfOnlyOnePage"
+    <coadmin-select v-if="!computedNoPageIfOnlyOnePage"
       class="col-auto"
       :dense="dense"
       :options-dense="dense"
@@ -80,6 +80,8 @@ export default {
   data () {
     return {
       sizePerPageOptions: [
+        { label: '1 条/页', value: 1 },
+        { label: '2 条/页', value: 2 },
         { label: '3 条/页', value: 3 },
         { label: '5 条/页', value: 5 },
         { label: '10 条/页', value: 10 },
@@ -102,6 +104,15 @@ export default {
     ...mapGetters('settings', [
       'pageSize'
     ]),
+    computedNoPageIfOnlyOnePage () {
+      if (!this.noPageIfOnlyOnePage) {
+        return false
+      }
+      if (this.page.size >= this.page.total) {
+        return true
+      }
+      return false
+    },
     pageMax () {
       const p = parseInt(this.page.total / this.page.size)
       if (p * this.page.size === this.page.total) {

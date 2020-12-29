@@ -46,7 +46,7 @@
       :visible-columns="crud.visibleColumns"
       :title="query.dictName"
       :loading="crud.loading"
-      :loading-delay="1000"
+      :loading-delay="300"
       selection="multiple"
       :selected.sync="crud.selections"
       @row-click="(evt, row, index) => crud.selections = [row]"
