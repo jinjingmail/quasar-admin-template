@@ -67,8 +67,7 @@
           </template>
           <q-td v-else :key="col.name" :props="props">
             <template v-if="_isExpandColumn(col.name)">
-              <span :style="_expandSpaceStyle(props)" style="display:inline-block">
-              </span>
+              <span :style="_expandSpaceStyle(props)" style="display:inline-block" />
               <q-btn
                 v-if="props.row.__has_child"
                 dense
@@ -122,7 +121,10 @@ export default {
       required: true
     },
     columns: Array,
-    visibleColumns: Array,
+    visibleColumns: {
+      type: Array,
+      default: () => []
+    },
 
     rowsPerPageOptions: {
       type: Array,
@@ -199,11 +201,14 @@ export default {
     if (this.expanded && this.expanded.length && this.expanded.length > 0) {
       Object.assign(this.treeExpandedKeys, this.expanded)
     }
+    if (!this.columns || this.columns.length === 0) {
+      console.error('*** coadmin-table tree-table mode must set columns!!')
+    }
   },
   watch: {
     expanded (valNew) {
       if (this.expanded && this.expanded.length && this.expanded.length > 0) {
-        this.treeExpandedKeys = Object.assign([], this.expanded)
+        this.treeExpandedKeys = [...this.expanded]
       } else {
         this.treeExpandedKeys = []
       }
@@ -372,11 +377,22 @@ export default {
      * slot:body-cell-[name] 的列不能作为可扩展按钮位置
      */
     _isExpandColumn (columnName) {
+      if (!this.columns || this.columns.length === 0) {
+        return false
+      }
+      /*
+       * 因为 这些slot内部实现了 q-td，所以没有办法插入expand按钮
+       */
+      if (this.$scopedSlots['body-cell']) {
+        return false
+      }
       if (this.$scopedSlots['body-cell-' + columnName]) {
         return false
       }
 
-      if (this.expandKey && this.visibleColumns.includes(this.expandKey)) {
+      const vColumns = this._visibleColumns()
+
+      if (this.expandKey && vColumns.includes(this.expandKey)) {
         if (this.expandKey === columnName) {
           for (const column of this.columns) {
             // 被选做扩展按钮的列，强制为左对齐，否则看不出树形效果
@@ -390,30 +406,40 @@ export default {
         }
       }
 
-      if (this.columns && this.columns.length > 0) {
-        for (const column of this.columns) {
-          if (this.visibleColumns && this.visibleColumns.length > 0) {
-            if (this.visibleColumns.includes(column.name)) {
-              if (column.name === columnName) {
-                if (this.$scopedSlots['body-cell-' + column.name]) {
-                  continue
-                }
-                // 被选做扩展按钮的列，强制为左对齐，否则看不出树形效果
-                if (column.align !== 'left') {
-                  Vue.set(column, 'align', 'left')
-                }
-                return true
-              } else {
-                if (this.$scopedSlots['body-cell-' + column.name]) {
-                  continue
-                }
-                return false
-              }
+      for (const column of this.columns) {
+        if (vColumns.includes(column.name)) {
+          if (column.name === columnName) {
+            if (this.$scopedSlots['body-cell-' + column.name]) {
+              continue
             }
+            // 被选做扩展按钮的列，强制为左对齐，否则看不出树形效果
+            if (column.align !== 'left') {
+              Vue.set(column, 'align', 'left')
+            }
+            return true
+          } else {
+            if (this.$scopedSlots['body-cell-' + column.name]) {
+              continue
+            }
+            return false
           }
         }
       }
       return false
+    },
+    _visibleColumns () {
+      if (this.visibleColumns && this.visibleColumns.length > 0) {
+        return this.visibleColumns
+      }
+      const vcols = []
+      if (this.columns && this.columns.length > 0) {
+        for (const c of this.columns) {
+          if (c.required) {
+            vcols.push(c.name)
+          }
+        }
+      }
+      return vcols
     },
     _deepTreeData (result, children1, deep) {
       for (const dd of children1) {

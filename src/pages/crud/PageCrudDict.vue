@@ -138,6 +138,15 @@ export default {
       }
     }
   },
+  watch: {
+    '$q.screen.gt.xs' (val) {
+      if (val) {
+        this.splitter = 600
+      } else {
+        this.splitter = 250
+      }
+    }
+  },
   methods: {
     // 获取数据前设置好接口地址
     [CRUD.HOOK.beforeRefresh]() {
