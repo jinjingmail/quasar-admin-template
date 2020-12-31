@@ -110,7 +110,9 @@ export default {
     model (valNew, valOld) {
       if (!this.disable) {
         if (!valNew) {
-          this.$emit('clear', valOld)
+          this.$nextTick(() => {
+            this.$emit('clear', valOld)
+          })
         }
         this.$emit('input', valNew)
       }

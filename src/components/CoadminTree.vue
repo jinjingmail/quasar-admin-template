@@ -1,9 +1,19 @@
 <!--
   增加插槽：
+    loading
     toolbar:         过滤界面
     toolbar-start
     toolbar-end
   增加属性：
+    dark
+    square
+    flat
+    bordered
+
+    loading
+    loading-delay       多少ms后开始显示 loading 状态
+    loading-spinner     '', 'cycle', 'gears', 'ios', 'ball', 'dots' 【提示：loading-spinner=''，则使用默认loading】
+
     selectable：    是否可以使用 selected 属性
     no-toolbar
     no-filter：     是否显示过滤输入框
@@ -26,7 +36,10 @@
     @selected-label -> function(label)：以label的形式输出selected的数据
 -->
 <template>
-  <coadmin-card flat>
+  <coadmin-card
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
     <slot name="toolbar" v-if="!noToolbar">
       <q-toolbar>
         <div class="row full-width">
@@ -46,7 +59,7 @@
           <q-space/>
 
           <q-btn v-if="!noExpandBtn"
-            class="col-auto"
+            class="col-auto q-my-sm"
             dense
             flat
             :icon="filterExpanded?expandBtnIconMore:expandBtnIconLess"
@@ -59,20 +72,23 @@
     <q-tree v-if="selectable"
         ref="tree"
         v-bind="$attrs"
-        v-on="listeners"
+        v-on="$listeners"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
         :children-key="childrenKey"
-        :selected.sync="selectedSync"
-        :expanded.sync="expandedSync"
-        :ticked.sync="tickedSync"
-        :tick-strategy="tickStrategyComputed"
+        :selected="selectedSync"
+        :expanded="expandedSync"
+        :ticked="tickedSync"
+        :tick-strategy="computedTickStrategy"
         :no-nodes-label="noNodesLabel"
         :no-results-label="noResultsLabel"
         :no-connectors="noConnectors"
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
+        @update:selected="nodeKey => _updateSelected(nodeKey)"
+        @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
+        @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
     >
       <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
         <slot name="default-header" v-bind="prop"/>
@@ -88,19 +104,21 @@
     <q-tree v-else
         ref="tree"
         v-bind="$attrs"
-        v-on="listeners"
+        v-on="$listeners"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
         :children-key="childrenKey"
-        :expanded.sync="expandedSync"
-        :ticked.sync="tickedSync"
-        :tick-strategy="tickStrategyComputed"
+        :expanded="expandedSync"
+        :ticked="tickedSync"
+        :tick-strategy="computedTickStrategy"
         :no-nodes-label="noNodesLabel"
         :no-results-label="noResultsLabel"
         :no-connectors="noConnectors"
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
+        @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
+        @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
     >
       <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
         <slot name="default-header" v-bind="prop"/>
@@ -196,9 +214,7 @@ export default {
       tickedSync: [],
       expandedSync: [],
       filterInput: '',
-      filterExpanded: true,
-      dynamicSlotNameHeaders: [],
-      dynamicSlotNameBodys: []
+      filterExpanded: true
     }
   },
   mounted () {
@@ -217,53 +233,34 @@ export default {
       }
     },
     ticked (newVal, oldVal) {
-      if (!this.disable && (!newVal || newVal.length === 0)) {
+      /*if (!this.disable && (!newVal || newVal.length === 0)) {
         if (!(newVal && newVal.length === 0 && oldVal && oldVal.length === 0)) {
           this.tickedSync = []
         }
+      }*/
+      if (!this.disable) {
+        this.tickedSync = newVal
       }
     },
     expanded (newVal) {
       if (!this.disable) {
         this.expandedSync = newVal
       }
-    },
+    }
+    /*,
     selectedSync (val) {
       const label = this.keyToLabel(val)
       if (this.$listeners['selected-label']) {
         this.$emit('selected-label', label)
       }
       this.$emit('update:selected', val)
-    },
+    }*/
     /* expandedSync (val) {
       if (this.disable) {
         return
       }
       this.$emit('update:expanded', [...this.expandedSync])
     }, */
-    tickedSync (val) {
-      if (this.disable || this.tickStrategy === 'none') {
-        return
-      }
-      if (this.tickStrategy === 'leaf-all-with-parent') {
-        const tickedKeys = this.queryTickedLeafAllWithParent()
-        this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-      } else
-      if (this.tickStrategy === 'leaf-all-only-parent') {
-        const tickedKeys = this.queryTickedLeafAllOnlyParent()
-        this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-      } else
-      if (this.tickStrategy === 'leaf-any-with-parent') {
-        const tickedKeys = this.queryTickedLeafAnyWithParent()
-        this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-      } else {
-        this.$emit('update:ticked', [...this.tickedSync])
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
-      }
-    }
   },
   computed: {
     computedDynamicSlotNames () {
@@ -273,7 +270,7 @@ export default {
       }
       return names
     },
-    tickStrategyComputed () {
+    computedTickStrategy () {
       if (this.tickStrategy === 'leaf-all-only-parent' || this.tickStrategy === 'leaf-any-with-parent' || this.tickStrategy === 'leaf-all-with-parent') {
         return 'leaf-filtered'
       } else {
@@ -293,7 +290,8 @@ export default {
       } else {
         return this.filterMethodDefault
       }
-    },
+    }
+    /*,
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象
@@ -309,9 +307,46 @@ export default {
           }
         }
       )
-    }
+    }*/
   },
   methods: {
+    _updateSelected (nodeKey) {
+      this.selectedSync = nodeKey
+      const label = this.keyToLabel(nodeKey)
+      this.$emit('update:selected', nodeKey)
+      if (this.$listeners['selected-label']) {
+        this.$emit('selected-label', label)
+      }
+    },
+    _updateExpanded (nodeKeys) {
+      this.expandedSync = nodeKeys
+      this.$emit('update:expanded', nodeKeys)
+    },
+    _updateTicked (nodeKeys) {
+      if (this.disable) {
+        console.warn('disabled=true donot sent update:ticked')
+        return
+      }
+      this.tickedSync = nodeKeys
+      if (this.tickStrategy === 'leaf-all-with-parent') {
+        const tickedKeys = this.queryTickedLeafAllWithParent()
+        this.$emit('update:ticked', tickedKeys)
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+      } else
+      if (this.tickStrategy === 'leaf-all-only-parent') {
+        const tickedKeys = this.queryTickedLeafAllOnlyParent()
+        this.$emit('update:ticked', tickedKeys)
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+      } else
+      if (this.tickStrategy === 'leaf-any-with-parent') {
+        const tickedKeys = this.queryTickedLeafAnyWithParent()
+        this.$emit('update:ticked', tickedKeys)
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+      } else {
+        this.$emit('update:ticked', [...this.tickedSync])
+        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
+      }
+    },
     filterReset () {
       if (this.noFilter) {
         return

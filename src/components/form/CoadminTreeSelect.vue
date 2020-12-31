@@ -36,6 +36,7 @@
         :tick-strategy="tickStrategy"
         :filter-key-like="filterKeyLike"
         :filter-key-equal="filterKeyEqual"
+        :filter-placeholder="filterPlaceholder"
         :no-connectors="noConnectors"
         :accordion="accordion"
         :selected-color="selectedColor"
@@ -45,12 +46,6 @@
       </coadmin-tree>
     </q-popup-proxy>
 
-    <!--
-    <template v-slot:append v-if="!noIcons">
-      <q-icon name="event" />
-    </template>
-    -->
-
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
@@ -59,11 +54,9 @@
 </template>
 
 <script>
-// import formMixin from './formMixin.js'
 export default {
   name: 'CoadminTreeSelect',
   inheritAttrs: false,
-  // mixins: [formMixin],
   props: {
     disable: Boolean,
     readonly: Boolean,
@@ -74,10 +67,7 @@ export default {
     },
 
     treeClass: String,
-    treeStyle: {
-      type: String,
-      default: 'width:350px; max-height:65vh;'
-    },
+    treeStyle: String,
     nodes: {
       type: Array,
       required: true
@@ -123,7 +113,8 @@ export default {
     filterKeyEqual: {
       type: String,
       default: null
-    }
+    },
+    filterPlaceholder: String
   },
   data () {
     return {

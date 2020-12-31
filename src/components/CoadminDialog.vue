@@ -1,12 +1,14 @@
 <!--
   增加插槽：
+    loading
     header_left
     header_right
     header_right_prepend   在最大化和删除按钮之前
   增加属性：
     参考 props 定义
     loading
-    loading-spinner
+    loading-delay       多少ms后开始显示 loading 状态
+    loading-spinner     '', 'cycle', 'gears', 'ios', 'ball', 'dots' 【提示：loading-spinner=''，则使用默认loading】
     no-header
     no-drag
     no-max
@@ -29,7 +31,8 @@
     v-on="$listeners"
     @before-show="_beforeShow"
   >
-    <coadmin-card ref="card" :style="computedCardStyle" :class="computedCardClass" :id="uuid">
+    <coadmin-card ref="card" :style="computedCardStyle" :class="computedCardClass" :id="uuid"
+      :loading="loading" :loading-spinner="loadingSpinner" :loading-delay="loadingDelay">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
           <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
@@ -64,14 +67,6 @@
 
       <slot />
 
-      <q-inner-loading :showing="loading" style="z-index:5">
-          <q-spinner-gears v-if="loadingSpinner === 'gears'" size="50px" color="primary" />
-          <q-spinner-ios   v-else-if="loadingSpinner === 'ios'" size="50px" color="primary" />
-          <q-spinner       v-else-if="loadingSpinner === 'cycle'" size="50px" color="primary" />
-          <q-spinner-ball  v-else-if="loadingSpinner === 'ball'" size="50px" color="primary" />
-          <q-spinner-dots  v-else-if="loadingSpinner === 'dots'" size="50px" color="primary" />
-          <q-spinner-gears v-else size="50px" color="primary" />
-      </q-inner-loading>
     </coadmin-card>
   </q-dialog>
 </template>
@@ -89,6 +84,9 @@ export default {
       default: ''
     },
     loading: Boolean,
+    loadingSpinner: String,
+    loadingDelay: Number,
+
     noHeader: Boolean,
     noClose: Boolean,
     noDrag: Boolean,
@@ -113,11 +111,6 @@ export default {
     icon_max_exit: {
       type: String,
       default: 'fullscreen_exit'
-    },
-    loadingSpinner: {
-      type: String,
-      default: 'gears',
-      validator: v => ['cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
     },
     contentClass: {
       type: String,

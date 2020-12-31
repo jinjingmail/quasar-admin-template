@@ -38,7 +38,8 @@
       v-model="splitter"
       unit="px"
       :horizontal="$q.screen.xs"
-      emit-immediately
+      separator-style="background-color: transparent"
+      emit-immediatelyx
     >
       <template v-slot:before>
         <coadmin-table
@@ -56,9 +57,13 @@
         >
           <template v-slot:top-right="props">
             <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-              <coadmin-input class='col-auto' placeholder="名称、描述" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
+              <coadmin-input class='col-auto' placeholder="名称、描述" v-model="query.blurry"
+                content-style="width:140px"
+                clearable
+                @clear="crud.toQuery()"
+                @keyup.enter.native="crud.toQuery()"/>
               <div class='col-auto'>
-                <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+                <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery()" />
               </div>
               <q-space/>
               <crud-operation :permission="permission" no-view no-edit no-label/>

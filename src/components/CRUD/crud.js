@@ -1,5 +1,7 @@
+import { Notify } from 'quasar'
 import { initData, download } from '@/api/data'
 import { parseTime, downloadFile } from '@/utils/index'
+import Setting from '@/default-setting'
 import Vue from 'vue'
 
 /**
@@ -104,7 +106,7 @@ function CRUD(options) {
       // 页码
       page: 0,
       // 每页数据条数
-      size: 10,
+      size: Setting.pageSize,
       // 总数据条数
       total: 0
     },
@@ -172,8 +174,8 @@ function CRUD(options) {
     /**
      * 启动添加
      */
-    toAdd() {
-      crud.resetForm()
+    toAdd(data = {}) {
+      crud.resetForm(JSON.parse(JSON.stringify(data)))
       if (!(callVmHook(crud, CRUD.HOOK.beforeToAdd, crud.form) && callVmHook(crud, CRUD.HOOK.beforeToCU, crud.form))) {
         return
       }
@@ -540,11 +542,52 @@ function CRUD(options) {
       return crud.vms.find(vm => vm && vm.type === type).vm
     },
     notify(title, type = CRUD.NOTIFICATION_TYPE.INFO) {
+      /*
       crud.vms[0].vm.$q.notify({
         type,
         message: title,
         timeout: 3000,
         position: 'top'
+      })*/
+      Notify.create({
+        type,
+        message: title,
+        timeout: 5000,
+        position: 'bottom'
+      })
+    },
+    notifyInfo(title) {
+      Notify.create({
+        type: CRUD.NOTIFICATION_TYPE.INFO,
+        message: title,
+        timeout: 5000,
+        position: 'bottom'
+      })
+    },
+    notifySuccess(title) {
+      Notify.create({
+        type: CRUD.NOTIFICATION_TYPE.SUCCESS,
+        message: title,
+        timeout: 5000,
+        position: 'bottom'
+      })
+    },
+    notifyWarning(title) {
+      Notify.create({
+        type: CRUD.NOTIFICATION_TYPE.WARNING,
+        message: title,
+        timeout: 10 * 1000,
+        position: 'bottom',
+        closeBtn: '关闭'
+      })
+    },
+    notifyError(title) {
+      Notify.create({
+        type: CRUD.NOTIFICATION_TYPE.ERROR,
+        message: title,
+        timeout: 60 * 1000,
+        position: 'bottom',
+        closeBtn: '关闭'
       })
     },
     updateProp(name, value) {
