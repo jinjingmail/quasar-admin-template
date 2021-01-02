@@ -97,16 +97,8 @@
                   <coadmin-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
                   <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
                   <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
-                    <q-popup-proxy breakpoint="0">
-                      <coadmin-card>
-                        <div >ThisisPopup</div>
-                      </coadmin-card>
-                    </q-popup-proxy>
                   </coadmin-input>
-                  <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" label-slot v-model="query.iron" clearable >
-                    <template v-slot:label>
-                      <div style="color:red;">iron in slot</div>
-                    </template>
+                  <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" v-model="query.iron" clearable >
                   </coadmin-input>
                   <coadmin-select
                     class="col-12 col-sm-6"
@@ -148,9 +140,6 @@
                     :options="listOptions"
                     @value-label="label => querySelectSingleLabel = label"
                   >
-                    <template v-slot:after>
-                      <q-icon name="menu" />
-                    </template>
                   </coadmin-select>
                   <coadmin-field
                     class="col-12 col-sm-6"

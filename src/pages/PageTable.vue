@@ -149,6 +149,24 @@
             value-key="id"
             :rules="[val => !!val || 'Field is required']"
           />
+          <coadmin-select
+            v-model="selectModels"
+            :dense="false"
+            form-label="multiselect"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            options-dense
+            outlined
+            placeholder="选择巨头"
+            :options="mapOptions"
+            map-options
+            emit-value
+            multiple
+            />
           <coadmin-option-group
             v-model="selectModels"
             class="col-12 col-sm-6"
