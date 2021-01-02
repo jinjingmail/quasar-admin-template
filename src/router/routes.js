@@ -207,6 +207,11 @@ const routes = [
         name: 'PageTreeSelect',
         component: () => import('pages/PageTreeSelect.vue'),
         meta: { title: 'PageTreeSelect', icon: 'add', caption: '演示Tree组件的各种情况' }
+      }, {
+        path: 'pageInput',
+        name: 'PageInput',
+        component: () => import('pages/PageInput.vue'),
+        meta: { title: 'PageInput', icon: 'add', caption: '演示Input组件' }
       }
     ]
   }, {

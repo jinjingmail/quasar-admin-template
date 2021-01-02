@@ -29,9 +29,9 @@
         :label-key="labelKey"
         :children-key="childrenKey"
         :selectable="selectable"
-        :selected.sync="popupTreeSelected"
-        :expanded.sync="popupTreeExpanded"
-        :ticked.sync="popupTreeTicked"
+        :selected="popupTreeSelected"
+        :expanded="popupTreeExpanded"
+        :ticked="popupTreeTicked"
         :no-ticked-expand="noTickedExpand"
         :tick-strategy="tickStrategy"
         :filter-key-like="filterKeyLike"
@@ -42,6 +42,9 @@
         :selected-color="selectedColor"
         @ticked-label="labels => popupTreeTickedLabels=labels"
         @selected-label="label => popupTreeSelectedLabel=label"
+        @update:selected="nodeKey => _updateSelected(nodeKey)"
+        @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
+        @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
       >
       </coadmin-tree>
     </q-popup-proxy>
@@ -119,9 +122,10 @@ export default {
   data () {
     return {
       popupTreeSelected: null,
-      popupTreeSelectedLabel: null,
       popupTreeExpanded: [],
       popupTreeTicked: [],
+
+      popupTreeSelectedLabel: null,
       popupTreeTickedLabels: null
     }
   },
@@ -144,15 +148,18 @@ export default {
       if (this.disable) {
         return
       }
+      /*
       if ((!newVal || newVal.length === 0) && (oldVal && oldVal.length > 0)) {
         this.popupTreeTicked = []
         this.popupTreeExpanded = []
         this.popupTreeTickedLabels = null
-      }
+      }*/
+      this.popupTreeTicked = newVal
     },
     expanded (newVal) {
       this.popupTreeExpanded = newVal
-    },
+    }
+    /*,
     popupTreeSelected (val) {
       if (!val) {
         this.popupTreeSelectedLabel = null
@@ -166,9 +173,10 @@ export default {
     popupTreeTicked (newVal, oldVal) {
       if (this.tickStrategy !== 'none') {
         this.$emit('update:ticked', newVal)
+        console.log('popupTreeTicked.', newVal, oldVal, this.popupTreeTickedLabels)
         if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.popupTreeTickedLabels)
       }
-    }
+    }*/
   },
   computed: {
     computedReadonly () {
@@ -207,6 +215,29 @@ export default {
     }
   },
   methods: {
+    _updateSelected (nodeKey) {
+      //this.selectedSync = nodeKey
+      const label = this.keyToLabel(nodeKey)
+      this.$emit('update:selected', nodeKey)
+      if (this.$listeners['selected-label']) {
+        this.$emit('selected-label', label)
+      }
+    },
+    _updateExpanded (nodeKeys) {
+      //this.expandedSync = nodeKeys
+      this.$emit('update:expanded', nodeKeys)
+    },
+    _updateTicked (nodeKeys) {
+      if (this.disable) {
+        console.warn('disabled=true donot sent update:ticked')
+        return
+      }
+      //this.tickedSync = nodeKeys
+      this.$emit('update:ticked', nodeKeys)
+      if (this.$listeners['ticked-label']) {
+        this.$emit('ticked-label', this.keysToLabels(nodeKeys))
+      }
+    },
     inputMethod (value) {
       if (!value) {
         this.popupTreeSelected = null

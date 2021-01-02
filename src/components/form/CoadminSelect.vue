@@ -9,7 +9,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-select
-      v-model="model"
+      :value="model"
       ref="select"
       class="col coadmin-select"
       popup-content-class="custom-other-bg"
@@ -19,8 +19,14 @@
       :options="optionsInData"
       v-bind="$attrs"
       v-on="listeners"
+      :multiple="multiple"
+      :use-input="useInput"
+      :emit-value="emitValue"
+      :map-options="mapOptions"
       :dense="dense"
       :options-dense="optionsDense"
+      :option-label="optionLabel"
+      :option-value="optionValue"
       :outlined="outlined"
       :disable="disable"
       :readonly="readonly"
@@ -30,6 +36,7 @@
       @mouseleave.native="hover=false"
       @popup-show="_popupshow"
       @popup-hide="_popuphide"
+      @input="_input"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
@@ -54,7 +61,7 @@
     </q-select>
   </div>
   <q-select v-else
-    v-model="model"
+    :value="model"
     ref="select"
     class="coadmin-select"
     popup-content-class="custom-other-bg"
@@ -65,8 +72,14 @@
     :options="optionsInData"
     v-bind="$attrs"
     v-on="listeners"
+    :multiple="multiple"
+    :use-input="useInput"
+    :emit-value="emitValue"
+    :map-options="mapOptions"
     :dense="dense"
     :options-dense="optionsDense"
+    :option-label="optionLabel"
+    :option-value="optionValue"
     :outlined="outlined"
     :disable="disable"
     :readonly="readonly"
@@ -76,6 +89,7 @@
     @mouseleave.native="hover=false"
     @popup-show="_popupshow"
     @popup-hide="_popuphide"
+    @input="_input"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -142,6 +156,18 @@ export default {
       type: String,
       default: null
     },
+    optionLabel: {
+      type: [Function, String],
+      default: 'label'
+    },
+    optionValue: {
+      type: [Function, String],
+      default: 'value'
+    },
+    multiple: Boolean,
+    useInput: Boolean,
+    mapOptions: Boolean,
+    emitValue: Boolean,
     inputClass: String
   },
   data () {
@@ -153,20 +179,14 @@ export default {
     }
   },
   created () {
-    const value = this.model = this.$attrs.value
-    if (this.$attrs.multiple) {
-      if (value == null) {
-        this.model = []
-      } else {
-        this.model = value
-      }
-    } else {
-      this.model = value
-    }
+    this._initModel(this.$attrs.value)
   },
   watch: {
-    '$attrs.value' (val) {
-      this.model = val
+    '$attrs.value' (val, old) {
+      console.log('new=', val)
+      console.log('old=', old)
+      //this.model = val
+      this._initModel(val)
     }
     /*,
     model (val, valOld) {
@@ -196,12 +216,12 @@ export default {
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          input: function (value) {
+          /*input: function (value) {
             if (!vm.disable) {
               //vm.$emit('input', value)
               vm._modelChange(value)
             }
-          }
+          }*/
           /*
           filter: function (inputValue, doneFn, abortFn) {
             if (vm.noFilter) {
@@ -213,10 +233,49 @@ export default {
     }
   },
   methods: {
+    _initModel(value) {
+      let optionIsString = false
+      if (this.options && this.options.length > 0) {
+        const opt0 = this.options[0]
+        if (typeof opt0[this.optionValue] === 'string') {
+          //if (!(value === null || value === undefined || typeof value === 'object')) {
+          optionIsString = true
+          //}
+        }
+      }
+      console.log('optionisstring=', optionIsString, typeof value, Array.isArray(value), this.multiple)
+      if (this.multiple) {
+        if (value == null) {
+          this.model = []
+        } else {
+          if (optionIsString) {
+            if (typeof value === 'number') {
+              this.model = value + ''
+            } else if (Array.isArray(value)) {
+              this.model = []
+              for (const v of value) {
+                this.model.push(v + '')
+              }
+              console.log('value.is array=', this.model)
+            } else {
+              this.model = value
+            }
+          } else {
+            this.model = value
+          }
+        }
+      } else {
+        this.model = optionIsString ? value + '' : value
+      }
+      console.log('model=', this.model, this.$attrs.value)
+    },
+    _input (val) {
+      console.log('_input.val=', val)
+      this._modelChange(val)
+    },
     _doCustomCursorClick () {
-      console.log('use-input=', this.$attrs['use-input'])
       // eslint-disable-next-line eqeqeq
-      if (this.$attrs['use-input'] != undefined) {
+      if (this.useInput) {
         if (this.popupShow) {
           this.$refs.select.hidePopup()
         } else {
@@ -229,7 +288,9 @@ export default {
         this.$emit('value-label', this._valueToLabel(valNew))
       }
       if (!valNew) {
-        this.$emit('clear', valOld)
+        this.$nextTick(() => {
+          this.$emit('clear', valOld)
+        })
       }
       if (!this.disable) {
         this.$emit('input', valNew)
@@ -257,14 +318,14 @@ export default {
           return null
         }
       }
-      if (this.$attrs['map-options'] === '' || this.$attrs['map-options']) {
-        const optionLabelKey = (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
-        const optionValueKey = (this.$attrs['option-value'] === undefined) ? 'value' : this.$attrs['option-value']
-        if (this.$attrs['emit-value'] !== '' && !this.$attrs['emit-value']) {
+      if (this.mapOptions) {
+        const optionLabelKey = this.optionLabel // (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
+        const optionValueKey = this.optionValue // (this.$attrs['option-value'] === undefined) ? 'value' : this.$attrs['option-value']
+        if (this.emitValue) {
           value = this._transMapToValue(value, optionValueKey)
         }
         const labels = []
-        if (this.$attrs.multiple === '' || this.$attrs.multiple) {
+        if (this.multiple) {
           for (const v of value) {
             for (const m of this.options) {
               if (m[optionValueKey] === v) {
@@ -310,7 +371,7 @@ export default {
             const needle = val.toLocaleLowerCase()
             this.optionsInData = this.options.filter(v => v.toLocaleLowerCase().indexOf(needle) > -1)
           } else {
-            const labelKey = (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
+            const labelKey = this.optionLabel // (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
             const needle = val.toLocaleLowerCase()
             const likeKey = this.filterKeyLike
             const equalKey = this.filterKeyEqual

@@ -39,7 +39,6 @@
       unit="px"
       :horizontal="$q.screen.xs"
       separator-style="background-color: transparent"
-      emit-immediatelyx
     >
       <template v-slot:before>
         <coadmin-table

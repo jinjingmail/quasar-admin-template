@@ -54,7 +54,6 @@ export default {
   },
   created () {
     this.showLoading = this.loading
-    console.log('loading=', this.loadingDelay, this.loading, this.loadingSpinner)
   },
   watch: {
     loading (valNew) {
@@ -63,9 +62,7 @@ export default {
         if (this.loadingDelay <= 0) {
           this.showLoading = this.loading
         } else {
-          console.log('begin settimeout', this.loading)
           setTimeout(() => {
-            console.log('end timeout', this.loading)
             this.showLoading = this.loading
           }, this.loadingDelay)
         }

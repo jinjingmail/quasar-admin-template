@@ -100,7 +100,7 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
-    <!-- 注意：这里不需要定义 selected.sync -->
+    <!-- 注意：这里不能定义 selected.sync -->
     <q-tree v-else
         ref="tree"
         v-bind="$attrs"
@@ -160,8 +160,8 @@ export default {
       type: Boolean,
       default: true
     },
-    selected: {}, // sync
     selectable: Boolean,
+    selected: {}, // sync
     ticked: Array, // sync
     expanded: Array, // sync
     tickStrategy: {
@@ -331,20 +331,27 @@ export default {
       if (this.tickStrategy === 'leaf-all-with-parent') {
         const tickedKeys = this.queryTickedLeafAllWithParent()
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-      } else
-      if (this.tickStrategy === 'leaf-all-only-parent') {
+        if (this.$listeners['ticked-label']) {
+          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        }
+      } else if (this.tickStrategy === 'leaf-all-only-parent') {
         const tickedKeys = this.queryTickedLeafAllOnlyParent()
+        console.log('leaf-all-only-parent: tickedKeys=', tickedKeys)
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-      } else
-      if (this.tickStrategy === 'leaf-any-with-parent') {
+        if (this.$listeners['ticked-label']) {
+          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        }
+      } else if (this.tickStrategy === 'leaf-any-with-parent') {
         const tickedKeys = this.queryTickedLeafAnyWithParent()
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        if (this.$listeners['ticked-label']) {
+          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
+        }
       } else {
         this.$emit('update:ticked', [...this.tickedSync])
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
+        if (this.$listeners['ticked-label']) {
+          this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
+        }
       }
     },
     filterReset () {

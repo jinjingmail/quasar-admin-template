@@ -88,15 +88,17 @@ export default {
         this.model = value
         return
       }
-      const opt0 = this.optionsTranslated[0]
-      if (typeof opt0[this.valueKey] === 'string') {
-        if (!(value === null || value === undefined || typeof value === 'object')) {
-          this.model = value + ''
+      if (this.optionsTranslated && this.optionsTranslated.length > 0) {
+        const opt0 = this.optionsTranslated[0]
+        if (typeof opt0[this.valueKey] === 'string') {
+          if (!(value === null || value === undefined || typeof value === 'object')) {
+            this.model = value + ''
+          } else {
+            this.model = value
+          }
         } else {
           this.model = value
         }
-      } else {
-        this.model = value
       }
     }
   },
