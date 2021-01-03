@@ -259,7 +259,7 @@ export default {
       immediate: true,
       handler (newVal, oldVal) {
         if (!this.disable) {
-          this.tickedSync = newVal
+          this.tickedSync = this.calcTicked(newVal)
         }
         if (this.$listeners['ticked-label']) {
           this.$emit('ticked-label', this.keysToLabels(newVal))

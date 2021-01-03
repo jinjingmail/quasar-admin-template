@@ -21,9 +21,9 @@
     >
       <div class="row items-center no-wrap">
         <span class="q-mr-xs">{{tab.title}}</span>
-        <q-btn v-if="!isAffix(tab)" @ctop="closeTab(tab)" icon="close" flat size="8px" round/>
+        <q-btn v-if="!isAffix(tab)" @click.stop="closeTab(tab)" icon="close" flat size="8px" round/>
       </div>
-    </q-tab>lick.s
+    </q-tab>
   </q-tabs>
 </template>
 

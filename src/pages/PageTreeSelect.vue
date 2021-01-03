@@ -120,7 +120,7 @@ export default {
       popupTreeExpanded: [],
       popupTreeTicked: [46],
       popupTreeTickedLabels: null,
-      tree: { ticked1: [46], selected1: 45 }
+      tree: { ticked1: [46], ticked2: [5, 19], ticked3: [5], selected1: 45 }
     }
   },
   mounted () {

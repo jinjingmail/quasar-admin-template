@@ -29,6 +29,7 @@
   <q-table
     ref="table"
     class="coadmin-table"
+    :color="color"
     :class="computedClass"
     card-class="custom-table-bg"
     :style="computedStyle"
@@ -130,6 +131,10 @@ export default {
     rowsPerPageOptions: {
       type: Array,
       default: () => [0]
+    },
+    color: {
+      type: String,
+      default: 'primary'
     },
     separator: String,
     virtualScroll: Boolean,
