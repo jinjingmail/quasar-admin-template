@@ -29,7 +29,11 @@ export default {
     },
     contentClass: String,
     contentStyle: String,
-    noEllipsis: Boolean // form 表单的label过长的情况
+    noEllipsis: Boolean, // form 表单的label过长的情况
+    noErrorIcon: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
     computedClass () {

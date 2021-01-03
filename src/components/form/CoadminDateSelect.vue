@@ -15,13 +15,14 @@
 -->
 <template>
   <coadmin-input
-    v-model="inputModel"
+    :value="inputModel"
     ref="input"
     v-on="listeners"
     v-bind="$attrs"
     :disable="disable"
-    :readonly="computedReadonly"
+    :readonly="readonly"
     :no-clear-focus="noClearFocus"
+    @clear="_clearInput"
   >
     <q-popup-proxy
       ref="popupDate"
@@ -113,6 +114,7 @@ export default {
         this.dateModel = null
       }
     },
+    /*
     inputModel (newVal, oldVal) {
       if (!newVal) {
         this.dateModel = null
@@ -121,7 +123,7 @@ export default {
         // TODO 判断 newVal是否合法
         this.dateModel = newVal
       }
-    },
+    },*/
     dateModel (newVal, oldVal) {
       if (this.range) {
         if (!newVal || !newVal.from) {
@@ -149,13 +151,6 @@ export default {
     }
   },
   computed: {
-    computedReadonly () {
-      if (!this.useInput || this.readonly) {
-        return true
-      } else {
-        return false
-      }
-    },
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象
@@ -166,15 +161,17 @@ export default {
         {
           // 这里确保组件配合 `v-model` 的工作
           input: function (value) {
-            // if (!vm.disable && !vm.readonly) {
-            //   vm.$emit('input', value)
-            // }
           }
         }
       )
     }
   },
   methods: {
+    _clearInput(old) {
+      this.inputModel = null
+      this.dateModel = null
+    },
+
     resetValidation () {
       this.$refs.input.resetValidation()
     },

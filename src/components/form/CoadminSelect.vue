@@ -9,7 +9,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-select
-      :value="model"
+      :value="value"
       ref="select"
       class="col coadmin-select"
       popup-content-class="custom-other-bg"
@@ -36,7 +36,6 @@
       @mouseleave.native="hover=false"
       @popup-show="_popupshow"
       @popup-hide="_popuphide"
-      @input="_input"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
@@ -46,8 +45,8 @@
       </template>
       <template v-slot:append>
         <slot name="append" />
-        <template v-if="clearable && hover && !!model && !disable">
-          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+        <template v-if="clearable && hover && !!value && !disable">
+          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
         </template>
         <template v-else>
           <q-icon
@@ -61,7 +60,7 @@
     </q-select>
   </div>
   <q-select v-else
-    :value="model"
+    :value="value"
     ref="select"
     class="coadmin-select"
     popup-content-class="custom-other-bg"
@@ -89,7 +88,6 @@
     @mouseleave.native="hover=false"
     @popup-show="_popupshow"
     @popup-hide="_popuphide"
-    @input="_input"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
@@ -100,8 +98,8 @@
 
     <template v-slot:append>
       <slot name="append" />
-      <template v-if="clearable && hover && !!model && !disable">
-        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+      <template v-if="clearable && hover && !!value && !disable">
+        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
       </template>
       <template v-else>
         <q-icon
@@ -124,6 +122,9 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    value: {
+      type: [String, Number, Array]
+    },
     clearable: Boolean,
     clearIcon: {
       type: String,
@@ -135,10 +136,6 @@ export default {
       default: 'arrow_drop_down'
     },
     hideDropdownIcon: Boolean,
-    noErrorIcon: {
-      type: Boolean,
-      default: true
-    },
     options: {
       type: Array,
       default: () => []
@@ -173,33 +170,22 @@ export default {
   data () {
     return {
       hover: false,
-      model: null,
       optionsInData: this.options,
       popupShow: false
     }
   },
   created () {
-    this._initModel(this.$attrs.value)
+    if (this.multiple && !this.value) {
+      this.$emit('input', [])
+    }
   },
   watch: {
-    '$attrs.value' (val, old) {
-      console.log('new=', val)
-      console.log('old=', old)
-      //this.model = val
-      this._initModel(val)
+    value: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        this._emitValueLabel(newVal)
+      }
     }
-    /*,
-    model (val, valOld) {
-      if (this.$listeners['value-label']) {
-        this.$emit('value-label', this._valueToLabel(val))
-      }
-      if (!this.disable) {
-        if (!val) {
-          this.$emit('clear', valOld)
-          this.$emit('input', val)
-        }
-      }
-    }*/
   },
   computed: {
     computedInputClass () {
@@ -216,65 +202,17 @@ export default {
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          /*input: function (value) {
+          input: function (value) {
             if (!vm.disable) {
-              //vm.$emit('input', value)
               vm._modelChange(value)
             }
-          }*/
-          /*
-          filter: function (inputValue, doneFn, abortFn) {
-            if (vm.noFilter) {
-              vm.$emit('filter', )
-            }
-          } */
+          }
         }
       )
     }
   },
   methods: {
-    _initModel(value) {
-      let optionIsString = false
-      if (this.options && this.options.length > 0) {
-        const opt0 = this.options[0]
-        if (typeof opt0[this.optionValue] === 'string') {
-          //if (!(value === null || value === undefined || typeof value === 'object')) {
-          optionIsString = true
-          //}
-        }
-      }
-      console.log('optionisstring=', optionIsString, typeof value, Array.isArray(value), this.multiple)
-      if (this.multiple) {
-        if (value == null) {
-          this.model = []
-        } else {
-          if (optionIsString) {
-            if (typeof value === 'number') {
-              this.model = value + ''
-            } else if (Array.isArray(value)) {
-              this.model = []
-              for (const v of value) {
-                this.model.push(v + '')
-              }
-              console.log('value.is array=', this.model)
-            } else {
-              this.model = value
-            }
-          } else {
-            this.model = value
-          }
-        }
-      } else {
-        this.model = optionIsString ? value + '' : value
-      }
-      console.log('model=', this.model, this.$attrs.value)
-    },
-    _input (val) {
-      console.log('_input.val=', val)
-      this._modelChange(val)
-    },
     _doCustomCursorClick () {
-      // eslint-disable-next-line eqeqeq
       if (this.useInput) {
         if (this.popupShow) {
           this.$refs.select.hidePopup()
@@ -283,17 +221,21 @@ export default {
         }
       }
     },
-    _modelChange (valNew, valOld) {
-      if (this.$listeners['value-label']) {
-        this.$emit('value-label', this._valueToLabel(valNew))
-      }
-      if (!valNew) {
-        this.$nextTick(() => {
-          this.$emit('clear', valOld)
-        })
-      }
+    _doClear () {
+      const oldVal = this.value
+      this._modelChange(null)
+      //this.$nextTick(() => {
+      this.$emit('clear', oldVal)
+      //})
+    },
+    _modelChange (valNew) {
       if (!this.disable) {
         this.$emit('input', valNew)
+      }
+    },
+    _emitValueLabel(value) {
+      if (this.$listeners['value-label']) {
+        this.$emit('value-label', this._valueToLabel(value))
       }
     },
     _popupshow (evt) {
@@ -304,14 +246,6 @@ export default {
       this.popupShow = false
       this.$emit('popup-hide', evt)
     },
-    _doClean () {
-      const old = this.model
-      this.model = null
-      this._modelChange(this.model, old)
-      /*if (!this.noClearFocus) {
-        this.focus()
-      }*/
-    },
     _valueToLabel (value) {
       if (typeof value !== 'number') {
         if (!value || value.length === 0) {
@@ -319,9 +253,9 @@ export default {
         }
       }
       if (this.mapOptions) {
-        const optionLabelKey = this.optionLabel // (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
-        const optionValueKey = this.optionValue // (this.$attrs['option-value'] === undefined) ? 'value' : this.$attrs['option-value']
-        if (this.emitValue) {
+        const optionLabelKey = this.optionLabel
+        const optionValueKey = this.optionValue
+        if (!this.emitValue) {
           value = this._transMapToValue(value, optionValueKey)
         }
         const labels = []
@@ -340,6 +274,7 @@ export default {
               return m[optionLabelKey]
             }
           }
+          return null
         }
         return labels
       } else {
@@ -347,7 +282,7 @@ export default {
       }
     },
     _transMapToValue (mapValue, valueKey) {
-      if (mapValue.length !== undefined) {
+      if (mapValue.length) {
         const values = []
         for (const v of mapValue) {
           values.push(v[valueKey])
@@ -371,7 +306,7 @@ export default {
             const needle = val.toLocaleLowerCase()
             this.optionsInData = this.options.filter(v => v.toLocaleLowerCase().indexOf(needle) > -1)
           } else {
-            const labelKey = this.optionLabel // (this.$attrs['option-label'] === undefined) ? 'label' : this.$attrs['option-label']
+            const labelKey = this.optionLabel
             const needle = val.toLocaleLowerCase()
             const likeKey = this.filterKeyLike
             const equalKey = this.filterKeyEqual

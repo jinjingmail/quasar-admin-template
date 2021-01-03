@@ -7,14 +7,14 @@
 -->
 <template>
   <coadmin-input
-    :value="computedInputValue"
     ref="input"
     v-on="listenersOfInput"
     v-bind="$attrs"
+    :value="computedInputValue"
+    :readonly="readonly"
     :disable="disable"
-    :readonly="computedReadonly"
     :no-clear-focus="noClearFocus"
-    @input="inputMethod"
+    @clear="_clearInput"
   >
     <q-popup-proxy
       ref="popupTree"
@@ -40,9 +40,9 @@
         :no-connectors="noConnectors"
         :accordion="accordion"
         :selected-color="selectedColor"
-        @ticked-label="labels => popupTreeTickedLabels=labels"
-        @selected-label="label => popupTreeSelectedLabel=label"
-        @update:selected="nodeKey => _updateSelected(nodeKey)"
+        @ticked-label="_popupTickedLabel"
+        @selected-label="_popupSelectedLabel"
+        @update:selected="selectedKey => _updateSelected(selectedKey)"
         @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
         @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
       >
@@ -63,7 +63,6 @@ export default {
   props: {
     disable: Boolean,
     readonly: Boolean,
-    useInput: Boolean,
     noClearFocus: {
       type: Boolean,
       default: true
@@ -133,59 +132,38 @@ export default {
     this.popupTreeSelected = this.selectable ? (this.selected ? this.selected : null) : null
     this.popupTreeExpanded = this.expanded
     this.popupTreeTicked = this.ticked
-
-    this.popupTreeSelectedLabel = this.keyToLabel(this.popupTreeSelected)
-    this.popupTreeTickedLabels = this.keysToLabels(this.popupTreeTicked)
+  },
+  mounted () {
+    /*
+     * 调用 popupTree.show() 触发一次事件发送
+     */
+    this.$refs.popupTree.show()
+    this.$nextTick(() => {
+      this.$refs.popupTree.hide()
+    })
   },
   watch: {
-    selected (newVal) {
-      if (this.disable) {
-        return
+    selected: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        if (!this.disable) {
+          this.popupTreeSelected = newVal
+        }
       }
-      this.popupTreeSelected = newVal
     },
-    ticked (newVal, oldVal) {
-      if (this.disable) {
-        return
+    ticked: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        if (!this.disable) {
+          this.popupTreeTicked = newVal
+        }
       }
-      /*
-      if ((!newVal || newVal.length === 0) && (oldVal && oldVal.length > 0)) {
-        this.popupTreeTicked = []
-        this.popupTreeExpanded = []
-        this.popupTreeTickedLabels = null
-      }*/
-      this.popupTreeTicked = newVal
     },
     expanded (newVal) {
       this.popupTreeExpanded = newVal
     }
-    /*,
-    popupTreeSelected (val) {
-      if (!val) {
-        this.popupTreeSelectedLabel = null
-      }
-      if (this.$listeners['selected-label']) this.$emit('selected-label', this.popupTreeSelectedLabel)
-      this.$emit('update:selected', val)
-    },
-    popupTreeExpanded (newVal, oldVal) {
-      this.$emit('update:expanded', newVal)
-    },
-    popupTreeTicked (newVal, oldVal) {
-      if (this.tickStrategy !== 'none') {
-        this.$emit('update:ticked', newVal)
-        console.log('popupTreeTicked.', newVal, oldVal, this.popupTreeTickedLabels)
-        if (this.$listeners['ticked-label']) this.$emit('ticked-label', this.popupTreeTickedLabels)
-      }
-    }*/
   },
   computed: {
-    computedReadonly () {
-      if (!this.useInput || this.readonly) {
-        return true
-      } else {
-        return false
-      }
-    },
     computedInputValue () {
       if (this.selectable) {
         return this.popupTreeSelectedLabel
@@ -206,25 +184,24 @@ export default {
         {
           // 这里确保组件配合 `v-model` 的工作
           input: function (value) {
-            if (!vm.disable) {
-              vm.$emit('input', value)
-            }
           }
         }
       )
     }
   },
   methods: {
+    _popupTickedLabel(labels) {
+      this.popupTreeTickedLabels = labels
+      this.$emit('ticked-label', labels)
+    },
+    _popupSelectedLabel(label) {
+      this.popupTreeSelectedLabel = label
+      this.$emit('selected-label', label)
+    },
     _updateSelected (nodeKey) {
-      //this.selectedSync = nodeKey
-      const label = this.keyToLabel(nodeKey)
       this.$emit('update:selected', nodeKey)
-      if (this.$listeners['selected-label']) {
-        this.$emit('selected-label', label)
-      }
     },
     _updateExpanded (nodeKeys) {
-      //this.expandedSync = nodeKeys
       this.$emit('update:expanded', nodeKeys)
     },
     _updateTicked (nodeKeys) {
@@ -232,20 +209,16 @@ export default {
         console.warn('disabled=true donot sent update:ticked')
         return
       }
-      //this.tickedSync = nodeKeys
       this.$emit('update:ticked', nodeKeys)
-      if (this.$listeners['ticked-label']) {
-        this.$emit('ticked-label', this.keysToLabels(nodeKeys))
-      }
     },
-    inputMethod (value) {
-      if (!value) {
-        this.popupTreeSelected = null
-        this.popupTreeTicked = []
-        this.popupTreeExpanded = []
-        this.popupTreeTickedLabels = null
-      }
+    _clearInput () {
+      this.popupTreeSelected = null
+      this.popupTreeTicked = []
+      this.popupTreeExpanded = []
+      if (this.selectable) this.$emit('update:selected', null)
+      this.$emit('update:ticked', [])
     },
+    /*
     keysToLabels (keys) {
       if (!keys || keys.length === 0) {
         return null
@@ -308,7 +281,7 @@ export default {
       } else {
         return false
       }
-    },
+    },*/
 
     resetValidation () {
       this.$refs.input.resetValidation()

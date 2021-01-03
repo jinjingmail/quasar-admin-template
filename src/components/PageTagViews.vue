@@ -4,7 +4,7 @@
     dense
     align="left"
     class="full-width"
-    content-class="custom-table-bg"
+    xxxxcontent-class="custom-table-bg"
     :breakpoint="0"
     :inline-label="true"
     outside-arrows
@@ -21,9 +21,9 @@
     >
       <div class="row items-center no-wrap">
         <span class="q-mr-xs">{{tab.title}}</span>
-        <q-btn v-if="!isAffix(tab)" @click.stop="closeTab(tab)" icon="close" flat size="8px" round/>
+        <q-btn v-if="!isAffix(tab)" @ctop="closeTab(tab)" icon="close" flat size="8px" round/>
       </div>
-    </q-tab>
+    </q-tab>lick.s
   </q-tabs>
 </template>
 

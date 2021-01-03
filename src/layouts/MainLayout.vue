@@ -166,7 +166,6 @@
                   label="个人设置"
                   flat
                   borderless
-                  size="sm"
                 />
                 <q-space/>
                 <q-btn
@@ -174,7 +173,6 @@
                   label="退出登录"
                   flat
                   borderless
-                  size="sm"
                   @click="$store.dispatch('user/logout').then(()=>{$router.push('/user/login')})"
                 />
               </q-toolbar>

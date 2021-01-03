@@ -2,16 +2,20 @@
   增加插槽：
   增加属性：
     参考 props 定义
+    option-label      参考q-select 定义这两个key
+    option-value      参考q-select 定义这两个key
+    value-to-string   将value转换为string再使用
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-option-group
-      v-model="model"
+      :value="valueSync"
       ref="optionGroup"
       class="col q-py-xs coadmin-option-group"
       v-bind="$attrs"
       v-on="listeners"
+      :type="type"
       :options="optionsTranslated"
       :dense="dense"
       :disable="disable"
@@ -26,12 +30,13 @@
     </q-option-group>
   </div>
   <q-option-group v-else
-    v-model="model"
+    :value="valueSync"
     ref="optionGroup"
     class="q-py-xs coadmin-option-group"
     :class="computedClass"
     v-bind="$attrs"
     v-on="listeners"
+    :type="type"
     :options="optionsTranslated"
     :dense="dense"
     :disable="disable"
@@ -54,68 +59,70 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    value: null,
+    valueToString: Boolean,
+    type: {
+      type: String,
+      default: 'radio',
+      validator: v => ['radio', 'checkbox', 'toggle'].includes(v)
+    },
     options: {
       type: Array,
       default: () => []
     },
-    labelKey: {
-      type: String,
+    optionLabel: {
+      type: [Function, String],
       default: 'label'
     },
-    valueKey: {
-      type: String,
+    optionValue: {
+      type: [Function, String],
       default: 'value'
     }
   },
   data () {
     return {
-      model: null,
+      valueSync: null,
       optionsTranslated: []
     }
   },
   created () {
-    if (this.labelKey === 'label' && this.valueKey === 'value') {
+    if (this.optionLabel === 'label' && this.optionValue === 'value') {
       this.optionsTranslated = this.options
     } else {
-      this.optionsTranslated = this.options.map(o => { return { label: o[this.labelKey], value: o[this.valueKey] } })
+      this.optionsTranslated = this.options.map(o => { return { label: o[this.optionLabel], value: o[this.optionValue] } })
     }
-    const value = this.$attrs.value
-
-    if (!(value === false || value === 0 || !!value) && (this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle')) {
-      this.model = []
-    } else {
-      if (this.optionsTranslated && this.optionsTranslated.length === 0) {
-        this.model = value
-        return
-      }
-      if (this.optionsTranslated && this.optionsTranslated.length > 0) {
-        const opt0 = this.optionsTranslated[0]
-        if (typeof opt0[this.valueKey] === 'string') {
-          if (!(value === null || value === undefined || typeof value === 'object')) {
-            this.model = value + ''
-          } else {
-            this.model = value
-          }
-        } else {
-          this.model = value
+    if (this.value == null && this.type === 'checkbox') {
+      this.$emit('input', [])
+    }
+    if (this.valueToString && this.value != null) {
+      if (typeof this.value === 'object') {
+        this.valueSync = []
+        for (const o of this.value) {
+          this.valueSync.push(o + '')
         }
+      } else {
+        this.valueSync = this.value + ''
       }
     }
-  },
-  mounted () {
+    this._emitValueLabel(this.valueSync)
   },
   watch: {
-    '$attrs.value' (val) {
-      if ((this.$attrs.type === 'checkbox' || this.$attrs.type === 'toggle') && !val) {
-        this.model = []
-      } else {
-        this.model = val
-      }
-    },
-    model (value) {
-      // 这里不判断 this.disable
-      if (this.$listeners['value-label']) {
-        this.$emit('value-label', this.valueToLabel(value))
+    value: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        if (this.valueToString && this.value != null) {
+          if (typeof this.value === 'object') {
+            this.valueSync = []
+            for (const o of this.value) {
+              this.valueSync.push(o + '')
+            }
+          } else {
+            this.valueSync = this.value + ''
+          }
+        } else {
+          this.valueSync = this.value
+        }
+        this._emitValueLabel(this.valueSync)
       }
     }
   },
@@ -128,16 +135,25 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           input: function (value) {
-            if (!vm.disable) {
-              vm.$emit('input', value)
-            }
+            vm._doModelChange(value)
           }
         }
       )
     }
   },
   methods: {
-    valueToLabel (value) {
+    _emitValueLabel(value) {
+      if (this.$listeners['value-label']) {
+        const labels = this._valueToLabel(value)
+        this.$emit('value-label', labels)
+      }
+    },
+    _doModelChange(value) {
+      if (!this.disable) {
+        this.$emit('input', value)
+      }
+    },
+    _valueToLabel (value) {
       if (value == null || value === undefined) {
         return null
       }
@@ -153,11 +169,9 @@ export default {
         }
         return labels.length === 0 ? null : labels
       }
-      if (typeof value === 'string' && value.length > 0) {
-        for (const v of this.optionsTranslated) {
-          if (v.value === value) {
-            return v.label
-          }
+      for (const v of this.optionsTranslated) {
+        if (v.value === value) {
+          return v.label
         }
       }
       return value

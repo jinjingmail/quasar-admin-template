@@ -36,9 +36,11 @@
     @selected-label -> function(label)：以label的形式输出selected的数据
 -->
 <template>
-  <coadmin-card
-    v-bind="$attrs"
-    v-on="$listeners"
+  <q-card class="coadmin-tree custom-other-bg"
+    :tag="tag"
+    :flat="flat"
+    :square="square"
+    :bordered="bordered"
   >
     <slot name="toolbar" v-if="!noToolbar">
       <q-toolbar>
@@ -72,7 +74,10 @@
     <q-tree v-if="selectable"
         ref="tree"
         v-bind="$attrs"
-        v-on="$listeners"
+        v-on="listeners"
+        :style="contentStyle"
+        :class="contentClass"
+        class="q-pa-xs"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
@@ -86,9 +91,6 @@
         :no-connectors="noConnectors"
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
-        @update:selected="nodeKey => _updateSelected(nodeKey)"
-        @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
-        @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
     >
       <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
         <slot name="default-header" v-bind="prop"/>
@@ -104,7 +106,10 @@
     <q-tree v-else
         ref="tree"
         v-bind="$attrs"
-        v-on="$listeners"
+        v-on="listeners"
+        :style="contentStyle"
+        :class="contentClass"
+        class="q-pa-xs"
         :nodes="nodes"
         :node-key="nodeKey"
         :label-key="labelKey"
@@ -117,8 +122,6 @@
         :no-connectors="noConnectors"
         :filter="filterComputed"
         :filter-method="filterMethodComputed"
-        @update:ticked="tickedNodeKeys => _updateTicked(tickedNodeKeys)"
-        @update:expanded="nodeKeys => _updateExpanded(nodeKeys)"
     >
       <template v-if="$scopedSlots['default-header']" v-slot:default-header="prop">
         <slot name="default-header" v-bind="prop"/>
@@ -130,7 +133,7 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
-  </coadmin-card>
+  </q-card>
 </template>
 
 <script>
@@ -138,6 +141,17 @@ export default {
   name: 'CoadminTree',
   inheritAttrs: false,
   props: {
+    tag: {
+      type: String,
+      default: 'div'
+    },
+    square: Boolean,
+    flat: Boolean,
+    bordered: Boolean,
+
+    contentStyle: String,
+    contentClass: String,
+
     disable: Boolean,
     readonly: Boolean,
     nodes: {
@@ -218,49 +232,45 @@ export default {
     }
   },
   mounted () {
-    this.tickedSync = this.calcTicked()
-    if (!this.noTickedExpand) {
-      this.expandedSync = this.calcExpanded()
-    }
+    this.tickedSync = this.calcTicked(this.ticked)
     this.selectedSync = this.selectable ? (this.selected ? this.selected : null) : null
+    if (!this.noTickedExpand) {
+      if (this.selectedSync) {
+        this.expandedSync = this.calcExpanded(this.expanded, [this.selectedSync])
+      } else {
+        this.expandedSync = this.calcExpanded(this.expanded, this.ticked)
+      }
+    }
   },
   created () {
   },
   watch: {
-    selected (newVal) {
-      if (!this.disable) {
-        this.selectedSync = newVal
+    selected: {
+      immediate: true,
+      handler  (newVal) {
+        if (!this.disable) {
+          this.selectedSync = newVal
+        }
+        const label = this.keyToLabel(newVal)
+        this.$emit('selected-label', label)
       }
     },
-    ticked (newVal, oldVal) {
-      /*if (!this.disable && (!newVal || newVal.length === 0)) {
-        if (!(newVal && newVal.length === 0 && oldVal && oldVal.length === 0)) {
-          this.tickedSync = []
+    ticked: {
+      immediate: true,
+      handler (newVal, oldVal) {
+        if (!this.disable) {
+          this.tickedSync = newVal
         }
-      }*/
-      if (!this.disable) {
-        this.tickedSync = newVal
+        if (this.$listeners['ticked-label']) {
+          this.$emit('ticked-label', this.keysToLabels(newVal))
+        }
       }
     },
     expanded (newVal) {
-      if (!this.disable) {
+      if (!this.noTickedExpand) {
         this.expandedSync = newVal
       }
     }
-    /*,
-    selectedSync (val) {
-      const label = this.keyToLabel(val)
-      if (this.$listeners['selected-label']) {
-        this.$emit('selected-label', label)
-      }
-      this.$emit('update:selected', val)
-    }*/
-    /* expandedSync (val) {
-      if (this.disable) {
-        return
-      }
-      this.$emit('update:expanded', [...this.expandedSync])
-    }, */
   },
   computed: {
     computedDynamicSlotNames () {
@@ -290,8 +300,7 @@ export default {
       } else {
         return this.filterMethodDefault
       }
-    }
-    /*,
+    },
     listeners: function () {
       const vm = this
       // `Object.assign` 将所有的对象合并为一个新对象
@@ -302,25 +311,32 @@ export default {
         {
           // 这里确保组件配合 `.sync` 的工作
           'update:selected': function (value) {
+            vm._updateSelected(value)
           },
           'update:ticked': function (value) {
+            vm._updateTicked(value)
+          },
+          'update:expanded': function (value) {
+            vm._updateExpanded(value)
           }
         }
       )
-    }*/
+    }
   },
   methods: {
     _updateSelected (nodeKey) {
       this.selectedSync = nodeKey
-      const label = this.keyToLabel(nodeKey)
+      //const label = this.keyToLabel(nodeKey)
       this.$emit('update:selected', nodeKey)
-      if (this.$listeners['selected-label']) {
+      /*if (this.$listeners['selected-label']) {
         this.$emit('selected-label', label)
-      }
+      }*/
     },
     _updateExpanded (nodeKeys) {
       this.expandedSync = nodeKeys
-      this.$emit('update:expanded', nodeKeys)
+      if (this.$listeners['update:expanded']) {
+        this.$emit('update:expanded', nodeKeys)
+      }
     },
     _updateTicked (nodeKeys) {
       if (this.disable) {
@@ -329,29 +345,16 @@ export default {
       }
       this.tickedSync = nodeKeys
       if (this.tickStrategy === 'leaf-all-with-parent') {
-        const tickedKeys = this.queryTickedLeafAllWithParent()
+        const tickedKeys = this.queryTickedLeafAllWithParent(nodeKeys)
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) {
-          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-        }
       } else if (this.tickStrategy === 'leaf-all-only-parent') {
-        const tickedKeys = this.queryTickedLeafAllOnlyParent()
-        console.log('leaf-all-only-parent: tickedKeys=', tickedKeys)
+        const tickedKeys = this.queryTickedLeafAllOnlyParent(nodeKeys)
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) {
-          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-        }
       } else if (this.tickStrategy === 'leaf-any-with-parent') {
-        const tickedKeys = this.queryTickedLeafAnyWithParent()
+        const tickedKeys = this.queryTickedLeafAnyWithParent(nodeKeys)
         this.$emit('update:ticked', tickedKeys)
-        if (this.$listeners['ticked-label']) {
-          this.$emit('ticked-label', this.keysToLabels(tickedKeys))
-        }
       } else {
-        this.$emit('update:ticked', [...this.tickedSync])
-        if (this.$listeners['ticked-label']) {
-          this.$emit('ticked-label', this.keysToLabels(this.tickedSync))
-        }
+        this.$emit('update:ticked', [...nodeKeys])
       }
     },
     filterReset () {
@@ -405,14 +408,17 @@ export default {
       }
       return ''
     },
-    calcExpanded () {
+    calcExpanded (expanded, ticked) {
       // 指定了展开项，则不自动展开ticked项
-      if (this.expanded && this.expanded.length > 0) {
-        return [...this.expanded]
+      if (expanded && expanded.length > 0) {
+        return [...expanded]
+      }
+      if (!ticked || ticked.length === 0) {
+        return []
       }
       // 找到父节点（总共向上找3级） TODO 改为递归
       const set = new Set()
-      for (const key of this.tickedSync) {
+      for (const key of ticked) {
         const node = this.findParentNode(key, null, this.nodes)
         if (node && node[this.nodeKey]) set.add(node[this.nodeKey])
       }
@@ -426,8 +432,8 @@ export default {
       }
       return [...set]
     },
-    calcTicked () {
-      if (!this.ticked || this.ticked.length === 0) {
+    calcTicked (ticked) {
+      if (!ticked || ticked.length === 0) {
         return []
       }
       if (this.tickStrategy === 'none') {
@@ -436,7 +442,7 @@ export default {
       if (this.tickStrategy === 'leaf-all-only-parent') {
         // 把子节点给勾上
         const keys = new Set()
-        for (const key of this.ticked) {
+        for (const key of ticked) {
           const node = this.findTreeNode(key, this.nodes)
           if (this.hasChildren(node)) {
             this.fillLeaf(keys, node[this.childrenKey])
@@ -446,7 +452,7 @@ export default {
         }
         return [...keys]
       }
-      return [...this.ticked]
+      return [...ticked]
     },
     fillLeaf (keys, children) {
       for (const child of children) {
@@ -458,14 +464,14 @@ export default {
       }
     },
     // 如果子节点选中大于0个，则增加父节点
-    queryTickedLeafAnyWithParent () {
-      if (!this.tickedSync || this.tickedSync.length === 0) {
+    queryTickedLeafAnyWithParent (nodeKeys) {
+      if (!nodeKeys || nodeKeys.length === 0) {
         return []
       }
-      const keys = [...this.tickedSync]
+      const keys = [...nodeKeys]
       for (const node of this.nodes) {
         if (this.hasChildren(node)) {
-          if (this.isAnyChildTicked(keys, node[this.childrenKey])) {
+          if (this.isAnyChildTicked(nodeKeys, keys, node[this.childrenKey])) {
             keys.unshift(node[this.nodeKey])
           }
         }
@@ -473,14 +479,14 @@ export default {
       return [...new Set(keys)]
     },
     // 如果子节点全选中，则增加父节点
-    queryTickedLeafAllWithParent () {
-      if (!this.tickedSync || this.tickedSync.length === 0) {
+    queryTickedLeafAllWithParent (nodeKeys) {
+      if (!nodeKeys || nodeKeys.length === 0) {
         return []
       }
-      const keys = [...this.tickedSync]
+      const keys = [...nodeKeys]
       for (const node of this.nodes) {
         if (this.hasChildren(node)) {
-          if (this.isAllChildTicked(keys, node[this.childrenKey])) {
+          if (this.isAllChildTicked(nodeKeys, keys, node[this.childrenKey])) {
             keys.unshift(node[this.nodeKey])
           }
         }
@@ -488,31 +494,31 @@ export default {
       return [...new Set(keys)]
     },
     // 如果子节点全选中，则增加父节点，去掉子节点
-    queryTickedLeafAllOnlyParent () {
-      if (!this.tickedSync || this.tickedSync.length === 0) {
+    queryTickedLeafAllOnlyParent (nodeKeys) {
+      if (!nodeKeys || nodeKeys.length === 0) {
         return []
       }
-      const keys = [...this.tickedSync]
+      const keys = [...nodeKeys]
       for (const node of this.nodes) {
         if (this.hasChildren(node)) {
-          if (this.isAllChildTicked_OnlyParent(keys, node[this.childrenKey])) {
+          if (this.isAllChildTicked_OnlyParent(nodeKeys, keys, node[this.childrenKey])) {
             keys.push(node[this.nodeKey])
           }
         }
       }
       return [...new Set(keys)]
     },
-    isAnyChildTicked (keys, children) {
+    isAnyChildTicked (allKeys, keys, children) {
       let anyTicked = false
       for (const child of children) {
         if (this.hasChildren(child)) {
-          if (this.isAnyChildTicked(keys, child[this.childrenKey])) {
+          if (this.isAnyChildTicked(allKeys, keys, child[this.childrenKey])) {
             keys.unshift(child[this.nodeKey])
             anyTicked = true
           }
         } else {
           if (!anyTicked) {
-            if (this.arrayContains(this.tickedSync, child[this.nodeKey])) {
+            if (this.arrayContains(allKeys, child[this.nodeKey])) {
               anyTicked = true
             }
           }
@@ -520,18 +526,18 @@ export default {
       }
       return anyTicked
     },
-    isAllChildTicked (keys, children) {
+    isAllChildTicked (allKeys, keys, children) {
       let allTicked = true
       for (const child of children) {
         if (this.hasChildren(child)) {
-          if (this.isAllChildTicked(keys, child[this.childrenKey])) {
+          if (this.isAllChildTicked(allKeys, keys, child[this.childrenKey])) {
             keys.unshift(child[this.nodeKey])
           } else {
             allTicked = false
           }
         } else {
           if (allTicked) {
-            if (!this.arrayContains(this.tickedSync, child[this.nodeKey])) {
+            if (!this.arrayContains(allKeys, child[this.nodeKey])) {
               allTicked = false
             }
           }
@@ -539,18 +545,18 @@ export default {
       }
       return allTicked
     },
-    isAllChildTicked_OnlyParent (keys, children) {
+    isAllChildTicked_OnlyParent (allKeys, keys, children) {
       let allTicked = true
       for (const child of children) {
         if (this.hasChildren(child)) {
-          if (this.isAllChildTicked_OnlyParent(keys, child[this.childrenKey])) {
+          if (this.isAllChildTicked_OnlyParent(allKeys, keys, child[this.childrenKey])) {
             keys.push(child[this.nodeKey])
           } else {
             allTicked = false
           }
         } else {
           if (allTicked) {
-            if (!this.arrayContains(this.tickedSync, child[this.nodeKey])) {
+            if (!this.arrayContains(allKeys, child[this.nodeKey])) {
               allTicked = false
             }
           }

@@ -1,7 +1,7 @@
 <!--
   重新定义input等form组件：
   1、简化代码量
-  2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写modal值，这里自定义组件给予修正
+  2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写model值，这里自定义组件不能改写
   新增插槽：
       form-label
   新增prop：
@@ -11,7 +11,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"  :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
     <q-input
-      v-model="model"
+      :value="value"
       class="col coadmin-input"
       :class="contentClass"
       :style="contentStyle"
@@ -31,8 +31,8 @@
         <slot :name="slotName"/>
       </template>
       <template v-slot:append>
-        <template v-if="clearable && hover && !!model && !disable">
-          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+        <template v-if="clearable && hover && !!value && !disable">
+          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
         </template>
         <slot v-else name="append"/>
       </template>
@@ -40,7 +40,7 @@
   </div>
   <q-input v-else
     ref="input"
-    v-model="model"
+    :value="value"
     class="coadmin-input"
     :class="{computedClass, contentClass}"
     :style="contentStyle"
@@ -60,8 +60,8 @@
     </template>
 
     <template v-slot:append>
-      <template v-if="clearable && hover && !!model && !disable">
-        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClean()"/>
+      <template v-if="clearable && hover && !!value && !disable">
+        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
       </template>
       <slot v-else name="append"/>
     </template>
@@ -76,46 +76,23 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    value: {
+      type: [String, Number]
+    },
     clearable: Boolean,
     clearIcon: {
       type: String,
       default: 'cancel'
     },
     noClearFocus: Boolean,
-    value: {
-      type: [String, Number]
-    },
     label: {
       type: String,
       default: undefined
-    },
-    noErrorIcon: {
-      type: Boolean,
-      default: true
     }
   },
   data () {
     return {
-      hover: false,
-      model: undefined
-    }
-  },
-  created () {
-    this.model = this.value
-  },
-  watch: {
-    value (valNew) {
-      this.model = this.value
-    },
-    model (valNew, valOld) {
-      if (!this.disable) {
-        if (!valNew) {
-          this.$nextTick(() => {
-            this.$emit('clear', valOld)
-          })
-        }
-        this.$emit('input', valNew)
-      }
+      hover: false
     }
   },
   computed: {
@@ -128,24 +105,28 @@ export default {
         // 添加自定义监听器，或覆写一些监听器的行为
         {
           // 这里确保组件配合 `v-model` 的工作
-          /*input: function (value) {
-            if (!vm.disable) {
-              //vm.model = value
-              vm.$emit('input', value)
-            }
-          }*/
+          input: function (value) {
+            vm._doInput(value)
+          }
         }
       )
     }
   },
   methods: {
-    _doClean () {
-      this.model = null
-      /*if (!this.noClearFocus) {
-        this.focus()
-      }*/
+    _doClear () {
+      const oldVal = this.value
+      this._doInput(null)
+      //this.$nextTick(() => {
+      this.$emit('clear', oldVal)
+      //})
+    },
+    _doInput (value) {
+      if (!this.disable) {
+        this.$emit('input', value)
+      }
     },
 
+    /* q-input 默认方法 begin */
     resetValidation () {
       this.$refs.input.resetValidation()
     },
@@ -161,6 +142,7 @@ export default {
     select () {
       this.$refs.input.select()
     }
+    /* q-input 默认方法 end */
   }
 }
 </script>

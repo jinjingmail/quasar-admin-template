@@ -197,8 +197,8 @@
                     :inline="true"
                     form-label="optionsGroup"
                     :options="mapOptions"
-                    label-key="desc"
-                    value-key="id"
+                    option-label="desc"
+                    option-value="id"
                     @value-label="label => querySelectSingleLabel = label"
                   />
                   <coadmin-option-group
@@ -207,8 +207,8 @@
                     :inline="true"
                     form-label="optionsGroup"
                     :options="mapOptions"
-                    label-key="desc"
-                    value-key="id"
+                    option-label="desc"
+                    option-value="id"
                     type="checkbox"
                     @value-label="labels => querySelectMultipleLabels = labels"
                   />

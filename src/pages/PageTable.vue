@@ -25,6 +25,8 @@
         <div class="row q-gutter-sm">
           <q-checkbox v-model="labelTop" label="label-top" />
           <coadmin-input v-model.lazy="labelStyle" placeholder="label-style" style="width:255px"/>
+          <q-btn label="好的" dense outlined/>
+          <q-btn dense color="primary" icon="search" label="查询"/>
         </div>
         <div class="q-gutter-sm">
           <q-radio v-model="labelAlign" val="auto" label="auto" />
@@ -145,8 +147,8 @@
             form-label="optionsGroup"
             :disable="dialogFormReadonly"
             :options="mapOptions"
-            label-key="desc"
-            value-key="id"
+            option-value="id"
+            option-label="desc"
             :rules="[val => !!val || 'Field is required']"
           />
           <coadmin-select
@@ -174,8 +176,8 @@
             form-label="optionsGroup"
             :disable="dialogFormReadonly"
             :options="mapOptions"
-            label-key="desc"
-            value-key="id"
+            option-value="id"
+            option-label="desc"
             type="checkbox"
             :rules="[val => !!val || 'Field is required']"
           />
@@ -237,6 +239,7 @@
             form-label="no-ellipsis no-ellipsis no-ellipsis no-ellipsis"
             no-ellipsis
             v-model="dialogForm.date3"
+            clearable
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           >
@@ -408,7 +411,7 @@
 </template>
 
 <script>
-import depts from '../data/depts.js'
+import depts from '@/data/depts.js'
 import { data, columns, visibleColumns } from '../data/test.js'
 
 const dialogFormDefault = { id: null, name: null, calories: null, fat: null, protein: null, sodium: null, calcium: null, iron: null }

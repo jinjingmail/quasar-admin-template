@@ -165,7 +165,7 @@ export default {
   components: { crudOperation, crudMore, crudPagination, crudRow },
   cruds() {
     // * 默认查询参数：query
-    return CRUD({ query: { name: 'nnn' }, columns, visibleColumns, idField: 'id', title: '演示', sort: ['name,asc', 'id,desc'], url: 'api/demo', crudMethod: { ...crudDemo } })
+    return CRUD({ columns, visibleColumns, idField: 'id', title: '演示', sort: ['name,asc', 'id,desc'], url: 'api/demo', crudMethod: { ...crudDemo } })
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   data () {
@@ -183,8 +183,8 @@ export default {
   },
   created () {
     // 动态初始化参数初始化（比如通过URL携带来的参数）
-    /* 提示：如果需要指定页面的初始查询参数，还需要在上面的 cruds() 中初始化 query: {name} */
-    this.query.name = 'Demo'
+    // 提示：必须使用 $set() 赋值，不能这样 this.query.name='Demo'
+    this.$set(this.query, 'name', 'Demo')
   },
   mounted () {
     this.$refs.searchPopup.show()
