@@ -5,7 +5,6 @@
     toolbar-start
     toolbar-end
   增加属性：
-    dark
     square
     flat
     bordered

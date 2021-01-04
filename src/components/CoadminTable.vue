@@ -12,6 +12,22 @@
     expand-icon-fold    树表折叠按钮的图标
     expand-without-label 点击文字不展开树表
 
+    color
+    dense
+    dark
+    flat
+    square
+    bordered
+    table-style
+    table-class
+    table-header-style
+    table-header-class
+    card-container-style
+    card-container-class
+    card-style
+    card-class
+    title-class
+
     sticky-header
     sticky-first-column
     sticky-last-column
@@ -28,13 +44,13 @@
 <template>
   <q-table
     ref="table"
-    class="coadmin-table"
-    :color="color"
-    :class="computedClass"
-    card-class="custom-table-bg"
-    :style="computedStyle"
     v-bind="$attrs"
     v-on="listeners"
+    class="coadmin-table"
+    :class="computedClass"
+    :card-class="'custom-table-bg ' + cardClass"
+    :color="color"
+    :style="computedStyle"
     :row-key="rowKey"
     :data="computedTreeTableData"
     :columns="columns"
@@ -128,6 +144,10 @@ export default {
       default: () => []
     },
 
+    cardClass: {
+      type: String,
+      default: ''
+    },
     rowsPerPageOptions: {
       type: Array,
       default: () => [0]

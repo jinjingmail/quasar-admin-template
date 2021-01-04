@@ -9,7 +9,10 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"  :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+      :style="computedLabelStyle">
+      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+    </label>
     <q-input
       :value="value"
       class="col coadmin-input"
@@ -18,6 +21,7 @@
       ref="input"
       v-bind="$attrs"
       v-on="listeners"
+      :rules="rules"
       :label="label"
       :dense="dense"
       :outlined="outlined"
@@ -31,7 +35,7 @@
         <slot :name="slotName"/>
       </template>
       <template v-slot:append>
-        <template v-if="clearable && hover && !!value && !disable">
+        <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
           <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
         </template>
         <slot v-else name="append"/>
@@ -46,6 +50,7 @@
     :style="contentStyle"
     v-bind="$attrs"
     v-on="listeners"
+    :rules="rules"
     :label="label"
     :dense="dense"
     :outlined="outlined"
@@ -60,7 +65,7 @@
     </template>
 
     <template v-slot:append>
-      <template v-if="clearable && hover && !!value && !disable">
+      <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
         <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
       </template>
       <slot v-else name="append"/>
@@ -79,6 +84,7 @@ export default {
     value: {
       type: [String, Number]
     },
+    rules: Array,
     clearable: Boolean,
     clearIcon: {
       type: String,

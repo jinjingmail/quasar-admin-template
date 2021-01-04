@@ -10,8 +10,8 @@
         <div class="text-body2">这里是要打印的内容</div>
       </q-card-section>
       <q-card-actions align="right">
+        <q-btn dense label="关闭" flat v-close-popup />
         <q-btn dense label="打印" color="primary" @click="$q.notify({type:'info', message:'打印'})"/>
-        <q-btn dense label="Cancel" flat v-close-popup />
       </q-card-actions>
     </coadmin-dialog>
 

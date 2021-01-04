@@ -5,7 +5,10 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+      :style="computedLabelStyle">
+      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+    </label>
     <q-field
       ref="field"
       class="col coadmin-field"
@@ -54,6 +57,7 @@ export default {
   inheritAttrs: false,
   mixins: [formMixin],
   props: {
+    rules: Array
   },
   data () {
     return {

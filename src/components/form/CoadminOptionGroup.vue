@@ -4,17 +4,21 @@
     参考 props 定义
     option-label      参考q-select 定义这两个key
     option-value      参考q-select 定义这两个key
-    value-to-string   将value转换为string再使用
+    value-to-string   将value转换为string再使用(用于value跟options里面数据类型不一致的情况)
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}" :style="computedLabelStyle"><slot name="form-label">{{formLabel}}</slot></label>
+    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+      :style="computedLabelStyle">
+      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+    </label>
     <q-option-group
       :value="valueSync"
       ref="optionGroup"
       class="col q-py-xs coadmin-option-group"
       v-bind="$attrs"
       v-on="listeners"
+      :rules="rules"
       :type="type"
       :options="optionsTranslated"
       :dense="dense"
@@ -36,6 +40,7 @@
     :class="computedClass"
     v-bind="$attrs"
     v-on="listeners"
+    :rules="rules"
     :type="type"
     :options="optionsTranslated"
     :dense="dense"
@@ -61,6 +66,7 @@ export default {
   props: {
     value: null,
     valueToString: Boolean,
+    rules: Array,
     type: {
       type: String,
       default: 'radio',

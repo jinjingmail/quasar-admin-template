@@ -52,16 +52,14 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
-body {
-  // 左侧菜单栏active状态，默认颜色
-  // --q-color-menu-bg-active: rgba(2, 255, 2, 0.43);
-}
-
 .coadmin-input,
 .coadmin-select,
 .coadmin-field,
 .coadmin-option-group,
 .coadmin-form-item {
+  .q-field__input {
+    min-height: auto;
+  }
   // 按钮高度缩小
   .q-field__control,
   .q-field__marginal {
@@ -109,11 +107,11 @@ body {
 .custom-page-bg {
   background-color: var(--q-color-page-bg) ;
 }
-.custom-other-bg {
-  background-color: var(--q-color-other-bg) ;
-}
 .custom-table-bg {
   background-color: var(--q-color-table-bg) ;
+}
+.custom-other-bg {
+  background-color: var(--q-color-other-bg) ;
 }
 
 .coadmin-sidebar {

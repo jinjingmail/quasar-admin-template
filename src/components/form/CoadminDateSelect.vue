@@ -9,6 +9,7 @@
   新增prop：
       见prop定义
       date-today-btn
+      default-time
   返回值：
       range=false "2019/02/10"
       range=true  ["2019/02/10", "2019/02/15"]
@@ -93,7 +94,8 @@ export default {
     dateTextColor: String,
     defaultYearMonth: String,
     navigationMinYearMonth: String,
-    navigationMaxYearMonth: String
+    navigationMaxYearMonth: String,
+    defaultTime: Array
   },
   data () {
     return {
@@ -114,16 +116,6 @@ export default {
         this.dateModel = null
       }
     },
-    /*
-    inputModel (newVal, oldVal) {
-      if (!newVal) {
-        this.dateModel = null
-      }
-      if (!this.range) {
-        // TODO 判断 newVal是否合法
-        this.dateModel = newVal
-      }
-    },*/
     dateModel (newVal, oldVal) {
       if (this.range) {
         if (!newVal || !newVal.from) {
@@ -142,9 +134,23 @@ export default {
         return
       }
       if (this.range && newVal && newVal.from) {
-        this.$emit('input', [newVal.from, newVal.to])
+        let time1 = ''
+        let time2 = ''
+        if (this.defaultTime) {
+          if (this.defaultTime.length >= 1) {
+            time1 = this.defaultTime[0]
+          }
+          if (this.defaultTime.length >= 2) {
+            time2 = this.defaultTime[1]
+          }
+        }
+        this.$emit('input', [newVal.from + time1, newVal.to + time2])
       } else if (newVal && newVal.length > 0) {
-        this.$emit('input', newVal)
+        let time1 = ''
+        if (this.defaultTime && this.defaultTime.length >= 1) {
+          time1 = this.defaultTime[0]
+        }
+        this.$emit('input', newVal + time1)
       } else {
         this.$emit('input', '')
       }
