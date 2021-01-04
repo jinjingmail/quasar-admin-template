@@ -488,56 +488,6 @@ function CRUD(options) {
     getDataStatus(id) {
       return crud.dataStatus[id]
     },
-    /**
-     * 用于树形表格多选, 选中所有
-     * @param selection
-     */
-    /*selectAllChange(selection) {
-      // 如果选中的数目与请求到的数目相同就选中子节点，否则就清空选中
-      if (selection && selection.length === crud.data.length) {
-        selection.forEach(val => {
-          crud.selectChange(selection, val)
-        })
-      } else {
-        crud.getTable().clearSelection()
-      }
-    },*/
-    /**
-     * 用于树形表格多选，单选的封装
-     * @param selection
-     * @param row
-     */
-    /*selectChange(selection, row) {
-      // 如果selection中存在row代表是选中，否则是取消选中
-      if (selection.find(val => { return crud.getDataId(val) === crud.getDataId(row) })) {
-        if (row.children) {
-          row.children.forEach(val => {
-            crud.getTable().toggleRowSelection(val, true)
-            selection.push(val)
-            if (val.children) {
-              crud.selectChange(selection, val)
-            }
-          })
-        }
-      } else {
-        crud.toggleRowSelection(selection, row)
-      }
-    },*/
-    /**
-     * 切换选中状态
-     * @param selection
-     * @param data
-     */
-    /*toggleRowSelection(selection, data) {
-      if (data.children) {
-        data.children.forEach(val => {
-          crud.getTable().toggleRowSelection(val, false)
-          if (val.children) {
-            crud.toggleRowSelection(selection, val)
-          }
-        })
-      }
-    },*/
     findVM(type) {
       return crud.vms.find(vm => vm && vm.type === type).vm
     },
@@ -590,6 +540,15 @@ function CRUD(options) {
         closeBtn: '关闭'
       })
     },
+    notifyFailure(title) {
+      Notify.create({
+        type: CRUD.NOTIFICATION_TYPE.ERROR,
+        message: title,
+        timeout: 60 * 1000,
+        position: 'bottom',
+        closeBtn: '关闭'
+      })
+    },
     updateProp(name, value) {
       Vue.set(crud.props, name, value)
     },
@@ -602,27 +561,6 @@ function CRUD(options) {
     attchTable() {
       const table = this.getTable()
       this.updateProp('table', table)
-      /* Quasar 不支持树表
-      const that = this
-      table.$on('expand-change', (row, expanded) => {
-        if (!expanded) {
-          return
-        }
-        const lazyTreeNodeMap = table.store.states.lazyTreeNodeMap
-        row.children = lazyTreeNodeMap[crud.getDataId(row)]
-        if (row.children) {
-          row.children.forEach(ele => {
-            const id = crud.getDataId(ele)
-            if (that.dataStatus[id] === undefined) {
-              that.dataStatus[id] = {
-                delete: 0,
-                edit: 0
-              }
-            }
-          })
-        }
-      })
-      */
     }
   }
   const crud = Object.assign({}, data)

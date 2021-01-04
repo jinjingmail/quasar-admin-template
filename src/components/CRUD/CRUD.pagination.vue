@@ -16,7 +16,7 @@
     <slot name="start" />
     <coadmin-field dense borderless :outlined="false" class="col-auto">
       <template v-slot:control>
-        <div class="self-center full-width no-outline" tabindex="0">共{{page.total}}条</div>
+        <div class="self-center full-width no-outline" tabindex="0">共 {{page.total}} 条</div>
       </template>
     </coadmin-field>
     <q-pagination v-if="!computedNoPageIfOnlyOnePage"

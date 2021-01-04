@@ -6,7 +6,7 @@
     :expand-separator="level===1"
     :dense="false"
     :default-opened="false"
-    :duration="200"
+    :duration="300"
     @input="expansionItemInput"
   >
     <template v-slot:header>

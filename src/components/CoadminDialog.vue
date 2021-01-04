@@ -135,6 +135,8 @@ export default {
       maxscreen: null,
       tempStyleWidth: null,
       tempStyleMaxWidth: null,
+      tempStyleHeight: null,
+      tempStyleMaxHeight: null,
       tempStyleLeft: null,
       tempStyleTop: null
     }
@@ -182,7 +184,7 @@ export default {
       if (this.$listeners['before-show']) {
         this.$emit('before-show')
       }
-      this.$nextTick(function () {
+      this.$nextTick(() => {
         if (this.maxscreen) {
           this._toMaxScreen()
         } else if (this.tempStyleWidth) {
@@ -208,10 +210,14 @@ export default {
     _toMaxScreen () {
       this.tempStyleWidth = this.$refs.card.$el.style.width
       this.tempStyleMaxWidth = this.$refs.card.$el.style.maxWidth
+      this.tempStyleHeight = this.$refs.card.$el.style.height
+      this.tempStyleMaxHeight = this.$refs.card.$el.style.maxHeight
       this.tempStyleLeft = this.$refs.card.$el.style.left
       this.tempStyleTop = this.$refs.card.$el.style.top
       this.$refs.card.$el.style.width = '100%'
       this.$refs.card.$el.style.maxWidth = '100vw'
+      this.$refs.card.$el.style.height = '100%'
+      this.$refs.card.$el.style.maxHeight = '100vh'
       this.$refs.card.$el.style.left = ''
       this.$refs.card.$el.style.top = ''
     },
@@ -225,6 +231,16 @@ export default {
         this.$refs.card.$el.style.maxWidth = this.tempStyleMaxWidth
       } else {
         this.$refs.card.$el.style.maxWidth = ''
+      }
+      if (this.tempStyleHeight) {
+        this.$refs.card.$el.style.height = this.tempStyleHeight
+      } else {
+        this.$refs.card.$el.style.height = ''
+      }
+      if (this.tempStyleMaxHeight) {
+        this.$refs.card.$el.style.maxHeight = this.tempStyleMaxHeight
+      } else {
+        this.$refs.card.$el.style.maxHeight = ''
       }
       if (this.tempStyleLeft) {
         this.$refs.card.$el.style.left = this.tempStyleLeft

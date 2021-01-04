@@ -141,7 +141,7 @@ export default {
     },
     permission: {
       type: Object,
-      required: true
+      default: () => { return {} }
     },
     noView: Boolean,
     noEdit: Boolean,
