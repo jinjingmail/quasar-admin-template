@@ -139,10 +139,7 @@ export default {
       required: true
     },
     columns: Array,
-    visibleColumns: {
-      type: Array,
-      default: () => []
-    },
+    visibleColumns: Array,
 
     cardClass: {
       type: String,
