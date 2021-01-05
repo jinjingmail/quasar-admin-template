@@ -74,6 +74,8 @@ export function formatTime(time, option) {
   } else if (diff < 3600 * 24 * 2) {
     return '1天前'
   }
+  return parseTime(time, option)
+  /*
   if (option) {
     return parseTime(time, option)
   } else {
@@ -88,7 +90,7 @@ export function formatTime(time, option) {
       d.getMinutes() +
       '分'
     )
-  }
+  }*/
 }
 
 /**

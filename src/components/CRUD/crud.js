@@ -1,6 +1,6 @@
 import { Notify } from 'quasar'
 import { initData, download } from '@/api/data'
-import { parseTime, downloadFile } from '@/utils/index'
+import { parseTime, formatTime, downloadFile } from '@/utils/index'
 import Setting from '@/default-setting'
 import Vue from 'vue'
 
@@ -531,7 +531,12 @@ function CRUD(options) {
         closeBtn: '关闭'
       })
     },
-    notifyError(title) {
+    notifyError(title, err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        title = title + err.response.data.message
+      } else {
+        title = title + JSON.stringify(err)
+      }
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
@@ -540,7 +545,12 @@ function CRUD(options) {
         closeBtn: '关闭'
       })
     },
-    notifyFailure(title) {
+    notifyFailure(title, err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        title = title + err.response.data.message
+      } else {
+        title = title + JSON.stringify(err)
+      }
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
@@ -710,7 +720,8 @@ function presenter(crud) {
       // this.crud.page.size = this.$store.state.settings.pageSize
     },
     methods: {
-      parseTime
+      parseTime,
+      formatTime
     },
     created() {
       for (const k in this.$crud) {
