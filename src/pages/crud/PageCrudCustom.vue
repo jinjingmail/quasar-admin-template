@@ -130,10 +130,10 @@
             :permission="permission"
             color-edit='green'
             label-del="删"
+            :msg-del="'真的删 ' + props.row.name + ' ?'"
             icon-del="delete_sweep"
             no-add
-            tooltip
-            msg="真的删？">
+            tooltip>
             <template v-slot:end>
               <q-btn dense label="导出" />
             </template>

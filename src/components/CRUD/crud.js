@@ -118,24 +118,6 @@ function CRUD(options) {
     delAllLoading: false
   }
   const methods = {
-    /**
-     * 通用的提示
-     */
-    submitSuccessNotify() {
-      crud.notify(crud.msg.submit, CRUD.NOTIFICATION_TYPE.SUCCESS)
-    },
-    addSuccessNotify() {
-      crud.notify(crud.msg.add, CRUD.NOTIFICATION_TYPE.SUCCESS)
-    },
-    editSuccessNotify() {
-      crud.notify(crud.msg.edit, CRUD.NOTIFICATION_TYPE.SUCCESS)
-    },
-    delSuccessNotify() {
-      crud.notify(crud.msg.del, CRUD.NOTIFICATION_TYPE.SUCCESS)
-    },
-    delFailureNotify() {
-      crud.notify(crud.msg.delFailure, CRUD.NOTIFICATION_TYPE.ERROR)
-    },
     // 搜索
     toQuery() {
       crud.page.page = 1
@@ -301,7 +283,7 @@ function CRUD(options) {
       crud.crudMethod.add(crud.form).then(() => {
         crud.status.add = CRUD.STATUS.NORMAL
         crud.resetForm()
-        crud.addSuccessNotify()
+        crud.notifySuccess(crud.msg.add)
         callVmHook(crud, CRUD.HOOK.afterSubmit)
         crud.toQuery()
       }).catch(() => {
@@ -320,7 +302,7 @@ function CRUD(options) {
       crud.crudMethod.edit(crud.form).then(() => {
         crud.status.edit = CRUD.STATUS.NORMAL
         crud.getDataStatus(crud.getDataId(crud.form)).edit = CRUD.STATUS.NORMAL
-        crud.editSuccessNotify()
+        crud.notifySuccess(crud.msg.edit)
         crud.resetForm()
         callVmHook(crud, CRUD.HOOK.afterSubmit)
         crud.refresh()
@@ -359,7 +341,7 @@ function CRUD(options) {
           dataStatus.delete = CRUD.STATUS.PREPARED
         }
         crud.delChangePage(1)
-        crud.delSuccessNotify()
+        crud.notifySuccess(crud.msg.del)
         callVmHook(crud, CRUD.HOOK.afterDelete, data)
         crud.refresh()
       }).catch(() => {
@@ -368,7 +350,7 @@ function CRUD(options) {
         } else {
           dataStatus.delete = CRUD.STATUS.PREPARED
         }
-        crud.delFailureNotify()
+        crud.notifyFailure(crud.msg.delFailure)
       })
     },
     /**
@@ -540,13 +522,13 @@ function CRUD(options) {
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
-        timeout: 60 * 1000,
+        timeout: 30 * 1000,
         position: 'bottom',
         closeBtn: '关闭'
       })
     },
     notifyFailure(title, err) {
-      if (err.response && err.response.data && err.response.data.message) {
+      if (err && err.response && err.response.data && err.response.data.message) {
         title = title + err.response.data.message
       } else {
         title = title + JSON.stringify(err)
@@ -554,7 +536,7 @@ function CRUD(options) {
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
-        timeout: 60 * 1000,
+        timeout: 30 * 1000,
         position: 'bottom',
         closeBtn: '关闭'
       })

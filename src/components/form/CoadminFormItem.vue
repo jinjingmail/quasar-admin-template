@@ -4,7 +4,7 @@
     参考 props 定义
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label q-pt-sm">
+  <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
       :style="computedLabelStyle">
       <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>

@@ -25,6 +25,7 @@
     label-view / label-edit / label-del / label-add
     icon-edit / icon-view / icon-del / icon-add
     no-edit / no-view / no-del / no-add
+    msg-del
     no-wrap     多个按钮不出现换行
     no-icon
     no-label
@@ -50,7 +51,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :class="'text-' + colorEdit" :dense="computedDenseMenu" @click="crud.toEdit(data)" v-if="!noEdit">
+        <q-item clickable v-permission="permission.edit" :class="'text-' + colorEdit" :dense="computedDenseMenu" @click="crud.toEdit(data)" v-if="!noEdit">
           <q-item-section avatar v-if="computedIconEdit">
             <q-icon :name="computedIconEdit" />
           </q-item-section>
@@ -59,7 +60,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :class="'text-' + colorDel" :dense="computedDenseMenu" v-if="!noDel">
+        <q-item clickable v-permission="permission.del" :class="'text-' + colorDel" :dense="computedDenseMenu" v-if="!noDel">
           <q-item-section avatar v-if="computedIconDel">
             <q-icon :name="computedIconDel" />
           </q-item-section>
@@ -69,7 +70,7 @@
           <q-popup-proxy>
             <coadmin-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
               <q-card-section class="bg-primary text-white">
-                <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
+                <div class="text-subtitle1 text-no-wrap">{{msgDel}}</div>
               </q-card-section>
               <q-separator />
               <q-card-actions align="right" class="q-pa-md">
@@ -80,7 +81,7 @@
           </q-popup-proxy>
         </q-item>
 
-        <q-item clickable :class="'text-' + colorAdd" :dense="computedDenseMenu" @click="crud.toAdd(dataAdd)" v-if="!noAdd">
+        <q-item clickable v-permission="permission.add" :class="'text-' + colorAdd" :dense="computedDenseMenu" @click="crud.toAdd(dataAdd)" v-if="!noAdd">
           <q-item-section avatar v-if="computedIconAdd">
             <q-icon :name="computedIconAdd" />
           </q-item-section>
@@ -99,16 +100,16 @@
     <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
       <q-tooltip :delay="550" v-if="tooltip">{{labelView}}</q-tooltip>
     </q-btn>
-    <q-btn @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
       <q-tooltip :delay="550" v-if="tooltip">{{labelEdit}}</q-tooltip>
     </q-btn>
-    <q-btn v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
         <coadmin-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
           <q-card-section class="bg-primary text-white">
-            <div class="text-subtitle1 text-no-wrap">{{msg}}</div>
+            <div class="text-subtitle1 text-no-wrap">{{msgDel}}</div>
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
@@ -118,11 +119,9 @@
         </coadmin-card>
       </q-popup-proxy>
     </q-btn>
-
-    <q-btn @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
       <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
     </q-btn>
-
     <slot name="end" />
   </div>
 </template>
@@ -147,7 +146,7 @@ export default {
     noEdit: Boolean,
     noDel: Boolean,
     noAdd: Boolean,
-    msg: {
+    msgDel: {
       type: String,
       default: '确定删除本条数据？'
     },
@@ -302,6 +301,11 @@ export default {
       this.crud.doDelete(this.data)
     },
     [CRUD.HOOK.afterDelete](crud, data) {
+      if (data === this.data) {
+        this.delLoading = false
+      }
+    },
+    [CRUD.HOOK.afterDeleteError](crud, data) {
       if (data === this.data) {
         this.delLoading = false
       }

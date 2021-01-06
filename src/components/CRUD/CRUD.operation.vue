@@ -17,29 +17,38 @@
     color-edit / color-view / color-del / color-add
     label-view / label-edit / label-del / label-add
     icon-edit / icon-view / icon-del / icon-add
+    no-edit / no-view / no-del / no-add
+    msg-del
     no-icon
     no-label
 -->
 <template>
-  <div class="col-auto q-pl-none q-gutter-sm no-wrap">
+  <div class="q-gutter-sm no-wrap">
     <!--左侧插槽-->
     <slot name="start" />
     <q-btn :dense="dense" :padding="(dense && computedLabelView)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorView" :icon="computedIconView" :label="computedLabelView" v-if="!noView && !(crud.selections.length!==1)" @click="crud.toView(crud.selections[0])"/>
-    <q-btn :dense="dense" :padding="(dense && computedLabelEdit)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    <q-btn :dense="dense" v-permission="permission.edit" :padding="(dense && computedLabelEdit)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit" v-if="!noEdit && !(crud.selections.length!==1)" @click="crud.toEdit(crud.selections[0])"/>
-    <q-btn :dense="dense" :padding="(dense && computedLabelDel)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    <q-btn :dense="dense" v-permission="permission.del" :padding="(dense && computedLabelDel)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorDel" :icon="computedIconDel" :label="computedLabelDel" v-if="!noDel && !(crud.selections.length===0)"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
-    <q-btn :dense="dense" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    <q-btn :dense="dense" v-permission="permission.add" :padding="(dense && computedLabelAdd)?'xs sm':''" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <!--右侧插槽-->
     <slot name="end" />
-    <coadmin-dialog ref="dialogDelete" no-max title="删除" card-style="width:250px; max-width:95vw;">
+    <coadmin-dialog ref="dialogDelete" no-max :title="labelDel" card-style="width:250px; max-width:95vw;">
       <q-card-section>
-        <div class="text-body1">删除选中的 {{crud.selections.length}} 条数据?</div>
+        <div class="text-body1">
+          <template v-if="msgDel">
+            {{msgDel}}
+          </template>
+          <template v-else>
+            删除选中的 {{crud.selections.length}} 条数据?
+          </template>
+        </div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
         <q-btn label="取消" v-close-popup flat />
@@ -125,6 +134,7 @@ export default {
       type: String,
       default: '删除'
     },
+    msgDel: String,
     noIcon: Boolean,
     noLabel: Boolean
   },
