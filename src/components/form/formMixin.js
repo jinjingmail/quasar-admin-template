@@ -10,7 +10,7 @@ export default {
       type: String,
       validator: v => ['auto', 'left', 'right', 'center'].includes(v)
     },
-    labelStyle: String,
+    formLabelStyle: String,
     outlined: {
       type: Boolean,
       default: true
@@ -51,17 +51,17 @@ export default {
     },
     computedLabelStyle () {
       /* 直接在组件上设置 */
-      let style = this.labelStyle
+      let style = this.formLabelStyle
       if (!style) {
-        style = this.$parent.labelStyle
+        style = this.$parent.formLabelStyle
       }
       /* 在 coadmin-form 上设置 */
       if (!style) {
-        style = this.$parent.$parent.labelStyle
+        style = this.$parent.$parent.formLabelStyle
       }
       /* coadmin-date-select 等包裹 coadmin-input 的情况 */
       if (!style) {
-        style = this.$parent.$parent.$parent.labelStyle
+        style = this.$parent.$parent.$parent.formLabelStyle
       }
       return style
     }

@@ -4,6 +4,16 @@ import { Notify } from 'quasar'
 
 import setting from '@/default-setting'
 
+function notifyError(errorMsg, timeout) {
+  Notify.create({
+    type: 'negative',
+    message: errorMsg,
+    timeout,
+    position: 'bottom',
+    closeBtn: 'CLOSE'
+  })
+}
+
 console.log('process.env.VUE_APP_BASE_API=', process.env.VUE_APP_BASE_API)
 // 创建axios实例
 console.log('create axios')
@@ -40,11 +50,7 @@ export default ({ app, router, store, Vue }) => {
         reader.readAsText(error.response.data, 'utf-8')
         reader.onload = function(e) {
           const errorMsg = JSON.parse(reader.result).message
-          Notify.create({
-            type: 'negative',
-            message: errorMsg,
-            timeout: 5000
-          })
+          notifyError(errorMsg, 30 * 1000)
         }
       } else {
         let code = 0
@@ -52,11 +58,7 @@ export default ({ app, router, store, Vue }) => {
           code = error.response.data.status
         } catch (e) {
           if (error.toString().indexOf('Error: timeout') !== -1) {
-            Notify.create({
-              type: 'negative',
-              message: '网络请求超时',
-              timeout: 5000
-            })
+            notifyError('网络请求超时', 5 * 1000)
             return Promise.reject(error)
           }
         }
@@ -71,21 +73,14 @@ export default ({ app, router, store, Vue }) => {
           } else if (code === 403) {
             router.push({ path: '/401' })
           } else {
-            const errorMsg = error.response.data.message
-            if (errorMsg !== undefined) {
-              Notify.create({
-                type: 'negative',
-                message: errorMsg,
-                timeout: 5000
-              })
+            if (error && error.response && error.response.data && error.response.data.message) {
+              notifyError(error.response.data.message, 30 * 1000)
+            } else {
+              notifyError('错误：' + JSON.stringify(error), 30 * 1000)
             }
           }
         } else {
-          Notify.create({
-            type: 'negative',
-            message: '接口请求失败',
-            timeout: 5000
-          })
+          notifyError('接口请求失败', 5 * 1000)
         }
       }
       return Promise.reject(error)

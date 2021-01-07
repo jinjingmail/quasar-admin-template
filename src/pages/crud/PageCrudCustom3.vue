@@ -51,7 +51,7 @@
         <div class="q-ma-none">
           <div class="row q-gutter-sm">
             <q-checkbox v-model="labelTop" label="label-top" />
-            <q-input dense outlined v-model.lazy="labelStyle" placeholder="label-style" style="width:280px"/>
+            <q-input dense outlined v-model.lazy="labelStyle" placeholder="form-label-style" style="width:280px"/>
           </div>
           <div class="q-gutter-sm">
             <q-radio v-model="labelAlign" val="auto" label="auto" />
@@ -75,7 +75,7 @@
           :label-top="labelTop"
           :label-align="labelAlign"
           :label-width="labelWidth"
-          :label-style="labelStyle"
+          :form-label-style="labelStyle"
         >
           <coadmin-input class=""
             placeholder="ID" v-model="query.id" content-style="width:200px" clearable no-clear-focus/>

@@ -24,9 +24,7 @@
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
           <q-checkbox v-model="labelTop" label="label-top" />
-          <coadmin-input v-model.lazy="labelStyle" placeholder="label-style" style="width:255px"/>
-          <q-btn label="好的" dense outlined/>
-          <q-btn dense color="primary" icon="search" label="查询"/>
+          <coadmin-input v-model.lazy="labelStyle" placeholder="form-label-style" style="width:255px"/>
         </div>
         <div class="q-gutter-sm">
           <q-radio v-model="labelAlign" val="auto" label="auto" />
@@ -50,7 +48,7 @@
         :label-top="labelTop"
         :label-align="labelAlign"
         :label-width="labelWidth"
-        :label-style="labelStyle"
+        :form-label-style="labelStyle"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
           <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
           </coadmin-input>
@@ -78,8 +76,8 @@
               ]"
               >
           </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="protein" label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="sodium" label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="protein" form-label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
+          <coadmin-input class="col-12 col-sm-6" form-label="sodium" form-label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
           <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
             <q-popup-proxy>
               <coadmin-card>
@@ -252,7 +250,7 @@
             class="col-12 col-sm-6"
             form-label="DateRange"
             v-model="dialogForm.date2"
-            label-style="color:grey"
+            form-label-style="color:grey"
             clearable
             range
             :disable="dialogFormReadonly"
