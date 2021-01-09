@@ -225,17 +225,15 @@ input:-ms-input-placeholder {
   /* 验证失败样式 begin */
   .q-field {
     &__bottom--animated {
-      left: 9px;
-      bottom: 7px;
+      left: 2px;
+      bottom: -1px;
       padding: 0;
       z-index: 10;
       .q-field__messages {
         & div {
           width: max-content;
-          border-radius: 4px;
-          background: $negative;
-          color: #fff;
-          padding: 4px;
+          color: $negative;
+          padding: 0px;
         }
       }
     }
