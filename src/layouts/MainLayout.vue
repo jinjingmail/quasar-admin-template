@@ -190,6 +190,9 @@
               <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（刷新页面生效）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})" v-if="$q.screen.gt.xs"/>
               <q-toggle :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
               <coadmin-input label="左侧菜单宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
+
+              <q-separator inset class="q-mt-md" />
+
               <q-toolbar class="no-padding">
                 <div class="text-subtitle1 ">主色调</div>
                 <q-space/>
