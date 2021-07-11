@@ -10,7 +10,6 @@ const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
 module.exports = function (ctx) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -81,7 +80,17 @@ module.exports = function (ctx) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+        // cfg.plugins.push(xxx)
         cfg.resolve.alias = {
+          /* 系统自带：
+            src       /src
+            app       /
+            components  /src/components
+            layouts  /src/layouts
+            pages    /src/pages
+            assets   /src/assets
+            boot     /src/boot
+          */
           ...cfg.resolve.alias, // This adds the existing alias
           // Add your own alias
           '@': resolve('src'),
@@ -96,7 +105,9 @@ module.exports = function (ctx) {
       port: 8080,
       open: true // opens browser window automatically
     },
+    plugins: [
 
+    ],
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       iconSet: 'material-icons', // Quasar icon set

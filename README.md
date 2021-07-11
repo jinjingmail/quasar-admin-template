@@ -49,6 +49,7 @@ TODO 菜单再紧凑一些（做成配置项）
 TODO 在右侧打开外部url（iframe或其他方案）
 TODO 增加“个人设置”页面
 TODO 升级 quasar 到最新v1版
+TODO 菜单增加“new”标签支持
 
 TODO CoadminOptionGroup 自定义form项的错误提示
 TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”

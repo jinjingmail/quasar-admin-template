@@ -86,7 +86,7 @@ module.exports = {
    * 使用 dialogStyle 设置背景色（含半透明）:
    *  background:#3d1d1d52
    */
-  dialogClass: 'q-pa-sm',
+  dialogClass: '',
   dialogStyle: '',
   dialogClassMobile: '',
   dialogStyleMobile: '',
@@ -126,9 +126,9 @@ module.exports = {
   /**
    * 底部文字，支持html语法
    */
-  footerTxt: '© 2020 XXYY 版权所有',
+  footerTxt: '© 2020-2021 XXYY 版权所有',
   /**
    * 备案号
    */
-  caseNumber: '粤ICP备xxxxxx号-1'
+  caseNumber: '粤ICP备xxxxxx号'
 }
