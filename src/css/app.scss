@@ -52,11 +52,11 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
-.coadmin-input,
-.coadmin-select,
-.coadmin-field,
-.coadmin-option-group,
-.coadmin-form-item {
+.co-input,
+.co-select,
+.co-field,
+.co-option-group,
+.co-form-item {
   .q-field__input {
     min-height: auto;
   }
@@ -90,10 +90,10 @@ input:-ms-input-placeholder {
 .coadmin-header,
 .coadmin-footer,
 .coadmin-page,
-.coadmin-form,
-.coadmin-card,
+.co-form,
+.co-card,
 .coadmin-popup,
-.coadmin-dialog {
+.co-dialog {
   .q-tab {
     padding: 0 5px 0 12px;
   }
@@ -158,7 +158,7 @@ input:-ms-input-placeholder {
 .coadmin-page {
 }
 
-.coadmin-table {
+.co-table {
   /*
   // 表格slot：top 里面
   .q-table__top {
@@ -221,7 +221,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-form {
+.co-form {
   /* 验证失败样式 begin */
   .q-field {
     &__bottom--animated {
@@ -264,7 +264,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-table-sticky-header {
+.co-table-sticky-header {
   /* 表格头部锁定 begin */
   &.q-dark .q-table__top,
   &.q-dark .q-table__bottom,
@@ -294,7 +294,7 @@ input:-ms-input-placeholder {
   /* 表格头部锁定 end */
 }
 
-.coadmin-table-sticky-first-column {
+.co-table-sticky-first-column {
   &.q-dark td:first-child,
   &.q-dark thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
@@ -315,7 +315,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-table-sticky-last-column {
+.co-table-sticky-last-column {
   &.q-dark td:last-child,
   &.q-dark thead tr:last-child th:last-child {
     /* bg color is important for th; just specify one */
@@ -341,7 +341,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-table-sticky-first-and-last-column {
+.co-table-sticky-first-and-last-column {
   &.q-dark td:first-child,
   &.q-dark thead tr:first-child th:first-child {
     /* bg color is important for th; just specify one */
@@ -386,7 +386,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-table-sticky-header-and-first-column {
+.co-table-sticky-header-and-first-column {
   &.q-dark td:first-child,
   &.q-dark tr th {
     /* bg color is important for td; just specify one */
@@ -428,7 +428,7 @@ input:-ms-input-placeholder {
     left: 0;
   }
 }
-.coadmin-table-sticky-header-and-last-column {
+.co-table-sticky-header-and-last-column {
   td:last-child,
   th:last-child {
     padding-right: 6px !important;
@@ -480,7 +480,7 @@ input:-ms-input-placeholder {
     right: 0;
   }
 }
-.coadmin-table-sticky-header-and-first-last-column {
+.co-table-sticky-header-and-first-last-column {
   td:last-child,
   th:last-child {
     padding-right: 6px !important;

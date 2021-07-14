@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <coadmin-card class="row q-ma-none q-pa-md q-gutter-md">
-      <coadmin-tree-select
+    <co-card class="row q-ma-none q-pa-md q-gutter-md">
+      <co-tree-select
         placeholder="leaf（只有叶子节点）"
         class="col-5"
         node-key="id"
@@ -19,7 +19,7 @@
       <div class="col-3">{{popupTreeTicked}}</div>
       <div class="col-3">{{popupTreeTickedLabels}}</div>
 
-      <coadmin-tree-select
+      <co-tree-select
         class="col-5"
         placeholder="strict（选谁是谁）"
         node-key="id"
@@ -37,7 +37,7 @@
       <div class="col-3">{{tree.ticked1}}</div>
       <div class="col-3">{{tree.ticked1Labels}}</div>
 
-      <coadmin-tree-select
+      <co-tree-select
         class="col-5"
         placeholder="leaf-any-with-parent（任意叶子节点选中就包含父节点）"
         node-key="id"
@@ -55,7 +55,7 @@
       <div class="col-3">{{tree.ticked2}}</div>
       <div class="col-3">{{tree.ticked2Labels}}</div>
 
-      <coadmin-tree-select
+      <co-tree-select
         class="col-5"
         placeholder="leaf-all-only-parent（选中所有叶子节点就只包含父节点）"
         node-key="id"
@@ -72,7 +72,7 @@
       <div class="col-3">{{tree.ticked3}}</div>
       <div class="col-3">{{tree.ticked3Labels}}</div>
 
-      <coadmin-tree-select
+      <co-tree-select
         class="col-5"
         placeholder="leaf-all-with-parent（选中所有叶子节点就包含父节点）"
         node-key="id"
@@ -89,7 +89,7 @@
       <div class="col-3">{{tree.ticked4}}</div>
       <div class="col-3">{{tree.ticked4Labels}}</div>
 
-      <coadmin-tree-select
+      <co-tree-select
         class="col-5"
         placeholder="（单选）"
         node-key="id"
@@ -106,7 +106,7 @@
       <div class="col-3">{{tree.selected1}}</div>
       <div class="col-3">{{tree.selected1Label}}</div>
 
-    </coadmin-card>
+    </co-card>
   </div>
 </template>
 

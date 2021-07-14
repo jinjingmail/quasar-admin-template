@@ -1,6 +1,6 @@
 <template>
   <div>
-    <coadmin-dialog
+    <co-dialog
       ref="printDialog"
       title="打印"
       icon="print"
@@ -13,9 +13,9 @@
         <q-btn dense label="关闭" flat v-close-popup />
         <q-btn dense label="打印" color="primary" @click="$q.notify({type:'info', message:'打印'})"/>
       </q-card-actions>
-    </coadmin-dialog>
+    </co-dialog>
 
-    <coadmin-dialog
+    <co-dialog
       ref="formDialog"
       title="表单演示"
       no-backdrop-dismiss
@@ -24,7 +24,7 @@
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
           <q-checkbox v-model="labelTop" label="label-top" />
-          <coadmin-input v-model.lazy="labelStyle" placeholder="form-label-style" style="width:255px"/>
+          <co-input v-model.lazy="labelStyle" placeholder="form-label-style" style="width:255px"/>
         </div>
         <div class="q-gutter-sm">
           <q-radio v-model="labelAlign" val="auto" label="auto" />
@@ -43,19 +43,19 @@
         </div>
       </div>
       <q-separator />
-      <coadmin-form ref="dialogForm"
+      <co-form ref="dialogForm"
         @submit="onDialogFormSubmit"
         :label-top="labelTop"
         :label-align="labelAlign"
         :label-width="labelWidth"
         :form-label-style="labelStyle"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
-          </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
+          <co-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
+          </co-input>
+          <co-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
             @blur="$q.notify({message:'名称 blur notify'})"
             :rules="[val => !!val || 'Field is required']"/>
-          <coadmin-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
+          <co-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
             <template v-slot:append>
               <q-icon v-if="!dialogForm.calories" name="search" />
               <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
@@ -69,23 +69,23 @@
             <template v-slot:after>
               <q-icon name="expand_more" />
             </template>
-          </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" :rules="[
+          </co-input>
+          <co-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" :rules="[
               val => !!val || '不能空',
               val => val.length === 11 || '请输入11个字符'
               ]"
               >
-          </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="protein" form-label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="sodium" form-label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
+          </co-input>
+          <co-input class="col-12 col-sm-6" form-label="protein" form-label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></co-input>
+          <co-input class="col-12 col-sm-6" form-label="sodium" form-label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></co-input>
+          <co-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
             <q-popup-proxy>
-              <coadmin-card>
+              <co-card>
                 <div >ThisisPopup</div>
-              </coadmin-card>
+              </co-card>
             </q-popup-proxy>
-          </coadmin-input>
-          <coadmin-select
+          </co-input>
+          <co-select
             class="col-12 col-sm-6"
             form-label="protein5"
             label="选择"
@@ -103,9 +103,9 @@
             emit-value
             map-options
           />
-          <coadmin-input :dense="false" class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
-          </coadmin-input>
-          <coadmin-select
+          <co-input :dense="false" class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
+          </co-input>
+          <co-select
             :dense="false"
             v-model="selectModel"
             form-label="big select"
@@ -125,8 +125,8 @@
             <template v-slot:append>
               <q-icon name="add"/>
             </template>
-          </coadmin-select>
-          <coadmin-field
+          </co-select>
+          <co-field
             class="col-12 col-sm-6"
             form-label="options"
             :disable="dialogFormReadonly"
@@ -137,8 +137,8 @@
                 <q-radio dense name="shape" v-model="selectModel" val="腾讯" label="腾讯控股" />
               </div>
             </template>
-          </coadmin-field>
-          <coadmin-option-group
+          </co-field>
+          <co-option-group
             v-model="selectModel"
             class="col-12 col-sm-6"
             :inline="true"
@@ -149,7 +149,7 @@
             option-label="desc"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-select
+          <co-select
             v-model="selectModels"
             :dense="false"
             form-label="multiselect"
@@ -167,7 +167,7 @@
             emit-value
             multiple
             />
-          <coadmin-option-group
+          <co-option-group
             v-model="selectModels"
             class="col-12 col-sm-6"
             :inline="true"
@@ -179,7 +179,7 @@
             type="checkbox"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-date
+          <co-date
             v-model="selectDate"
             class="col-12 col-sm-6"
             form-label="TOP"
@@ -189,50 +189,50 @@
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
           />
-          <coadmin-input class="col-12 col-sm-6" form-label="LEFT" label-align="left" label-width="large" no-ellipsis mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
+          <co-input class="col-12 col-sm-6" form-label="LEFT" label-align="left" label-width="large" no-ellipsis mask="####-##-##" placeholder="####-##-##" v-model="selectDate" :disable="dialogFormReadonly">
             <q-popup-proxy
               ref="popupDateinput"
             >
-              <coadmin-date v-model="selectDate" @input="$refs.popupDateinput.hide()">
-              </coadmin-date>
+              <co-date v-model="selectDate" @input="$refs.popupDateinput.hide()">
+              </co-date>
             </q-popup-proxy>
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
               </q-icon>
             </template>
-          </coadmin-input>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formField">
+          </co-input>
+          <co-form-item class="col-12 col-sm-6" form-label="formField">
             <q-field dense borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
-          </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formField">
+          </co-form-item>
+          <co-form-item class="col-12 col-sm-6" form-label="formField">
             <q-field dense borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
-          </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formtext">
+          </co-form-item>
+          <co-form-item class="col-12 col-sm-6" form-label="formtext">
             <div class="q-pt-xs">语句用于基于不同条件执行不同动作</div>
-          </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="formtext">
+          </co-form-item>
+          <co-form-item class="col-12 col-sm-6" form-label="formtext">
             <div class="q-pt-xs">
             语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
             </div>
-          </coadmin-form-item>
-          <coadmin-form-item class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
+          </co-form-item>
+          <co-form-item class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
             <div class="row q-gutter-none">
               <q-radio v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
               <q-radio v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
               <q-radio v-model="shape" class="col-6 col-md-4" val="ellipse" label="Ellipse" />
               <q-radio v-model="shape" class="col-6 col-md-4" val="polygon" label="Polygon" />
             </div>
-          </coadmin-form-item>
+          </co-form-item>
 
-          <coadmin-date-select
+          <co-date-select
             class="col-12 col-sm-6"
             form-label="no-ellipsis no-ellipsis no-ellipsis no-ellipsis"
             no-ellipsis
@@ -244,9 +244,9 @@
             <template v-slot:append>
               <q-icon name="event" />
             </template>
-          </coadmin-date-select>
+          </co-date-select>
 
-          <coadmin-date-select
+          <co-date-select
             class="col-12 col-sm-6"
             form-label="DateRange"
             v-model="dialogForm.date2"
@@ -259,8 +259,8 @@
             <template v-slot:append>
               <q-icon name="event" />
             </template>
-          </coadmin-date-select>
-          <coadmin-tree-select
+          </co-date-select>
+          <co-tree-select
             class="col-12 col-sm-6"
             form-label="TreeTicked"
             :nodes="treeDatas()"
@@ -276,16 +276,16 @@
             clearable
             :rules="[val => !!val || 'Field is required']"
           />
-      </coadmin-form>
+      </co-form>
       <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-space />
         <q-btn label="取消" flat v-close-popup />
         <q-btn label="保存" icon="check" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
       </q-card-actions>
-    </coadmin-dialog>
+    </co-dialog>
 
-    <coadmin-table
+    <co-table
       row-key="id"
       dense
       stickyHeader
@@ -404,7 +404,7 @@
         />
       </template>
 
-    </coadmin-table>
+    </co-table>
   </div>
 </template>
 

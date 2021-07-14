@@ -15,7 +15,7 @@ export function initData(url, params) {
   const page = params.page
   const size = params.size
 
-  const content = url === 'api/dict' ? dicts.content : (url === 'api/dictDetail' ? getDictDetail(dicts, params) : data)
+  const content = url === 'api/dict' ? dicts.content : (url === 'api/dict-detail' ? getDictDetail(dicts, params) : data)
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {

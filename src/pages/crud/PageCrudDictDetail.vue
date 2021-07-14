@@ -1,9 +1,9 @@
 <!--
-  CRUD/crud.js 字典详情页面演示
+  crud/crud.js 字典详情页面演示
 -->
 <template>
   <div >
-    <coadmin-dialog
+    <co-dialog
       ref="formDialog"
       :value="crud.status.cu > 0"
       :title="crud.status.title"
@@ -11,33 +11,33 @@
       @before-hide="crud.cancelCU"
       content-style="width:600px; max-width:95vw;"
     >
-      <coadmin-form ref="form"
+      <co-form ref="form"
         label-width="small"
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
+          <co-form-item class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
-          </coadmin-form-item>
-          <coadmin-input class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
+          </co-form-item>
+          <co-input class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
             </template>
-          </coadmin-input>
-          <coadmin-input class="col-12" form-label="value" v-model="form.value" :disable="!!crud.status.view" :rules="[
+          </co-input>
+          <co-input class="col-12" form-label="value" v-model="form.value" :disable="!!crud.status.view" :rules="[
               val => (!!val) || '必填'
               ]"/>
-          <coadmin-input class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
-      </coadmin-form>
+          <co-input class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
+      </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
         <q-btn label="保存" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
-    </coadmin-dialog>
+    </co-dialog>
 
-    <coadmin-table
+    <co-table
       ref="table"
       row-key="id"
       dense
@@ -53,7 +53,7 @@
     >
       <template v-slot:top-right="props">
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <coadmin-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
+          <co-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
           <div class='col-auto'>
             <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
           </div>
@@ -79,17 +79,17 @@
           no-page-if-only-one-page/>
       </template>
 
-    </coadmin-table>
+    </co-table>
   </div>
 </template>
 
 <script>
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
-import crudOperation from '@crud/CRUD.operation'
-import crudPagination from '@crud/CRUD.pagination'
-import crudRow from '@crud/CRUD.row'
-import crudMore from '@crud/CRUD.more'
-import crudDictDetail from '@/api/dictDetail.js'
+import CrudOperation from '@crud/crud-operation'
+import CrudPagination from '@crud/crud-pagination'
+import CrudRow from '@crud/crud-row'
+import CrudMore from '@crud/crud-more'
+import dictDetail from '@/api/dict-detail.js'
 
 const columns = [
   { name: 'id', field: 'id', label: 'ID' },
@@ -111,7 +111,7 @@ const defaultForm = { id: null, label: null, value: null, sort: 10 }
 
 export default {
   name: 'PageCrudDictDetail',
-  components: { crudOperation, crudMore, crudPagination, crudRow },
+  components: { CrudOperation, CrudMore, CrudPagination, CrudRow },
   cruds() {
     return CRUD({
       columns,
@@ -120,8 +120,8 @@ export default {
       query: { dictName: '', dictId: null },
       title: '字典详情',
       sort: ['sort,asc', 'id,desc'],
-      url: 'api/dictDetail',
-      crudMethod: { ...crudDictDetail },
+      url: 'api/dict-detail',
+      crudMethod: { ...dictDetail },
       queryOnPresenterCreated: false
     })
   },

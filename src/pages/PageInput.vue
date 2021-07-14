@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <q-card class="q-ma-sm q-pa-md q-gutter-md">
-      <coadmin-input v-model="query.model" placeholder="输入值" clearable
+      <co-input v-model="query.model" placeholder="输入值" clearable
         @inputx="_input"
         @clear="_clear"/>
       <div>Input 当前值：{{query.model}}</div>
     </q-card>
     <q-card class="q-ma-sm q-pa-md q-gutter-md">
-      <coadmin-select v-model="query.modelMapOptionGroup" clearable
+      <co-select v-model="query.modelMapOptionGroup" clearable
         emit-value
         map-options
         xmultiple
@@ -22,7 +22,7 @@
       <div>select 当前label：{{query.modelMapSelectLabels}}</div>
     </q-card>
     <q-card class="q-ma-sm q-pa-md q-gutter-md">
-      <coadmin-option-group v-model="query.modelMapOptionGroup"
+      <co-option-group v-model="query.modelMapOptionGroup"
         inline
         xtype="checkbox"
         option-value="value"
@@ -35,7 +35,7 @@
       <div>option-group 当前label：{{query.modelMapOptionGroupLabels}}</div>
     </q-card>
     <q-card class="q-ma-sm q-pa-md q-gutter-md">
-      <coadmin-tree
+      <co-tree
         square
         node-key="id"
         label-key="name"

@@ -1,13 +1,13 @@
 <!--
-  CRUD/crud.js 自定义用法（覆盖一些默认值）
+  crud/crud.js 自定义用法（覆盖一些默认值）
 -->
 <template>
   <div >
-    <coadmin-dialog title="查找" no-max seamless ref="search" @before-hide="filterTable=''">
+    <co-dialog title="查找" no-max seamless ref="search" @before-hide="filterTable=''">
       <q-input placeholder="在当前页查找" dense outlined v-model="filterTable" clearable class="q-ml-sm q-mr-sm q-mt-none q-mb-sm"/>
-    </coadmin-dialog>
+    </co-dialog>
 
-    <coadmin-dialog
+    <co-dialog
       ref="formDialog"
       :value="crud.status.cu > 0"
       :title="crud.status.title"
@@ -15,30 +15,30 @@
       @before-hide="crud.cancelCU"
       card-style="width:800px; max-width:95vw;"
     >
-      <coadmin-form ref="form"
+      <co-form ref="form"
         label-width="small"
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
+          <co-form-item class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
-          </coadmin-form-item>
-          <coadmin-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
+          </co-form-item>
+          <co-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
             </template>
-          </coadmin-input>
-          <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
-      </coadmin-form>
+          </co-input>
+          <co-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
+      </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
         <q-btn label="保存" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
-    </coadmin-dialog>
+    </co-dialog>
 
-    <coadmin-table
+    <co-table
       ref="table"
       row-key="id"
       sticky-last-column
@@ -67,7 +67,7 @@
               <q-btn dense label="导出" outline/>
             </template>
           </crud-operation>
-          <coadmin-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:after>
               <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
@@ -80,14 +80,14 @@
                 </crud-more>
               </q-btn-dropdown>
             </template>
-            <coadmin-dialog ref="searchPopup"
+            <co-dialog ref="searchPopup"
               seamless card-style="width:700px; max-width:95vw;">
-              <coadmin-form ref="searchform"
+              <co-form ref="searchform"
                 label-width="small"
                 label-align="right"
                 class="q-pa-md row q-col-gutter-x-lg q-col-gutter-y-md">
-                  <coadmin-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" />
-                  <coadmin-date-select
+                  <co-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" />
+                  <co-date-select
                     class="col-12 col-sm-6"
                     form-label="date"
                     placeholder="日期单选"
@@ -97,8 +97,8 @@
                     <template v-slot:append>
                       <q-icon name="event" />
                     </template>
-                  </coadmin-date-select>
-                  <coadmin-tree-select
+                  </co-date-select>
+                  <co-tree-select
                     class="col-12"
                     form-label="Tree"
                     placeholder="Tree多选"
@@ -111,14 +111,14 @@
                     tree-class="q-pa-sm"
                     clearable
                   />
-              </coadmin-form>
+              </co-form>
               <q-card-actions class="q-pa-md" align="center">
                 <q-btn label="关闭" flat v-close-popup />
                 <q-btn label="查询(不关闭)" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
                 <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
               </q-card-actions>
-            </coadmin-dialog>
-          </coadmin-input>
+            </co-dialog>
+          </co-input>
         </div>
       </template>
 
@@ -145,16 +145,16 @@
         <crud-pagination input />
       </template>
 
-    </coadmin-table>
+    </co-table>
   </div>
 </template>
 
 <script>
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
-import crudOperation from '@crud/CRUD.operation'
-import crudPagination from '@crud/CRUD.pagination'
-import crudRow from '@crud/CRUD.row'
-import crudMore from '@crud/CRUD.more'
+import CrudOperation from '@crud/crud-operation'
+import CrudPagination from '@crud/crud-pagination'
+import CrudRow from '@crud/crud-row'
+import CrudMore from '@crud/crud-more'
 import crudDemo from '@/api/demo.js'
 
 import depts from '@/data/depts.js'
@@ -162,7 +162,7 @@ import { columns, visibleColumns, defaultForm } from '@/data/test.js'
 
 export default {
   name: 'PageCrudCustom',
-  components: { crudOperation, crudMore, crudPagination, crudRow },
+  components: { CrudOperation, CrudMore, CrudPagination, CrudRow },
   cruds() {
     // * 默认查询参数：query
     return CRUD({ columns, visibleColumns, idField: 'id', title: '演示', sort: ['name,asc', 'id,desc'], url: 'api/demo', crudMethod: { ...crudDemo } })

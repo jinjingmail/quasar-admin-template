@@ -94,7 +94,7 @@ module.exports = function (ctx) {
           ...cfg.resolve.alias, // This adds the existing alias
           // Add your own alias
           '@': resolve('src'),
-          '@crud': resolve('src/components/CRUD')
+          '@crud': resolve('src/components/crud')
         }
       }
     },

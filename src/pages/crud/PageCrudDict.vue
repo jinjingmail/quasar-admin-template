@@ -1,9 +1,9 @@
 <!--
-  CRUD/crud.js 字典页面演示
+  crud/crud.js 字典页面演示
 -->
 <template>
   <div >
-    <coadmin-dialog
+    <co-dialog
       ref="formDialog"
       :value="crud.status.cu > 0"
       :title="crud.status.title"
@@ -11,28 +11,28 @@
       @before-hide="crud.cancelCU"
       card-style="width:600px; max-width:95vw;"
     >
-      <coadmin-form ref="form"
+      <co-form ref="form"
         label-width="small"
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <coadmin-form-item class="col-12" form-label="ID" v-if="form.id">
+          <co-form-item class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
-          </coadmin-form-item>
-          <coadmin-input class="col-12" form-label="名称" v-model="form.name" :disable="!!crud.status.view" :rules="[
+          </co-form-item>
+          <co-input class="col-12" form-label="名称" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
-          </coadmin-input>
-          <coadmin-input class="col-12" form-label="描述" v-model="form.remark" :disable="!!crud.status.view" :rules="[
+          </co-input>
+          <co-input class="col-12" form-label="描述" v-model="form.remark" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
-          </coadmin-input>
-      </coadmin-form>
+          </co-input>
+      </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
         <q-btn label="保存" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
-    </coadmin-dialog>
+    </co-dialog>
 
     <q-splitter
       v-model="splitter"
@@ -41,7 +41,7 @@
       separator-style="background-color: transparent"
     >
       <template v-slot:before>
-        <coadmin-table
+        <co-table
           ref="table"
           row-key="id"
           dense
@@ -56,7 +56,7 @@
         >
           <template v-slot:top-right="props">
             <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-              <coadmin-input class='col-auto' placeholder="名称、描述" v-model="query.blurry"
+              <co-input class='col-auto' placeholder="名称、描述" v-model="query.blurry"
                 content-style="width:140px"
                 clearable
                 @clear="crud.toQuery()"
@@ -84,7 +84,7 @@
             <crud-pagination no-persistence-page-size/>
           </template>
 
-        </coadmin-table>
+        </co-table>
       </template>
 
       <template v-if="$q.screen.xs" v-slot:separator>
@@ -100,13 +100,13 @@
 
 <script>
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
-import crudOperation from '@crud/CRUD.operation'
-import crudPagination from '@crud/CRUD.pagination'
-import crudRow from '@crud/CRUD.row'
-import crudMore from '@crud/CRUD.more'
+import CrudOperation from '@crud/crud-operation'
+import CrudPagination from '@crud/crud-pagination'
+import CrudRow from '@crud/crud-row'
+import CrudMore from '@crud/crud-more'
 import crudDict from '@/api/dict.js'
 
-import dictDetail from './PageCrudDictDetail'
+import DictDetail from './PageCrudDictDetail'
 
 const columns = [
   { name: 'id', field: 'id', label: 'ID' },
@@ -127,7 +127,7 @@ const defaultForm = { id: null, name: null, remark: null, dictDetails: [] }
 
 export default {
   name: 'PageCrudDict',
-  components: { crudOperation, crudMore, crudPagination, crudRow, dictDetail },
+  components: { CrudOperation, CrudMore, CrudPagination, CrudRow, DictDetail },
   cruds() {
     return CRUD({ columns, visibleColumns, idField: 'id', title: '字典列表', url: 'api/dict', crudMethod: { ...crudDict } })
   },

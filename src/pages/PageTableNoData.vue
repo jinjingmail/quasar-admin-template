@@ -2,12 +2,12 @@
   <div>
 
     <q-dialog v-model="dialogData"
-      content-class="coadmin-dialog"
+      content-class="co-dialog"
       :maximized="dialogFullscreen"
       persistent
       :no-esc-dismiss="false"
     >
-      <coadmin-card id="dragableDialog" v-drag="{dragOutY:45}"
+      <co-card id="dragableDialog" v-drag="{dragOutY:45}"
         style="max-width:none;"
       >
         <q-toolbar>
@@ -22,7 +22,7 @@
         </q-toolbar>
 
         <q-card-section class="q-pt-none">
-          <q-form class="coadmin-form">
+          <q-form class="co-form">
             <div class="row q-col-gutter-md">
               <div class="col-12 col-sm-6">
                 <label>姓名</label>
@@ -47,10 +47,10 @@
           <q-btn flat label="Decline" color="primary" v-close-popup />
           <q-btn label="Accept" color="primary" v-close-popup />
         </q-card-actions>
-      </coadmin-card>
+      </co-card>
     </q-dialog>
 
-    <coadmin-table
+    <co-table
       class=""
       dense
       :wrap-cells="false"
@@ -175,7 +175,7 @@
         />
 
       </template>
-    </coadmin-table>
+    </co-table>
 
   </div>
 </template>

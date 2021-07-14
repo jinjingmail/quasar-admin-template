@@ -382,20 +382,20 @@
 </template>
 
 <script>
-import BarChart from './echarts/BarChart.vue'
-import PieChart from './echarts/PieChart.vue'
-import RadarChart from './echarts/RadarChart.vue'
-import ThemeRiver from './echarts/ThemeRiver.vue'
-import Point from './echarts/Point.vue'
-import HeatMap from './echarts/HeatMap.vue'
-import Sankey from './echarts/Sankey.vue'
-import Gauge from './echarts/Gauge.vue'
-import Graph from './echarts/Graph.vue'
-import Rich from './echarts/Rich.vue'
-import Scatter from './echarts/Scatter.vue'
-import Sunburst from './echarts/Sunburst.vue'
-import Funnel from './echarts/Funnel.vue'
-import Category from './echarts/Category.vue'
+import BarChart from 'pages/components/echarts/BarChart.vue'
+import PieChart from 'pages/components/echarts/PieChart.vue'
+import RadarChart from 'pages/components/echarts/RadarChart.vue'
+import ThemeRiver from 'pages/components/echarts/ThemeRiver.vue'
+import Point from 'pages/components/echarts/Point.vue'
+import HeatMap from 'pages/components/echarts/HeatMap.vue'
+import Sankey from 'pages/components/echarts/Sankey.vue'
+import Gauge from 'pages/components/echarts/Gauge.vue'
+import Graph from 'pages/components/echarts/Graph.vue'
+import Rich from 'pages/components/echarts/Rich.vue'
+import Scatter from 'pages/components/echarts/Scatter.vue'
+import Sunburst from 'pages/components/echarts/Sunburst.vue'
+import Funnel from 'pages/components/echarts/Funnel.vue'
+import Category from 'pages/components/echarts/Category.vue'
 
 export default {
   name: 'PageIndex',

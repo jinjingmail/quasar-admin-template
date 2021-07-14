@@ -1,6 +1,6 @@
 <template>
   <div >
-    <coadmin-table
+    <co-table
       row-key="id"
       dense
       flat
@@ -18,13 +18,13 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <q-space />
 
-          <coadmin-input class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
+          <co-input class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
-              <coadmin-card style="width:550px; max-width:95vw;" class="coadmin-popup">
+              <co-card style="width:550px; max-width:95vw;" class="coadmin-popup">
                 <q-card-section>
-                  <coadmin-form ref="searchform" label-width="small" label-align="right">
+                  <co-form ref="searchform" label-width="small" label-align="right">
                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-                      <coadmin-tree-select
+                      <co-tree-select
                         ref="treeInputMultiple"
                         class="col-12"
                         form-label="Tree"
@@ -41,7 +41,7 @@
                         tree-class="q-pa-sm"
                       />
 
-                      <coadmin-tree-select
+                      <co-tree-select
                         class="col-12 col-sm-6"
                         form-label="TreeSingle"
                         placeholder="Tree单选"
@@ -57,9 +57,9 @@
                         tree-class="q-pa-sm"
                       />
 
-                      <coadmin-input ref="input1" class="col-12" form-label="名称很长怎么办" v-model="query.name" clearable
+                      <co-input ref="input1" class="col-12" form-label="名称很长怎么办" v-model="query.name" clearable
                         @blur="$q.notify({message:'名称 blur notify'})"/>
-                      <coadmin-input ref="input2" outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
+                      <co-input ref="input2" outlined class="col-12 col-sm-6" form-label="calories" label="标签" v-model="query.calories">
                         <template v-slot:append>
                           <q-icon v-if="!query.calories" name="search" />
                           <q-icon v-else name="clear" class="cursor-pointer" @click="query.calories = ''" />
@@ -70,20 +70,20 @@
                         <template v-slot:after>
                           <q-icon name="add" />
                         </template>
-                      </coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
+                      </co-input>
+                      <co-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
                           val => !!val || '不能空',
                           val => val.length === 11 || '请输入11个字符'
                           ]"
                           >
-                      </coadmin-input>
-                      <coadmin-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
-                      </coadmin-input>
-                      <coadmin-input class="col-12 col-sm-6" form-label="iron" placeholder="places" v-model="query.iron" clearable >
-                      </coadmin-input>
-                      <coadmin-select
+                      </co-input>
+                      <co-input ref="input4" class="col-12 col-sm-6" form-label="protein" v-model="query.protein" filled ></co-input>
+                      <co-input class="col-12 col-sm-6" form-label="sodium" v-model="query.sodium" :outlined="false" ></co-input>
+                      <co-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="query.calcium" >
+                      </co-input>
+                      <co-input class="col-12 col-sm-6" form-label="iron" placeholder="places" v-model="query.iron" clearable >
+                      </co-input>
+                      <co-select
                         class="col-12 col-sm-6"
                         form-label="protein5"
                         label="选择"
@@ -106,8 +106,8 @@
                         <template v-slot:after>
                           <q-icon name="menu" />
                         </template>
-                      </coadmin-select>
-                      <coadmin-select
+                      </co-select>
+                      <co-select
                         v-model="query.selectCompany"
                         form-label="protein2"
                         class="col-12 col-sm-6"
@@ -124,8 +124,8 @@
                         <template v-slot:after>
                           <q-icon name="menu" />
                         </template>
-                      </coadmin-select>
-                      <coadmin-field
+                      </co-select>
+                      <co-field
                         class="col-12 col-sm-6"
                         form-label="options"
                       >
@@ -135,23 +135,23 @@
                             <q-radio dense name="shape" v-model="query.selectCompany" val="腾讯" label="腾讯控股" />
                           </div>
                         </template>
-                      </coadmin-field>
-                      <coadmin-input class="col-12 col-sm-6" label-align="right"
+                      </co-field>
+                      <co-input class="col-12 col-sm-6" label-align="right"
                         mask="####-##-##"
                         placeholder="####-##-##" form-label="dateinput"
                         v-model="query.date" >
                         <q-popup-proxy
                           ref="popupDateinput"
                         >
-                          <coadmin-date v-model="query.date" @input="$refs.popupDateinput.hide()">
-                          </coadmin-date>
+                          <co-date v-model="query.date" @input="$refs.popupDateinput.hide()">
+                          </co-date>
                         </q-popup-proxy>
                         <template v-slot:append>
                           <q-icon name="event" class="cursor-pointer">
                           </q-icon>
                         </template>
-                      </coadmin-input>
-                      <coadmin-date-select
+                      </co-input>
+                      <co-date-select
                         class="col-12"
                         form-label="date2"
                         placeholder="日期范围选"
@@ -163,8 +163,8 @@
                         <template v-slot:append>
                           <q-icon name="event" />
                         </template>
-                      </coadmin-date-select>
-                      <coadmin-date-select
+                      </co-date-select>
+                      <co-date-select
                         class="col-12 col-sm-6"
                         form-label="date3"
                         placeholder="日期单选"
@@ -173,10 +173,10 @@
                         <template v-slot:append>
                           <q-icon name="event" />
                         </template>
-                      </coadmin-date-select>
+                      </co-date-select>
 
                     </div>
-                  </coadmin-form>
+                  </co-form>
 
                 </q-card-section>
                 <q-card-actions align="center">
@@ -186,7 +186,7 @@
                   <q-btn label="关闭" flat v-close-popup />
                 </q-card-actions>
 
-              </coadmin-card>
+              </co-card>
             </q-popup-proxy>
             <template v-slot:after>
               <q-btn dense  color="primary" icon="search" @click="doQuery"/>
@@ -201,7 +201,7 @@
               </q-btn-dropdown>
             </template>
 
-          </coadmin-input>
+          </co-input>
 
         </div>
       </template>
@@ -233,7 +233,7 @@
         />
       </template>
 
-    </coadmin-table>
+    </co-table>
   </div>
 </template>
 

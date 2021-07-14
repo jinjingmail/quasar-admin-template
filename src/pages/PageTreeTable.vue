@@ -8,7 +8,7 @@
       emit-immediately
     >
       <template v-slot:before>
-          <coadmin-tree
+          <co-tree
             ref="tree"
             class=" custom-table-bg"
             :class="$q.screen.gt.xs?'q-mr-sm':''"
@@ -25,7 +25,7 @@
             <template v-slot:default-header="prop">
               <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
             </template>
-          </coadmin-tree>
+          </co-tree>
       </template>
 
       <template v-if="$q.screen.xs" v-slot:separator>
@@ -33,7 +33,7 @@
       </template>
 
       <template v-slot:after>
-          <coadmin-table
+          <co-table
             :class="$q.screen.gt.xs?'q-ml-sm':''"
             flat
             dense
@@ -117,7 +117,7 @@
             <template v-slot:loading>
               <q-inner-loading showing color="primary" />
             </template>
-          </coadmin-table>
+          </co-table>
       </template>
     </q-splitter>
 
@@ -126,12 +126,12 @@
 
 <script>
 import depts from '../data/depts.js'
-import CoadminTree from 'components/CoadminTree.vue'
+import CoTree from 'components/co-tree.vue'
 
 export default {
   name: 'PageTreeTable',
   components: {
-    CoadminTree
+    CoTree
   },
   data () {
     return {

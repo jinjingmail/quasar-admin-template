@@ -1,6 +1,6 @@
 /* Layout */
-import MainLayout from 'layouts/MainLayout.vue'
-import BlankLayout from 'layouts/BlankLayout.vue'
+import MainLayout from 'layouts/main-layout.vue'
+import BlankLayout from 'layouts/blank-layout.vue'
 
 /**
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -74,7 +74,7 @@ const routes = [
     ]
   }, {
     path: '/user',
-    component: () => import('layouts/LoginLayout.vue'),
+    component: () => import('layouts/login-layout.vue'),
     meta: { title: '用户', icon: 'account_circle' },
     children: [
       {
@@ -255,7 +255,7 @@ const routes = [
       {
         path: 'invoices',
         name: 'SalesInvoices',
-        component: () => import('pages/sales_invoices.vue'),
+        component: () => import('pages/sales-invoices.vue'),
         meta: { title: 'SalesInvoices', icon: 'account_balance_wallet' }
       }
     ]

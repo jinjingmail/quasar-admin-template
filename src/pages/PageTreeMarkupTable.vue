@@ -8,7 +8,7 @@
       emit-immediately
     >
       <template v-slot:before>
-        <coadmin-tree
+        <co-tree
           ref="tree"
           class="q-mr-sm"
           style="background-color:var(--q-color-table-bg)"
@@ -24,7 +24,7 @@
           <template v-slot:default-header="prop">
             <div :class="{'text-weight-bold':treeNodeSelected==prop.key}">{{ prop.node.label }}</div>
           </template>
-        </coadmin-tree>
+        </co-tree>
       </template>
 
       <template v-if="$q.screen.xs" v-slot:separator>
@@ -32,7 +32,7 @@
       </template>
 
       <template v-slot:after>
-          <coadmin-tree-markup-table
+          <co-tree-markup-table
             class="q-ml-sm"
             style="background-color:var(--q-color-table-bg)"
             :columns="columns"
@@ -45,14 +45,14 @@
 
 <script>
 import depts from '../data/depts.js'
-import CoadminTree from 'components/CoadminTree.vue'
-import CoadminTreeMarkupTable from 'components/CoadminTreeMarkupTable.vue'
+import CoTree from 'components/co-tree.vue'
+import CoTreeMarkupTable from 'components/co-tree-markup-table.vue'
 
 export default {
   name: 'PageTreeMarkupTable',
   components: {
-    CoadminTree,
-    CoadminTreeMarkupTable
+    CoTree,
+    CoTreeMarkupTable
   },
   data () {
     return {
