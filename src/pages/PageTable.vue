@@ -50,11 +50,11 @@
         :label-width="labelWidth"
         :form-label-style="labelStyle"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable>
+          <co-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable dense>
           </co-input>
           <co-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
             @blur="$q.notify({message:'名称 blur notify'})"
-            :rules="[val => !!val || 'Field is required']"/>
+            :rules="[val => !!val || 'Field is required']" dense/>
           <co-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
             <template v-slot:append>
               <q-icon v-if="!dialogForm.calories" name="search" />
@@ -70,7 +70,7 @@
               <q-icon name="expand_more" />
             </template>
           </co-input>
-          <co-input class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" :rules="[
+          <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="dialogForm.fat" :disable="dialogFormReadonly" :rules="[
               val => !!val || '不能空',
               val => val.length === 11 || '请输入11个字符'
               ]"
@@ -90,9 +90,6 @@
             form-label="protein5"
             label="选择"
             :disable="dialogFormReadonly"
-            dense
-            options-dense
-            outlined
             v-model="selectModel"
             no-filter
             :options="mapOptions"
@@ -202,20 +199,20 @@
             </template>
           </co-input>
           <co-form-item class="col-12 col-sm-6" form-label="formField">
-            <q-field dense borderless>
+            <co-field borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作</div>
               </template>
-            </q-field>
+            </co-field>
           </co-form-item>
           <co-form-item class="col-12 col-sm-6" form-label="formField">
-            <q-field dense borderless>
+            <q-field borderless>
               <template v-slot:control>
                 <div class="self-center full-width no-outline" tabindex="0">作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
               </template>
             </q-field>
           </co-form-item>
-          <co-form-item class="col-12 col-sm-6" form-label="formtext">
+          <co-form-item dense class="col-12 col-sm-6" form-label="formtext">
             <div class="q-pt-xs">语句用于基于不同条件执行不同动作</div>
           </co-form-item>
           <co-form-item class="col-12 col-sm-6" form-label="formtext">
@@ -281,7 +278,7 @@
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-space />
         <q-btn label="取消" flat v-close-popup />
-        <q-btn label="保存" icon="check" type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
+        <q-btn label="保存"  type="submit" color="primary" v-if="!dialogFormReadonly" @click="$refs.dialogForm.submit()"/>
       </q-card-actions>
     </co-dialog>
 

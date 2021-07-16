@@ -18,9 +18,9 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <q-space />
 
-          <co-input class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
+          <co-input dense class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
-              <co-card style="width:550px; max-width:95vw;" class="coadmin-popup">
+              <co-card style="width:550px; max-width:95vw;" class="co-popup">
                 <q-card-section>
                   <co-form ref="searchform" label-width="small" label-align="right">
                     <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
@@ -71,7 +71,7 @@
                           <q-icon name="add" />
                         </template>
                       </co-input>
-                      <co-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
+                      <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
                           val => !!val || '不能空',
                           val => val.length === 11 || '请输入11个字符'
                           ]"

@@ -19,8 +19,8 @@
           <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" filled clearable placeholder="查询"
             input-class="text-center">
             <template v-slot:after>
-              <q-btn dense  color="primary" icon="search" @click="doQuery"/>
-              <q-btn-dropdown dense auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
+              <q-btn color="primary" icon="search" @click="doQuery"/>
+              <q-btn-dropdown auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
                 <div class="row no-wrap q-pa-sm">
                   <div class="column">
                     <q-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
@@ -88,7 +88,7 @@
                       <q-icon name="add" />
                     </template>
                   </co-input>
-                  <co-input class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
+                  <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
                       val => !!val || '不能空',
                       val => val.length === 11 || '请输入11个字符'
                       ]"

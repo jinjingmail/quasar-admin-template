@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: 'CoadminTreeSelect',
+  name: 'CoTreeSelect',
   inheritAttrs: false,
   props: {
     disable: Boolean,

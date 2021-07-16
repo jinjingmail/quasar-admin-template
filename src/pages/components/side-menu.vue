@@ -44,7 +44,7 @@
     :ref="'route-'+item.path"
     :to="item.path"
     exact
-    active-class="coadmin-sidebar-menu-active"
+    active-class="co-sidebar-menu-active"
   >
     <q-item-section avatar v-if="item.icon">
       <q-icon :style="iconColor2(item.iconColor)" :name="item.icon" :size="level===1?'sm':'sm'"/>

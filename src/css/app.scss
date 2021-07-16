@@ -87,12 +87,12 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-header,
-.coadmin-footer,
-.coadmin-page,
+.co-header,
+.co-footer,
+.co-page,
 .co-form,
 .co-card,
-.coadmin-popup,
+.co-popup,
 .co-dialog {
   .q-tab {
     padding: 0 5px 0 12px;
@@ -114,7 +114,7 @@ input:-ms-input-placeholder {
   background-color: var(--q-color-other-bg) ;
 }
 
-.coadmin-sidebar {
+.co-sidebar {
   &-menu-active {
     background-color: var(--q-color-menu-bg-active);
   }
@@ -135,13 +135,13 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-header {
+.co-header {
   .q-tab__content {
     min-width: auto !important;
   }
 }
 
-.coadmin-sidebar {
+.co-sidebar {
   .q-item__section--avatar {
     min-width:40px;
   }
@@ -155,7 +155,7 @@ input:-ms-input-placeholder {
   }
 }
 
-.coadmin-page {
+.co-page {
 }
 
 .co-table {
@@ -204,7 +204,7 @@ input:-ms-input-placeholder {
 
 }
 
-.coadmin-popup {
+.co-popup {
   &.q-dark,
   .q-dark {
     //background-color: #2d2d2d;  // $grey-9;

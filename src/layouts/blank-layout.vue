@@ -1,3 +1,3 @@
 <template>
-  <router-view class="coadmin-page" />
+  <router-view class="co-page" />
 </template>

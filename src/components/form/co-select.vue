@@ -28,10 +28,8 @@
       :emit-value="emitValue"
       :map-options="mapOptions"
       :dense="dense"
-      :options-dense="optionsDense"
       :option-label="optionLabel"
       :option-value="optionValue"
-      :outlined="outlined"
       :disable="disable"
       :readonly="readonly"
       hide-dropdown-icon
@@ -81,10 +79,8 @@
     :emit-value="emitValue"
     :map-options="mapOptions"
     :dense="dense"
-    :options-dense="optionsDense"
     :option-label="optionLabel"
     :option-value="optionValue"
-    :outlined="outlined"
     :disable="disable"
     :readonly="readonly"
     hide-dropdown-icon
@@ -145,10 +141,6 @@ export default {
     options: {
       type: Array,
       default: () => []
-    },
-    optionsDense: {
-      type: Boolean,
-      default: true
     },
     noFilter: Boolean,
     filterKeyLike: {

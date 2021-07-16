@@ -35,7 +35,7 @@
       :loading="loading" :loading-spinner="loadingSpinner" :loading-delay="loadingDelay">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
-          <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none">
+          <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none" style="cursor:move">
             <slot name="header_left">
               <q-avatar v-if="!!icon">
                 <q-icon :name="icon"/>

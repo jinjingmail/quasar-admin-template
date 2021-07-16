@@ -16,7 +16,6 @@
       v-bind="$attrs"
       v-on="listeners"
       :dense="dense"
-      :outlined="outlined"
       :disable="disable"
       :readonly="readonly"
     >
@@ -36,7 +35,6 @@
     v-bind="$attrs"
     v-on="listeners"
     :dense="dense"
-    :outlined="outlined"
     :disable="disable"
     :readonly="readonly"
   >

@@ -15,21 +15,21 @@
         label-width="small"
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-form-item class="col-12" form-label="ID" v-if="form.id">
+          <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
           </co-form-item>
-          <co-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
+          <co-input dense outlined class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
             </template>
           </co-input>
-          <co-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
+          <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
-        <q-btn label="保存" icon="check" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
+        <q-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
     </co-dialog>

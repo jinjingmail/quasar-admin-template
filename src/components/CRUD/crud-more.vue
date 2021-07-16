@@ -24,7 +24,6 @@
 
       <q-toggle v-model="crud.visibleColumns" :dense="dense" v-for="item in crud.columns" :key="item.name"
         :val="item.name" :label="getLabel(item.label)" :disable="item.required"/>
-
       <slot name="end"/>
     </div>
   </div>

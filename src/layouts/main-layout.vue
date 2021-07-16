@@ -17,7 +17,7 @@
         <q-btn dense label="关闭" flat v-close-popup />
       </q-card-actions>
     </co-dialog>
-    <q-header :reveal="!fixedHeader" :elevated="false" :reveal-offset="60" bordered class="coadmin-header" :style="headerStyles">
+    <q-header :reveal="!fixedHeader" :elevated="false" :reveal-offset="60" bordered class="co-header" :style="headerStyles">
       <q-toolbar>
         <template v-if="!sidebarTop || !$q.screen.gt.xs">
           <q-avatar class="q-logo" @click="leftDrawerOpen = !leftDrawerOpen">
@@ -327,7 +327,7 @@
         </div>
     </q-drawer>
 
-    <q-drawer class="coadmin-sidebar main-page-sidebar non-selectable no-scroll"
+    <q-drawer class="co-sidebar main-page-sidebar non-selectable no-scroll"
       v-model="leftDrawerOpen"
       show-if-above
       side="left"
@@ -387,7 +387,7 @@
         :style="(tagsView && tagsViewTop)?'padding-top: 36px;':((tagsView && !tagsViewTop)?'padding-bottom: 36px':'')"
       >
         <keep-alive :include="cachedViews">
-          <router-view class="coadmin-page" :class="settingPageClass" :style="settingPageStyle"/>
+          <router-view class="co-page" :class="settingPageClass" :style="settingPageStyle"/>
         </keep-alive>
 
         <!-- place QPageSticky at end of page -->
@@ -630,7 +630,7 @@ export default {
 .body--dark .layout-main-bg-image {
 }
 
-.coadmin-sidebar.main-page-sidebar ::v-deep > .q-drawer {
+.co-sidebar.main-page-sidebar ::v-deep > .q-drawer {
   background-image: url("~assets/sidebar-bg.jpg") !important;
   background-size: cover !important;
   background-repeat: no-repeat;

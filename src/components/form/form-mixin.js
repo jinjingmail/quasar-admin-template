@@ -11,13 +11,9 @@ export default {
       validator: v => ['auto', 'left', 'right', 'center'].includes(v)
     },
     formLabelStyle: String,
-    outlined: {
-      type: Boolean,
-      default: true
-    },
     dense: {
       type: Boolean,
-      default: true
+      default: false
     },
     disable: {
       type: Boolean,

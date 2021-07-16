@@ -1,7 +1,7 @@
 <template>
   <q-layout :class="{'layout-user-container':pageBgImage}" class="custom-page-bg">
     <q-page-container>
-      <router-view class="coadmin-page" />
+      <router-view class="co-page" />
     </q-page-container>
     <q-footer
       bordered
