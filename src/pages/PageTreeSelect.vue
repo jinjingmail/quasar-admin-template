@@ -3,6 +3,7 @@
     <co-card class="row q-ma-none q-pa-md q-gutter-md">
       <co-tree-select
         placeholder="leaf（只有叶子节点）"
+        dense
         class="col-5"
         node-key="id"
         label-key="name"
@@ -22,6 +23,7 @@
       <co-tree-select
         class="col-5"
         placeholder="strict（选谁是谁）"
+        dense
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -40,6 +42,7 @@
       <co-tree-select
         class="col-5"
         placeholder="leaf-any-with-parent（任意叶子节点选中就包含父节点）"
+        dense
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -58,6 +61,7 @@
       <co-tree-select
         class="col-5"
         placeholder="leaf-all-only-parent（选中所有叶子节点就只包含父节点）"
+        dense
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -75,6 +79,7 @@
       <co-tree-select
         class="col-5"
         placeholder="leaf-all-with-parent（选中所有叶子节点就包含父节点）"
+        dense
         node-key="id"
         label-key="name"
         :nodes="treeDatas"
@@ -92,6 +97,7 @@
       <co-tree-select
         class="col-5"
         placeholder="（单选）"
+        dense
         node-key="id"
         label-key="name"
         :nodes="treeDatas"

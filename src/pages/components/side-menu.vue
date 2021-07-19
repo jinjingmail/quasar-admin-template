@@ -1,19 +1,20 @@
 <template>
   <q-expansion-item v-if="isExpansionItem(item)"
+    expand-icon="add"
+    expanded-icon="remove"
     :dense-toggle="level!==1"
     :content-inset-level="0.4"
     :group="uniqueOpened?('menu'+level):('menu' + randomAlphaNumber())"
-    :expand-separator="level===1"
-    :dense="false"
+    :expand-separator="level==1"
+    :dense="level!==1"
     :default-opened="false"
-    :duration="300"
+    :duration="150"
     @input="expansionItemInput"
   >
     <template v-slot:header>
       <q-item-section avatar v-if="item.icon">
         <q-icon :style="iconColor2(item.iconColor)" :name="item.icon" :size="level===1?'sm':'sm'"/>
       </q-item-section>
-
       <q-item-section>
         <q-item-label :style="iconColor2()">{{item.title}}</q-item-label>
         <q-item-label caption v-if="item.caption" :style="captionColor()">{{item.caption}}</q-item-label>
@@ -26,7 +27,7 @@
   </q-expansion-item>
 
   <q-item v-else-if="isExternalItem(item)"
-      :dense="false"
+      :dense="level!==1"
       :ref="'route-'+item.path"
       clickable tag="a" target="_blank"
       :href="item.path">
@@ -40,7 +41,7 @@
   </q-item>
 
   <q-item v-else-if="isRouteItem(item)"
-    :dense="false"
+    :dense="level!==1"
     :ref="'route-'+item.path"
     :to="item.path"
     exact

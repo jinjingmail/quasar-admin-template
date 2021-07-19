@@ -52,24 +52,25 @@
       <template v-slot:top-right="props">
 
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <co-input placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
+          <co-input placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
           <co-date-select
             content-style="width:200px"
             placeholder="日期范围"
             v-model="query.dateRange"
             clearable
+            dense outlined
             use-input
             range
             />
 
           <div class='col-auto'>
-            <q-btn dense label="查询" padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+            <q-btn label="查询" dense size="17px" color="primary" @click="crud.toQuery" />
           </div>
           <q-space/>
-          <crud-operation :permission="permission" no-label/>
+          <crud-operation :permission="permission" dense no-label size="17px"/>
           <div class="col-auto">
-            <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
-              <crud-more :tableSlotTopProps="props" />
+            <q-btn-dropdown dense size="17px" color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+              <crud-more dense :tableSlotTopProps="props" />
             </q-btn-dropdown>
           </div>
 

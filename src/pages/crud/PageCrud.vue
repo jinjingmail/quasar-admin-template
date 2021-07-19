@@ -45,12 +45,12 @@
       selection="multiple"
     >
       <template v-slot:top="props">
-        <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-
-          <crud-operation :permission="permission" />
-
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+        <div class='row full-width'>
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable dense filled placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
+            <template v-slot:before>
+              <crud-operation :permission="permission" dense/>
+            </template>
             <template v-slot:after>
               <q-btn dense color="primary" icon="search" @click="crud.toQuery"/>
               <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>

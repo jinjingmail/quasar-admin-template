@@ -16,7 +16,7 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" filled clearable placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" standout  dense clearable placeholder="查询"
             input-class="text-center">
             <template v-slot:after>
               <q-btn color="primary" icon="search" @click="doQuery"/>

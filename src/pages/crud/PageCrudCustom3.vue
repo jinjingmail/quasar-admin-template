@@ -78,9 +78,10 @@
           :form-label-style="labelStyle"
         >
           <co-input class=""
-            placeholder="ID" v-model="query.id" content-style="width:200px" clearable no-clear-focus/>
-          <co-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
+            form-label="ID" placeholder="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
+          <co-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
           <co-date-select
+             dense outlined
             content-style="width:200px"
             form-label="日期范围"
             placeholder="日期范围"
@@ -91,17 +92,18 @@
           <template v-if="crud.props.queryMore">
             <co-date-select
               class=""
+              dense outlined
               content-style="width:100px"
               placeholder="日期"
               v-model="query.dateSingle"
               clearable
             />
-            <co-input class="" content-style="width:200px" placeholder="Fat" v-model="query.fat" clearable>
+            <co-input class="" content-style="width:200px" placeholder="Fat" v-model="query.fat" dense outlined clearable>
               <template v-slot:append>
                 <q-icon name="add" />
               </template>
             </co-input>
-            <co-input class="" content-style="width:200px" placeholder="Calories" v-model="query.calories" />
+            <co-input class="" content-style="width:200px" placeholder="Calories" v-model="query.calories" dense outlined />
             <co-tree-select
               placeholder="Tree多选"
               :nodes="treeData"
@@ -111,6 +113,7 @@
               tick-strategy="leaf-all-only-parent"
               tree-class="q-pa-sm"
               clearable
+              dense outlined
               content-style="width:200px"
               no-input
             >
@@ -122,6 +125,7 @@
               v-model="query.selectSingle"
               :options="listOptions"
               clearable
+              dense outlined
               use-input
               hide-selected
               fill-input
@@ -133,6 +137,7 @@
               v-model="query.selectSingle"
               :options="listOptions"
               clearable
+              dense outlined
               placeholder="选择巨头"
               content-style="width:200px"
             />
@@ -143,7 +148,7 @@
         </co-form>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <crud-operation :permission="permission" no-label/>
+          <crud-operation dense :permission="permission" no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />

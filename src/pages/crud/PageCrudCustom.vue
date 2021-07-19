@@ -67,7 +67,7 @@
               <q-btn dense label="导出" outline/>
             </template>
           </crud-operation>
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" dense clearable filled placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:after>
               <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>

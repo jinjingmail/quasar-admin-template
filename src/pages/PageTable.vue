@@ -55,7 +55,7 @@
           <co-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
             @blur="$q.notify({message:'名称 blur notify'})"
             :rules="[val => !!val || 'Field is required']" dense/>
-          <co-input class="col-12 col-sm-6" form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
+          <co-input class="col-12 col-sm-6" dense form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
             <template v-slot:append>
               <q-icon v-if="!dialogForm.calories" name="search" />
               <q-icon v-else name="clear" class="cursor-pointer" @click="dialogForm.calories = ''" />
@@ -89,6 +89,8 @@
             class="col-12 col-sm-6"
             form-label="protein5"
             label="选择"
+            outlined
+            dense
             :disable="dialogFormReadonly"
             v-model="selectModel"
             no-filter
@@ -148,7 +150,6 @@
           />
           <co-select
             v-model="selectModels"
-            :dense="false"
             form-label="multiselect"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
@@ -156,7 +157,6 @@
             option-label="desc"
             option-disable="inactive"
             clearable
-            options-dense
             outlined
             placeholder="选择巨头"
             :options="mapOptions"

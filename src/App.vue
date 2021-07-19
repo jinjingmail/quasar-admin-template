@@ -9,6 +9,10 @@ import Vue from 'vue'
 import drag from './utils/vue-dragdrag'
 Vue.directive('drag', drag)
 
+// 权限指令
+import permission from './components/Permission'
+Vue.use(permission)
+
 import CoTable from './components/co-table'
 import CoDialog from './components/co-dialog'
 import CoCard from './components/co-card'

@@ -16,19 +16,19 @@
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
           <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
-            <div class="q-mt-xs">{{form.id}}</div>
+            <div class="q-mt-sm">{{form.id}}</div>
           </co-form-item>
-          <co-input class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
+          <co-input dense class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
             </template>
           </co-input>
-          <co-input class="col-12" form-label="value" v-model="form.value" :disable="!!crud.status.view" :rules="[
+          <co-input dense class="col-12" form-label="value" v-model="form.value" :disable="!!crud.status.view" :rules="[
               val => (!!val) || '必填'
               ]"/>
-          <co-input class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
+          <co-input dense class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
@@ -53,12 +53,12 @@
     >
       <template v-slot:top-right="props">
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <co-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" clearable @keyup.enter.native="crud.toQuery"/>
+          <co-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" dense clearable @keyup.enter.native="crud.toQuery"/>
           <div class='col-auto'>
-            <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery" />
+            <q-btn dense color="primary" icon="search" @click="crud.toQuery" />
           </div>
           <q-space/>
-          <crud-operation :permission="permission" :no-add="!dictId" no-view no-edit no-label/>
+          <crud-operation dense :permission="permission" :no-add="!dictId" no-view no-edit no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />

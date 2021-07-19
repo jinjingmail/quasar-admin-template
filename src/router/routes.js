@@ -14,7 +14,7 @@ import BlankLayout from 'layouts/blank-layout.vue'
  * meta : {
     （不支持）roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    caption: '副标题'             可选
+    captionxx: '副标题'             可选
     icon: 'name|img:path|base64' the icon show in the sidebar
     iconColor: 'text-grey'      不填默认primary
     noCache: true                if set true, the page will no be cached(default is false)
@@ -121,7 +121,7 @@ const routes = [
     name: 'CRUD',
     redirect: 'noredirect',
     alwaysShow: true,
-    meta: { title: 'CRUD.js 页面', icon: 'add', caption: '通用 crud.js' },
+    meta: { title: 'CRUD.js 页面', icon: 'add', captionxx: '通用 crud.js' },
     children: [
       {
         path: 'pageCrud',
@@ -133,7 +133,7 @@ const routes = [
         path: 'pageCrudCustom',
         name: 'PageCrudCustom',
         component: () => import('pages/crud/PageCrudCustom.vue'),
-        meta: { title: 'PageCrudCustom', icon: 'add', caption: '演示Crud自定义属性' }
+        meta: { title: 'PageCrudCustom', icon: 'add', captionxx: '演示Crud自定义属性' }
       },
       {
         path: 'pageCrudCustom2',
@@ -145,7 +145,7 @@ const routes = [
         path: 'pageCrudCustom3',
         name: 'PageCrudCustom3',
         component: () => import('pages/crud/PageCrudCustom3.vue'),
-        meta: { title: 'PageCrudCustom3', icon: 'add', caption: '演示自定义搜索栏' }
+        meta: { title: 'PageCrudCustom3', icon: 'add', captionxx: '演示自定义搜索栏' }
       },
       {
         path: 'pageCrudCustom4',
@@ -157,7 +157,7 @@ const routes = [
         path: 'pageCrudDict',
         name: 'PageCrudDict',
         component: () => import('pages/crud/PageCrudDict.vue'),
-        meta: { title: 'PageCrudDict', icon: 'add', caption: '演示字典管理' }
+        meta: { title: 'PageCrudDict', icon: 'add', captionxx: '演示字典管理' }
       }
     ]
   }, {
@@ -171,7 +171,7 @@ const routes = [
         path: 'pageTable',
         name: 'PageTable',
         component: () => import('pages/PageTable.vue'),
-        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', caption: '演示自定义表单' }
+        meta: { title: 'PageTable', icon: 'add', iconColor: 'yellow', captionxx: '演示自定义表单' }
       }, {
         path: 'pageSearchPopup',
         name: 'PageSearchPopup',
@@ -181,7 +181,7 @@ const routes = [
         path: 'pageSearchDialog',
         name: 'PageSearchDialog',
         component: () => import('pages/PageSearchDialog.vue'),
-        meta: { title: 'PageSearchDialog', icon: 'add', caption: '演示Dialog搜索框' }
+        meta: { title: 'PageSearchDialog', icon: 'add', captionxx: '演示Dialog搜索框' }
       }, {
         path: 'pageTableNoData',
         name: 'pageTableNoData',
@@ -191,7 +191,7 @@ const routes = [
         path: 'pageTreeTable',
         name: 'PageTreeTable',
         component: () => import('pages/PageTreeTable.vue'),
-        meta: { title: 'pageTreeTable', icon: 'add', noCache: false, caption: '基于q-table的多功能树表' }
+        meta: { title: 'pageTreeTable', icon: 'add', noCache: false, captionxx: '基于q-table的多功能树表' }
       }, {
         path: 'pageTreeTableCustom',
         name: 'PageTreeTableCustom',
@@ -201,17 +201,17 @@ const routes = [
         path: 'pageTreeMarkupTable',
         name: 'PageTreeMarkupTable',
         component: () => import('pages/PageTreeMarkupTable.vue'),
-        meta: { title: 'pageTreeMarkupTable', icon: 'add', caption: '基于q-markup-table的简单树表' }
+        meta: { title: 'pageTreeMarkupTable', icon: 'add', captionxx: '基于q-markup-table的简单树表' }
       }, {
         path: 'pageTreeSelect',
         name: 'PageTreeSelect',
         component: () => import('pages/PageTreeSelect.vue'),
-        meta: { title: 'PageTreeSelect', icon: 'add', caption: '演示Tree组件的各种情况' }
+        meta: { title: 'PageTreeSelect', icon: 'add', captionxx: '演示Tree组件的各种情况' }
       }, {
         path: 'pageInput',
         name: 'PageInput',
         component: () => import('pages/PageInput.vue'),
-        meta: { title: 'PageInput', icon: 'add', caption: '演示Input组件' }
+        meta: { title: 'PageInput', icon: 'add', captionxx: '演示Input组件' }
       }
     ]
   }, {

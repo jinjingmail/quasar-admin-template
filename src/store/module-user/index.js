@@ -1,10 +1,12 @@
 const state = {
-  username: null
+  username: null,
+  roles: ['admin', 'user:add', 'user:edit', 'user:del'] //添加几个默认权限用于测试
 }
 
 const getters = {
   username: state => state.username || '匿名用户',
-  isAuthed: state => !!state.username
+  isAuthed: state => !!state.username,
+  roles: state => state.roles || []
 }
 
 const mutations = {

@@ -52,6 +52,7 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
+/*
 .co-input,
 .co-select,
 .co-field,
@@ -86,6 +87,7 @@ input:-ms-input-placeholder {
     top: 8px;
   }
 }
+*/
 
 .co-header,
 .co-footer,
@@ -101,7 +103,6 @@ input:-ms-input-placeholder {
     min-height: 32px;
   }
 }
-
 /* 修改全局样式 END */
 
 .custom-page-bg {
@@ -207,12 +208,10 @@ input:-ms-input-placeholder {
 .co-popup {
   &.q-dark,
   .q-dark {
-    //background-color: #2d2d2d;  // $grey-9;
     background-color: var(--q-color-other-bg);
   }
   /* 使用v-drag，会导致对话框在小屏幕占满左右两边，这里增加一点空隙 */
   .q-dialog__inner--minimized {
-    // margin: 10px;
     padding: 10px 24px;
   }
   /* 改成16px以便跟 q-card__section 有相同的边距好对齐 */
@@ -260,7 +259,7 @@ input:-ms-input-placeholder {
 
   /* 当组件剩余空间很富裕时，上方对齐，默认是居中 */
   .q-field > .q-field__inner {
-    justify-content: flex-start;
+    //justify-content: flex-start;
   }
 }
 

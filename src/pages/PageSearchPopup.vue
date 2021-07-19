@@ -18,7 +18,7 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <q-space />
 
-          <co-input dense class="col" ref="searchInput" v-model="queryModel" filled clearable placeholder="查询" input-class="text-center">
+          <co-input dense class="col" ref="searchInput" v-model="queryModel" outlined clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
               <co-card style="width:550px; max-width:95vw;" class="co-popup">
                 <q-card-section>

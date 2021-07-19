@@ -23,7 +23,8 @@
       </template>
 
       <q-toggle v-model="crud.visibleColumns" :dense="dense" v-for="item in crud.columns" :key="item.name"
-        :val="item.name" :label="getLabel(item.label)" :disable="item.required"/>
+        :val="item.name" :label="getLabel(item.label)" :disable="item.required" :style="dense?'padding:3px 0':''"/>
+
       <slot name="end"/>
     </div>
   </div>

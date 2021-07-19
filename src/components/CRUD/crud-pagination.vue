@@ -14,7 +14,7 @@
 <template>
   <div class="row">
     <slot name="start" />
-    <co-field dense borderless :outlined="false" class="col-auto">
+    <co-field :dense="dense" borderless :outlined="false" class="col-auto">
       <template v-slot:control>
         <div class="self-center full-width no-outline" tabindex="0">共 {{page.total}} 条</div>
       </template>
@@ -43,7 +43,6 @@
       map-options
       @input="pageSizeChange"
       :hide-dropdown-icon="!$q.screen.gt.xs"
-      :outlined="$q.screen.gt.xs"
       borderless
     />
     <slot name="end" />
@@ -58,8 +57,7 @@ export default {
   mixins: [pagination()],
   props: {
     dense: {
-      type: Boolean,
-      default: true
+      type: Boolean
     },
     iconPrevPage: {
       type: String,

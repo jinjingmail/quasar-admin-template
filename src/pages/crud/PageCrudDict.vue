@@ -16,13 +16,13 @@
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
           <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
-            <div class="q-mt-xs">{{form.id}}</div>
+            <div class="q-mt-sm">{{form.id}}</div>
           </co-form-item>
-          <co-input class="col-12" form-label="名称" v-model="form.name" :disable="!!crud.status.view" :rules="[
+          <co-input dense class="col-12" form-label="名称" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
           </co-input>
-          <co-input class="col-12" form-label="描述" v-model="form.remark" :disable="!!crud.status.view" :rules="[
+          <co-input dense class="col-12" form-label="描述" v-model="form.remark" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
           </co-input>
@@ -59,13 +59,14 @@
               <co-input class='col-auto' placeholder="名称、描述" v-model="query.blurry"
                 content-style="width:140px"
                 clearable
+                dense
                 @clear="crud.toQuery()"
                 @keyup.enter.native="crud.toQuery()"/>
               <div class='col-auto'>
-                <q-btn dense padding="xs sm" color="primary" icon="search" @click="crud.toQuery()" />
+                <q-btn dense color="primary" icon="search" @click="crud.toQuery()" />
               </div>
               <q-space/>
-              <crud-operation :permission="permission" no-view no-edit no-label/>
+              <crud-operation :permission="permission" no-view no-edit no-label dense/>
               <div class="col-auto">
                 <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                   <crud-more :tableSlotTopProps="props" />
@@ -76,7 +77,7 @@
 
           <template v-slot:body-cell-action="props">
             <q-td :props="props">
-              <crud-row :data="props.row" no-add flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
+              <crud-row :data="props.row" no-icon no-add flat :permission="permission" :type="$q.screen.gt.xs?'button':'menu'"/>
             </q-td>
           </template>
 
