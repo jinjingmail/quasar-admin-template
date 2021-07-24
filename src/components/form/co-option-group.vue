@@ -16,6 +16,7 @@
       :value="valueSync"
       ref="optionGroup"
       class="col q-py-xs co-option-group"
+      style="margin-top:1px"
       v-bind="$attrs"
       v-on="listeners"
       :rules="rules"

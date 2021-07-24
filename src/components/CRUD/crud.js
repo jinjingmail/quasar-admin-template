@@ -349,6 +349,7 @@ function CRUD(options) {
           crud.delAllLoading = false
         } else {
           dataStatus.delete = CRUD.STATUS.PREPARED
+          callVmHook(crud, CRUD.HOOK.afterDeleteError, data)
         }
         crud.notifyFailure(crud.msg.delFailure)
       })
@@ -510,7 +511,7 @@ function CRUD(options) {
         message: title,
         timeout: 10 * 1000,
         position: 'bottom',
-        closeBtn: '关闭'
+        closeBtn: 'CLOSE'
       })
     },
     notifyError(title, err) {
@@ -522,9 +523,9 @@ function CRUD(options) {
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
-        timeout: 30 * 1000,
+        timeout: 60 * 1000,
         position: 'bottom',
-        closeBtn: '关闭'
+        closeBtn: 'CLOSE'
       })
     },
     notifyFailure(title, err) {
@@ -536,9 +537,9 @@ function CRUD(options) {
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
         message: title,
-        timeout: 30 * 1000,
+        timeout: 60 * 1000,
         position: 'bottom',
-        closeBtn: '关闭'
+        closeBtn: 'CLOSE'
       })
     },
     updateProp(name, value) {
@@ -870,7 +871,8 @@ CRUD.HOOK = {
   /** 提交 - 之后 */
   afterSubmit: 'afterCrudSubmitCU',
   afterAddError: 'afterCrudAddError',
-  afterEditError: 'afterCrudEditError'
+  afterEditError: 'afterCrudEditError',
+  afterDeleteError: 'afterCrudDeleteError'
 }
 
 /**

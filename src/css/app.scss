@@ -52,7 +52,6 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
-/*
 .co-input,
 .co-select,
 .co-field,
@@ -61,33 +60,67 @@ input:-ms-input-placeholder {
   .q-field__input {
     min-height: auto;
   }
-  // 按钮高度缩小
+  &.q-textarea .q-field__control {
+    min-height: 45px;
+    height: auto;
+  }
+  &.q-textarea.q-field--dense .q-field__control {
+    min-height: 34px;
+    height: auto;
+  }
+  &.q-textarea.q-field--dense .q-field__native {
+    padding-top: 7px;
+  }
+  &.q-textarea .q-field__native {
+    padding-top: 13px;
+  }
+
+  // 高度缩小
   .q-field__control,
   .q-field__marginal {
     height: 45px;
   }
   &.q-field--dense .q-field__control, 
   &.q-field--dense .q-field__marginal {
-    height: 33px;
+    height: 34px;
   }
+
   &.q-field--auto-height .q-field__control,
   &.q-field--auto-height .q-field__native {
-    // min-height: 45px;
-    min-height: auto;
+    min-height: 45px;
   }
+  &.q-field--auto-height .q-field__control {
+    height: auto;
+  }
+  &.q-field--auto-height.q-field--labeled .q-field__control-container {
+    padding-top: 0;
+  }
+  &.q-field--auto-height.q-field--labeled .q-field__native,
+  &.q-field--auto-height.q-field--labeled .q-field__prefix,
+  &.q-field--auto-height.q-field--labeled .q-field__suffix {
+    padding-top:20px;
+  }
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__native,
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__prefix,
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__suffix {
+    padding-top:14px;
+  }
+
   &.q-field--auto-height.q-field--dense .q-field__control,
   &.q-field--auto-height.q-field--dense .q-field__native {
-    // min-height: 35px;
-    min-height: auto;
+    min-height: 34px;
   }
-  &.q-field__label {
+  &.q-field--auto-height.q-field--dense .q-field__control {
+    height: auto;
+  }
+
+  .q-field__label {
     top: 15px;
   }
   &.q-field--dense .q-field__label {
     top: 8px;
   }
 }
-*/
 
 .co-header,
 .co-footer,

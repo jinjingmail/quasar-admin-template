@@ -10,13 +10,13 @@ import drag from './utils/vue-dragdrag'
 Vue.directive('drag', drag)
 
 // 权限指令
-import permission from './components/Permission'
+import permission from 'components/permission/index'
 Vue.use(permission)
 
-import CoTable from './components/co-table'
-import CoDialog from './components/co-dialog'
-import CoCard from './components/co-card'
-import CoTree from './components/co-tree'
+import CoTable from 'components/co-table'
+import CoDialog from 'components/co-dialog'
+import CoCard from 'components/co-card'
+import CoTree from 'components/co-tree'
 
 import CoField from 'components/form/co-field.vue'
 import CoInput from 'components/form/co-input.vue'

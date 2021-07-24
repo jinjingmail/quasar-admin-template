@@ -50,8 +50,8 @@
       <template v-slot:top="props">
         <div class="q-ma-none">
           <div class="row q-gutter-sm">
-            <q-checkbox v-model="labelTop" label="label-top" />
-            <q-input dense outlined v-model.lazy="labelStyle" placeholder="form-label-style" style="width:280px"/>
+            <q-checkbox dense v-model="labelTop" label="label-top" />
+            <co-input dense outlined v-model.lazy="labelStyle" placeholder="form-label-style" style="width:280px"/>
           </div>
           <div class="q-gutter-sm">
             <q-radio v-model="labelAlign" val="auto" label="auto" />

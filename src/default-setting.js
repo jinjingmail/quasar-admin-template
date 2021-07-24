@@ -80,7 +80,9 @@ module.exports = {
   tableClassMobile: 'q-table--flat q-table--square',
   tableStyleMobile: '',
   /**
-   * Dialog样式
+   * Dialog样式:
+   * 使用 dialogClass 设置边框：
+   *  q-pa-sm
    * 使用 dialogClass 设置背景色：
    *  bg-teal
    * 使用 dialogStyle 设置背景色（含半透明）:

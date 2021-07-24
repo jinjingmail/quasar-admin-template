@@ -97,13 +97,13 @@
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
+    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
       <q-tooltip :delay="550" v-if="tooltip">{{labelView}}</q-tooltip>
     </q-btn>
-    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
       <q-tooltip :delay="550" v-if="tooltip">{{labelEdit}}</q-tooltip>
     </q-btn>
-    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
@@ -113,13 +113,13 @@
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
-            <q-btn v-close-popup flat>取消</q-btn>
-            <q-btn v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
+            <q-btn :dense="dense" v-close-popup flat>取消</q-btn>
+            <q-btn :dense="dense" v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
           </q-card-actions>
         </co-card>
       </q-popup-proxy>
     </q-btn>
-    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
       <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
     </q-btn>
     <slot name="end" />
@@ -163,10 +163,7 @@ export default {
     push: Boolean,
     unelevated: Boolean,
     glossy: Boolean,
-    dense: {
-      type: Boolean,
-      default: true
-    },
+    dense: Boolean,
     denseMenu: {
       type: Boolean,
       default: undefined

@@ -19,27 +19,27 @@
       ref="formDialog"
       title="表单演示"
       no-backdrop-dismiss
-      card-style="width:800px; max-width:95vw;"
+      card-style="width:1200px; max-width:95vw;"
     >
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
-          <q-checkbox v-model="labelTop" label="label-top" />
-          <co-input v-model.lazy="labelStyle" placeholder="form-label-style" style="width:255px"/>
+          <q-checkbox dense v-model="labelTop" label="label-top" />
+          <co-input dense v-model.lazy="labelStyle" placeholder="form-label-style" style="width:255px"/>
         </div>
         <div class="q-gutter-sm">
-          <q-radio v-model="labelAlign" val="auto" label="auto" />
-          <q-radio v-model="labelAlign" val="left" label="left" />
-          <q-radio v-model="labelAlign" val="center" label="center" />
-          <q-radio v-model="labelAlign" val="right" label="right" />
+          <q-radio dense v-model="labelAlign" val="auto" label="auto" />
+          <q-radio dense v-model="labelAlign" val="left" label="left" />
+          <q-radio dense v-model="labelAlign" val="center" label="center" />
+          <q-radio dense v-model="labelAlign" val="right" label="right" />
         </div>
         <div class="q-gutter-sm">
-          <q-radio v-model="labelWidth" val="fit-content" label="fit-content" />
-          <q-radio v-model="labelWidth" val="xsmall" label="xsmall" />
-          <q-radio v-model="labelWidth" val="small" label="small" />
-          <q-radio v-model="labelWidth" val="medium" label="medium" />
-          <q-radio v-model="labelWidth" val="large" label="large" />
-          <q-radio v-model="labelWidth" val="xlarge" label="xlarge" />
-          <q-radio v-model="labelWidth" val="xxlarge" label="xxlarge" />
+          <q-radio dense v-model="labelWidth" val="fit-content" label="fit-content" />
+          <q-radio dense v-model="labelWidth" val="xsmall" label="xsmall" />
+          <q-radio dense v-model="labelWidth" val="small" label="small" />
+          <q-radio dense v-model="labelWidth" val="medium" label="medium" />
+          <q-radio dense v-model="labelWidth" val="large" label="large" />
+          <q-radio dense v-model="labelWidth" val="xlarge" label="xlarge" />
+          <q-radio dense v-model="labelWidth" val="xxlarge" label="xxlarge" />
         </div>
       </div>
       <q-separator />
@@ -50,11 +50,15 @@
         :label-width="labelWidth"
         :form-label-style="labelStyle"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-input class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable dense>
+          <co-input dense class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable
+            outlined>
           </co-input>
-          <co-input class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办" v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
+          <co-input dense class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办"
+            placeholder="名称很长"
+            v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
+            outlined
             @blur="$q.notify({message:'名称 blur notify'})"
-            :rules="[val => !!val || 'Field is required']" dense/>
+            :rules="[val => !!val || 'Field is required']" />
           <co-input class="col-12 col-sm-6" dense form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
             <template v-slot:append>
               <q-icon v-if="!dialogForm.calories" name="search" />
@@ -78,19 +82,13 @@
           </co-input>
           <co-input class="col-12 col-sm-6" form-label="protein" form-label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></co-input>
           <co-input class="col-12 col-sm-6" form-label="sodium" form-label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></co-input>
-          <co-input class="col-12 col-sm-6" form-label="calcium" placeholder="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly">
-            <q-popup-proxy>
-              <co-card>
-                <div >ThisisPopup</div>
-              </co-card>
-            </q-popup-proxy>
-          </co-input>
+          <co-input class="col-12 col-sm-6" dense form-label="calcium" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly"/>
           <co-select
             class="col-12 col-sm-6"
+            dense
             form-label="protein5"
             label="选择"
             outlined
-            dense
             :disable="dialogFormReadonly"
             v-model="selectModel"
             no-filter
@@ -102,22 +100,23 @@
             emit-value
             map-options
           />
-          <co-input :dense="false" class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron" clearable :disable="dialogFormReadonly">
+          <co-input class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron"
+            outlined
+            label="大输入框"
+            clearable :disable="dialogFormReadonly">
           </co-input>
           <co-select
-            :dense="false"
             v-model="selectModel"
             form-label="big select"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             clearable
-            options-dense
             outlined
             use-input
             hide-selected
             fill-input
             input-debounce="0"
-            placeholder="选择巨头"
+            label="大选择框"
             :options="listOptions"
             :rules="[val => !!val || 'Field is required']"
           >
@@ -125,8 +124,35 @@
               <q-icon name="add"/>
             </template>
           </co-select>
+
+          <co-input class="col-12 col-sm-6" form-label="big input2" v-model="dialogForm.iron"
+            outlined
+            placeholder="大输入框"
+            clearable :disable="dialogFormReadonly">
+          </co-input>
+          <co-select
+            v-model="selectModel"
+            form-label="big select2"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            clearable
+            outlined
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            placeholder="大选择框"
+            :options="listOptions"
+            :rules="[val => !!val || 'Field is required']"
+          >
+            <template v-slot:append>
+              <q-icon name="add"/>
+            </template>
+          </co-select>
+
           <co-field
             class="col-12 col-sm-6"
+            dense
             form-label="options"
             :disable="dialogFormReadonly"
           >
@@ -140,8 +166,9 @@
           <co-option-group
             v-model="selectModel"
             class="col-12 col-sm-6"
+            dense
             :inline="true"
-            form-label="optionsGroup"
+            form-label="options Group"
             :disable="dialogFormReadonly"
             :options="mapOptions"
             option-value="id"
@@ -157,7 +184,6 @@
             option-label="desc"
             option-disable="inactive"
             clearable
-            outlined
             placeholder="选择巨头"
             :options="mapOptions"
             map-options
@@ -167,8 +193,9 @@
           <co-option-group
             v-model="selectModels"
             class="col-12 col-sm-6"
+            dense
             :inline="true"
-            form-label="optionsGroup"
+            form-label="optionsGroup2"
             :disable="dialogFormReadonly"
             :options="mapOptions"
             option-value="id"
@@ -220,13 +247,10 @@
             语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
             </div>
           </co-form-item>
-          <co-form-item class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
-            <div class="row q-gutter-none">
-              <q-radio v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
-              <q-radio v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
-              <q-radio v-model="shape" class="col-6 col-md-4" val="ellipse" label="Ellipse" />
-              <q-radio v-model="shape" class="col-6 col-md-4" val="polygon" label="Polygon" />
-            </div>
+          <co-form-item dense class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
+              <q-radio dense v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
+              <q-radio dense v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
+              <q-radio dense v-model="shape" class="col-6 col-md-4" val="ellipse" label="Ellipse" />
           </co-form-item>
 
           <co-date-select
@@ -246,6 +270,7 @@
           <co-date-select
             class="col-12 col-sm-6"
             form-label="DateRange"
+            dense
             v-model="dialogForm.date2"
             form-label-style="color:grey"
             clearable
@@ -260,6 +285,7 @@
           <co-tree-select
             class="col-12 col-sm-6"
             form-label="TreeTicked"
+            dense
             :nodes="treeDatas()"
             node-key="id"
             label-key="name"
@@ -272,6 +298,34 @@
             :disable="dialogFormReadonly"
             clearable
             :rules="[val => !!val || 'Field is required']"
+          />
+          <co-input
+            form-label="autogrow"
+            class="col-12 col-sm-6"
+            dense
+            v-model="text"
+            autogrow
+          />
+          <co-input
+            form-label="textarea"
+            class="col-12 col-sm-6"
+            dense
+            v-model="text"
+            type="textarea"
+            rows="2"
+          />
+          <co-input
+            form-label="autogrow big"
+            class="col-12 col-sm-6"
+            v-model="text"
+            autogrow
+          />
+          <co-input
+            form-label="textarea big"
+            class="col-12 col-sm-6"
+            v-model="text"
+            type="textarea"
+            rows="2"
           />
       </co-form>
       <q-card-actions class="q-pa-md">

@@ -14,9 +14,9 @@
 <template>
   <div class="row">
     <slot name="start" />
-    <co-field :dense="dense" borderless :outlined="false" class="col-auto">
+    <co-field :dense="dense" borderless :outlined="false" class="col-auto" :style="dense?'margin-top:3px':''">
       <template v-slot:control>
-        <div class="self-center full-width no-outline" tabindex="0">共 {{page.total}} 条</div>
+        共 {{page.total}} 条
       </template>
     </co-field>
     <q-pagination v-if="!computedNoPageIfOnlyOnePage"
@@ -30,11 +30,12 @@
       :icon-prev="iconPrevPage"
       :icon-next="iconNextPage"
       :max-pages="$q.screen.gt.xs?maxPages:5"
-      :size="dense?undefined:'18px'"
+      :size="dense?'13px':'16px'"
     >
     </q-pagination>
     <co-select v-if="!computedNoPageIfOnlyOnePage"
       class="col-auto"
+      :style="dense?'margin-top:3px':''"
       :dense="dense"
       :options-dense="dense"
       :value="page.size"

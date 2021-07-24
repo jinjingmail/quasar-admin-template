@@ -52,13 +52,12 @@
       <template v-slot:top-right="props">
 
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
-          <co-input placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
+          <co-input placeholder="名称" v-model="query.name" content-style="width:200px" clearable/>
           <co-date-select
             content-style="width:200px"
             placeholder="日期范围"
             v-model="query.dateRange"
             clearable
-            dense outlined
             use-input
             range
             />
