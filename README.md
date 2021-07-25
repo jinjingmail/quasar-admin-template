@@ -33,7 +33,6 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 
 ```bash
 TODO co-dialog
-  - TODO 标题栏紧凑一点
   - TODO 可移动的dialog的标题栏图标显示移动图标
   - TODO 标题栏添加可以折叠对话框内容的按钮
   - TODO dialog里面内容滚动时，可以不滚动标题栏、底部工具栏
@@ -44,18 +43,14 @@ TODO 页面总的增删改查工具栏，可以配置为变灰还是消失
 TODO 如果不显示 Tab 栏，则所有页面都不 keep-alive（不缓存）
 TODO 加快图标页加载速度
 TODO 菜单caption 附加文字颜色，改为灰色
-TODO 当左侧菜单不到顶的时候，菜单项有点考上了
-TODO 菜单再紧凑一些（做成配置项）
 TODO 在右侧打开外部url（iframe或其他方案）
 TODO 增加“个人设置”页面
-TODO 升级 quasar 到最新v1版
 TODO 菜单增加“new”标签支持
 
 TODO CoadminOptionGroup 自定义form项的错误提示
 TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
 TODO co-tree selected和ticked，可以设置“只选parent，只选leaf”
 
-TODO BUG CoadminSelect use-input的时候，会出现下拉列出的选项空白行的问题
 TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
 TODO BUG 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色
