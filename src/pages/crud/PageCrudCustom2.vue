@@ -35,36 +35,36 @@
     </co-dialog>
 
     <div class='row q-gutter-xs full-width q-pa-md'>
-        <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
-              input-class="text-center" @clear="crud.resetQuery()">
-          <template v-slot:after>
-            <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
-          </template>
-          <co-dialog ref="searchPopup"
-            seamless card-style="width:700px; max-width:95vw;">
-            <co-form ref="searchform"
-              label-width="small"
-              label-align="right"
-              class="q-pa-md row q-col-gutter-x-lg q-col-gutter-y-md">
-                <co-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" clearable/>
-                <co-date-select
-                  class="col-12 col-sm-6"
-                  form-label="date"
-                  placeholder="日期单选"
-                  clearable
-                  v-model="query.dateSingle"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" />
-                  </template>
-                </co-date-select>
-            </co-form>
-            <q-card-actions class="q-pa-md" align="center">
-              <q-btn label="关闭" flat v-close-popup />
-              <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
-            </q-card-actions>
-          </co-dialog>
-        </co-input>
+      <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
+            input-class="text-center" @clear="crud.resetQuery()">
+        <template v-slot:after>
+          <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
+        </template>
+        <co-dialog ref="searchPopup"
+          seamless card-style="width:700px; max-width:95vw;">
+          <co-form ref="searchform"
+            label-width="small"
+            label-align="right"
+            class="q-pa-md row q-col-gutter-x-lg q-col-gutter-y-md">
+              <co-input class="col-12 col-sm-6" form-label="名字" v-model="query.name" clearable/>
+              <co-date-select
+                class="col-12 col-sm-6"
+                form-label="date"
+                placeholder="日期单选"
+                clearable
+                v-model="query.dateSingle"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" />
+                </template>
+              </co-date-select>
+          </co-form>
+          <q-card-actions class="q-pa-md" align="center">
+            <q-btn label="关闭" flat v-close-popup />
+            <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+          </q-card-actions>
+        </co-dialog>
+      </co-input>
     </div>
 
     <co-table

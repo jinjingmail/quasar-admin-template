@@ -57,6 +57,10 @@ input:-ms-input-placeholder {
 .co-field,
 .co-option-group,
 .co-form-item {
+  /*输入框中的label，颜色变浅一些*/
+  .q-field__label {
+    color: $grey-7;
+  }
   .q-field__input {
     min-height: auto;
   }
@@ -98,12 +102,22 @@ input:-ms-input-placeholder {
   &.q-field--auto-height.q-field--labeled .q-field__native,
   &.q-field--auto-height.q-field--labeled .q-field__prefix,
   &.q-field--auto-height.q-field--labeled .q-field__suffix {
-    padding-top:20px;
+    padding-top:10px;
   }
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__native,
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__prefix,
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__suffix {
-    padding-top:14px;
+    padding-top: 3px;
+  }
+  &.q-field--dense.q-field--labeled .q-field__native,
+  &.q-field--dense.q-field--labeled .q-field__prefix,
+  &.q-field--dense.q-field--labeled .q-field__suffix {
+    padding-top: revert;
+  }
+  &.q-field--labeled .q-field__native,
+  &.q-field--labeled .q-field__prefix,
+  &.q-field--labeled .q-field__suffix {
+    padding-top: 10px;
   }
 
   &.q-field--auto-height.q-field--dense .q-field__control,
@@ -115,10 +129,29 @@ input:-ms-input-placeholder {
   }
 
   .q-field__label {
-    top: 15px;
+    top: 13px;
+    font-size: inherit;
   }
   &.q-field--dense .q-field__label {
     top: 8px;
+  }
+  &.q-field--float .q-field__label {
+    top: 9px;
+  }
+  &.q-field--dense.q-field--float .q-field__label {
+    top: 0px;
+  }
+  &.q-field--focused .q-field__label {
+    top: -5px;
+  }
+  &.q-field--dense.q-field--focused .q-field__label {
+    top: -7px;
+  }
+  &.q-textarea.q-field--dense.q-field--labeled .q-field__control-container {
+    padding-top: 7px;
+  }
+  &.q-textarea.q-field--labeled .q-field__control-container {
+    padding-top: 5px;
   }
 }
 

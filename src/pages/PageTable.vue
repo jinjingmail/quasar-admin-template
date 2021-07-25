@@ -16,6 +16,105 @@
     </co-dialog>
 
     <co-dialog
+      ref="formDialog2"
+      title="表单演示2"
+      no-backdrop-dismiss
+      card-style="width:900px; max-width:95vw;"
+    >
+      <co-form ref="dialogForm"
+        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
+
+          <co-input class="col-12 col-sm-6" dense label-slot label="输入框第一个" v-model="dialogForm.calcium" filled>
+            <template v-slot:label>
+              <span style="color: var(--q-color-primary)">输入框第一个</span>
+            </template>
+          </co-input>
+          <co-input class="col-12 col-sm-6" dense label="输入框第二个" v-model="dialogForm.calcium" filled  :rules="[val => !!val || 'Field is required']"/>
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            label-slot
+            label="选择框第一个"
+            filled
+            use-input
+            hide-selected
+            fill-input
+            v-model="selectModel"
+            no-filter
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          >
+            <template v-slot:label>
+              <span style="color: var(--q-color-primary)">输入框第一个</span>
+            </template>
+          </co-select>
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            label="选择框第二个"
+            filled
+            v-model="selectModel"
+            no-filter
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          />
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            label="选择框第三个"
+            label-slot
+            filled
+            v-model="selectModel"
+            no-filter
+            use-input
+            hide-selected
+            fill-input
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          >
+            <template v-slot:label>
+              <span style="color: var(--q-color-primary)">Slot 标签</span>
+            </template>
+          </co-select>
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            label="选择框第四个"
+            filled
+            v-model="selectModel"
+            no-filter
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          />
+      </co-form>
+      <q-card-actions class="q-pa-md">
+        <q-space />
+        <q-btn label="取消" flat v-close-popup />
+        <q-btn label="保存"  type="submit" color="primary" @click="$refs.dialogForm.submit()"/>
+      </q-card-actions>
+    </co-dialog>
+
+    <co-dialog
       ref="formDialog"
       title="表单演示"
       no-backdrop-dismiss
@@ -82,13 +181,21 @@
           </co-input>
           <co-input class="col-12 col-sm-6" form-label="protein" form-label-style="color:green" v-model="dialogForm.protein" :outlined="false"  :disable="dialogFormReadonly"></co-input>
           <co-input class="col-12 col-sm-6" form-label="sodium" form-label-style="background-color:grey" v-model="dialogForm.sodium" filled :disable="dialogFormReadonly"></co-input>
-          <co-input class="col-12 col-sm-6" dense form-label="calcium" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly"/>
+          <co-input class="col-12 col-sm-6" dense form-label="calcium1" label="calcium" v-model="dialogForm.calcium" :disable="dialogFormReadonly" :rules="[val => !!val || 'Field is required']"/>
+          <co-input class="col-12 col-sm-6" dense form-label="calcium2" label="calcium" label-slot v-model="dialogForm.calcium" :disable="dialogFormReadonly" standout>
+            <template v-slot:label>
+              <span style="color: green">Label Slot 标签</span>
+            </template>
+          </co-input>
           <co-select
             class="col-12 col-sm-6"
             dense
-            form-label="protein5"
-            label="选择"
-            outlined
+            form-label="protein1"
+            placeholder="选择"
+            filled
+            use-input
+            hide-selected
+            fill-input
             :disable="dialogFormReadonly"
             v-model="selectModel"
             no-filter
@@ -100,14 +207,67 @@
             emit-value
             map-options
           />
-          <co-input class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron"
-            outlined
-            label="大输入框"
-            clearable :disable="dialogFormReadonly">
-          </co-input>
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            form-label="protein2"
+            filled
+            :disable="dialogFormReadonly"
+            v-model="selectModel"
+            no-filter
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          />
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            form-label="protein3"
+            label-slot
+            label="选择"
+            filled
+            :disable="dialogFormReadonly"
+            v-model="selectModel"
+            no-filter
+            use-input
+            hide-selected
+            fill-input
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          >
+            <template v-slot:label>
+              <span style="color: var(--q-color-primary)">Label Slot 标签</span>
+            </template>
+          </co-select>
+          <co-select
+            class="col-12 col-sm-6"
+            dense
+            form-label="protein4"
+            label="选择"
+            filled
+            :disable="dialogFormReadonly"
+            v-model="selectModel"
+            no-filter
+            :options="mapOptions"
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            emit-value
+            map-options
+          />
           <co-select
             v-model="selectModel"
-            form-label="big select"
+            form-label="big select1"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             clearable
@@ -124,12 +284,6 @@
               <q-icon name="add"/>
             </template>
           </co-select>
-
-          <co-input class="col-12 col-sm-6" form-label="big input2" v-model="dialogForm.iron"
-            outlined
-            placeholder="大输入框"
-            clearable :disable="dialogFormReadonly">
-          </co-input>
           <co-select
             v-model="selectModel"
             form-label="big select2"
@@ -149,6 +303,54 @@
               <q-icon name="add"/>
             </template>
           </co-select>
+          <co-select
+            v-model="selectModel"
+            form-label="big select3"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            clearable
+            outlined
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            placeholder="大选择框"
+            :options="listOptions"
+            :rules="[val => !!val || 'Field is required']"
+          >
+          </co-select>
+          <co-select
+            v-model="selectModel"
+            form-label="big select4"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            clearable
+            outlined
+            input-debounce="0"
+            label="大选择框"
+            label-slot
+            :options="listOptions"
+            :rules="[val => !!val || 'Field is required']"
+          >
+            <template v-slot:label>
+              Label Slot 标签
+            </template>
+            <template v-slot:append>
+              <q-icon name="add"/>
+            </template>
+          </co-select>
+
+          <co-input class="col-12 col-sm-6" form-label="big input" v-model="dialogForm.iron"
+            outlined
+            label="大输入框"
+            clearable :disable="dialogFormReadonly">
+          </co-input>
+
+          <co-input class="col-12 col-sm-6" form-label="big input2" v-model="dialogForm.iron"
+            outlined
+            placeholder="大输入框"
+            clearable :disable="dialogFormReadonly">
+          </co-input>
 
           <co-field
             class="col-12 col-sm-6"
@@ -247,11 +449,21 @@
             语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
             </div>
           </co-form-item>
-          <co-form-item dense class="col-12 col-sm-6" form-label="RIGHT" label-align="right" label-width="small">
+
+          <co-field dense class="col-12 col-sm-6" form-label="text field1" readonly>
+            <template v-slot:control>语句用于基于不同条件执行不同动作</template>
+          </co-field>
+          <co-field dense class="col-12 col-sm-6" form-label="text field2" disable>
+            <template v-slot:control>语句用于基于不同条件执行不同动作</template>
+          </co-field>
+
+          <co-field dense borderless class="col-12 col-sm-6" form-label="RIGHT" label-align="right" disable>
+            <template v-slot:control>
               <q-radio dense v-model="shape" class="col-6 col-md-4" val="line" label="Line" />
               <q-radio dense v-model="shape" class="col-6 col-md-4" val="rectangle" label="Rectangle" />
               <q-radio dense v-model="shape" class="col-6 col-md-4" val="ellipse" label="Ellipse" />
-          </co-form-item>
+            </template>
+          </co-field>
 
           <co-date-select
             class="col-12 col-sm-6"
@@ -300,33 +512,75 @@
             :rules="[val => !!val || 'Field is required']"
           />
           <co-input
-            form-label="autogrow"
+            form-label="autogrow1"
+            class="col-12 col-sm-6"
+            dense
+            v-model="text"
+            autogrow
+            :rules="[val => !!val || 'Field is required']"
+          />
+          <co-input
+            form-label="textarea1"
+            class="col-12 col-sm-6"
+            dense
+            v-model="text"
+            type="textarea"
+            rows="2"
+            :rules="[val => !!val || 'Field is required']"
+          />
+          <co-input
+            form-label="autogrow2"
+            label="文本域"
             class="col-12 col-sm-6"
             dense
             v-model="text"
             autogrow
           />
           <co-input
-            form-label="textarea"
+            form-label="textarea2"
+            label="文本域"
             class="col-12 col-sm-6"
             dense
             v-model="text"
             type="textarea"
             rows="2"
           />
+
           <co-input
-            form-label="autogrow big"
+            form-label="autogrow big1"
             class="col-12 col-sm-6"
             v-model="text"
             autogrow
           />
           <co-input
-            form-label="textarea big"
+            form-label="textarea big1"
             class="col-12 col-sm-6"
             v-model="text"
             type="textarea"
             rows="2"
           />
+          <co-input
+            form-label="autogrow big2"
+            label="文本域"
+            class="col-12 col-sm-6"
+            v-model="text"
+            autogrow
+            :rules="[val => !!val || 'Field is required']"
+          />
+          <co-input
+            form-label="textarea big2"
+            label="文本域"
+            label-slot
+            class="col-12 col-sm-6"
+            v-model="text"
+            type="textarea"
+            rows="2"
+            :rules="[val => !!val || 'Field is required']"
+          >
+            <template v-slot:label>
+              Label Slot 标签
+            </template>
+          </co-input>
       </co-form>
       <q-card-actions class="q-pa-md">
         <q-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
@@ -357,7 +611,8 @@
             <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-btn label="打开Coadmin对话框" @click="$refs.formDialog.show()"></q-btn>
+                  <q-btn flat label="对话框样式1" @click="$refs.formDialog.show()"></q-btn>
+                  <q-btn flat label="对话框样式2" @click="$refs.formDialog2.show()"></q-btn>
                 </div>
               </div>
             </q-btn-dropdown>
