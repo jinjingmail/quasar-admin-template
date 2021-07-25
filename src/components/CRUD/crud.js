@@ -138,8 +138,13 @@ function CRUD(options) {
             table.store.states.treeData = {}
             table.store.states.lazyTreeNodeMap = {}
           }
-          crud.page.total = data.totalElements
-          crud.data = data.content
+          if (data.status && data.data) {
+            crud.page.total = data.data.totalElements
+            crud.data = data.data.content
+          } else {
+            crud.page.total = data.totalElements
+            crud.data = data.content
+          }
           crud.resetDataStatus()
           // time 毫秒后显示表格
           setTimeout(() => {
@@ -280,7 +285,13 @@ function CRUD(options) {
         return
       }
       crud.status.add = CRUD.STATUS.PROCESSING
-      crud.crudMethod.add(crud.form).then(() => {
+      crud.crudMethod.add(crud.form).then((res) => {
+        if (res && typeof res.data === 'number' && res.data <= 0) {
+          crud.status.add = CRUD.STATUS.PREPARED
+          callVmHook(crud, CRUD.HOOK.afterAddError)
+          crud.notifyError('添加失败')
+          return
+        }
         crud.status.add = CRUD.STATUS.NORMAL
         crud.resetForm()
         crud.notifySuccess(crud.msg.add)
@@ -299,7 +310,13 @@ function CRUD(options) {
         return
       }
       crud.status.edit = CRUD.STATUS.PROCESSING
-      crud.crudMethod.edit(crud.form).then(() => {
+      crud.crudMethod.edit(crud.form).then((res) => {
+        if (res && typeof res.data === 'number' && res.data <= 0) {
+          crud.status.edit = CRUD.STATUS.PREPARED
+          callVmHook(crud, CRUD.HOOK.afterEditError)
+          crud.notifyError('编辑失败')
+          return
+        }
         crud.status.edit = CRUD.STATUS.NORMAL
         crud.getDataStatus(crud.getDataId(crud.form)).edit = CRUD.STATUS.NORMAL
         crud.notifySuccess(crud.msg.edit)
@@ -334,7 +351,17 @@ function CRUD(options) {
       if (!delAll) {
         dataStatus.delete = CRUD.STATUS.PROCESSING
       }
-      return crud.crudMethod.del(ids).then(() => {
+      return crud.crudMethod.del(ids).then((res) => {
+        if (res && typeof res.data === 'number' && res.data <= 0) {
+          if (delAll) {
+            crud.delAllLoading = false
+          } else {
+            dataStatus.delete = CRUD.STATUS.PREPARED
+            callVmHook(crud, CRUD.HOOK.afterDeleteError, data)
+          }
+          crud.notifyError('删除失败')
+          return
+        }
         if (delAll) {
           crud.delAllLoading = false
         } else {
@@ -515,10 +542,10 @@ function CRUD(options) {
       })
     },
     notifyError(title, err) {
-      if (err.response && err.response.data && err.response.data.message) {
+      if (err && err.response && err.response.data && err.response.data.message) {
         title = title + err.response.data.message
       } else {
-        title = title + JSON.stringify(err)
+        title = title + (typeof err === 'undefined' ? '' : JSON.stringify(err))
       }
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,
@@ -532,7 +559,7 @@ function CRUD(options) {
       if (err && err.response && err.response.data && err.response.data.message) {
         title = title + err.response.data.message
       } else {
-        title = title + JSON.stringify(err)
+        title = title + (typeof err === 'undefined' ? '' : JSON.stringify(err))
       }
       Notify.create({
         type: CRUD.NOTIFICATION_TYPE.ERROR,

@@ -49,7 +49,7 @@
             ref="filter"
             dense
             v-model="filterInput"
-            :placeholder="filterPlaceholder"
+            :label="filterPlaceholder"
             class="col"
           >
             <template v-slot:append>

@@ -12,14 +12,14 @@
 
 ::-webkit-scrollbar-track {
   width: 6px;
-  background: rgba(#787a7a, 0.3);
+  background: rgba(#dedfdf, 0.3);
   -webkit-border-radius: 2em;
   -moz-border-radius: 2em;
   border-radius: 2em;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(#787a7a, 0.4);
+  background-color: rgba(#cecfcf, 0.4);
   background-clip: padding-box;
   min-height: 28px;
   -webkit-border-radius: 2em;
@@ -59,7 +59,7 @@ input:-ms-input-placeholder {
 .co-form-item {
   /*输入框中的label，颜色变浅一些*/
   .q-field__label {
-    color: $grey-7;
+    color: #ababab; /*$grey-7*/
   }
   .q-field__input {
     min-height: auto;
