@@ -52,6 +52,13 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
+.q-btn.disabled {
+  opacity: 0.4 !important;
+}
+.q-field--disabled .q-field__control > div {
+  opacity: 0.5 !important;
+}
+
 .co-input,
 .co-select,
 .co-field,
