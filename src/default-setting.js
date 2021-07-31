@@ -22,6 +22,10 @@ module.exports = {
    */
   elevatedHeader: false,
   /**
+   * @description 左侧菜单栏是否显示阴影
+   */
+  elevatedSidebar: true,
+  /**
    * @description 是否只保持一个子菜单的展开
    */
   uniqueOpened: true,
@@ -79,7 +83,7 @@ module.exports = {
    * 无圆角：
    *  q-table--square
    */
-  tableClass: 'q-table--flat q-table--square',
+  tableClass: 'q-table--flat q-table--square q-pa-xs',
   tableStyle: '',
   tableClassMobile: 'q-table--flat q-table--square',
   tableStyleMobile: '',

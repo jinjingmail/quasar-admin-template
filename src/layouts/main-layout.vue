@@ -187,6 +187,7 @@
               <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
               <q-toggle :value="elevatedHeader" :val="true" label="顶部阴影" @click.native="changeSetting({key:'elevatedHeader', value: !elevatedHeader})"/>
+              <q-toggle :value="elevatedSidebar" :val="true" label="左侧菜单阴影" @click.native="changeSetting({key:'elevatedSidebar', value: !elevatedSidebar})"/>
               <q-toggle :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})" v-if="$q.screen.gt.xs"/>
               <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（需刷新页面）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})" v-if="$q.screen.gt.xs"/>
               <q-toggle :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
@@ -332,13 +333,13 @@
       v-model="leftDrawerOpen"
       show-if-above
       side="left"
-      elevated
       :mini="miniCheck"
       @mouseover="leftDrawerMouseOver"
       @mouseout="leftDrawerMouseOut"
       :mini-to-overlay="miniToOverlay"
       :width="parseInt(sidebarWidth)"
       :breakpoint="599"
+      :elevated="elevatedSidebar"
       :bordered="false"
     >
       <div class="sidebar-body" :style="drawerStyles">
@@ -502,6 +503,7 @@ export default {
       'tagsViewTop',
       'fixedHeader',
       'elevatedHeader',
+      'elevatedSidebar',
       'uniqueOpened',
       'sidebarTop',
       'sidebarLogo',
@@ -623,6 +625,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.co-sidebar .sidebar-body  ::v-deep .q-separator {
+  background: rgb(165 165 165 / 41%);
+}
+
 .layout-main-bg-image {
   background-image: url("~assets/index.svg");
   background-repeat: no-repeat;

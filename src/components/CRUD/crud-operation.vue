@@ -50,9 +50,9 @@
       :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <!--右侧插槽-->
     <slot name="end" />
-    <co-dialog ref="dialogDelete" no-max :title="labelDel" card-style="width:250px; max-width:95vw;">
+    <co-dialog ref="dialogDelete" no-max :title="labelDel" card-style="width:250px; max-width:95vw;" card-class="bg-deep-orange">
       <q-card-section>
-        <div class="text-body1">
+        <div class="text-body1 text-white">
           <template v-if="msgDel">
             {{msgDel}}
           </template>
@@ -62,8 +62,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
-        <q-btn label="取消" v-close-popup flat :dense="dense" :size="size" :padding="padding"/>
-        <q-btn label="是的" v-close-popup  :dense="dense" :size="size" :padding="padding" icon="check" color="primary" @click="doDelete(crud.selections)" />
+        <q-btn label="取消" v-close-popup flat :dense="dense" :size="size" :padding="padding" color="white"/>
+        <q-btn label="是的" v-close-popup flat :dense="dense" :size="size" :padding="padding" icon="delete" color="white" @click="doDelete(crud.selections)" />
       </q-card-actions>
     </co-dialog>
   </div>

@@ -68,14 +68,14 @@
             <q-item-label :color="colorDel">{{labelDel}}</q-item-label>
           </q-item-section>
           <q-popup-proxy>
-            <co-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
-              <q-card-section class="bg-primary text-white">
-                <div class="text-subtitle1 text-no-wrap">{{msgDel}}</div>
+            <co-card style="min-width: 160px;" class="bg-deep-orange">
+              <q-card-section class="">
+                <div class="text-subtitle1 text-no-wrap text-white">{{msgDel}}</div>
               </q-card-section>
               <q-separator />
               <q-card-actions align="right" class="q-pa-md">
-                <q-btn v-close-popup flat>取消</q-btn>
-                <q-btn v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
+              <q-btn :dense="dense" v-close-popup flat color="white">取消</q-btn>
+              <q-btn :dense="dense" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
               </q-card-actions>
             </co-card>
           </q-popup-proxy>
@@ -107,14 +107,14 @@
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
-        <co-card style="min-width: 160px;" :class="$q.dark.isActive?'bg-grey-9':''">
-          <q-card-section class="bg-primary text-white">
-            <div class="text-subtitle1 text-no-wrap">{{msgDel}}</div>
+        <co-card style="min-width: 160px;" class="bg-deep-orange">
+          <q-card-section class="">
+            <div class="text-subtitle1 text-no-wrap text-white">{{msgDel}}</div>
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
-            <q-btn :dense="dense" v-close-popup flat>取消</q-btn>
-            <q-btn :dense="dense" v-close-popup color="primary" icon="check" @click="doDelete">是的</q-btn>
+            <q-btn :dense="dense" v-close-popup flat color="white">取消</q-btn>
+            <q-btn :dense="dense" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
           </q-card-actions>
         </co-card>
       </q-popup-proxy>

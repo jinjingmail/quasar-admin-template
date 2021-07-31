@@ -36,22 +36,22 @@
       :loading="loading" :loading-spinner="loadingSpinner" :loading-delay="loadingDelay">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
-          <q-toolbar v-if="!noDrag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none cursor-move">
+          <q-toolbar v-if="!noDrag && !maxscreen" key="drag" v-drag="{moveElId: uuid, dragOutY:40}" class="q-pl-none cursor-move">
             <slot name="header_left">
               <q-avatar v-if="!!icon">
                 <q-icon :name="icon"/>
               </q-avatar>
-              <div class="text-subtitle1">{{title}}</div>
+              <div class="text-subtitle1 non-selectable">{{title}}</div>
             </slot>
           </q-toolbar>
-          <template v-else>
+          <q-toolbar v-else class="q-pl-none" key="no-drag">
             <slot name="header_left">
               <q-avatar v-if="!!icon">
                 <q-icon :name="icon"/>
               </q-avatar>
-              <div class="text-subtitle1">{{title}}</div>
+              <div class="text-subtitle1 non-selectable">{{title}}</div>
             </slot>
-          </template>
+          </q-toolbar>
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
@@ -91,7 +91,10 @@ export default {
       default: ''
     },
     loading: Boolean,
-    loadingSpinner: String,
+    loadingSpinner: {
+      type: String,
+      validator: v => ['', 'cycle', 'gears', 'ios', 'ball', 'dots'].includes(v)
+    },
     loadingDelay: Number,
 
     noHeader: Boolean,
@@ -197,7 +200,7 @@ export default {
         if (this.maxscreen) {
           this._toMaxScreen()
         } else if (this.tempStyleWidth) {
-          this._toNormalScreen()
+          //this._toNormalScreen()
         }
       })
     },
