@@ -10,6 +10,7 @@
     ref="input"
     v-on="listenersOfInput"
     v-bind="$attrs"
+    autogrow
     :value="computedInputValue"
     :readonly="readonly"
     :disable="disable"
@@ -147,7 +148,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeSelected = newVal
-          this.__refreshTextInputDisplay()
+          //this.__refreshTextInputDisplay()
         }
       }
     },
@@ -156,7 +157,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeTicked = newVal
-          this.__refreshTextInputDisplay()
+          //this.__refreshTextInputDisplay()
         }
       }
     },

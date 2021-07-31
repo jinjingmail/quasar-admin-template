@@ -155,7 +155,7 @@
           <co-input dense class="col-12 col-sm-6" form-label="名称很长怎么办名称很长怎么办名称很长怎么办"
             placeholder="名称很长"
             v-model="dialogForm.name" clearable :disable="dialogFormReadonly"
-            outlined
+            standout
             @blur="$q.notify({message:'名称 blur notify'})"
             :rules="[val => !!val || 'Field is required']" />
           <co-input class="col-12 col-sm-6" dense form-label="calories" label="标签" v-model="dialogForm.calories" :disable="dialogFormReadonly" ref="form_calories">
@@ -289,7 +289,6 @@
             form-label="big select2"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
-            clearable
             outlined
             use-input
             hide-selected
@@ -405,6 +404,7 @@
             option-disable="inactive"
             use-input
             fill-input
+            use-chips
             input-debounce="0"
             :options="mapOptions"
             map-options

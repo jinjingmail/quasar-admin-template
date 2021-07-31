@@ -34,8 +34,6 @@
       :readonly="readonly"
       hide-dropdown-icon
       @filter="_filterFn"
-      @mouseover.native="hover=true"
-      @mouseleave.native="hover=false"
       @popup-show="_popupshow"
       @popup-hide="_popuphide"
     >
@@ -47,7 +45,7 @@
       </template>
       <template v-slot:append>
         <slot name="append" />
-        <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
+        <template v-if="clearable && _hasValue() && !disable">
           <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
         </template>
         <template v-else>
@@ -84,8 +82,6 @@
     :readonly="readonly"
     hide-dropdown-icon
     @filter="_filterFn"
-    @mouseover.native="hover=true"
-    @mouseleave.native="hover=false"
     @popup-show="_popupshow"
     @popup-hide="_popuphide"
   >
@@ -98,7 +94,7 @@
 
     <template v-slot:append>
       <slot name="append" />
-      <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
+      <template v-if="clearable && _hasValue() && !disable">
         <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
       </template>
       <template v-else>
@@ -166,7 +162,6 @@ export default {
   },
   data () {
     return {
-      hover: false,
       optionsInData: this.options,
       popupShow: false
     }
@@ -209,12 +204,27 @@ export default {
     }
   },
   methods: {
+    _hasValue() {
+      if (Array.isArray(this.value)) {
+        return this.value.length > 0
+      } else {
+        if (this.value == null) {
+          return false
+        }
+        const type = typeof this.value
+        if (type === 'undefined') {
+          return false
+        }
+        if (type === 'string') {
+          return this.value !== ''
+        }
+        return true
+      }
+    },
     _doClear () {
       const oldVal = this.value
       this._modelChange(null)
-      //this.$nextTick(() => {
       this.$emit('clear', oldVal)
-      //})
     },
     _modelChange (valNew) {
       if (!this.disable) {
