@@ -54,11 +54,11 @@
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
-            <q-btn v-if="!noMax" flat round dense
+            <q-btn v-if="!noMax" flat dense
               :icon="maxscreen?icon_max_exit:icon_max"
               @click="toggleMaxScreen()"/>
 
-            <q-btn v-if="!noClose" flat round dense
+            <q-btn v-if="!noClose" flat dense
               :icon="icon_close?icon_close:'close'"
               @click="closeMethod?closeMethod():$refs.dialog.hide()"/>
           </slot>

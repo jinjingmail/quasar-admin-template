@@ -309,7 +309,7 @@ export default {
         if (this.isFullscreen) {
           height = '100vh'
         } else {
-          let sub = '- 50px ' //q-page
+          let sub = '- 42px ' //q-page
           if (this.tagsView) {
             sub += '- 40px '
           } else {

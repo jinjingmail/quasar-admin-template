@@ -52,11 +52,21 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
+.q-toolbar {
+  min-height: 40px;
+}
 .q-btn.disabled {
   opacity: 0.4 !important;
 }
 .q-field--disabled .q-field__control > div {
   opacity: 0.5 !important;
+}
+
+.co-select.q-select--with-input.q-select--with-chips input.q-field__input.fit {
+  height: 24px !important;
+}
+.co-select.q-field--dense.q-select--with-chips .q-chip {
+  margin: 0 4px 8px 4px;
 }
 
 .co-input,
@@ -71,6 +81,7 @@ input:-ms-input-placeholder {
   .q-field__input {
     min-height: auto;
   }
+
   &.q-textarea .q-field__control {
     min-height: 45px;
     height: auto;

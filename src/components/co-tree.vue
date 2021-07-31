@@ -1,7 +1,7 @@
 <!--
   增加插槽：
     loading
-    toolbar:         过滤界面
+    toolbar
     toolbar-start
     toolbar-end
   增加属性：
@@ -36,6 +36,8 @@
 -->
 <template>
   <q-card class="co-tree custom-other-bg"
+    :class="settingClass"
+    :style="settingStyle"
     :tag="tag"
     :flat="flat"
     :square="square"
@@ -136,6 +138,8 @@
 </template>
 
 <script>
+import Setting from '@/default-setting'
+
 export default {
   name: 'CoTree',
   inheritAttrs: false,
@@ -272,6 +276,20 @@ export default {
     }
   },
   computed: {
+    settingClass () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.treeClass
+      } else {
+        return Setting.treeClassMobile
+      }
+    },
+    settingStyle () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.treeStyle
+      } else {
+        return Setting.treeStyleMobile
+      }
+    },
     computedDynamicSlotNames () {
       const names = new Set()
       for (const key in this.$scopedSlots) {

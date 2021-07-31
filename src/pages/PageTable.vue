@@ -379,7 +379,41 @@
           />
           <co-select
             v-model="selectModels"
-            form-label="multiselect"
+            form-label="multiselect1"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            dense
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            clearable
+            use-chips
+            placeholder="选择巨头"
+            :options="mapOptions"
+            map-options
+            emit-value
+            multiple
+            />
+          <co-select
+            v-model="selectModels"
+            form-label="multiselect2"
+            class="col-12 col-sm-6"
+            :disable="dialogFormReadonly"
+            dense
+            option-value="id"
+            option-label="desc"
+            option-disable="inactive"
+            use-input
+            fill-input
+            input-debounce="0"
+            :options="mapOptions"
+            map-options
+            emit-value
+            multiple
+            />
+          <co-select
+            v-model="selectModels"
+            form-label="multiselect3"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             option-value="id"

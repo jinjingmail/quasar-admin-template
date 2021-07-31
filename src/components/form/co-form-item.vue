@@ -7,7 +7,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
       :style="computedLabelStyle">
-      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
     <div class="col co-form-item">
       <slot />

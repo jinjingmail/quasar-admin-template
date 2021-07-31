@@ -11,7 +11,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
       :style="computedLabelStyle">
-      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
     <q-input
       :value="value"
@@ -35,7 +35,7 @@
       </template>
       <template v-slot:append>
         <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
+          <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
         </template>
         <slot v-else name="append"/>
       </template>
@@ -64,7 +64,7 @@
 
     <template v-slot:append>
       <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
+        <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
       </template>
       <slot v-else name="append"/>
     </template>

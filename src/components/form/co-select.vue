@@ -9,7 +9,7 @@
   <div v-if="formLabel" :class="computedClass" class="form-label">
     <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
       :style="computedLabelStyle">
-      <slot name="form-label"><template v-if="rules && rules.length > 0">* </template>{{formLabel}}</slot>
+      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
     <q-select
       :value="value"
@@ -48,15 +48,14 @@
       <template v-slot:append>
         <slot name="append" />
         <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-          <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
+          <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
         </template>
         <template v-else>
           <q-icon
             v-if="!hideDropdownIcon"
             class="cursor-pointer"
             :style="popupShow?'transform: rotate(180deg)':''"
-            :name="dropdownIcon"
-            @click="_doCustomCursorClick()"/>
+            :name="dropdownIcon"/>
         </template>
       </template>
     </q-select>
@@ -100,7 +99,7 @@
     <template v-slot:append>
       <slot name="append" />
       <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-        <q-icon :name='clearIcon' class='cursor-pointer' @click="_doClear()"/>
+        <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
       </template>
       <template v-else>
         <q-icon
@@ -108,7 +107,7 @@
           class="cursor-pointer"
           :style="popupShow?'transform: rotate(180deg)':''"
           :name="dropdownIcon"
-          @click="_doCustomCursorClick()"/>
+          />
       </template>
     </template>
 
@@ -210,15 +209,6 @@ export default {
     }
   },
   methods: {
-    _doCustomCursorClick () {
-      if (this.useInput) {
-        if (this.popupShow) {
-          this.$refs.select.hidePopup()
-        } else {
-          this.$refs.select.showPopup()
-        }
-      }
-    },
     _doClear () {
       const oldVal = this.value
       this._modelChange(null)

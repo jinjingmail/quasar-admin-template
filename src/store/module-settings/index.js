@@ -83,6 +83,7 @@ const state = {
   tagsView: get('setting.tagsView', defaultSetting.tagsView),
   tagsViewTop: get('setting.tagsViewTop', defaultSetting.tagsViewTop),
   fixedHeader: get('setting.fixedHeader', defaultSetting.fixedHeader),
+  elevatedHeader: get('setting.elevatedHeader', defaultSetting.elevatedHeader),
   sidebarLogo: get('setting.sidebarLogo', defaultSetting.sidebarLogo),
   sidebarTop: get('setting.sidebarTop', defaultSetting.sidebarTop),
   sidebarWidth: get('setting.sidebarWidth', defaultSetting.sidebarWidth),
@@ -124,6 +125,7 @@ const getters = {
   tagsView: state => state.tagsView,
   tagsViewTop: state => state.tagsViewTop,
   fixedHeader: state => state.fixedHeader,
+  elevatedHeader: state => state.elevatedHeader,
   sidebarLogo: state => state.sidebarLogo,
   sidebarTop: state => state.sidebarTop,
   sidebarWidth: state => state.sidebarWidth,
@@ -162,7 +164,7 @@ const mutations = {
 
 const actions = {
   init ({ commit }) {
-    console.log('do setting init')
+    console.log('state: do setting init')
     /*
      * 通过commit darkmode，间接更新颜色css变量
      */

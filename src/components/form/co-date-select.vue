@@ -64,11 +64,9 @@
 </template>
 
 <script>
-// import FormMixin from './form-mixin.js'
 export default {
   name: 'CoDateSelect',
   inheritAttrs: false,
-  // mixins: [FormMixin],
   props: {
     disable: Boolean,
     readonly: Boolean,

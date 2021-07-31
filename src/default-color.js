@@ -20,8 +20,8 @@ module.exports = {
   /**
    * 页面背景墙底色
    */
-  colorPageBg: 'rgb(238, 238, 238)',
-  colorPageBgDark: 'rgb(41, 41, 41)',
+  colorPageBg: 'rgb(238, 238, 238, 1.0)',
+  colorPageBgDark: 'rgb(41, 41, 41, 1.0)',
   /**
    * Table表格页面的背景颜色
    */

@@ -100,7 +100,10 @@ export default {
       default: 'primary'
     },
     selectable: Boolean, // 是否可以使用 selected.sync 属性
-    selected: {}, // sync
+    selected: {
+      type: [Number, String],
+      default: null
+    }, // sync
     ticked: Array, // sync
     expanded: Array, // sync
     tickStrategy: {
@@ -137,14 +140,17 @@ export default {
     /*
      * 调用 popupTree.show() 触发一次事件发送
      */
-    this.$refs.popupTree.show()
-    this.$nextTick(() => {
-      this.$refs.popupTree.hide()
-    })
+    console.log('tree-select.selected=' + this.selected + ', this.computedInputValue=' + this.computedInputValue)
+    if ((this.selectable && this.selected != null) || (Array.isArray(this.ticked) && this.ticked.length > 0)) {
+      this.$refs.popupTree.show()
+      this.$nextTick(() => {
+        this.$refs.popupTree.hide()
+      })
+    }
   },
   watch: {
     selected: {
-      immediate: true,
+      immediate: false,
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeSelected = newVal
@@ -152,7 +158,7 @@ export default {
       }
     },
     ticked: {
-      immediate: true,
+      immediate: false,
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeTicked = newVal
@@ -212,76 +218,17 @@ export default {
       this.$emit('update:ticked', nodeKeys)
     },
     _clearInput () {
+      this.popupTreeTickedLabels = ''
+      this.popupTreeSelectedLabel = ''
       this.popupTreeSelected = null
       this.popupTreeTicked = []
       this.popupTreeExpanded = []
-      if (this.selectable) this.$emit('update:selected', null)
-      this.$emit('update:ticked', [])
-    },
-    /*
-    keysToLabels (keys) {
-      if (!keys || keys.length === 0) {
-        return null
-      }
-      if (!this.labelKey) {
-        return null
-      }
-      const labels = []
-      keys.forEach(key => {
-        const node = this.findTreeNode(key, this.nodes)
-        if (node && node[this.labelKey]) {
-          labels.push(node[this.labelKey])
-        }
-      })
-      return labels
-    },
-    keyToLabel (key) {
-      if (!key) {
-        return ''
-      }
-      if (!this.labelKey) {
-        return ''
-      }
-      const node = this.findTreeNode(key, this.nodes)
-      if (node && node[this.labelKey]) {
-        return node[this.labelKey]
-      }
-      return ''
-    },
-    findTreeNode (key, nodes) {
-      if (this.nodes) {
-        for (const node of nodes) {
-          if (node[this.nodeKey] === key) {
-            return node
-          } else if (this.hasChildren(node)) {
-            const node2 = this.findTreeNode2(key, node[this.childrenKey])
-            if (node2) {
-              return node2
-            }
-          }
-        }
-      }
-      return null
-    },
-    findTreeNode2 (key, nodes) {
-      for (const node of nodes) {
-        if (node[this.nodeKey] === key) {
-          return node
-        } else if (this.hasChildren(node)) {
-          const node2 = this.findTreeNode2(key, node[this.childrenKey])
-          if (node2) {
-            return node2
-          }
-        }
-      }
-    },
-    hasChildren (node) {
-      if (node && node[this.childrenKey] && node[this.childrenKey].length > 0) {
-        return true
+      if (this.selectable) {
+        this.$emit('update:selected', null)
       } else {
-        return false
+        this.$emit('update:ticked', [])
       }
-    },*/
+    },
 
     resetValidation () {
       this.$refs.input.resetValidation()
