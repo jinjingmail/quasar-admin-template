@@ -19,26 +19,25 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 - 左侧菜单栏基于路由配置自动生成，可以实现noCache、icon等自定义配置
 - 页面路由Tab标签栏
 - 演示了几种在页面实现搜索栏的样式（费了我不少时间）
-- 增强开发了CoadminDialog，可以实现拖拽和最大化等
-- 增强开发了CoadminTree，增加了很多功能
+- 增强开发了CoDialog，可以实现拖拽和最大化等
+- 增强开发了CoTree，增加了很多功能
   - tick-strategy 在原有none strict leaf leaf-filtered的基础上，增加leaf-any-with-parent（子节点大于0个ticked，则增加父节点）、leaf-all-with-parent（子节点全部ticked，则增加父节点）、leaf-all-only-parent（子节点全部ticked，则只取父节点，去掉子节点）
   - 增加事件 ticked-label和selected-label，返回选择的节点的label
   - 增加一个过滤输入栏
-- 增强开发了CoadminTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
-- 增强开发了CoadminForm，CoadminDate、CoadminInput、CoadminOptionGroup、CoadminFormItem，增加一些实用功能
-- 新增CoadminDateSelect
-- 新增CoadminTreeSelect
-- 新增CoadminTreeTable
+- 增强开发了CoTable，新增了新的loading样式，还有sticky-header、sticky-first-column、sticky-last-column
+- 增强开发了CoForm，CoDate、CoInput、CoOptionGroup、CoFormItem，增加一些实用功能
+- 新增CoDateSelect
+- 新增CoTreeSelect
+- 新增CoTreeTable
 - 感谢：eladmin-web、vue-element-admin、quasar-admin-crm、quasar-element-pro
 
 ```bash
 TODO co-dialog
-  - TODO 可移动的dialog的标题栏图标显示移动图标
-  - TODO 标题栏添加可以折叠对话框内容的按钮
+  - TODO 可移动的dialog的标题栏图标显示移动鼠标光标
+  - 标题栏添加可以折叠对话框内容的按钮
   - TODO dialog里面内容滚动时，可以不滚动标题栏、底部工具栏
 TODO 页面增加字段选择的存储
 TODO 页面增加表格大小选择（存储）
-TODO 页面增加表格是否换行选择（存储）
 TODO 页面总的增删改查工具栏，可以配置为变灰还是消失
 TODO 如果不显示 Tab 栏，则所有页面都不 keep-alive（不缓存）
 TODO 加快图标页加载速度
@@ -47,11 +46,12 @@ TODO 在右侧打开外部url（iframe或其他方案）
 TODO 增加“个人设置”页面
 TODO 菜单增加“new”标签支持
 
-TODO CoadminOptionGroup 自定义form项的错误提示
-TODO CoadminDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
+TODO CoOptionGroup 自定义form项的错误提示
+TODO CoDateSelect 可以手工输入日期、可以选择“最近7天、最近30天、本月、。。。”
 TODO co-tree selected和ticked，可以设置“只选parent，只选leaf”
+为 co-tree 添加 tree-class / tree-style tree-class-mobile tree-style-mobile
 
-TODO BUG CoadminInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
+TODO BUG CoInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
 TODO BUG 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色
 ```
@@ -90,9 +90,11 @@ TODO BUG 图表dark模式文字颜色
 
 ## Install the dependencies（安装依赖）
 ```bash
-首先，安装新版nodejs
-然后，执行下面的指令安装依赖
+首先，安装nodejs（注意：只能是12和14版本，更新的版本可能有问题）
+然后，安装 quasar 工具：
 npm install -g @quasar/cli
+
+安装依赖:
 npm install
 ```
 
