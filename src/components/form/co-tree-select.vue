@@ -137,15 +137,8 @@ export default {
     this.popupTreeTicked = this.ticked
   },
   mounted () {
-    /*
-     * 调用 popupTree.show() 触发一次事件发送
-     */
-    console.log('tree-select.selected=' + this.selected + ', this.computedInputValue=' + this.computedInputValue)
     if ((this.selectable && this.selected != null) || (Array.isArray(this.ticked) && this.ticked.length > 0)) {
-      this.$refs.popupTree.show()
-      this.$nextTick(() => {
-        this.$refs.popupTree.hide()
-      })
+      this.__refreshTextInputDisplay()
     }
   },
   watch: {
@@ -154,6 +147,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeSelected = newVal
+          this.__refreshTextInputDisplay()
         }
       }
     },
@@ -162,6 +156,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeTicked = newVal
+          this.__refreshTextInputDisplay()
         }
       }
     },
@@ -196,6 +191,16 @@ export default {
     }
   },
   methods: {
+    /*
+     * 显示一下co-tree控件。co-tree在显示一下后，会计算 selected 和 ticked 对应的label，
+     * 计算得到的label会在本组件的 computed:computedInputValue 中显示出来
+     */
+    __refreshTextInputDisplay() {
+      this.$refs.popupTree.show()
+      this.$nextTick(() => {
+        this.$refs.popupTree.hide()
+      })
+    },
     _popupTickedLabel(labels) {
       this.popupTreeTickedLabels = labels
       this.$emit('ticked-label', labels)

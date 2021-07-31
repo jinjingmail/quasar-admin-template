@@ -242,7 +242,7 @@
               </div>
 
               <q-toolbar class="no-padding">
-                  <div class="text-subtitle1 ">左侧</div>
+                  <div class="text-subtitle1 ">左侧菜单</div>
                   <q-space/>
                   <q-btn icon="restore" flat round color="primary">
                     <q-tooltip :delay="550" content-class="bg-amber text-black shadow-4">
