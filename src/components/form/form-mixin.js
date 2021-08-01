@@ -13,7 +13,7 @@ export default {
     formLabelStyle: String,
     dense: {
       type: Boolean,
-      default: false
+      default: undefined
     },
     disable: {
       type: Boolean,

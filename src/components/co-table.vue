@@ -50,6 +50,7 @@
     :class="computedClass"
     :card-class="'custom-table-bg ' + cardClass"
     :color="color"
+    :dense="_dense()"
     :style="computedStyle"
     :row-key="rowKey"
     :data="computedTreeTableData"
@@ -88,7 +89,7 @@
               <span :style="_expandSpaceStyle(props)" style="display:inline-block" />
               <q-btn
                 v-if="props.row.__has_child"
-                dense
+                :dense="_dense()"
                 padding="none"
                 style="margin-top:-3px; margin-right:0px;"
                 :style="expandStyle"
@@ -152,6 +153,10 @@ export default {
     color: {
       type: String,
       default: 'primary'
+    },
+    dense: {
+      type: Boolean,
+      default: undefined
     },
     separator: String,
     virtualScroll: Boolean,
@@ -377,6 +382,13 @@ export default {
     }
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     _calcExpandSizeToWidth () {
       switch (this.expandSize) {
         case 'xs': return 14

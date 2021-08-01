@@ -140,6 +140,7 @@
               dense outlined
               placeholder="选择巨头"
               content-style="width:200px"
+              hide-dropdown-icon
             />
           </template>
           <q-btn dense label="查询" padding="xs sm" color="primary" @click="crud.toQuery" />

@@ -66,7 +66,8 @@ input:-ms-input-placeholder {
   height: 24px !important;
 }
 .co-select.q-field--dense.q-select--with-chips .q-chip {
-  margin: 0 4px 8px 4px;
+  //margin: 0 4px 8px 4px;
+  margin: 0px 4px 0px 0px;
 }
 
 .co-input,
@@ -82,19 +83,31 @@ input:-ms-input-placeholder {
     min-height: auto;
   }
 
-  &.q-textarea .q-field__control {
+  &.q-textarea .q-field__control,
+  &.q-textarea .q-field__native {
     min-height: 45px;
     height: auto;
   }
-  &.q-textarea.q-field--dense .q-field__control {
+  &.q-textarea.q-field--dense .q-field__control,
+  &.q-textarea.q-field--dense .q-field__native {
     min-height: 34px;
     height: auto;
   }
   &.q-textarea.q-field--dense .q-field__native {
-    padding-top: 7px;
+    padding-top: 9px;
   }
   &.q-textarea .q-field__native {
     padding-top: 13px;
+  }
+  &.q-textarea.q-textarea--autogrow .q-field__control-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  &.q-textarea.q-field--dense.q-field--labeled .q-field__control-container {
+    padding-top: 7px;
+  }
+  &.q-textarea.q-field--labeled .q-field__control-container {
+    padding-top: 5px;
   }
 
   // 高度缩小
@@ -164,12 +177,6 @@ input:-ms-input-placeholder {
   }
   &.q-field--dense.q-field--focused .q-field__label {
     top: -7px;
-  }
-  &.q-textarea.q-field--dense.q-field--labeled .q-field__control-container {
-    padding-top: 7px;
-  }
-  &.q-textarea.q-field--labeled .q-field__control-container {
-    padding-top: 5px;
   }
 }
 

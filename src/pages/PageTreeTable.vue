@@ -36,7 +36,6 @@
           <co-table
             :class="$q.screen.gt.xs?'q-ml-sm':''"
             flat
-            dense
             tree-table
             tree-children-key="children"
             expand-flat

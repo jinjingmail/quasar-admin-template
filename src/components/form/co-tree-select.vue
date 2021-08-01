@@ -6,7 +6,7 @@
   返回值：
 -->
 <template>
-  <co-input
+  <co-field
     ref="input"
     v-on="listenersOfInput"
     v-bind="$attrs"
@@ -50,11 +50,16 @@
       </co-tree>
     </q-popup-proxy>
 
+    <template v-slot:append v-if="!hideDropdownIcon || (clearable && !!computedInputValue)">
+      <q-icon v-if="!disable && clearable && !!computedInputValue" :name="clearIcon" class="cursor-pointer" @click.prevent.stop="_clearInput"/>
+      <q-icon v-else-if="!hideDropdownIcon" :name="dropdownIcon" />
+    </template>
+
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
 
-  </co-input>
+  </co-field>
 </template>
 
 <script>
@@ -64,6 +69,16 @@ export default {
   props: {
     disable: Boolean,
     readonly: Boolean,
+    clearable: Boolean,
+    dropdownIcon: {
+      type: String,
+      default: 'clear_all'
+    },
+    hideDropdownIcon: Boolean,
+    clearIcon: {
+      type: String,
+      default: 'cancel'
+    },
     noClearFocus: {
       type: Boolean,
       default: true
@@ -148,7 +163,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeSelected = newVal
-          //this.__refreshTextInputDisplay()
+          this.__refreshTextInputDisplay()
         }
       }
     },
@@ -157,7 +172,7 @@ export default {
       handler (newVal, oldVal) {
         if (!this.disable) {
           this.popupTreeTicked = newVal
-          //this.__refreshTextInputDisplay()
+          this.__refreshTextInputDisplay()
         }
       }
     },

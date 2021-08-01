@@ -31,22 +31,22 @@
   <div class="q-gutter-sm no-wrap">
     <!--左侧插槽-->
     <slot name="start" />
-    <q-btn :dense="dense" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    <q-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorView" :icon="computedIconView" :label="computedLabelView"
       :disable="crud.selections.length!==1"
       v-if="!noView || hideDisable" @click="crud.toView(crud.selections[0])"/>
-    <q-btn :dense="dense" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.edit"
+    <q-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.edit"
       :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit"
       :disable="crud.selections.length!==1"
       v-if="!noEdit || hideDisable" @click="crud.toEdit(crud.selections[0])"/>
-    <q-btn :dense="dense" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.del"
+    <q-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.del"
       :color="colorDel" :icon="computedIconDel" :label="computedLabelDel"
       :disable="!crud.selections.length"
       v-if="!noDel || hideDisable"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
-    <q-btn :dense="dense" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.add"
+    <q-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.add"
       :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
     <!--右侧插槽-->
     <slot name="end" />
@@ -62,14 +62,15 @@
         </div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
-        <q-btn label="取消" v-close-popup flat :dense="dense" :size="size" :padding="padding" color="white"/>
-        <q-btn label="是的" v-close-popup flat :dense="dense" :size="size" :padding="padding" icon="delete" color="white" @click="doDelete(crud.selections)" />
+        <q-btn label="取消" v-close-popup flat :dense="_dense()" :size="size" :padding="padding" color="white"/>
+        <q-btn label="是的" v-close-popup flat :dense="_dense()" :size="size" :padding="padding" icon="delete" color="white" @click="doDelete(crud.selections)" />
       </q-card-actions>
     </co-dialog>
   </div>
 </template>
 <script>
 import { crud } from './crud'
+import Setting from '@/default-setting'
 
 export default {
   mixins: [crud()],
@@ -97,7 +98,10 @@ export default {
     unelevated: Boolean,
     glossy: Boolean,
 
-    dense: Boolean,
+    dense: {
+      type: Boolean,
+      default: undefined
+    },
     size: String,
     padding: String,
 
@@ -224,6 +228,13 @@ export default {
     }
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     doDelete (datas) {
       this.crud.delAllLoading = true
       this.crud.doDelete(datas)

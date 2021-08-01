@@ -180,10 +180,10 @@
 
                 </q-card-section>
                 <q-card-actions align="center">
+                  <q-btn label="关闭" flat v-close-popup />
+                  <q-btn label="清空" flat v-close-popup />
                   <q-btn label="查询" type="submit" color="primary" icon="search" @click="doQuery">
                   </q-btn>
-                  <q-btn label="清空" flat v-close-popup />
-                  <q-btn label="关闭" flat v-close-popup />
                 </q-card-actions>
 
               </co-card>

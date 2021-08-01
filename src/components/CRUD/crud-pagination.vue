@@ -14,7 +14,7 @@
 <template>
   <div class="row">
     <slot name="start" />
-    <co-field :dense="dense" borderless :outlined="false" class="col-auto" :style="dense?'margin-top:3px':''">
+    <co-field :dense="_dense()" borderless :outlined="false" class="col-auto" :style="_dense()?'margin-top:3px':''">
       <template v-slot:control>
         共 {{page.total}} 条
       </template>
@@ -30,17 +30,17 @@
       :icon-prev="iconPrevPage"
       :icon-next="iconNextPage"
       :max-pages="$q.screen.gt.xs?maxPages:5"
-      :size="size?size:(dense?'13px':'16px')"
-      :dense="dense"
+      :size="size?size:(_dense()?'13px':'16px')"
+      :dense="_dense()"
       v-bind="$attrs"
       v-on="$listeners"
     >
     </q-pagination>
     <co-select v-if="!computedNoPageIfOnlyOnePage"
       class="col-auto"
-      :style="dense?'margin-top:3px':''"
-      :dense="dense"
-      :options-dense="dense"
+      :style="_dense()?'margin-top:3px':''"
+      :dense="_dense()"
+      :options-dense="_dense()"
       :value="page.size"
       :options="sizePerPageOptions"
       emit-value
@@ -55,12 +55,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Setting from '@/default-setting'
 
 import { pagination } from './crud'
 export default {
   mixins: [pagination()],
   props: {
-    dense: Boolean,
+    dense: {
+      type: Boolean,
+      default: undefined
+    },
     size: String,
     iconPrevPage: {
       type: String,
@@ -124,6 +128,13 @@ export default {
     ...mapActions('settings', [
       'changeSetting'
     ]),
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     pageSizeChange (value) {
       if (!this.noPersistencePageSize) {
         this.changeSetting({ key: 'pageSize', value: value })

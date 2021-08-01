@@ -8,7 +8,7 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
@@ -21,7 +21,7 @@
       :rules="rules"
       :type="type"
       :options="optionsTranslated"
-      :dense="dense"
+      :dense="_dense()"
       :disable="disable"
       :readonly="readonly"
     >
@@ -43,7 +43,7 @@
     :rules="rules"
     :type="type"
     :options="optionsTranslated"
-    :dense="dense"
+    :dense="_dense()"
     :disable="disable"
     :readonly="readonly"
   >
@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import Setting from '@/default-setting'
+
 import FormMixin from './form-mixin.js'
 export default {
   name: 'CoOptionGroup',
@@ -66,6 +68,10 @@ export default {
   props: {
     value: null,
     valueToString: Boolean,
+    dense: {
+      type: Boolean,
+      default: undefined
+    },
     rules: Array,
     type: {
       type: String,
@@ -148,6 +154,13 @@ export default {
     }
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     _emitValueLabel(value) {
       if (this.$listeners['value-label']) {
         const labels = this._valueToLabel(value)

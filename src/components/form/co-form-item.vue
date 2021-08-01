@@ -5,7 +5,8 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
+      class="non-selectable"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+import defaultSetting from '@/default-setting'
+
 import FormMixin from './form-mixin.js'
 export default {
   name: 'CoFormItem',
@@ -36,6 +39,13 @@ export default {
   mounted () {
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return defaultSetting.denseMode
+      } else {
+        return this.dense
+      }
+    }
   }
 }
 </script>

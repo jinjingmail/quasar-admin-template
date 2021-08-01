@@ -1,5 +1,5 @@
-import defaultSetting from '../../default-setting'
-import defaultColor from '../../default-color'
+import defaultSetting from '@/default-setting'
+import defaultColor from '@/default-color'
 import { LocalStorage, Dark, colors } from 'quasar'
 
 function get (key, default_ = null) {

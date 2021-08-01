@@ -55,15 +55,15 @@
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
-            <q-btn v-if="!noMinimize" flat dense
+            <q-btn v-if="!noMinimize" flat :dense="_dense()"
               :icon="minimize?'expand_more':'expand_less'"
               @click="toggleMinimize()"/>
 
-            <q-btn v-if="!noMax" flat dense
+            <q-btn v-if="!noMax" flat :dense="_dense()"
               :icon="maxscreen?icon_max_exit:icon_max"
               @click="toggleMaxScreen()"/>
 
-            <q-btn v-if="!noClose" flat dense
+            <q-btn v-if="!noClose" flat :dense="_dense()"
               :icon="icon_close?icon_close:'close'"
               @click="closeMethod?closeMethod():$refs.dialog.hide()"/>
           </slot>
@@ -192,6 +192,13 @@ export default {
     }
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     _beforeShow (evt) {
       if (this.$listeners['before-show']) {
         this.$emit('before-show')

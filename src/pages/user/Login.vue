@@ -29,8 +29,6 @@
           >
             <co-input
               class="q-mb-md"
-              outlined
-              dense
               no-error-icon
               v-model.trim="form.username"
               placeholder="账号 demo"
@@ -38,8 +36,6 @@
             />
             <co-input
               class="q-mb-md"
-              outlined
-              dense
               no-error-icon
               type="password"
               v-model.trim="form.password"
@@ -48,8 +44,6 @@
             />
             <co-input
               class="q-mb-md"
-              outlined
-              dense
               no-error-icon
               v-model.trim="form.verify"
               placeholder="验证码"
@@ -61,14 +55,13 @@
               </template>
             </co-input>
             <div class="column q-gutter-y-sm q-mt-none">
-              <q-checkbox
+              <co-checkbox
                 v-model="form.rememberMe"
                 label="记住账号"
-                dense
               />
             </div>
             <div class="q-mt-md column items-center">
-              <q-btn
+              <co-btn
                 label="登录"
                 type="submit"
                 color="primary"

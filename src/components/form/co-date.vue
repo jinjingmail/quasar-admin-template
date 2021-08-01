@@ -88,7 +88,7 @@ export default {
     range: Boolean,
     rangeSeparator: {
       type: String,
-      default: ' ~ '
+      default: ' -> '
     }
   },
   data () {
@@ -124,6 +124,8 @@ export default {
       if (this.range) {
         if (this.multiple) {
           return ''
+        } else if (!v.from) {
+          return v
         } else {
           return v.from + this.rangeSeparator + v.to
         }

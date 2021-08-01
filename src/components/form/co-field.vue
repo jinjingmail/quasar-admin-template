@@ -5,7 +5,8 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
+      class="non-selectable"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
@@ -15,15 +16,21 @@
       :style="contentStyle"
       v-bind="$attrs"
       v-on="listeners"
-      :dense="dense"
+      :dense="_dense()"
       :disable="disable"
       :readonly="readonly"
+      :filled="_filled()"
+      :outlined="_outlined()"
+      :standout="_standout()"
+      :borderless="_borderless()"
+      :square="_square()"
+      :rounded="_rounded()"
     >
+      <template v-slot:control="prop">
+        {{prop.value}}
+      </template>
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
-      </template>
-      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-        <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-field>
   </div>
@@ -34,31 +41,59 @@
     :style="contentStyle"
     v-bind="$attrs"
     v-on="listeners"
-    :dense="dense"
+    :dense="_dense()"
     :disable="disable"
     :readonly="readonly"
+    :filled="_filled()"
+    :outlined="_outlined()"
+    :standout="_standout()"
+    :borderless="_borderless()"
+    :square="_square()"
+    :rounded="_rounded()"
   >
+    <template v-slot:control="prop">
+      {{prop.value}}
+    </template>
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
-    </template>
-    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-      <slot :name="slotName" v-bind="prop"/>
     </template>
   </q-field>
 
 </template>
 
 <script>
+import defaultSetting from '@/default-setting'
+
 import FormMixin from './form-mixin.js'
 export default {
   name: 'CoField',
   inheritAttrs: false,
   mixins: [FormMixin],
   props: {
-    rules: Array
-  },
-  data () {
-    return {
+    rules: Array,
+    filled: {
+      type: Boolean,
+      default: undefined
+    },
+    outlined: {
+      type: Boolean,
+      default: undefined
+    },
+    standout: {
+      type: Boolean,
+      default: undefined
+    },
+    borderless: {
+      type: Boolean,
+      default: undefined
+    },
+    square: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded: {
+      type: Boolean,
+      default: undefined
     }
   },
   computed: {
@@ -81,6 +116,80 @@ export default {
   mounted () {
   },
   methods: {
+    _filled() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.filled
+      }
+      if (defaultSetting.designMode === 'filled') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _outlined() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.outlined
+      }
+      if (defaultSetting.designMode === 'outlined') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _standout() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.standout
+      }
+      if (defaultSetting.designMode === 'standout') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _borderless() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.borderless
+      }
+      if (defaultSetting.designMode === 'borderless') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _square() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.square
+      }
+      if (defaultSetting.designCorner === 'square') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _rounded() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.rounded
+      }
+      if (defaultSetting.designCorner === 'rounded') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _dense() {
+      if (this.dense === undefined) {
+        return defaultSetting.denseMode
+      } else {
+        return this.dense
+      }
+    },
+
     resetValidation () {
       this.$refs.field.resetValidation()
     },

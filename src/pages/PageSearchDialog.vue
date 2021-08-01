@@ -171,14 +171,11 @@
                     class="col-12"
                     form-label="date2"
                     placeholder="日期范围选"
-                    range-separator=" 至 "
                     v-model="query.dateRange"
                     clearable
+                    :defaultTime ="[' 00:00:00',' 23:59:59']"
                     range
                   >
-                    <template v-slot:append>
-                      <q-icon name="event" />
-                    </template>
                   </co-date-select>
                   <co-date-select
                     class="col-12 col-sm-6"
@@ -186,9 +183,6 @@
                     placeholder="日期单选"
                     v-model="query.dateSingle"
                   >
-                    <template v-slot:append>
-                      <q-icon name="event" />
-                    </template>
                   </co-date-select>
 
                   <co-option-group
@@ -234,9 +228,9 @@
                 </div>
               </co-form>
               <q-card-actions align="center">
+                <q-btn label="关闭" flat v-close-popup />
                 <q-btn label="查询" type="submit" color="primary" icon="search" v-close-popup @click="doQuery">
                 </q-btn>
-                <q-btn label="关闭" flat v-close-popup />
               </q-card-actions>
             </co-dialog>
           </co-input>
@@ -330,6 +324,7 @@ export default {
             if (this.queryTickedLabels) labels.push('[' + this.queryTickedLabels.join(',') + ']')
           } else if (key === 'dateRange') {
             const range = this.query[key]
+            console.log('range=', range)
             if (range) labels.push('[' + range.join(',') + ']')
           } else if (key === 'selectSingle') {
             if (this.querySelectSingleLabel) labels.push(this.querySelectSingleLabel)

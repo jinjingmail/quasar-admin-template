@@ -7,7 +7,8 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
+      class="non-selectable"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
@@ -27,11 +28,17 @@
       :use-input="useInput"
       :emit-value="emitValue"
       :map-options="mapOptions"
-      :dense="dense"
+      :dense="_dense()"
       :option-label="optionLabel"
       :option-value="optionValue"
       :disable="disable"
       :readonly="readonly"
+      :filled="_filled()"
+      :outlined="_outlined()"
+      :standout="_standout()"
+      :borderless="_borderless()"
+      :square="_square()"
+      :rounded="_rounded()"
       hide-dropdown-icon
       @filter="_filterFn"
       @popup-show="_popupshow"
@@ -75,11 +82,17 @@
     :use-input="useInput"
     :emit-value="emitValue"
     :map-options="mapOptions"
-    :dense="dense"
+    :dense="_dense()"
     :option-label="optionLabel"
     :option-value="optionValue"
     :disable="disable"
     :readonly="readonly"
+    :filled="_filled()"
+    :outlined="_outlined()"
+    :standout="_standout()"
+    :borderless="_borderless()"
+    :square="_square()"
+    :rounded="_rounded()"
     hide-dropdown-icon
     @filter="_filterFn"
     @popup-show="_popupshow"
@@ -112,6 +125,7 @@
 </template>
 
 <script>
+import Setting from '@/default-setting'
 import FormMixin from './form-mixin.js'
 export default {
   name: 'CoSelect',
@@ -158,7 +172,31 @@ export default {
     useInput: Boolean,
     mapOptions: Boolean,
     emitValue: Boolean,
-    inputClass: String
+    inputClass: String,
+    filled: {
+      type: Boolean,
+      default: undefined
+    },
+    outlined: {
+      type: Boolean,
+      default: undefined
+    },
+    standout: {
+      type: Boolean,
+      default: undefined
+    },
+    borderless: {
+      type: Boolean,
+      default: undefined
+    },
+    square: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded: {
+      type: Boolean,
+      default: undefined
+    }
   },
   data () {
     return {
@@ -204,6 +242,80 @@ export default {
     }
   },
   methods: {
+    _filled() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.filled
+      }
+      if (Setting.designMode === 'filled') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _outlined() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.outlined
+      }
+      if (Setting.designMode === 'outlined') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _standout() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.standout
+      }
+      if (Setting.designMode === 'standout') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _borderless() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.borderless
+      }
+      if (Setting.designMode === 'borderless') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _square() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.square
+      }
+      if (Setting.designCorner === 'square') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _rounded() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.rounded
+      }
+      if (Setting.designCorner === 'rounded') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
+
     _hasValue() {
       if (Array.isArray(this.value)) {
         return this.value.length > 0

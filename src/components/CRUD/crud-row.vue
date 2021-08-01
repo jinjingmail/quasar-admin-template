@@ -33,7 +33,7 @@
 -->
 <template>
   <q-btn no-wrap v-if="type === 'menu'"
-    :dense='dense' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    :dense='_dense()' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
     :flat="flat"
     :icon-right="menuShow?iconMenuOpen:iconMenu"
     :label="labelMenu"
@@ -74,8 +74,8 @@
               </q-card-section>
               <q-separator />
               <q-card-actions align="right" class="q-pa-md">
-              <q-btn :dense="dense" v-close-popup flat color="white">取消</q-btn>
-              <q-btn :dense="dense" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
+              <q-btn :dense="_dense()" v-close-popup flat color="white">取消</q-btn>
+              <q-btn :dense="_dense()" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
               </q-card-actions>
             </co-card>
           </q-popup-proxy>
@@ -97,13 +97,13 @@
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(dense && !noLabel && labelView && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
+    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(_dense() && !noLabel && labelView && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
       <q-tooltip :delay="550" v-if="tooltip">{{labelView}}</q-tooltip>
     </q-btn>
-    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(dense && !noLabel && labelEdit && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(_dense() && !noLabel && labelEdit && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
       <q-tooltip :delay="550" v-if="tooltip">{{labelEdit}}</q-tooltip>
     </q-btn>
-    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(dense && !noLabel && labelDel && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(_dense() && !noLabel && labelDel && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
@@ -113,13 +113,13 @@
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
-            <q-btn :dense="dense" v-close-popup flat color="white">取消</q-btn>
-            <q-btn :dense="dense" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
+            <q-btn :dense="_dense()" v-close-popup flat color="white">取消</q-btn>
+            <q-btn :dense="_dense()" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
           </q-card-actions>
         </co-card>
       </q-popup-proxy>
     </q-btn>
-    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(dense && !noLabel && labelAdd && !flat)?'xs sm':''" :size="dense?'sm':'md'" no-wrap :dense='dense' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(_dense() && !noLabel && labelAdd && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
       <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
     </q-btn>
     <slot name="end" />
@@ -128,6 +128,8 @@
 
 <script>
 import CRUD, { crud } from './crud'
+import Setting from '@/default-setting'
+
 export default {
   mixins: [crud()],
   props: {
@@ -163,7 +165,10 @@ export default {
     push: Boolean,
     unelevated: Boolean,
     glossy: Boolean,
-    dense: Boolean,
+    dense: {
+      type: Boolean,
+      default: undefined
+    },
     denseMenu: {
       type: Boolean,
       default: undefined
@@ -273,10 +278,9 @@ export default {
     },
     computedDenseMenu () {
       if (this.denseMenu !== undefined) {
-        console.log('dense menu')
         return this.denseMenu
       } else {
-        return this.dense
+        return this._dense()
       }
     }
   },
@@ -290,6 +294,13 @@ export default {
     }
   },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     doDelete() {
       this.delLoading = true
       if (this.$refs.menu) {

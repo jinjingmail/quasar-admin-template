@@ -148,7 +148,25 @@ module.exports = {
    */
   darkMode: false,
   /**
-   * 表格每页显示的行数
+   * 设置输入框、表格、按钮等默认dense：
+   *    支持 → undefined / true / false
+   */
+  denseMode: true,
+  /**
+   * 设置输入框的外观样式：
+   * co-select/co-input/co-field/co-date-select/co-tree-select design mode：
+   *    支持 → standard / standout / filled / outlined / borderless
+   *
+   * 注意：quasar中， filled, outlined, standout, borderless 都设置的话，只有一个会生效
+   */
+  designMode: 'filled',
+  /**
+   * 设置输入框的外观为方形直角 或 圆形大圆弧：
+   *    支持 → standard / square / rounded
+   */
+  designCorner: 'standard',
+  /**
+   * 表格每页默认显示的行数
    */
   pageSize: 10,
   /**

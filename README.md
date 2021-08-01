@@ -51,7 +51,7 @@ TODO CoDateSelect 可以手工输入日期、可以选择“最近7天、最近3
 TODO co-tree selected和ticked，可以设置“只选parent，只选leaf”
 为 co-tree 添加 tree-class / tree-style tree-class-mobile tree-style-mobile
 
-TODO BUG CoInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
+CoInput 在popup-proxy 里面时，有时候prepend、append、before、after 的slot会失效
 对话框最大化后，取消拖动
 TODO BUG 图表dark模式文字颜色
 ```

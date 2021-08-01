@@ -18,14 +18,14 @@
           <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
           </co-form-item>
-          <co-input dense outlined class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
+          <co-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
             </template>
           </co-input>
-          <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
+          <co-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
@@ -46,16 +46,16 @@
     >
       <template v-slot:top="props">
         <div class='row full-width'>
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable dense filled placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:before>
-              <crud-operation :permission="permission" dense/>
+              <crud-operation :permission="permission" />
             </template>
             <template v-slot:after>
-              <q-btn dense color="primary" icon="search" @click="crud.toQuery"/>
-              <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+              <co-btn color="primary" icon="search" @click="crud.toQuery"/>
+              <co-btn-dropdown color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props" />
-              </q-btn-dropdown>
+              </co-btn-dropdown>
             </template>
             <co-dialog ref="searchPopup"
               seamless card-style="width:700px; max-width:95vw;">

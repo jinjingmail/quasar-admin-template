@@ -52,7 +52,7 @@
         <q-space/>
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn dense flat icon="notifications">
+          <co-btn dense flat icon="notifications">
             <q-badge color="red" text-color="white" floating>
               {{itemsMenu.length}}
             </q-badge>
@@ -119,14 +119,14 @@
                 </q-infinite-scroll>
               </q-list>
             </q-menu>
-          </q-btn>
-          <q-btn flat dense v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-          <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-          <q-btn flat dense :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
+          </co-btn>
+          <co-btn flat v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+          <co-btn flat :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          <co-btn flat :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
             <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
-          </q-btn>
+          </co-btn>
         </div>
 
       </q-toolbar>
@@ -146,11 +146,11 @@
     >
         <div class="q-pa-sm q-pb-xl">
           <q-toolbar class="transparent">
-            <q-btn icon="close" round flat dense @click="$refs.drawerRight.toggle()"/>
+            <co-btn icon="close" round flat @click="$refs.drawerRight.toggle()"/>
 
             <q-space/>
-            <q-btn flat dense :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-            <q-btn flat dense :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+            <co-btn flat :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+            <co-btn flat :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
           </q-toolbar>
 
           <div class="no-wrap">
@@ -161,14 +161,14 @@
               </q-avatar>
 
               <q-toolbar>
-                <q-btn
+                <co-btn
                   color="primary"
                   label="个人设置"
                   flat
                   borderless
                 />
                 <q-space/>
-                <q-btn
+                <co-btn
                   color="primary"
                   label="退出登录"
                   flat

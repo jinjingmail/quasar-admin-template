@@ -9,7 +9,8 @@
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
+    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
+      class="non-selectable"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
@@ -23,10 +24,16 @@
       v-on="listeners"
       :rules="rules"
       :label="label"
-      :dense="dense"
+      :dense="_dense()"
       :no-error-icon="noErrorIcon"
       :disable="disable"
       :readonly="readonly"
+      :filled="_filled()"
+      :outlined="_outlined()"
+      :standout="_standout()"
+      :borderless="_borderless()"
+      :square="_square()"
+      :rounded="_rounded()"
       @mouseover.native="hover=true"
       @mouseleave.native="hover=false"
     >
@@ -51,10 +58,16 @@
     v-on="listeners"
     :rules="rules"
     :label="label"
-    :dense="dense"
+    :dense="_dense()"
     :no-error-icon="noErrorIcon"
     :disable="disable"
     :readonly="readonly"
+    :filled="_filled()"
+    :outlined="_outlined()"
+    :standout="_standout()"
+    :borderless="_borderless()"
+    :square="_square()"
+    :rounded="_rounded()"
     @mouseover.native="hover=true"
     @mouseleave.native="hover=false"
   >
@@ -73,7 +86,9 @@
 </template>
 
 <script>
+import defaultSetting from '@/default-setting'
 import FormMixin from './form-mixin.js'
+
 export default {
   name: 'CoInput',
   inheritAttrs: false,
@@ -91,6 +106,30 @@ export default {
     noClearFocus: Boolean,
     label: {
       type: String,
+      default: undefined
+    },
+    filled: {
+      type: Boolean,
+      default: undefined
+    },
+    outlined: {
+      type: Boolean,
+      default: undefined
+    },
+    standout: {
+      type: Boolean,
+      default: undefined
+    },
+    borderless: {
+      type: Boolean,
+      default: undefined
+    },
+    square: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded: {
+      type: Boolean,
       default: undefined
     }
   },
@@ -117,6 +156,79 @@ export default {
     }
   },
   methods: {
+    _filled() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.filled
+      }
+      if (defaultSetting.designMode === 'filled') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _outlined() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.outlined
+      }
+      if (defaultSetting.designMode === 'outlined') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _standout() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.standout
+      }
+      if (defaultSetting.designMode === 'standout') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _borderless() {
+      const undef = this.filled === undefined && this.outlined === undefined && this.standout === undefined && this.borderless === undefined
+      if (!undef) {
+        return this.borderless
+      }
+      if (defaultSetting.designMode === 'borderless') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _square() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.square
+      }
+      if (defaultSetting.designCorner === 'square') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _rounded() {
+      const undef = this.square === undefined && this.rounded === undefined
+      if (!undef) {
+        return this.rounded
+      }
+      if (defaultSetting.designCorner === 'rounded') {
+        return true
+      } else {
+        return false
+      }
+    },
+    _dense() {
+      if (this.dense === undefined) {
+        return defaultSetting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     _doClear () {
       const oldVal = this.value
       this._doInput(null)
