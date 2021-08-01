@@ -108,10 +108,6 @@ export default {
       this.cnLocale = this.locale
     }
   },
-  mounted () {
-    //console.log('coadmin.data.this=', this)
-    console.log('coadmin.date $parent labelStyle=', this.$parent.$parent.labelStyle, this.$parent.$attrs.labelStyle)
-  },
   computed: {
     computedSubtitle () {
       if (this.subtitle) {

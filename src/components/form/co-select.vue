@@ -29,6 +29,7 @@
       :emit-value="emitValue"
       :map-options="mapOptions"
       :dense="_dense()"
+      :options-dense="optionsDense?optionsDense:_dense()"
       :option-label="optionLabel"
       :option-value="optionValue"
       :disable="disable"
@@ -83,6 +84,7 @@
     :emit-value="emitValue"
     :map-options="mapOptions"
     :dense="_dense()"
+    :options-dense="optionsDense?optionsDense:_dense()"
     :option-label="optionLabel"
     :option-value="optionValue"
     :disable="disable"
@@ -136,6 +138,10 @@ export default {
       type: [String, Number, Array, Boolean]
     },
     rules: Array,
+    optionsDense: {
+      type: Boolean,
+      default: undefined
+    },
     clearable: Boolean,
     clearIcon: {
       type: String,

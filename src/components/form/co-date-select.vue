@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { remove } from '@/utils/string'
+
 export default {
   name: 'CoDateSelect',
   inheritAttrs: false,
@@ -105,50 +107,44 @@ export default {
   },
   computed: {
     dateModel () {
-      const newVal = this.$attrs.value
       if (this.range) {
-        if (Array.isArray(newVal) && newVal.length >= 2) {
+        if (Array.isArray(this.$attrs.value) && this.$attrs.value.length >= 2) {
+          // 去掉 defaultTime 后缀
+          let dateBegin = this.$attrs.value[0]
+          let dateEnd = this.$attrs.value[1]
+          if (Array.isArray(this.defaultTime) && this.defaultTime.length >= 2) {
+            dateBegin = remove(dateBegin, this.defaultTime[0])
+            dateEnd = remove(dateEnd, this.defaultTime[1])
+          }
           // 在range模式下，同一天 {from:'2020-01-12', to:'2020-01-12'} 会不显示，所以这里特殊处理一下
-          if (newVal[0] === newVal[1]) { // TODO 包含defaultTime时，需要先去掉defaultTime
-            return newVal[0]
+          if (dateBegin === dateEnd) {
+            return dateBegin
           } else {
-            return { from: newVal[0], to: newVal[1] }
+            return { from: dateBegin, to: dateEnd }
           }
         } else {
           return undefined
         }
       } else {
-        if (!newVal) {
+        if (!this.$attrs.value) {
           return undefined
         } else {
-          return newVal
+          return this.$attrs.value
         }
       }
-      /*
-      if (!newVal) {
-        return undefined
-      } else {
-        if (Array.isArray(newVal) && newVal.length > 0) {
-          return !this.range ? newVal : { from: newVal[0], to: newVal[1] }
-        } else {
-          return newVal
-        }
-      }*/
     },
     inputModel () {
-      const newVal = this.$attrs.value
+      const newVal = this.dateModel
       let input
       if (this.range) {
-        /*
-        if (!newVal || !newVal.from) {
+        if (!newVal) {
           input = undefined
         } else {
-          input = newVal.from + this.rangeSeparator + newVal.to
-        }*/
-        if (Array.isArray(newVal) && newVal.length >= 2) {
-          input = newVal[0] + this.rangeSeparator + newVal[1]
-        } else {
-          input = undefined
+          if (newVal.from) {
+            input = newVal.from + this.rangeSeparator + newVal.to
+          } else {
+            input = newVal + this.rangeSeparator + newVal
+          }
         }
       } else {
         if (!newVal) {

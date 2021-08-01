@@ -7,37 +7,10 @@
     value-to-string   将value转换为string再使用(用于value跟options里面数据类型不一致的情况)
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
-      :style="computedLabelStyle">
-      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
-    </label>
-    <q-option-group
-      :value="valueSync"
-      ref="optionGroup"
-      class="col q-py-xs co-option-group"
-      v-bind="$attrs"
-      v-on="listeners"
-      :rules="rules"
-      :type="type"
-      :options="optionsTranslated"
-      :dense="_dense()"
-      :disable="disable"
-      :readonly="readonly"
-    >
-      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-        <slot :name="slotName"/>
-      </template>
-      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-        <slot :name="slotName" v-bind="prop"/>
-      </template>
-    </q-option-group>
-  </div>
-  <q-option-group v-else
+  <q-option-group
     :value="valueSync"
     ref="optionGroup"
-    class="q-py-xs co-option-group"
-    :class="computedClass"
+    class="col co-option-group"
     v-bind="$attrs"
     v-on="listeners"
     :rules="rules"
@@ -46,31 +19,28 @@
     :dense="_dense()"
     :disable="disable"
     :readonly="readonly"
-  >
-    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-      <slot :name="slotName"/>
-    </template>
-    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-      <slot :name="slotName" v-bind="prop"/>
-    </template>
-  </q-option-group>
-
+  />
 </template>
 
 <script>
 import Setting from '@/default-setting'
-
-import FormMixin from './form-mixin.js'
 export default {
   name: 'CoOptionGroup',
   inheritAttrs: false,
-  mixins: [FormMixin],
   props: {
     value: null,
     valueToString: Boolean,
     dense: {
       type: Boolean,
       default: undefined
+    },
+    disable: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
     rules: Array,
     type: {

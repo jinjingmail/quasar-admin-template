@@ -156,8 +156,6 @@ module.exports = {
    * 设置输入框的外观样式：
    * co-select/co-input/co-field/co-date-select/co-tree-select design mode：
    *    支持 → standard / standout / filled / outlined / borderless
-   *
-   * 注意：quasar中， filled, outlined, standout, borderless 都设置的话，只有一个会生效
    */
   designMode: 'filled',
   /**
