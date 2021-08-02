@@ -15,7 +15,7 @@
         label-width="small"
         label-align="center"
         class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
+          <co-form-item class="col-12" form-label="ID" v-if="form.id">
             <div class="q-mt-xs">{{form.id}}</div>
           </co-form-item>
           <co-input class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[

@@ -12,9 +12,9 @@
     no-page-if-only-one-page  拢共只有一页时就不显示分页栏了
 -->
 <template>
-  <div class="row">
+  <div class="row inline no-wrap items-center">
     <slot name="start" />
-    <co-field :dense="_dense()" borderless :outlined="false" class="col-auto" :style="_dense()?'margin-top:3px':''">
+    <co-field borderless :outlined="false" class="col-auto">
       <template v-slot:control>
         共 {{page.total}} 条
       </template>
@@ -38,9 +38,6 @@
     </q-pagination>
     <co-select v-if="!computedNoPageIfOnlyOnePage"
       class="col-auto"
-      :style="_dense()?'margin-top:3px':''"
-      :dense="_dense()"
-      :options-dense="_dense()"
       :value="page.size"
       :options="sizePerPageOptions"
       emit-value

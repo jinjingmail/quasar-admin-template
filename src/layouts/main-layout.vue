@@ -120,9 +120,9 @@
               </q-list>
             </q-menu>
           </co-btn>
-          <co-btn flat v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
-          <co-btn flat :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-          <co-btn flat :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
+          <co-btn dense flat v-if="$q.screen.gt.xs" :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'" @click="$q.fullscreen.toggle()"/>
+          <co-btn dense flat :icon="$q.dark.isActive ? 'wb_sunny' : 'brightness_3'" @click="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+          <co-btn dense flat :label="$q.screen.gt.xs?username:''" @click="$refs.drawerRight.toggle()" class="no-wrap">
             <q-avatar size="md" class="q-pl-xs">
               <img src="~assets/boy-avatar.jpg">
             </q-avatar>
@@ -183,6 +183,7 @@
             <div class="column">
               <div class="text-subtitle1 ">Settings</div>
               <q-toggle :value="$q.dark.isActive" :val="true" label="DARK模式" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              <q-toggle :value="denseMode" :val="true" label="紧凑模式" @click.native="changeSettingDenseMode(!denseMode)"/>
               <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
               <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
               <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
@@ -510,6 +511,7 @@ export default {
       'sidebarWidth',
       'sidebarMini',
       'darkMode',
+      'denseMode',
       'pageBgImage',
       'colorPrimary',
       'colorHeaderBg1',
@@ -558,6 +560,12 @@ export default {
       'changeSetting',
       'restoreSetting'
     ]),
+    changeSettingDenseMode(mode) {
+      this.changeSetting({ key: 'denseMode', value: mode })
+      this.$nextTick(() => {
+        this.$router.go(0)
+      })
+    },
     moveFab (ev) {
       this.draggingFab = ev.isFirst !== true && ev.isFinal !== true
 

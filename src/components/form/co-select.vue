@@ -6,9 +6,9 @@
     filter-key-like
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label">
+  <div v-if="formLabel" :class="computedClass" class="form-label inline no-wrap items-center">
     <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
-      class="non-selectable"
+      class="non-selectable col-auto"
       :style="computedLabelStyle">
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>

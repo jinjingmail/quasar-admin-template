@@ -12,8 +12,8 @@
     no-header
     no-drag
     no-max
+    no-min
     no-close
-    no-minimize
     close-method
     icon
     content-class
@@ -55,24 +55,22 @@
 
           <slot name="header_right_prepend"></slot>
           <slot name="header_right">
-            <q-btn v-if="!noMinimize" flat :dense="_dense()"
+            <co-btn dense padding="xs sm" v-if="!noMin" flat
               :icon="minimize?'expand_more':'expand_less'"
               @click="toggleMinimize()"/>
 
-            <q-btn v-if="!noMax" flat :dense="_dense()"
+            <co-btn dense padding="xs sm" v-if="!noMax" flat
               :icon="maxscreen?icon_max_exit:icon_max"
               @click="toggleMaxScreen()"/>
 
-            <q-btn v-if="!noClose" flat :dense="_dense()"
+            <co-btn dense padding="xs sm" v-if="!noClose" flat
               :icon="icon_close?icon_close:'close'"
               @click="closeMethod?closeMethod():$refs.dialog.hide()"/>
           </slot>
         </q-toolbar>
       </q-card-section>
 
-      <template v-if="!minimize">
-        <slot />
-      </template>
+      <slot  v-if="!minimize"/>
 
     </co-card>
   </q-dialog>
@@ -99,7 +97,7 @@ export default {
 
     noHeader: Boolean,
     noClose: Boolean,
-    noMinimize: Boolean,
+    noMin: Boolean,
     noDrag: Boolean,
     noMax: Boolean,
     maximized: {

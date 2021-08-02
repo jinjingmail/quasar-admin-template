@@ -32,8 +32,8 @@
     tooltip
 -->
 <template>
-  <q-btn no-wrap v-if="type === 'menu'"
-    :dense='_dense()' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+  <co-btn no-wrap v-if="type === 'menu'"
+    :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
     :flat="flat"
     :icon-right="menuShow?iconMenuOpen:iconMenu"
     :label="labelMenu"
@@ -74,8 +74,8 @@
               </q-card-section>
               <q-separator />
               <q-card-actions align="right" class="q-pa-md">
-              <q-btn :dense="_dense()" v-close-popup flat color="white">取消</q-btn>
-              <q-btn :dense="_dense()" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
+              <co-btn v-close-popup flat color="white">取消</co-btn>
+              <co-btn v-close-popup flat color="white" icon="delete" @click="doDelete">删除</co-btn>
               </q-card-actions>
             </co-card>
           </q-popup-proxy>
@@ -93,7 +93,7 @@
         <slot name="end" />
       </q-list>
     </q-menu>
-  </q-btn>
+  </co-btn>
 
   <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
     <slot name="start" />
@@ -113,8 +113,8 @@
           </q-card-section>
           <q-separator />
           <q-card-actions align="right" class="q-pa-md">
-            <q-btn :dense="_dense()" v-close-popup flat color="white">取消</q-btn>
-            <q-btn :dense="_dense()" v-close-popup flat color="white" icon="delete" @click="doDelete">删除</q-btn>
+            <co-btn v-close-popup flat color="white">取消</co-btn>
+            <co-btn v-close-popup flat color="white" icon="delete" @click="doDelete">删除</co-btn>
           </q-card-actions>
         </co-card>
       </q-popup-proxy>

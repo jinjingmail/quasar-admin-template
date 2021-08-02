@@ -4,11 +4,11 @@
     参考 props 定义
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label">
+  <div v-if="formLabel" :class="computedClass" class="form-label inline no-wrap items-center">
     <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
       class="non-selectable"
       :style="computedLabelStyle">
-      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
+      <slot name="form-label col-auto"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
     <q-field
       ref="field"

@@ -4,7 +4,7 @@ import { LocalStorage, Dark, colors } from 'quasar'
 
 function get (key, default_ = null) {
   const v = LocalStorage.getItem(key)
-  if (v != null) {
+  if (v != null && v !== undefined) {
     return v
   } else {
     return default_
@@ -92,6 +92,7 @@ const state = {
   uniqueOpened: get('setting.uniqueOpened', defaultSetting.uniqueOpened),
   showFooter: get('setting.showFooter', defaultSetting.showFooter),
   darkMode: get('setting.darkMode', defaultSetting.darkMode),
+  denseMode: get('setting.denseMode', defaultSetting.denseMode),
   pageBgImage: get('setting.pageBgImage', defaultSetting.pageBgImage),
 
   colorPrimary: getColor('setting.colorPrimary', null),
@@ -135,6 +136,7 @@ const getters = {
   uniqueOpened: state => state.uniqueOpened,
   showFooter: state => state.showFooter,
   darkMode: state => state.darkMode,
+  denseMode: state => state.denseMode,
   pageBgImage: state => state.pageBgImage,
 
   colorPrimary: state => Dark.isActive ? state.colorPrimaryDark : state.colorPrimary,
