@@ -25,12 +25,17 @@
       :borderless="_borderless()"
       :square="_square()"
       :rounded="_rounded()"
+      :rules="rules"
+      :no-error-icon="noErrorIcon"
     >
       <template v-slot:control="prop">
         {{prop.value}}
       </template>
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
+      </template>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-field>
   </div>
@@ -50,12 +55,17 @@
     :borderless="_borderless()"
     :square="_square()"
     :rounded="_rounded()"
+    :rules="rules"
+    :no-error-icon="noErrorIcon"
   >
     <template v-slot:control="prop">
       {{prop.value}}
     </template>
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
+    </template>
+    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+      <slot :name="slotName" v-bind="prop"/>
     </template>
   </q-field>
 
@@ -121,7 +131,7 @@ export default {
       if (!undef) {
         return this.filled
       }
-      if (defaultSetting.designMode === 'filled') {
+      if (defaultSetting.inputDesignMode === 'filled') {
         return true
       } else {
         return false
@@ -132,7 +142,7 @@ export default {
       if (!undef) {
         return this.outlined
       }
-      if (defaultSetting.designMode === 'outlined') {
+      if (defaultSetting.inputDesignMode === 'outlined') {
         return true
       } else {
         return false
@@ -143,7 +153,7 @@ export default {
       if (!undef) {
         return this.standout
       }
-      if (defaultSetting.designMode === 'standout') {
+      if (defaultSetting.inputDesignMode === 'standout') {
         return true
       } else {
         return false
@@ -154,7 +164,7 @@ export default {
       if (!undef) {
         return this.borderless
       }
-      if (defaultSetting.designMode === 'borderless') {
+      if (defaultSetting.inputDesignMode === 'borderless') {
         return true
       } else {
         return false
@@ -165,7 +175,7 @@ export default {
       if (!undef) {
         return this.square
       }
-      if (defaultSetting.designCorner === 'square') {
+      if (defaultSetting.inputDesignCorner === 'square') {
         return true
       } else {
         return false
@@ -176,7 +186,7 @@ export default {
       if (!undef) {
         return this.rounded
       }
-      if (defaultSetting.designCorner === 'rounded') {
+      if (defaultSetting.inputDesignCorner === 'rounded') {
         return true
       } else {
         return false

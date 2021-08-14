@@ -1,31 +1,22 @@
 <!--
-  重新定义input等form组件：
-  1、简化代码量
-  2、QInput 等Quasar自带的组件，当设置disable后，还是可以通过控制台强制改写model值，这里自定义组件不能改写
-  新增插槽：
-      form-label
-  新增prop：
-      见prop定义
+  增加插槽：
+  增加属性：
+    参考 props 定义
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label inline no-wrap items-center">
     <label :class="{'dense':_dense(), 'ellipsis-2-lines':!noEllipsis}"
-      class="non-selectable col-auto"
+      class="non-selectable"
       :style="computedLabelStyle">
-      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
+      <slot name="form-label col-auto"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
-    <q-input
-      :value="value"
-      class="col co-input"
-      :class="contentClass"
+    <q-file
+      ref="file"
+      class="col co-file"
       :style="contentStyle"
-      ref="input"
       v-bind="$attrs"
       v-on="listeners"
-      :rules="rules"
-      :label="label"
       :dense="_dense()"
-      :no-error-icon="noErrorIcon"
       :disable="disable"
       :readonly="readonly"
       :filled="_filled()"
@@ -34,32 +25,25 @@
       :borderless="_borderless()"
       :square="_square()"
       :rounded="_rounded()"
-      @mouseover.native="hover=true"
-      @mouseleave.native="hover=false"
+      :rules="rules"
+      :no-error-icon="noErrorIcon"
     >
       <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
         <slot :name="slotName"/>
       </template>
-      <template v-slot:append>
-        <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-          <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
-        </template>
-        <slot v-else name="append"/>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
       </template>
-    </q-input>
+    </q-file>
   </div>
-  <q-input v-else
-    ref="input"
-    :value="value"
-    class="co-input"
-    :class="{computedClass, contentClass}"
+  <q-file v-else
+    ref="file"
+    class="co-file"
+    :class="computedClass"
     :style="contentStyle"
     v-bind="$attrs"
     v-on="listeners"
-    :rules="rules"
-    :label="label"
     :dense="_dense()"
-    :no-error-icon="noErrorIcon"
     :disable="disable"
     :readonly="readonly"
     :filled="_filled()"
@@ -68,46 +52,29 @@
     :borderless="_borderless()"
     :square="_square()"
     :rounded="_rounded()"
-    @mouseover.native="hover=true"
-    @mouseleave.native="hover=false"
+    :rules="rules"
+    :no-error-icon="noErrorIcon"
   >
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
-
-    <template v-slot:append>
-      <template v-if="clearable && hover && (value!=null && value !== '') && !disable">
-        <q-icon :name='clearIcon' class='cursor-pointer' @click.prevent.stop="_doClear()"/>
-      </template>
-      <slot v-else name="append"/>
+    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+      <slot :name="slotName" v-bind="prop"/>
     </template>
+  </q-file>
 
-  </q-input>
 </template>
 
 <script>
 import defaultSetting from '@/default-setting'
-import FormMixin from './form-mixin.js'
 
+import FormMixin from './form-mixin.js'
 export default {
-  name: 'CoInput',
+  name: 'CoFile',
   inheritAttrs: false,
   mixins: [FormMixin],
   props: {
-    value: {
-      type: [String, Number]
-    },
     rules: Array,
-    clearable: Boolean,
-    clearIcon: {
-      type: String,
-      default: 'cancel'
-    },
-    noClearFocus: Boolean,
-    label: {
-      type: String,
-      default: undefined
-    },
     filled: {
       type: Boolean,
       default: undefined
@@ -133,27 +100,24 @@ export default {
       default: undefined
     }
   },
-  data () {
-    return {
-      hover: false
-    }
-  },
   computed: {
     listeners: function () {
       const vm = this
-      // `Object.assign` 将所有的对象合并为一个新对象
       return Object.assign({},
         // 从父级添加所有的监听器
         vm.$listeners,
         // 添加自定义监听器，或覆写一些监听器的行为
         {
-          // 这里确保组件配合 `v-model` 的工作
           input: function (value) {
-            vm._doInput(value)
+            if (!vm.disable && !vm.readonly) {
+              vm.$emit('input', value)
+            }
           }
         }
       )
     }
+  },
+  mounted () {
   },
   methods: {
     _filled() {
@@ -229,36 +193,31 @@ export default {
         return this.dense
       }
     },
-    _doClear () {
-      const oldVal = this.value
-      this._doInput(null)
-      //this.$nextTick(() => {
-      this.$emit('clear', oldVal)
-      //})
-    },
-    _doInput (value) {
-      if (!this.disable) {
-        this.$emit('input', value)
-      }
-    },
 
-    /* q-input 默认方法 begin */
+    pickFiles (evt) {
+      this.$refs.file.pickFiles(evt)
+    },
+    addFiles (files) {
+      this.$refs.file.addFiles(files)
+    },
     resetValidation () {
-      this.$refs.input.resetValidation()
+      this.$refs.file.resetValidation()
     },
     validate (value) {
-      return this.$refs.input.validate(value)
+      return this.$refs.file.validate(value)
     },
     focus () {
-      this.$refs.input.focus()
+      this.$refs.file.focus()
     },
     blur () {
-      this.$refs.input.blur()
+      this.$refs.file.blur()
     },
-    select () {
-      this.$refs.input.select()
+    removeAtIndex (index) {
+      this.$refs.file.removeAtIndex(index)
+    },
+    removeFile (file) {
+      this.$refs.file.removeFile(file)
     }
-    /* q-input 默认方法 end */
   }
 }
 </script>

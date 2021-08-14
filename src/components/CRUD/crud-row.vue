@@ -32,12 +32,15 @@
     tooltip
 -->
 <template>
-  <co-btn no-wrap v-if="type === 'menu'"
+  <co-btn v-if="type === 'menu'"
+    no-wrap
+    :dense="_dense()"
     :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
     :flat="flat"
     :icon-right="menuShow?iconMenuOpen:iconMenu"
     :label="labelMenu"
     :color="colorMenu"
+    :padding="(_dense() && !noLabel && labelView && !flat)?'xs sm':''" :size="_dense()?'sm':'md'"
     :loading="delLoading" :disable="delLoading">
     <q-menu ref="menu" :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
       <q-list>
@@ -95,15 +98,15 @@
     </q-menu>
   </co-btn>
 
-  <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="noWrap?'no-wrap':''">
+  <div v-else class="q-gutter-x-sm q-gutter-y-xs" :class="{'no-wrap':noWrap}">
     <slot name="start" />
-    <q-btn @click="crud.toView(data)" v-if="!noView" :padding="(_dense() && !noLabel && labelView && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
+    <co-btn @click="crud.toView(data)" v-if="!noView" :dense="_dense()" :padding="(_dense() && !noLabel && labelView && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
       <q-tooltip :delay="550" v-if="tooltip">{{labelView}}</q-tooltip>
-    </q-btn>
-    <q-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :padding="(_dense() && !noLabel && labelEdit && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
+    </co-btn>
+    <co-btn v-permission="permission.edit" @click="crud.toEdit(data)" v-if="!noEdit" :dense="_dense()" :padding="(_dense() && !noLabel && labelEdit && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="colorEdit" :icon="computedIconEdit" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelEdit">
       <q-tooltip :delay="550" v-if="tooltip">{{labelEdit}}</q-tooltip>
-    </q-btn>
-    <q-btn v-permission="permission.del" v-if="!noDel" :padding="(_dense() && !noLabel && labelDel && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
+    </co-btn>
+    <co-btn v-permission="permission.del" v-if="!noDel" :dense="_dense()" :padding="(_dense() && !noLabel && labelDel && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="colorDel" :icon="computedIconDel"   :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelDel"
       :loading="delLoading" :disable="delLoading">
       <q-tooltip :delay="550" v-if="tooltip">{{labelDel}}</q-tooltip>
       <q-popup-proxy>
@@ -118,10 +121,10 @@
           </q-card-actions>
         </co-card>
       </q-popup-proxy>
-    </q-btn>
-    <q-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :padding="(_dense() && !noLabel && labelAdd && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :dense='_dense()' :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
+    </co-btn>
+    <co-btn v-permission="permission.add" @click="crud.toAdd(dataAdd)" v-if="!noAdd" :dense="_dense()" :padding="(_dense() && !noLabel && labelAdd && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="colorAdd" :icon="computedIconAdd" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelAdd">
       <q-tooltip :delay="550" v-if="tooltip">{{labelAdd}}</q-tooltip>
-    </q-btn>
+    </co-btn>
     <slot name="end" />
   </div>
 </template>
@@ -155,16 +158,39 @@ export default {
     type: {
       type: String,
       default: 'button',
-      validator: v => ['menu', 'button'].includes(v)
+      validator: v => ['menu', 'button', 'btn'].includes(v)
     },
     noWrap: Boolean,
-    flat: Boolean,
-    rounded: Boolean,
-    round: Boolean,
-    outline: Boolean,
-    push: Boolean,
-    unelevated: Boolean,
-    glossy: Boolean,
+    flat: {
+      type: Boolean,
+      default: undefined
+    },
+    outline: {
+      type: Boolean,
+      default: undefined
+    },
+    push: {
+      type: Boolean,
+      default: undefined
+    },
+    unelevated: {
+      type: Boolean,
+      default: undefined
+    },
+    glossy: {
+      type: Boolean,
+      default: undefined
+    },
+
+    rounded: {
+      type: Boolean,
+      default: undefined
+    },
+    round: {
+      type: Boolean,
+      default: undefined
+    },
+
     dense: {
       type: Boolean,
       default: undefined
@@ -179,7 +205,7 @@ export default {
     },
     colorView: {
       type: String,
-      default: 'secondary'
+      default: 'blue-grey-5'
     },
     colorEdit: {
       type: String,

@@ -19,7 +19,7 @@
         共 {{page.total}} 条
       </template>
     </co-field>
-    <q-pagination v-if="!computedNoPageIfOnlyOnePage"
+    <co-pagination v-if="!computedNoPageIfOnlyOnePage"
       :value="page.page"
       class="col-auto"
       :max="pageMax"
@@ -35,7 +35,7 @@
       v-bind="$attrs"
       v-on="$listeners"
     >
-    </q-pagination>
+    </co-pagination>
     <co-select v-if="!computedNoPageIfOnlyOnePage"
       class="col-auto"
       :value="page.size"

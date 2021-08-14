@@ -113,6 +113,7 @@
       no-backdrop-dismiss
       card-style="width:1200px; max-width:95vw;"
     >
+      <q-scroll-area style="height: 80vh">
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
           <co-checkbox v-model="labelTop" label="label-top" />
@@ -757,6 +758,7 @@
             </template>
           </co-input>
       </co-form>
+      </q-scroll-area>
       <q-card-actions class="q-pa-md">
         <co-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-space />

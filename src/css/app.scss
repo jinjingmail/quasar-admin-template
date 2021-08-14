@@ -58,6 +58,12 @@ input:-ms-input-placeholder {
 .q-btn.disabled {
   opacity: 0.4 !important;
 }
+.q-field--disabled .q-field__control {
+  background-color: $grey-4;
+}
+.q-field--disabled.q-field--dark .q-field__control {
+  background-color: $grey-9;
+}
 .q-field--disabled .q-field__control > div {
   opacity: 0.7 !important;
 }
@@ -70,11 +76,14 @@ input:-ms-input-placeholder {
   margin: 0px 4px 0px 0px;
 }
 
+.co-btn--square {
+  border-radius: unset;
+}
+
+.co-field,
 .co-input,
 .co-select,
-.co-field,
-.co-option-group,
-.co-form-item {
+.co-file {
   /*输入框中的label，颜色变浅一些*/
   .q-field__label {
     color: #ababab; /*$grey-7*/
@@ -170,7 +179,7 @@ input:-ms-input-placeholder {
     top: 9px;
   }
   &.q-field--dense.q-field--float .q-field__label {
-    top: 0px;
+    top: 4px;
   }
   &.q-field--focused .q-field__label {
     top: -5px;

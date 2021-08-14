@@ -28,6 +28,7 @@
             class="login-form my-form q-mt-lg"
           >
             <co-input
+              :dense="false"
               class="q-mb-md"
               no-error-icon
               v-model.trim="form.username"
@@ -35,6 +36,7 @@
               :rules="[ val => val && val.length > 0 || '请输入用户账号']"
             />
             <co-input
+              :dense="false"
               class="q-mb-md"
               no-error-icon
               type="password"
@@ -43,6 +45,7 @@
               :rules="[ val => val && val.length > 0 || '请输入登录密码']"
             />
             <co-input
+              :dense="false"
               class="q-mb-md"
               no-error-icon
               v-model.trim="form.verify"

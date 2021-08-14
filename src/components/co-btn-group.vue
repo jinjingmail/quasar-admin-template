@@ -1,13 +1,13 @@
 <!--
-  co-btn 组件
-  增加一个 square 属性，显示直角边的按钮。
+  co-btn-group 组件
+    新增 square 参数
 -->
 <template>
-  <q-btn
-    ref="btn"
+  <q-btn-group
+    ref="btnGroup"
     v-bind="$attrs"
     v-on="$listeners"
-    class="co-btn"
+    class="co-btn-group"
     :class="{'co-btn--square':_square()}"
     :dense="_dense()"
     :flat="_flat()"
@@ -19,14 +19,14 @@
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
       <slot :name="slotName"/>
     </template>
-  </q-btn>
+  </q-btn-group>
 </template>
 
 <script>
 import Setting from '@/default-setting'
 
 export default {
-  name: 'CoBtn',
+  name: 'CoBtnGroup',
   inheritAttrs: false,
   props: {
     dense: {
@@ -56,12 +56,7 @@ export default {
     rounded: {
       type: Boolean,
       default: undefined
-    },
-    round: {
-      type: Boolean,
-      default: undefined
     }
-
   },
   methods: {
     _dense() {
@@ -137,10 +132,6 @@ export default {
       } else {
         return false
       }
-    },
-
-    click(evt) {
-      this.$refs.btn.click(evt)
     }
   }
 }

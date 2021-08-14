@@ -31,12 +31,7 @@
       :title="computedTitle"
       :today-btn="todayBtn"
     >
-      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-        <slot :name="slotName"/>
-      </template>
-      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-        <slot :name="slotName" v-bind="prop"/>
-      </template>
+      <slot name="default"/>
     </q-date>
   </div>
   <q-date v-else
@@ -55,12 +50,7 @@
     :title="computedTitle"
     :today-btn="todayBtn"
   >
-    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-      <slot :name="slotName"/>
-    </template>
-    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-      <slot :name="slotName" v-bind="prop"/>
-    </template>
+    <slot name="default"/>
   </q-date>
 
 </template>

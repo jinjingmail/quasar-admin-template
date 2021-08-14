@@ -93,6 +93,10 @@ const state = {
   showFooter: get('setting.showFooter', defaultSetting.showFooter),
   darkMode: get('setting.darkMode', defaultSetting.darkMode),
   denseMode: get('setting.denseMode', defaultSetting.denseMode),
+  inputDesignMode: get('setting.inputDesignMode', defaultSetting.inputDesignMode),
+  inputDesignCorner: get('setting.inputDesignCorner', defaultSetting.inputDesignCorner),
+  btnDesignMode: get('setting.btnDesignMode', defaultSetting.btnDesignMode),
+  btnDesignCorner: get('setting.btnDesignCorner', defaultSetting.btnDesignCorner),
   pageBgImage: get('setting.pageBgImage', defaultSetting.pageBgImage),
 
   colorPrimary: getColor('setting.colorPrimary', null),
@@ -137,6 +141,10 @@ const getters = {
   showFooter: state => state.showFooter,
   darkMode: state => state.darkMode,
   denseMode: state => state.denseMode,
+  inputDesignMode: state => state.inputDesignMode,
+  inputDesignCorner: state => state.inputDesignCorner,
+  btnDesignMode: state => state.btnDesignMode,
+  btnDesignCorner: state => state.btnDesignCorner,
   pageBgImage: state => state.pageBgImage,
 
   colorPrimary: state => Dark.isActive ? state.colorPrimaryDark : state.colorPrimary,

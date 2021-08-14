@@ -15,19 +15,22 @@
     <div class="column">
       <slot name="start"/>
       <template v-if="!noFullscreen && tableSlotTopProps && tableSlotTopProps.inFullscreen != undefined">
-        <co-btn flat :label="labelFullscreen" align="left"
+        <co-btn :label="labelFullscreen" align="left"
+          flat
+          :dense="_dense()"
           :icon="tableSlotTopProps.inFullscreen?iconFullscreenExit:iconFullscreen"
           @click.native="toggleTableFullscreen(tableSlotTopProps)"/>
         <q-separator/>
       </template>
-      <co-toggle v-model="crud.visibleColumns" v-for="item in crud.columns" :key="item.name"
-        :val="item.name" :label="getLabel(item.label)" :disable="item.required" style="margin:5px 0"/>
+      <co-checkbox v-model="crud.visibleColumns" v-for="item in crud.columns" :key="item.name" :dense="_dense()"
+        :val="item.name" :label="getLabel(item.label)" :disable="item.required" style="margin:1px 6px"/>
       <slot name="end"/>
     </div>
   </div>
 </template>
 <script>
 import { crud } from './crud'
+import Setting from '@/default-setting'
 
 export default {
   mixins: [crud()],
@@ -51,11 +54,14 @@ export default {
       default: '全屏'
     }
   },
-  data () {
-    return {
-    }
-  },
   methods: {
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
+    },
     getLabel (label) {
       if (label.length > 20) {
         return label.substr(0, 20) + '..'

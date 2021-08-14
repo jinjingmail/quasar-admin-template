@@ -181,25 +181,24 @@
             <q-separator inset class="q-my-sm" />
 
             <div class="column">
-              <div class="text-subtitle1 ">Settings</div>
-              <q-toggle :value="$q.dark.isActive" :val="true" label="DARK模式" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
-              <q-toggle :value="denseMode" :val="true" label="紧凑模式" @click.native="changeSettingDenseMode(!denseMode)"/>
-              <q-toggle :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
-              <q-toggle :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
-              <q-toggle :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
-              <q-toggle :value="elevatedHeader" :val="true" label="顶部阴影" @click.native="changeSetting({key:'elevatedHeader', value: !elevatedHeader})"/>
-              <q-toggle :value="elevatedSidebar" :val="true" label="左侧菜单阴影" @click.native="changeSetting({key:'elevatedSidebar', value: !elevatedSidebar})"/>
-              <q-toggle :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})" v-if="$q.screen.gt.xs"/>
-              <q-toggle :value="sidebarMini" :val="true" label="左侧菜单折叠（需刷新页面）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})" v-if="$q.screen.gt.xs"/>
-              <q-toggle :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
-              <co-input filled dense label="左侧菜单宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
+              <co-checkbox style="margin:2px 4px" :value="$q.dark.isActive" :val="true" label="DARK模式" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+              <co-checkbox style="margin:2px 4px" :value="denseMode" :val="true" label="紧凑模式" @click.native="changeSettingDenseMode(!denseMode)"/>
+              <co-checkbox style="margin:2px 4px" :value="tagsView" :val="true" label="Tab栏显示" @click.native="changeSetting({key:'tagsView', value: !tagsView})"/>
+              <co-checkbox style="margin:2px 4px" :value="tagsViewTop" :val="true" label="Tab栏顶部显示" @click.native="changeSetting({key:'tagsViewTop', value: !tagsViewTop})"/>
+              <co-checkbox style="margin:2px 4px" :value="fixedHeader" :val="true" label="顶部锁定" @click.native="changeSetting({key:'fixedHeader', value: !fixedHeader})"/>
+              <co-checkbox style="margin:2px 4px" :value="elevatedHeader" :val="true" label="顶部阴影" @click.native="changeSetting({key:'elevatedHeader', value: !elevatedHeader})"/>
+              <co-checkbox style="margin:2px 4px" :value="elevatedSidebar" :val="true" label="左侧菜单阴影" @click.native="changeSetting({key:'elevatedSidebar', value: !elevatedSidebar})"/>
+              <co-checkbox style="margin:2px 4px" :value="sidebarTop" :val="true" label="左侧菜单到顶" @click.native="changeSetting({key:'sidebarTop', value: !sidebarTop})" v-if="$q.screen.gt.xs"/>
+              <co-checkbox style="margin:2px 4px" :value="sidebarMini" :val="true" label="左侧菜单折叠（需刷新）" @click.native="changeSetting({key:'sidebarMini', value: !sidebarMini})" v-if="$q.screen.gt.xs"/>
+              <co-checkbox style="margin:2px 4px" :value="uniqueOpened" :val="true" label="左侧菜单只展开一个" @click.native="changeSetting({key:'uniqueOpened', value: !uniqueOpened})"/>
+              <co-input dense label="左侧菜单宽度" style="width:100px" :value="sidebarWidth" @input="val => changeSetting({key:'sidebarWidth', value: val})" type="number"/>
 
               <q-separator inset class="q-mt-md" />
 
               <q-toolbar class="no-padding">
                 <div class="text-subtitle1 ">主色调</div>
                 <q-space/>
-                <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+                <co-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <brand-color />
 
@@ -223,24 +222,24 @@
                       </co-card>
                     </q-popup-proxy>
                   </q-btn>
-                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+                  <co-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <div class="row q-gutter-lg">
-                <q-btn class="col-auto" size="sm" label="背景1" color="primary">
+                <co-btn flat dense class="col-auto" label="背景1" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorHeaderBg1" @change="value => changeSetting({key:'colorHeaderBg1', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="背景2" color="primary">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="背景2" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorHeaderBg2" @change="value => changeSetting({key:'colorHeaderBg2', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="文字" color="primary">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="文字" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorHeaderText" @change="value => changeSetting({key:'colorHeaderText', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
+                </co-btn>
               </div>
 
               <q-toolbar class="no-padding">
@@ -263,24 +262,24 @@
                       </co-card>
                     </q-popup-proxy>
                   </q-btn>
-                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+                  <co-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
               <div class="row q-gutter-lg">
-                <q-btn class="col-auto" size="sm" label="背景" color="primary">
+                <co-btn flat dense class="col-auto" label="背景" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorMenuBg" @change="value => changeSetting({key:'colorMenuBg', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="文字" color="primary">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="文字" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorMenuText" @change="value => changeSetting({key:'colorMenuText', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="选中项" color="primary">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="选中项" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorMenuBgActive" @change="value => changeSetting({key:'colorMenuBgActive', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
+                </co-btn>
               </div>
 
               <q-toolbar class="no-padding">
@@ -303,25 +302,39 @@
                       </co-card>
                     </q-popup-proxy>
                   </q-btn>
-                  <q-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
+                  <co-toggle :value="$q.dark.isActive" :val="true" label="DARK" @click.native="changeSetting({key:'darkMode', value: !$q.dark.isActive})"/>
               </q-toolbar>
-              <div class="row q-gutter-lg">
-                <q-btn class="col-auto" size="sm" label="背景底色" color="primary">
+              <div class="row q-gutter-sm">
+                <co-btn flat dense class="col-auto" label="背景底色" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorPageBg" @change="value => changeSetting({key:'colorPageBg', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="表格背景" color="primary">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="表格背景" color="primary">
                   <q-popup-proxy>
                     <q-color :value="colorTableBg" @change="value => changeSetting({key:'colorTableBg', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-btn class="col-auto" size="sm" label="其它背景" color="primary" @click="testDialog=true">
+                </co-btn>
+                <co-btn flat dense class="col-auto" label="其它背景" color="primary" @click="testDialog=true">
                   <q-popup-proxy>
                     <q-color :value="colorOtherBg" @change="value => changeSetting({key:'colorOtherBg', value: value})"/>
                   </q-popup-proxy>
-                </q-btn>
-                <q-checkbox :value="pageBgImage" label="显示背景图" dense @click.native="changeSetting({key:'pageBgImage', value: !pageBgImage})"/>
+                </co-btn>
+                <co-checkbox dense :value="pageBgImage" label="显示背景图" @click.native="changeSetting({key:'pageBgImage', value: !pageBgImage})"/>
+              </div>
+
+              <q-separator inset class="q-mt-md" />
+              <div class="text-subtitle1 ">输入框样式</div>
+              <div class="row q-gutter-sm">
+                <co-select :value="inputDesignMode" class="col" :options="['default', 'standout', 'filled', 'outlined', 'borderless']" @input="value => changeSettingInputDesignMode(value)"/>
+                <co-select :value="inputDesignCorner" class="col" :options="['default', 'square', 'rounded']" @input="value => changeSettingInputDesignCorner(value)"/>
+              </div>
+
+              <q-separator inset class="q-mt-md" />
+              <div class="text-subtitle1 ">按钮样式</div>
+              <div class="row q-gutter-sm">
+                <co-select :value="btnDesignMode" class="col" :options="['default', 'flat', 'outline', 'push', 'unelevated']" @input="value => changeSettingBtnDesignMode(value)"/>
+                <co-select :value="btnDesignCorner" class="col" :options="['default', 'square', 'rounded']" @input="value => changeSettingBtnDesignCorner(value)"/>
               </div>
 
             </div>
@@ -512,6 +525,10 @@ export default {
       'sidebarMini',
       'darkMode',
       'denseMode',
+      'inputDesignMode',
+      'inputDesignCorner',
+      'btnDesignMode',
+      'btnDesignCorner',
       'pageBgImage',
       'colorPrimary',
       'colorHeaderBg1',
@@ -562,6 +579,31 @@ export default {
     ]),
     changeSettingDenseMode(mode) {
       this.changeSetting({ key: 'denseMode', value: mode })
+      this.$nextTick(() => {
+        this.$router.go(0)
+      })
+    },
+    changeSettingInputDesignMode(mode) {
+      console.log('mode=' + mode)
+      this.changeSetting({ key: 'inputDesignMode', value: mode })
+      this.$nextTick(() => {
+        this.$router.go(0)
+      })
+    },
+    changeSettingInputDesignCorner(mode) {
+      this.changeSetting({ key: 'inputDesignCorner', value: mode })
+      this.$nextTick(() => {
+        this.$router.go(0)
+      })
+    },
+    changeSettingBtnDesignMode(mode) {
+      this.changeSetting({ key: 'btnDesignMode', value: mode })
+      this.$nextTick(() => {
+        this.$router.go(0)
+      })
+    },
+    changeSettingBtnDesignCorner(mode) {
+      this.changeSetting({ key: 'btnDesignCorner', value: mode })
       this.$nextTick(() => {
         this.$router.go(0)
       })

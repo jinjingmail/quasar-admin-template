@@ -45,12 +45,6 @@
       @popup-show="_popupshow"
       @popup-hide="_popuphide"
     >
-      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-        <slot :name="slotName"/>
-      </template>
-      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-        <slot :name="slotName" v-bind="prop"/>
-      </template>
       <template v-slot:append>
         <slot name="append" />
         <template v-if="clearable && _hasValue() && !disable">
@@ -63,6 +57,12 @@
             :style="popupShow?'transform: rotate(180deg)':''"
             :name="dropdownIcon"/>
         </template>
+      </template>
+      <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
+        <slot :name="slotName"/>
+      </template>
+      <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+        <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-select>
   </div>
@@ -100,13 +100,6 @@
     @popup-show="_popupshow"
     @popup-hide="_popuphide"
   >
-    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-      <slot :name="slotName"/>
-    </template>
-    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
-      <slot :name="slotName" v-bind="prop"/>
-    </template>
-
     <template v-slot:append>
       <slot name="append" />
       <template v-if="clearable && _hasValue() && !disable">
@@ -121,7 +114,12 @@
           />
       </template>
     </template>
-
+    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
+      <slot :name="slotName"/>
+    </template>
+    <template v-for="slotName in Object.keys($scopedSlots)" v-slot:[slotName]="prop">
+      <slot :name="slotName" v-bind="prop"/>
+    </template>
   </q-select>
 
 </template>
@@ -253,7 +251,7 @@ export default {
       if (!undef) {
         return this.filled
       }
-      if (Setting.designMode === 'filled') {
+      if (Setting.inputDesignMode === 'filled') {
         return true
       } else {
         return false
@@ -264,7 +262,7 @@ export default {
       if (!undef) {
         return this.outlined
       }
-      if (Setting.designMode === 'outlined') {
+      if (Setting.inputDesignMode === 'outlined') {
         return true
       } else {
         return false
@@ -275,7 +273,7 @@ export default {
       if (!undef) {
         return this.standout
       }
-      if (Setting.designMode === 'standout') {
+      if (Setting.inputDesignMode === 'standout') {
         return true
       } else {
         return false
@@ -286,7 +284,7 @@ export default {
       if (!undef) {
         return this.borderless
       }
-      if (Setting.designMode === 'borderless') {
+      if (Setting.inputDesignMode === 'borderless') {
         return true
       } else {
         return false
@@ -297,7 +295,7 @@ export default {
       if (!undef) {
         return this.square
       }
-      if (Setting.designCorner === 'square') {
+      if (Setting.inputDesignCorner === 'square') {
         return true
       } else {
         return false
@@ -308,7 +306,7 @@ export default {
       if (!undef) {
         return this.rounded
       }
-      if (Setting.designCorner === 'rounded') {
+      if (Setting.inputDesignCorner === 'rounded') {
         return true
       } else {
         return false

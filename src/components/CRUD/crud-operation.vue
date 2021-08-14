@@ -31,20 +31,20 @@
   <div class="q-gutter-sm no-wrap">
     <!--左侧插槽-->
     <slot name="start" />
-    <co-btn :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.add"
+    <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.add"
       :color="colorAdd" :icon="computedIconAdd" :label="computedLabelAdd" v-if="!noAdd" @click="crud.toAdd"/>
-    <co-btn :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.del"
+    <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.del"
       :color="colorDel" :icon="computedIconDel" :label="computedLabelDel"
       :disable="!crud.selections.length"
       v-if="!noDel || hideDisable"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
-    <co-btn :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.edit"
+    <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.edit"
       :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit"
       :disable="crud.selections.length!==1"
       v-if="!noEdit || hideDisable" @click="crud.toEdit(crud.selections[0])"/>
-    <co-btn :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+    <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorView" :icon="computedIconView" :label="computedLabelView"
       :disable="crud.selections.length!==1"
       v-if="!noView || hideDisable" @click="crud.toView(crud.selections[0])"/>
@@ -62,14 +62,15 @@
         </div>
       </q-card-section>
       <q-card-actions align="right" class="q-pa-md">
-        <co-btn label="取消" v-close-popup flat :size="size" :padding="padding" color="white"/>
-        <co-btn label="是的" v-close-popup flat :size="size" :padding="padding" icon="delete" color="white" @click="doDelete(crud.selections)" />
+        <co-btn label="取消" v-close-popup flat :dense="_dense()" :size="size" :padding="padding" color="white"/>
+        <co-btn label="是的" v-close-popup flat :dense="_dense()" :size="size" :padding="padding" icon="delete" color="white" @click="doDelete(crud.selections)" />
       </q-card-actions>
     </co-dialog>
   </div>
 </template>
 <script>
 import { crud } from './crud'
+import Setting from '@/default-setting'
 
 export default {
   mixins: [crud()],
@@ -89,13 +90,35 @@ export default {
     noDel: Boolean,
     noDownload: Boolean,
 
-    flat: Boolean,
-    rounded: Boolean,
-    round: Boolean,
-    outline: Boolean,
-    push: Boolean,
-    unelevated: Boolean,
-    glossy: Boolean,
+    flat: {
+      type: Boolean,
+      default: undefined
+    },
+    outline: {
+      type: Boolean,
+      default: undefined
+    },
+    push: {
+      type: Boolean,
+      default: undefined
+    },
+    unelevated: {
+      type: Boolean,
+      default: undefined
+    },
+    glossy: {
+      type: Boolean,
+      default: undefined
+    },
+
+    round: {
+      type: Boolean,
+      default: undefined
+    },
+    rounded: {
+      type: Boolean,
+      default: undefined
+    },
 
     dense: {
       type: Boolean,
@@ -230,6 +253,13 @@ export default {
     doDelete (datas) {
       this.crud.delAllLoading = true
       this.crud.doDelete(datas)
+    },
+    _dense() {
+      if (this.dense === undefined) {
+        return Setting.denseMode
+      } else {
+        return this.dense
+      }
     }
   }
 }

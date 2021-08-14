@@ -9,8 +9,11 @@
   新增prop：
       见prop定义
       date-today-btn
-      default-time  自动在日期后面添加后缀，比如：[' 00:00:00', ' 23:59:59']
+      default-time  自动在日期后面添加后缀，比如：['00:00:00', '23:59:59']
+      date-time-join 日期和时间链接符号
       hide-dropdown-icon
+      edit-time     修改时间
+      with-seconds
   返回值：
       range=false "2019/02/10"
       range=true  ["2019/02/10", "2019/02/15"]
@@ -24,9 +27,11 @@
     :disable="disable"
     :readonly="readonly"
     :no-clear-focus="noClearFocus"
+    :rules="rules"
   >
     <q-popup-proxy
       ref="popupDate"
+      @before-hide="_popupDateBeforeHide"
     >
       <co-date
         :value="dateModel"
@@ -47,6 +52,36 @@
         :navigation-max-year-month="navigationMaxYearMonth"
         @input="_dateInput"
       >
+        <div class="row q-gutter-xl" v-if="editTime">
+          <q-field dense class="col" label="开始时间" :value="times[0]">
+            <template v-slot:control>{{times[0]}}</template>
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-time
+                v-model="times[0]"
+                :with-seconds="withSeconds"
+                format24h
+              >
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-time>
+            </q-popup-proxy>
+          </q-field>
+          <q-field dense class="col" label="结束时间" :value="times[1]">
+            <template v-slot:control>{{times[1]}}</template>
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-time
+                v-model="times[1]"
+                :with-seconds="withSeconds"
+                format24h
+              >
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Close" color="primary" flat />
+                </div>
+              </q-time>
+            </q-popup-proxy>
+          </q-field>
+        </div>
       </co-date>
     </q-popup-proxy>
 
@@ -73,6 +108,7 @@ export default {
     readonly: Boolean,
     clearable: Boolean,
     useInput: Boolean,
+    rules: Array,
     dropdownIcon: {
       type: String,
       default: 'event'
@@ -90,7 +126,11 @@ export default {
     range: Boolean,
     rangeSeparator: {
       type: String,
-      default: ' -> '
+      default: ' → '
+    },
+    dateTimeJoin: {
+      type: String,
+      default: ' '
     },
     dateTodayBtn: Boolean,
     dateMask: String,
@@ -103,7 +143,20 @@ export default {
     defaultYearMonth: String,
     navigationMinYearMonth: String,
     navigationMaxYearMonth: String,
-    defaultTime: Array
+    defaultTime: Array,
+    editTime: Boolean,
+    withSeconds: Boolean
+  },
+  data () {
+    return {
+      times: []
+    }
+  },
+  created() {
+    if (this.editTime) {
+      this.times[0] = this.defaultTime[0]
+      this.times[1] = this.defaultTime[1]
+    }
   },
   computed: {
     dateModel () {
@@ -112,9 +165,11 @@ export default {
           // 去掉 defaultTime 后缀
           let dateBegin = this.$attrs.value[0]
           let dateEnd = this.$attrs.value[1]
-          if (Array.isArray(this.defaultTime) && this.defaultTime.length >= 2) {
-            dateBegin = remove(dateBegin, this.defaultTime[0])
-            dateEnd = remove(dateEnd, this.defaultTime[1])
+          if (Array.isArray(this.times) && this.times.length >= 2) {
+            const b = dateBegin.split(this.dateTimeJoin)
+            const e = dateEnd.split(this.dateTimeJoin)
+            dateBegin = remove(dateBegin, b[b.length - 1])
+            dateEnd = remove(dateEnd, e[e.length - 1])
           }
           // 在range模式下，同一天 {from:'2020-01-12', to:'2020-01-12'} 会不显示，所以这里特殊处理一下
           if (dateBegin === dateEnd) {
@@ -174,27 +229,34 @@ export default {
     }
   },
   methods: {
+    _popupDateBeforeHide() {
+      if (this.editTime) {
+        this._dateInput(this.dateModel)
+      }
+    },
     _dateInput(value, reason, details) {
       const newVal = value
       if (this.range && newVal && newVal.from) {
         let time1 = ''
         let time2 = ''
-        if (this.defaultTime) {
-          if (this.defaultTime.length >= 1) {
-            time1 = this.defaultTime[0]
+        if (this.times) {
+          if (this.times.length >= 1) {
+            time1 = this.times[0]
           }
-          if (this.defaultTime.length >= 2) {
-            time2 = this.defaultTime[1]
+          if (this.times.length >= 2) {
+            time2 = this.times[1]
           }
         }
-        this.$emit('input', [newVal.from + time1, newVal.to + time2])
+        this.$emit('input', [newVal.from + this.dateTimeJoin + time1, newVal.to + this.dateTimeJoin + time2])
       } else if (newVal && newVal.length > 0) {
         let time1 = ''
-        if (this.defaultTime && this.defaultTime.length >= 1) {
-          time1 = this.defaultTime[0]
+        if (this.times && this.times.length >= 1) {
+          time1 = this.times[0]
         }
-        this.$emit('input', newVal + time1)
+        this.$refs.popupDate.hide()
+        this.$emit('input', newVal + this.dateTimeJoin + time1)
       } else {
+        this.$refs.popupDate.hide()
         this.$emit('input', undefined)
       }
     },
@@ -213,9 +275,6 @@ export default {
     },
     blur () {
       this.$refs.input.blur()
-    },
-    select () {
-      this.$refs.input.select()
     }
   }
 }

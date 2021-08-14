@@ -16,6 +16,7 @@
     :disable="disable"
     :no-clear-focus="noClearFocus"
     @clear="_clearInput"
+    :rules="rules"
   >
     <q-popup-proxy
       ref="popupTree"
@@ -70,6 +71,7 @@ export default {
     disable: Boolean,
     readonly: Boolean,
     clearable: Boolean,
+    rules: Array,
     dropdownIcon: {
       type: String,
       default: 'clear_all'

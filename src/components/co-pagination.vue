@@ -1,32 +1,26 @@
 <!--
-  co-btn 组件
-  增加一个 square 属性，显示直角边的按钮。
+  co-pagination 组件
 -->
 <template>
-  <q-btn
-    ref="btn"
+  <q-pagination
+    ref="pagination"
     v-bind="$attrs"
     v-on="$listeners"
-    class="co-btn"
-    :class="{'co-btn--square':_square()}"
+    class="co-pagination"
     :dense="_dense()"
     :flat="_flat()"
     :outline="_outline()"
     :push="_push()"
     :unelevated="_unelevated()"
     :rounded="_rounded()"
-    >
-    <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
-      <slot :name="slotName"/>
-    </template>
-  </q-btn>
+    />
 </template>
 
 <script>
 import Setting from '@/default-setting'
 
 export default {
-  name: 'CoBtn',
+  name: 'CoPagination',
   inheritAttrs: false,
   props: {
     dense: {
@@ -139,8 +133,11 @@ export default {
       }
     },
 
-    click(evt) {
-      this.$refs.btn.click(evt)
+    set(pageNumber) {
+      this.$refs.pagination.click(pageNumber)
+    },
+    setByOffset (offset) {
+      this.$refs.pagination.setByOffset(offset)
     }
   }
 }

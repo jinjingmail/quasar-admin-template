@@ -151,18 +151,29 @@ module.exports = {
    * 设置输入框、表格、按钮等默认dense：
    *    支持 → undefined / true / false
    */
-  denseMode: true,
+  denseMode: false,
   /**
    * 设置输入框的外观样式：
    * co-select/co-input/co-field/co-date-select/co-tree-select design mode：
-   *    支持 → standard / standout / filled / outlined / borderless
+   *    支持 → default / standout / filled / outlined / borderless
    */
-  designMode: 'filled',
+  inputDesignMode: 'outlined',
   /**
    * 设置输入框的外观为方形直角 或 圆形大圆弧：
-   *    支持 → standard / square / rounded
+   *    支持 → default / square / rounded
    */
-  designCorner: 'standard',
+  inputDesignCorner: 'rounded',
+  /**
+   * 设置输入框的外观样式：
+   * co-btn / co-btn-toggle / co-btn-dropdown design mode：
+   *    支持 → default / flat / outline / push / unelevated
+   */
+  btnDesignMode: 'default',
+  /**
+   * 设置输入框的外观为方形直角 或 圆形大圆弧：
+   *    支持 → default / square / rounded
+   */
+  btnDesignCorner: 'rounded',
   /**
    * 表格每页默认显示的行数
    */
