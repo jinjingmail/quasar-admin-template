@@ -78,7 +78,7 @@ export default {
     range: Boolean,
     rangeSeparator: {
       type: String,
-      default: ' -> '
+      default: '→'
     }
   },
   data () {

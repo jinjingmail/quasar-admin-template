@@ -9,11 +9,14 @@
   新增prop：
       见prop定义
       date-today-btn
-      default-time  自动在日期后面添加后缀，比如：['00:00:00', '23:59:59']
+      default-time   自动在日期后面添加后缀，比如：['00:00:00', '23:59:59']
       date-time-join 日期和时间链接符号
+      date-mask
+      range          false=选择单个日期，true=选择日期区间
+      range-separator 两个日期区间的连接符
       hide-dropdown-icon
       edit-time     修改时间
-      with-seconds
+      with-seconds  修改时间包含秒
   返回值：
       range=false "2019/02/10"
       range=true  ["2019/02/10", "2019/02/15"]
@@ -32,6 +35,7 @@
     <q-popup-proxy
       ref="popupDate"
       @before-hide="_popupDateBeforeHide"
+      @show="modified=false"
     >
       <co-date
         :value="dateModel"
@@ -50,9 +54,9 @@
         :default-year-month="defaultYearMonth"
         :navigation-min-year-month="navigationMinYearMonth"
         :navigation-max-year-month="navigationMaxYearMonth"
-        @input="_dateInput"
+        @input="___inputDate"
       >
-        <div class="row q-gutter-xl" v-if="editTime">
+        <div class="row q-gutter-xl" v-if="editTime && range">
           <q-field dense class="col" label="开始时间" :value="times[0]">
             <template v-slot:control>{{times[0]}}</template>
             <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -60,9 +64,10 @@
                 v-model="times[0]"
                 :with-seconds="withSeconds"
                 format24h
+                @input="modified=true"
               >
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-time>
             </q-popup-proxy>
@@ -74,9 +79,10 @@
                 v-model="times[1]"
                 :with-seconds="withSeconds"
                 format24h
+                @input="modified=true"
               >
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
+                  <q-btn v-close-popup label="关闭" color="primary" flat />
                 </div>
               </q-time>
             </q-popup-proxy>
@@ -98,8 +104,6 @@
 </template>
 
 <script>
-import { remove } from '@/utils/string'
-
 export default {
   name: 'CoDateSelect',
   inheritAttrs: false,
@@ -122,11 +126,13 @@ export default {
       type: Boolean,
       default: true
     },
-
-    range: Boolean,
+    range: {
+      type: Boolean,
+      default: false
+    },
     rangeSeparator: {
       type: String,
-      default: ' → '
+      default: '→'
     },
     dateTimeJoin: {
       type: String,
@@ -149,47 +155,41 @@ export default {
   },
   data () {
     return {
-      times: []
+      times: [],
+      date: '',
+      modified: false
     }
   },
   created() {
-    if (this.editTime) {
+    if (Array.isArray(this.defaultTime) && this.defaultTime.length > 0) {
       this.times[0] = this.defaultTime[0]
-      this.times[1] = this.defaultTime[1]
+      if (this.defaultTime.length > 1) {
+        this.times[1] = this.defaultTime[1]
+      }
+    }
+    this.date = this.$attrs.value
+  },
+  watch: {
+    '$attrs.value' (val, old) {
+      if (!val) {
+        this.date = ''
+      }
     }
   },
   computed: {
     dateModel () {
-      if (this.range) {
-        if (Array.isArray(this.$attrs.value) && this.$attrs.value.length >= 2) {
-          // 去掉 defaultTime 后缀
-          let dateBegin = this.$attrs.value[0]
-          let dateEnd = this.$attrs.value[1]
-          if (Array.isArray(this.times) && this.times.length >= 2) {
-            const b = dateBegin.split(this.dateTimeJoin)
-            const e = dateEnd.split(this.dateTimeJoin)
-            dateBegin = remove(dateBegin, b[b.length - 1])
-            dateEnd = remove(dateEnd, e[e.length - 1])
-          }
-          // 在range模式下，同一天 {from:'2020-01-12', to:'2020-01-12'} 会不显示，所以这里特殊处理一下
-          if (dateBegin === dateEnd) {
-            return dateBegin
-          } else {
-            return { from: dateBegin, to: dateEnd }
-          }
+      if (this.range && this.date) {
+        if (this.date.from === this.date.to) {
+          return this.date.from
         } else {
-          return undefined
+          return this.date
         }
       } else {
-        if (!this.$attrs.value) {
-          return undefined
-        } else {
-          return this.$attrs.value
-        }
+        return this.date
       }
     },
     inputModel () {
-      const newVal = this.dateModel
+      const newVal = this.date
       let input
       if (this.range) {
         if (!newVal) {
@@ -230,13 +230,24 @@ export default {
   },
   methods: {
     _popupDateBeforeHide() {
-      if (this.editTime) {
-        this._dateInput(this.dateModel)
+      if (this.modified) {
+        this._dateInput(this.date)
       }
     },
-    _dateInput(value, reason, details) {
+    ___inputDate(value) {
+      this.modified = true
+      if (value === null) {
+        this.date = ''
+      } else {
+        this.date = value
+        if (!this.range) {
+          this._dateInput(this.date)
+        }
+      }
+    },
+    _dateInput(value/*, reason, details*/) {
       const newVal = value
-      if (this.range && newVal && newVal.from) {
+      if (this.range && newVal) {
         let time1 = ''
         let time2 = ''
         if (this.times) {
@@ -247,7 +258,11 @@ export default {
             time2 = this.times[1]
           }
         }
-        this.$emit('input', [newVal.from + this.dateTimeJoin + time1, newVal.to + this.dateTimeJoin + time2])
+        if (newVal && newVal.from) {
+          this.$emit('input', [newVal.from + this.dateTimeJoin + time1, newVal.to + this.dateTimeJoin + time2])
+        } else {
+          this.$emit('input', [newVal + this.dateTimeJoin + time1, newVal + this.dateTimeJoin + time2])
+        }
       } else if (newVal && newVal.length > 0) {
         let time1 = ''
         if (this.times && this.times.length >= 1) {
@@ -261,6 +276,7 @@ export default {
       }
     },
     _clearInput(old) {
+      this.date = ''
       this.$emit('input', undefined)
     },
 
