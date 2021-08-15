@@ -28,8 +28,8 @@
           <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
-        <q-btn label="取消" flat v-close-popup/>
-        <q-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
+        <co-btn label="取消" flat v-close-popup/>
+        <co-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
     </co-dialog>
@@ -81,7 +81,6 @@
             form-label="ID" placeholder="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
           <co-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
           <co-date-select
-             dense outlined
             content-style="width:200px"
             form-label="日期范围"
             placeholder="日期范围"
@@ -92,7 +91,6 @@
           <template v-if="crud.props.queryMore">
             <co-date-select
               class=""
-              dense outlined
               content-style="width:100px"
               placeholder="日期"
               v-model="query.dateSingle"
@@ -113,7 +111,6 @@
               tick-strategy="leaf-all-only-parent"
               tree-class="q-pa-sm"
               clearable
-              dense outlined
               content-style="width:200px"
               no-input
             >
@@ -125,7 +122,6 @@
               v-model="query.selectSingle"
               :options="listOptions"
               clearable
-              dense outlined
               use-input
               hide-selected
               fill-input
@@ -137,23 +133,22 @@
               v-model="query.selectSingle"
               :options="listOptions"
               clearable
-              dense outlined
               placeholder="选择巨头"
               content-style="width:200px"
               hide-dropdown-icon
             />
           </template>
-          <q-btn dense label="查询" padding="xs sm" color="primary" @click="crud.toQuery" />
-          <q-btn dense label="重置" flat @click="crud.resetQuery()" />
-          <q-btn dense :label="crud.props.queryMore?'更少..':'更多..'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
+          <co-btn label="查询" color="primary" @click="crud.toQuery" />
+          <co-btn label="重置" flat @click="crud.resetQuery()" />
+          <co-btn :label="crud.props.queryMore?'«更少':'更多»'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
         </co-form>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <crud-operation dense :permission="permission" no-label/>
+          <crud-operation :permission="permission" no-label/>
           <div class="col-auto">
-            <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+            <co-btn-dropdown color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />
-            </q-btn-dropdown>
+            </co-btn-dropdown>
           </div>
 
           <q-space />

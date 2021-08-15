@@ -28,8 +28,8 @@
           <co-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
-        <q-btn label="取消" flat v-close-popup/>
-        <q-btn label="保存" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
+        <co-btn label="取消" flat v-close-popup/>
+        <co-btn label="保存" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
     </co-dialog>
@@ -46,7 +46,7 @@
     >
       <template v-slot:top="props">
         <div class='row full-width'>
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable filled placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:before>
               <crud-operation :permission="permission" />
@@ -77,8 +77,8 @@
                   </co-date-select>
               </co-form>
               <q-card-actions class="q-pa-md" align="center">
-                <q-btn label="关闭" flat v-close-popup />
-                <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+                <co-btn label="关闭" flat v-close-popup />
+                <co-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
               </q-card-actions>
             </co-dialog>
           </co-input>

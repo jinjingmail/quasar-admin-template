@@ -55,7 +55,7 @@
     <q-menu ref="menu" :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
       <q-list>
         <slot name="start" />
-        <q-item clickable v-for="(item, i) in actionBegin" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
+        <q-item clickable v-for="(item, i) in actionStart" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
           <q-item-section avatar v-if="item.icon">
             <q-icon :name="item.icon" />
           </q-item-section>

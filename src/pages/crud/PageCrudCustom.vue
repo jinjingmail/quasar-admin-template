@@ -32,8 +32,8 @@
           <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-pa-md" align="right">
-        <q-btn label="取消" flat v-close-popup/>
-        <q-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
+        <co-btn label="取消" flat v-close-popup/>
+        <co-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
     </co-dialog>
@@ -43,8 +43,6 @@
       row-key="id"
       sticky-last-column
       sticky-header
-      flat
-      dense
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
@@ -61,24 +59,23 @@
             label-del=""
             icon-view=""
             no-edit
-            outline
             >
             <template v-slot:end>
-              <q-btn dense label="导出" outline/>
+              <co-btn label="导出" />
             </template>
           </crud-operation>
-          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" dense clearable filled placeholder="查询"
+          <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:after>
-              <q-btn dense color="primary" icon="search" label="查询" @click="crud.toQuery"/>
-              <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+              <co-btn color="primary" icon="search" label="查询" @click="crud.toQuery"/>
+              <co-btn-dropdown color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
                 <crud-more :tableSlotTopProps="props">
                   <template v-slot:start>
-                    <q-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
+                    <co-btn flat align="left" label="在当前页查找" icon="find_in_page" @click.native="$refs.search.show()" />
                     <q-separator/>
                   </template>
                 </crud-more>
-              </q-btn-dropdown>
+              </co-btn-dropdown>
             </template>
             <co-dialog ref="searchPopup"
               seamless card-style="width:700px; max-width:95vw;">
@@ -113,9 +110,9 @@
                   />
               </co-form>
               <q-card-actions class="q-pa-md" align="center">
-                <q-btn label="关闭" flat v-close-popup />
-                <q-btn label="查询(不关闭)" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
-                <q-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+                <co-btn label="关闭" flat v-close-popup />
+                <co-btn label="查询(不关闭)" color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
+                <co-btn label="查询" v-close-popup color="primary" icon="search" @click="crud.toQuery" :loading="crud.loading" :disable="crud.loading"/>
               </q-card-actions>
             </co-dialog>
           </co-input>
@@ -133,11 +130,19 @@
             :msg-del="'真的删 ' + props.row.name + ' ?'"
             icon-del="delete_sweep"
             no-add
-            tooltip>
-            <template v-slot:end>
-              <q-btn dense label="导出" />
-            </template>
-          </crud-row>
+            no-icon
+            :action-start="[
+              {label:'导出', click: clickExport},
+              {label:'导出2', click: clickExport}
+            ]"
+            action-end-menu
+            action-end-menu-label='更多'
+            action-end-menu-color='yellow'
+            :action-end="[
+              {label:'导出3', click: clickExport},
+              {label:'导出4', click: clickExport}
+            ]"
+            tooltip/>
         </q-td>
       </template>
 
@@ -211,6 +216,11 @@ export default {
           this.queryTickedLabels = null
         }
       }
+    }
+  },
+  methods: {
+    clickExport() {
+      console.log('clicked export')
     }
   }
 }
