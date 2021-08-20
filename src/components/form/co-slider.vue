@@ -2,7 +2,7 @@
   co-slider 组件
 -->
 <template>
-  <q-btn
+  <q-slider
     ref="slider"
     v-bind="$attrs"
     v-on="$listeners"
@@ -10,7 +10,7 @@
     :dense="_dense()"
     >
     <slot />
-  </q-btn>
+  </q-slider>
 </template>
 
 <script>

@@ -55,6 +55,13 @@ input:-ms-input-placeholder {
 .q-toolbar {
   min-height: 40px;
 }
+.q-table th {
+  font-weight: bold;
+}
+.q-table th,
+.q-table td {
+  padding: 7px 8px;
+}
 .q-btn.disabled {
   opacity: 0.4 !important;
 }
@@ -80,6 +87,54 @@ input:-ms-input-placeholder {
   border-radius: unset;
 }
 
+.co-field {
+  .q-radio__bg {
+    top:10%;
+    left:10%;
+    width:80%;
+    height:80%;
+  }
+  .q-radio__inner {
+    width: 0.65em;
+    min-width: 0.65em;
+    height: 0.65em;
+  }
+  .q-radio--dense .q-radio__bg {
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+  }
+  .q-radio--dense .q-radio__inner {
+    width: 0.5em;
+    min-width: 0.5em;
+    height: 0.5em;
+  }
+
+  .q-checkbox__bg {
+    top:10%;
+    left:0%;
+    width:80%;
+    height:80%;
+  }
+  .q-checkbox__inner {
+    width: 0.6em;
+    min-width: 0.6em;
+    height: 0.6em;
+  }
+  .q-checkbox--dense .q-checkbox__bg{
+    top:0%;
+    left:0%;
+    width:100%;
+    height:100%;
+  }
+  .q-checkbox--dense .q-checkbox__inner{
+    width: 0.45em;
+    min-width: 0.45em;
+    height: 0.45em;
+  }
+}
+
 .co-field,
 .co-input,
 .co-select,
@@ -91,10 +146,12 @@ input:-ms-input-placeholder {
   .q-field__input {
     min-height: auto;
   }
-
+  .q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
+    line-height: initial;
+  }
   &.q-textarea .q-field__control,
   &.q-textarea .q-field__native {
-    min-height: 45px;
+    min-height: 38px;
     height: auto;
   }
   &.q-textarea.q-field--dense .q-field__control,
@@ -122,7 +179,7 @@ input:-ms-input-placeholder {
   // 高度缩小
   .q-field__control,
   .q-field__marginal {
-    height: 45px;
+    height: 38px;
   }
   &.q-field--dense .q-field__control, 
   &.q-field--dense .q-field__marginal {
@@ -131,7 +188,7 @@ input:-ms-input-placeholder {
 
   &.q-field--auto-height .q-field__control,
   &.q-field--auto-height .q-field__native {
-    min-height: 45px;
+    min-height: 38px;
   }
   &.q-field--auto-height .q-field__control {
     height: auto;
@@ -169,7 +226,7 @@ input:-ms-input-placeholder {
   }
 
   .q-field__label {
-    top: 13px;
+    top: 10px;
     font-size: inherit;
   }
   &.q-field--dense .q-field__label {

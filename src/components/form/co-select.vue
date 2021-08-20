@@ -4,6 +4,7 @@
     公共属性参考 form-mixin.js
     filter-key-equal
     filter-key-like
+    value-to-string
 -->
 <template>
   <div v-if="formLabel" :class="computedClass" class="form-label inline no-wrap items-center">
@@ -13,7 +14,7 @@
       <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
     </label>
     <q-select
-      :value="value"
+      :value="computedValue"
       ref="select"
       class="col co-select"
       popup-content-class="custom-other-bg"
@@ -67,7 +68,7 @@
     </q-select>
   </div>
   <q-select v-else
-    :value="value"
+    :value="computedValue"
     ref="select"
     class="co-select"
     popup-content-class="custom-other-bg"
@@ -135,6 +136,7 @@ export default {
     value: {
       type: [String, Number, Array, Boolean]
     },
+    valueToString: Boolean,
     rules: Array,
     optionsDense: {
       type: Boolean,
@@ -222,6 +224,16 @@ export default {
     }
   },
   computed: {
+    computedValue () {
+      if (this.valueToString) {
+        if (this.value === undefined || this.value === null) {
+          return this.value
+        }
+        return this.value + ''
+      } else {
+        return this.value
+      }
+    },
     computedInputClass () {
       if (!this.inputClass) {
         return 'fit'

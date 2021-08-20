@@ -4,7 +4,6 @@
     end
   属性：
     permission
-    hide-disable
     disable
 
     dense
@@ -36,18 +35,18 @@
     <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.del"
       :color="colorDel" :icon="computedIconDel" :label="computedLabelDel"
       :disable="!crud.selections.length"
-      v-if="!noDel || hideDisable"
+      v-if="!noDel"
       @click="$refs.dialogDelete.show()"
       :loading="crud.delAllLoading"
       />
     <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" v-permission="permission.edit"
       :color="colorEdit" :icon="computedIconEdit" :label="computedLabelEdit"
       :disable="crud.selections.length!==1"
-      v-if="!noEdit || hideDisable" @click="crud.toEdit(crud.selections[0])"/>
+      v-if="!noEdit" @click="crud.toEdit(crud.selections[0])"/>
     <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
       :color="colorView" :icon="computedIconView" :label="computedLabelView"
       :disable="crud.selections.length!==1"
-      v-if="!noView || hideDisable" @click="crud.toView(crud.selections[0])"/>
+      v-if="!noView" @click="crud.toView(crud.selections[0])"/>
     <!--右侧插槽-->
     <slot name="end" />
     <co-dialog ref="dialogDelete" no-max :title="labelDel" card-style="width:250px; max-width:95vw;" card-class="bg-deep-orange">
@@ -81,9 +80,6 @@ export default {
     },
 
     disable: Boolean,
-    hideDisable: {
-      type: Boolean
-    },
     noAdd: Boolean,
     noView: Boolean,
     noEdit: Boolean,

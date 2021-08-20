@@ -14,7 +14,7 @@
 <template>
   <div class="row inline no-wrap items-center">
     <slot name="start" />
-    <co-field borderless :outlined="false" class="col-auto">
+    <co-field borderless :outlined="false" class="col-auto" :dense="_dense()">
       <template v-slot:control>
         共 {{page.total}} 条
       </template>
@@ -30,7 +30,6 @@
       :icon-prev="iconPrevPage"
       :icon-next="iconNextPage"
       :max-pages="$q.screen.gt.xs?maxPages:5"
-      :size="size?size:(_dense()?'13px':'16px')"
       :dense="_dense()"
       v-bind="$attrs"
       v-on="$listeners"
@@ -40,6 +39,7 @@
       class="col-auto"
       :value="page.size"
       :options="sizePerPageOptions"
+      :dense="_dense()"
       emit-value
       map-options
       borderless

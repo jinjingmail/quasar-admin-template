@@ -2,7 +2,7 @@
   co-range 组件
 -->
 <template>
-  <q-btn
+  <q-range
     ref="range"
     v-bind="$attrs"
     v-on="$listeners"
@@ -10,7 +10,7 @@
     :dense="_dense()"
     >
     <slot />
-  </q-btn>
+  </q-range>
 </template>
 
 <script>
