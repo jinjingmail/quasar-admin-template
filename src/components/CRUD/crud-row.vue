@@ -3,7 +3,7 @@
     start   添加按钮的话，请使用 action-start / action-end
     end
   属性：
-    action-start  [{label:'label', icon:'icon', color:'color', click:function(){}}, {...}]
+    action-start  [{permission:['menu:edit'], label:'添加子菜单', icon:'add', color:'red', click:function(){}}, {...}]  #提示permission必填
     action-end    同上
 
     action-start-menu       action-start 显示为菜单样式
@@ -55,7 +55,7 @@
     <q-menu ref="menu" :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
       <q-list>
         <slot name="start" />
-        <q-item clickable v-for="(item, i) in actionStart" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
+        <q-item clickable v-for="(item, i) in actionStart" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click" :class="!!item.color ? 'text-' + item.color : ''" v-permission="item.permission">
           <q-item-section avatar v-if="item.icon">
             <q-icon :name="item.icon" />
           </q-item-section>
@@ -111,7 +111,8 @@
             <q-item-label :color="colorAdd">{{labelAdd}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item clickable v-for="(item, i) in actionEnd" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
+
+        <q-item clickable v-for="(item, i) in actionEnd" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click" :class="!!item.color ? 'text-' + item.color : ''" v-permission="item.permission">
           <q-item-section avatar v-if="item.icon">
             <q-icon :name="item.icon" />
           </q-item-section>
@@ -131,7 +132,7 @@
       <co-btn :icon-right="menuShow?iconMenuOpen:iconMenu" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="actionStartMenuColor" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="actionStartMenuLabel">
         <q-menu :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
         <q-list>
-        <q-item clickable v-for="(item, i) in actionStart" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
+        <q-item clickable v-for="(item, i) in actionStart" v-permission="item.permission" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
           <q-item-section avatar v-if="item.icon">
             <q-icon :name="item.icon" />
           </q-item-section>
@@ -144,7 +145,7 @@
       </co-btn>
     </template>
     <template v-else>
-      <co-btn v-for="(item, i) in actionStart" :key="item.label+i+item.icon" @click="item.click" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="item.color" :icon="item.icon" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="item.label"/>
+      <co-btn v-for="(item, i) in actionStart" v-permission="item.permission" :key="item.label+i+item.icon" @click="item.click" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="item.color" :icon="item.icon" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="item.label"/>
     </template>
 
     <co-btn @click="crud.toView(data)" v-if="!noView" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="colorView" :icon="computedIconView" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="noLabel?'':labelView">
@@ -177,7 +178,7 @@
       <co-btn :icon-right="menuShow?iconMenuOpen:iconMenu" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="actionEndMenuColor" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="actionEndMenuLabel">
         <q-menu :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
         <q-list>
-        <q-item clickable v-for="(item, i) in actionEnd" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
+        <q-item clickable v-for="(item, i) in actionEnd" v-permission="item.permission" :key="item.label+i+item.icon" :dense="computedDenseMenu" @click="item.click">
           <q-item-section avatar v-if="item.icon">
             <q-icon :name="item.icon" />
           </q-item-section>
@@ -190,7 +191,7 @@
       </co-btn>
     </template>
     <template v-else>
-    <co-btn v-for="(item, i) in actionEnd" :key="item.label+i+item.icon" @click="item.click" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="item.color" :icon="item.icon" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="item.label"/>
+    <co-btn v-for="(item, i) in actionEnd" v-permission="item.permission" :key="item.label+i+item.icon" @click="item.click" :dense="_dense()" :padding="(_dense() && !flat)?'xs sm':''" :size="_dense()?'sm':'md'" no-wrap :color="item.color" :icon="item.icon" :flat='flat' :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy" :label="item.label"/>
     </template>
     <slot name="end" />
   </div>
@@ -310,7 +311,7 @@ export default {
     },
     colorAdd: {
       type: String,
-      default: 'primary'
+      default: 'secondary'
     },
     labelMenu: {
       type: String,

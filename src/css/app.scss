@@ -160,10 +160,10 @@ input:-ms-input-placeholder {
     height: auto;
   }
   &.q-textarea.q-field--dense .q-field__native {
-    padding-top: 9px;
+    padding-top: 8px;
   }
   &.q-textarea .q-field__native {
-    padding-top: 13px;
+    padding-top: 10px;
   }
   &.q-textarea.q-textarea--autogrow .q-field__control-container {
     padding-top: 0;
@@ -199,22 +199,22 @@ input:-ms-input-placeholder {
   &.q-field--auto-height.q-field--labeled .q-field__native,
   &.q-field--auto-height.q-field--labeled .q-field__prefix,
   &.q-field--auto-height.q-field--labeled .q-field__suffix {
-    padding-top:10px;
-  }
-  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__native,
-  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__prefix,
-  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__suffix {
-    padding-top: 3px;
-  }
-  &.q-field--dense.q-field--labeled .q-field__native,
-  &.q-field--dense.q-field--labeled .q-field__prefix,
-  &.q-field--dense.q-field--labeled .q-field__suffix {
-    padding-top: revert;
+    padding-top:12px;
   }
   &.q-field--labeled .q-field__native,
   &.q-field--labeled .q-field__prefix,
   &.q-field--labeled .q-field__suffix {
-    padding-top: 10px;
+    padding-top: 12px;
+  }
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__native,
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__prefix,
+  &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__suffix {
+    padding-top: 9px;
+  }
+  &.q-field--dense.q-field--labeled .q-field__native,
+  &.q-field--dense.q-field--labeled .q-field__prefix,
+  &.q-field--dense.q-field--labeled .q-field__suffix {
+    padding-top: 9px;
   }
 
   &.q-field--auto-height.q-field--dense .q-field__control,
@@ -226,23 +226,23 @@ input:-ms-input-placeholder {
   }
 
   .q-field__label {
-    top: 10px;
+    top: 9px;
     font-size: inherit;
-  }
-  &.q-field--dense .q-field__label {
-    top: 8px;
   }
   &.q-field--float .q-field__label {
     top: 9px;
   }
+  &.q-field--dense .q-field__label {
+    top: 7px;
+  }
   &.q-field--dense.q-field--float .q-field__label {
-    top: 4px;
+    top: 7px;
   }
   &.q-field--focused .q-field__label {
-    top: -5px;
+    //top: -5px;
   }
   &.q-field--dense.q-field--focused .q-field__label {
-    top: -7px;
+    //top: -7px;
   }
 }
 

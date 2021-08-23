@@ -65,13 +65,16 @@ export default {
         return this.dense
       }
     },
+    // 当前 flat 模式有bug，先禁用这个模式
     _flat() {
       const undef = this.flat === undefined && this.outline === undefined && this.push === undefined && this.unelevated === undefined
       if (!undef) {
-        return this.flat
+        //return this.flat
+        return undefined
       }
       if (Setting.btnDesignMode === 'flat') {
-        return true
+        //return true
+        return false
       } else {
         return false
       }

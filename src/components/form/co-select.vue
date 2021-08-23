@@ -226,10 +226,18 @@ export default {
   computed: {
     computedValue () {
       if (this.valueToString) {
-        if (this.value === undefined || this.value === null) {
-          return this.value
+        if (typeof this.value === 'number' || typeof this.value === 'boolean') {
+          return this.value + ''
+        } else if (Array.isArray(this.value) && this.value.length > 0) {
+          if (typeof this.value[0] === 'number' || typeof this.value[0] === 'boolean') {
+            const newArray = new Array(this.value.length)
+            for (let i = 0; i < this.value.length; ++i) {
+              newArray[i] = this.value[i] + ''
+            }
+            return newArray
+          }
         }
-        return this.value + ''
+        return this.value
       } else {
         return this.value
       }
