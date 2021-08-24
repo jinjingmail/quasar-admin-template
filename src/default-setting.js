@@ -88,23 +88,23 @@ module.exports = {
   tableClassMobile: 'q-table--flat q-table--square',
   tableStyleMobile: '',
   /**
-   * Tree样式:
+   * CoCard样式:
    * 设置边框：
    *  q-pa-sm q-ma-sm
    * 设置背景色：
    *  bg-teal
    * 无阴影：
-   *  q-table--flat no-shadow
+   *  q-card--flat no-shadow
    * 无圆角：
-   *  q-table--square
+   *  q-card--square
 
    * style: 设置背景色（含半透明）:
    *  background:#3d1d1d52
    */
-  treeClass: 'q-card--flat no-shadow q-table--square',
-  treeStyle: '',
-  treeClassMobile: 'q-card--flat no-shadow q-table--square',
-  treeStyleMobile: '',
+  cardClass: 'q-card--flat no-shadow',
+  cardStyle: '',
+  cardClassMobile: 'q-card--flat no-shadow',
+  cardStyleMobile: '',
   /**
    * Dialog样式:
    * 使用 dialogClass 设置边框：

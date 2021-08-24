@@ -35,9 +35,7 @@
     @selected-label -> function(label)：以label的形式输出selected的数据
 -->
 <template>
-  <q-card class="co-tree custom-other-bg"
-    :class="settingClass"
-    :style="settingStyle"
+  <co-card class="co-tree"
     :tag="tag"
     :flat="flat"
     :square="square"
@@ -134,12 +132,10 @@
         <slot :name="slotName" v-bind="prop"/>
       </template>
     </q-tree>
-  </q-card>
+  </co-card>
 </template>
 
 <script>
-import Setting from '@/default-setting'
-
 export default {
   name: 'CoTree',
   inheritAttrs: false,
@@ -276,20 +272,6 @@ export default {
     }
   },
   computed: {
-    settingClass () {
-      if (this.$q.screen.gt.xs) {
-        return Setting.treeClass
-      } else {
-        return Setting.treeClassMobile
-      }
-    },
-    settingStyle () {
-      if (this.$q.screen.gt.xs) {
-        return Setting.treeStyle
-      } else {
-        return Setting.treeStyleMobile
-      }
-    },
     computedDynamicSlotNames () {
       const names = new Set()
       for (const key in this.$scopedSlots) {

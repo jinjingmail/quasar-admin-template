@@ -13,6 +13,8 @@
     v-bind="$attrs"
     v-on="$listeners"
     class="co-card custom-other-bg"
+    :class="settingClass"
+    :style="settingStyle"
     >
     <slot />
     <!-- loadingSpinner 明确为空，则忽略 -->
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+import Setting from '@/default-setting'
+
 export default {
   name: 'CoCard',
   inheritAttrs: false,
@@ -54,6 +58,23 @@ export default {
   },
   created () {
     this.showLoading = this.loading
+  },
+  computed: {
+    settingClass () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.cardClass
+      } else {
+        return Setting.cardClassMobile
+      }
+    },
+    settingStyle () {
+      if (this.$q.screen.gt.xs) {
+        return Setting.cardStyle
+      } else {
+        return Setting.cardStyleMobile
+      }
+    }
+
   },
   watch: {
     loading (valNew) {

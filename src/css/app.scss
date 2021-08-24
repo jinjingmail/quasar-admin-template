@@ -52,6 +52,9 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
+.q-card--square {
+  border-radius: 0;
+}
 .q-toolbar {
   min-height: 40px;
 }
@@ -77,6 +80,9 @@ input:-ms-input-placeholder {
 
 .co-select.q-select--with-input.q-select--with-chips input.q-field__input.fit {
   height: 24px !important;
+}
+.co-select.q-field--dense.q-select--with-input.q-select--with-chips input.q-field__input.fit {
+  height: 18px !important;
 }
 .co-select.q-field--dense.q-select--with-chips .q-chip {
   //margin: 0 4px 8px 4px;
@@ -170,10 +176,10 @@ input:-ms-input-placeholder {
     padding-bottom: 0;
   }
   &.q-textarea.q-field--dense.q-field--labeled .q-field__control-container {
-    padding-top: 7px;
+    //padding-top: 7px;
   }
   &.q-textarea.q-field--labeled .q-field__control-container {
-    padding-top: 5px;
+    //padding-top: 5px;
   }
 
   // 高度缩小
@@ -199,22 +205,26 @@ input:-ms-input-placeholder {
   &.q-field--auto-height.q-field--labeled .q-field__native,
   &.q-field--auto-height.q-field--labeled .q-field__prefix,
   &.q-field--auto-height.q-field--labeled .q-field__suffix {
-    padding-top:12px;
+    padding-top:15px;
+    padding-bottom: 4px;
   }
   &.q-field--labeled .q-field__native,
   &.q-field--labeled .q-field__prefix,
   &.q-field--labeled .q-field__suffix {
-    padding-top: 12px;
+    padding-top: 15px;
+    padding-bottom: 4px;
   }
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__native,
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__prefix,
   &.q-field--auto-height.q-field--dense.q-field--labeled .q-field__suffix {
-    padding-top: 9px;
+    padding-top: 14px;
+    padding-bottom: 2px;
   }
   &.q-field--dense.q-field--labeled .q-field__native,
   &.q-field--dense.q-field--labeled .q-field__prefix,
   &.q-field--dense.q-field--labeled .q-field__suffix {
-    padding-top: 9px;
+    padding-top: 14px;
+    padding-bottom: 2px;
   }
 
   &.q-field--auto-height.q-field--dense .q-field__control,
@@ -226,17 +236,17 @@ input:-ms-input-placeholder {
   }
 
   .q-field__label {
-    top: 9px;
+    top: 10px;
     font-size: inherit;
   }
   &.q-field--float .q-field__label {
-    top: 9px;
+    top: 10px;
   }
   &.q-field--dense .q-field__label {
-    top: 7px;
+    top: 8px;
   }
   &.q-field--dense.q-field--float .q-field__label {
-    top: 7px;
+    top: 8px;
   }
   &.q-field--focused .q-field__label {
     //top: -5px;

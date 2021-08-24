@@ -21,6 +21,11 @@ import CoBtn from 'components/co-btn'
 import CoBtnDropdown from 'components/co-btn-dropdown'
 import CoBtnGroup from 'components/co-btn-group'
 import CoPagination from 'components/co-pagination'
+import CoChip from 'components/co-chip.vue'
+import CoExpansionItem from 'components/co-expansion-item.vue'
+import CoItem from 'components/co-item.vue'
+import CoList from 'components/co-list.vue'
+import CoTabs from 'components/co-tabs.vue'
 
 import CoField from 'components/form/co-field.vue'
 import CoInput from 'components/form/co-input.vue'
@@ -47,6 +52,11 @@ Vue.component(CoBtn.name, CoBtn)
 Vue.component(CoBtnDropdown.name, CoBtnDropdown)
 Vue.component(CoBtnGroup.name, CoBtnGroup)
 Vue.component(CoPagination.name, CoPagination)
+Vue.component(CoChip.name, CoChip)
+Vue.component(CoExpansionItem.name, CoExpansionItem)
+Vue.component(CoItem.name, CoItem)
+Vue.component(CoList.name, CoList)
+Vue.component(CoTabs.name, CoTabs)
 
 Vue.component(CoField.name, CoField)
 Vue.component(CoInput.name, CoInput)

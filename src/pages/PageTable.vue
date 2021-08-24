@@ -413,7 +413,7 @@
             />
           <co-select
             v-model="selectModels"
-            form-label="multiselect3"
+            form-label="big multiselect3"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             option-value="id"
@@ -431,7 +431,7 @@
             />
           <co-select
             v-model="selectModels"
-            form-label="multiselect4"
+            form-label="big multiselect4"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             option-value="id"
@@ -480,7 +480,7 @@
             />
           <co-select
             v-model="selectModels"
-            form-label="multiselect33"
+            form-label="big multiselect33"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             option-value="id"
@@ -497,7 +497,7 @@
             />
           <co-select
             v-model="selectModels"
-            form-label="multiselect44"
+            form-label="big multiselect44"
             class="col-12 col-sm-6"
             :disable="dialogFormReadonly"
             option-value="id"
