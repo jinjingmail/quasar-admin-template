@@ -52,9 +52,6 @@ input:-ms-input-placeholder {
 /****** 输入框placeholder 颜色变浅一点 end *******/
 
 /* 修改全局样式 BEGIN */
-.q-card--square {
-  border-radius: 0;
-}
 .q-toolbar {
   min-height: 40px;
 }
@@ -92,7 +89,6 @@ input:-ms-input-placeholder {
 .co-btn--square {
   border-radius: unset;
 }
-
 .co-field {
   .q-radio__bg {
     top:10%;
@@ -243,7 +239,7 @@ input:-ms-input-placeholder {
     top: 10px;
   }
   &.q-field--dense .q-field__label {
-    top: 8px;
+    top: 7px;
   }
   &.q-field--dense.q-field--float .q-field__label {
     top: 8px;

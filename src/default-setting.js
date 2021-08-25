@@ -88,22 +88,22 @@ module.exports = {
   tableClassMobile: 'q-table--flat q-table--square',
   tableStyleMobile: '',
   /**
-   * CoCard样式:
+   * CoCard样式（co-tree全局样式也在这里设置）:
    * 设置边框：
    *  q-pa-sm q-ma-sm
    * 设置背景色：
    *  bg-teal
    * 无阴影：
-   *  q-card--flat no-shadow
+   *  q-table--flat
    * 无圆角：
-   *  q-card--square
+   *  q-table--square
 
    * style: 设置背景色（含半透明）:
    *  background:#3d1d1d52
    */
-  cardClass: 'q-card--flat no-shadow',
+  cardClass: 'q-table--flat q-table--square',
   cardStyle: '',
-  cardClassMobile: 'q-card--flat no-shadow',
+  cardClassMobile: 'q-table--flat q-table--square',
   cardStyleMobile: '',
   /**
    * Dialog样式:
@@ -168,7 +168,7 @@ module.exports = {
    * co-btn / co-btn-toggle / co-btn-dropdown design mode：
    *    支持 → default / flat / outline / push / unelevated
    */
-  btnDesignMode: 'default',
+  btnDesignMode: 'push',
   /**
    * 设置输入框的外观为方形直角 或 圆形大圆弧：
    *    支持 → default / square / rounded

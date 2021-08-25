@@ -113,7 +113,6 @@
       no-backdrop-dismiss
       card-style="width:1200px; max-width:95vw;"
     >
-      <q-scroll-area style="height: 80vh">
       <div class="q-ma-md ">
         <div class="row q-gutter-sm">
           <co-checkbox v-model="labelTop" label="label-top" />
@@ -758,7 +757,6 @@
             </template>
           </co-input>
       </co-form>
-      </q-scroll-area>
       <q-card-actions class="q-pa-md">
         <co-btn label="打印" color="primary" @click="$refs.printDialog.show()"/>
         <q-space />
@@ -782,45 +780,45 @@
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <div class='col-auto q-pl-none q-gutter-sm no-wrap'>
-            <q-btn dense color="primary" icon="add" @click="rowAddClick"/>
-            <q-btn dense color="primary" icon="edit" @click="rowEditClick_selected" :disable="selected.length!==1"/>
-            <q-btn dense color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
-            <q-btn-dropdown auto-close dense icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
+            <co-btn color="primary" icon="add" @click="rowAddClick"/>
+            <co-btn color="primary" icon="edit" @click="rowEditClick_selected" :disable="selected.length!==1"/>
+            <co-btn color="primary" icon="delete" @click="rowDelClick_selected" :disable="selected.length===0"/>
+            <co-btn-dropdown auto-close icon="more_vert" color="primary" class="btn-dropdown-hide-droparrow">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-btn flat label="对话框样式1" @click="$refs.formDialog.show()"></q-btn>
-                  <q-btn flat label="对话框样式2" @click="$refs.formDialog2.show()"></q-btn>
+                  <co-btn label="对话框样式1" @click="$refs.formDialog.show()"></co-btn>
+                  <co-btn label="对话框样式2" @click="$refs.formDialog2.show()"></co-btn>
                 </div>
               </div>
-            </q-btn-dropdown>
+            </co-btn-dropdown>
           </div>
 
           <q-space />
 
-          <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-          <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+          <co-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" placeholder="姓名"/>
+          <co-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" placeholder="姓名"/>
           <template v-if="searchToggle" >
-            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
-            <q-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" dense placeholder="姓名"/>
+            <co-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" placeholder="姓名"/>
+            <co-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" placeholder="姓名"/>
+            <co-input v-model="textSearch" class="col-6 col-sm-4 col-md-3 col-lg-2" placeholder="姓名"/>
           </template>
 
           <q-space/>
 
-          <q-btn-group flat rounded class="col-auto">
-            <q-btn color="grey-3" text-color="dark" icon="search"/>
-            <q-btn color="grey-3" text-color="dark" :icon="searchToggle?'zoom_out':'zoom_in'" @click="searchToggle = !searchToggle"/>
-            <q-btn-dropdown auto-close color="grey-3" text-color="dark" class="btn-dropdown-hide-droparrow" icon="apps">
+          <co-btn-group flat rounded class="col-auto">
+            <co-btn color="grey-3" text-color="dark" icon="search"/>
+            <co-btn color="grey-3" text-color="dark" :icon="searchToggle?'zoom_out':'zoom_in'" @click="searchToggle = !searchToggle"/>
+            <co-btn-dropdown auto-close color="grey-3" text-color="dark" class="btn-dropdown-hide-droparrow" icon="apps">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <q-btn flat label="清空搜索" icon="replay" @click="loading = !loading"/>
-                  <q-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
+                  <co-btn flat label="清空搜索" icon="replay" @click="loading = !loading"/>
+                  <co-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
                   <q-separator/>
-                  <q-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
+                  <co-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
                 </div>
               </div>
-            </q-btn-dropdown>
-          </q-btn-group>
+            </co-btn-dropdown>
+          </co-btn-group>
 
         </div>
       </template>

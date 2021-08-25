@@ -125,11 +125,11 @@ export default {
 
     colorView: {
       type: String,
-      default: 'secondary'
+      default: 'blue-grey-5'
     },
     colorAdd: {
       type: String,
-      default: 'primary'
+      default: 'secondary'
     },
     colorEdit: {
       type: String,
@@ -177,9 +177,6 @@ export default {
   },
   computed: {
     computedLabelView () {
-      if (!this.$q.screen.gt.xs && this.iconView) {
-        return undefined
-      }
       if (this.labelView && !this.noLabel) {
         return this.labelView
       } else {
@@ -187,9 +184,6 @@ export default {
       }
     },
     computedLabelAdd () {
-      if (!this.$q.screen.gt.xs && this.iconAdd) {
-        return undefined
-      }
       if (this.labelAdd && !this.noLabel) {
         return this.labelAdd
       } else {
@@ -197,9 +191,6 @@ export default {
       }
     },
     computedLabelEdit () {
-      if (!this.$q.screen.gt.xs && this.iconEdit) {
-        return undefined
-      }
       if (this.labelEdit && !this.noLabel) {
         return this.labelEdit
       } else {
@@ -207,9 +198,6 @@ export default {
       }
     },
     computedLabelDel () {
-      if (!this.$q.screen.gt.xs && this.iconDel) {
-        return undefined
-      }
       if (this.labelDel && !this.noLabel) {
         return this.labelDel
       } else {
