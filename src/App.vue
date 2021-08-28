@@ -31,9 +31,9 @@ import CoField from 'components/form/co-field.vue'
 import CoInput from 'components/form/co-input.vue'
 import CoFile from 'components/form/co-file.vue'
 import CoDate from 'components/form/co-date.vue'
+import CoTime from 'components/form/co-time.vue'
 import CoOptionGroup from 'components/form/co-option-group.vue'
 import CoSelect from 'components/form/co-select.vue'
-import CoFormItem from 'components/form/co-form-item.vue'
 import CoForm from 'components/form/co-form.vue'
 import CoDateSelect from 'components/form/co-date-select.vue'
 import CoTreeSelect from 'components/form/co-tree-select.vue'
@@ -62,9 +62,9 @@ Vue.component(CoField.name, CoField)
 Vue.component(CoInput.name, CoInput)
 Vue.component(CoFile.name, CoFile)
 Vue.component(CoDate.name, CoDate)
+Vue.component(CoTime.name, CoTime)
 Vue.component(CoOptionGroup.name, CoOptionGroup)
 Vue.component(CoSelect.name, CoSelect)
-Vue.component(CoFormItem.name, CoFormItem)
 Vue.component(CoForm.name, CoForm)
 Vue.component(CoDateSelect.name, CoDateSelect)
 Vue.component(CoTreeSelect.name, CoTreeSelect)

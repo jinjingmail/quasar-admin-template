@@ -10,33 +10,8 @@
     range=true, multiple=true ：  [{"from": "2020/07/08", "to": "2020/07/15"}, {"from": "2020/07/08", "to": "2020/07/15"}]
 -->
 <template>
-  <div v-if="formLabel" :class="computedClass" class="form-label">
-    <label :class="{'dense':dense, 'ellipsis-2-lines':!noEllipsis}"
-      :style="computedLabelStyle">
-      <slot name="form-label"><span style="color:red" v-if="rules && rules.length > 0">* </span>{{formLabel}}</slot>
-    </label>
-    <q-date
-      ref="date"
-      class="custom-other-bg"
-      style="display: flex"
-      v-bind="$attrs"
-      v-on="listeners"
-      :mask="mask"
-      :locale="cnLocale"
-      :multiple="multiple"
-      :range="range"
-      :disable="disable"
-      :readonly="readonly"
-      :subtitle="computedSubtitle"
-      :title="computedTitle"
-      :today-btn="todayBtn"
-    >
-      <slot name="default"/>
-    </q-date>
-  </div>
-  <q-date v-else
+  <q-date
     ref="date"
-    :class="computedClass"
     class="custom-other-bg"
     v-bind="$attrs"
     v-on="listeners"
@@ -44,27 +19,20 @@
     :locale="cnLocale"
     :multiple="multiple"
     :range="range"
-    :disable="disable"
-    :readonly="readonly"
     :subtitle="computedSubtitle"
     :title="computedTitle"
     :today-btn="todayBtn"
   >
     <slot name="default"/>
   </q-date>
-
 </template>
-
 <script>
 import { date } from 'quasar'
-import FormMixin from './form-mixin.js'
 
 export default {
   name: 'CoDate',
   inheritAttrs: false,
-  mixins: [FormMixin],
   props: {
-    rules: Array,
     mask: {
       type: String,
       default: 'YYYY-MM-DD'

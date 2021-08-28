@@ -363,18 +363,19 @@
               </div>
             </template>
           </co-field>
-          <co-option-group
-            v-model="selectModel"
-            class="col-12 col-sm-6"
-            dense
-            :inline="true"
-            form-label="options Group"
-            :disable="dialogFormReadonly"
-            :options="mapOptions"
-            option-value="id"
-            option-label="desc"
-            :rules="[val => !!val || 'Field is required']"
-          />
+          <co-field class="col-12 col-sm-6" form-label="options Group" borderless :value="selectModel">
+            <template v-slot:control>
+              <co-option-group
+                v-model="selectModel"
+                :inline="true"
+                :disable="dialogFormReadonly"
+                :options="mapOptions"
+                option-value="id"
+                option-label="desc"
+                :rules="[val => !!val || 'Field is required']"
+              />
+            </template>
+          </co-field>
           <co-select
             v-model="selectModels"
             form-label="multiselect1"
@@ -510,55 +511,34 @@
             multiple
             />
 
-          <co-option-group
-            v-model="selectModels"
-            class="col-12 col-sm-6"
-            dense
-            :inline="true"
-            form-label="optionsGroup1"
-            :disable="dialogFormReadonly"
-            :options="mapOptions"
-            option-value="id"
-            option-label="desc"
-            type="checkbox"
-            :rules="[val => !!val || 'Field is required']"
-          />
-          <co-option-group
-            v-model="selectModels"
-            class="col-12 col-sm-6"
-            dense
-            :inline="true"
-            form-label="optionsGroup2"
-            :disable="dialogFormReadonly"
-            :options="mapOptions"
-            option-value="id"
-            option-label="desc"
-            type="checkbox"
-            :rules="[val => !!val || 'Field is required']"
-          />
-
-          <co-date
-            v-model="selectDate"
-            class="col-12 col-sm-6"
-            form-label="date1 TOP"
-            :dense="false"
-            label-top
-            today-btn
-            minimal
-            :disable="dialogFormReadonly"
-            :rules="[val => !!val || 'Field is required']"
-          />
-          <co-date
-            v-model="selectDate"
-            class="col-12 col-sm-6"
-            form-label="date2"
-            :dense="false"
-            today-btn
-            minimal
-            :disable="dialogFormReadonly"
-            :rules="[val => !!val || 'Field is required']"
-          />
-
+          <co-field class="col-12 col-sm-6" form-label="optionsGroup1" borderless :value="selectModels">
+            <template v-slot:control>
+              <co-option-group
+                v-model="selectModels"
+                :inline="true"
+                :disable="dialogFormReadonly"
+                :options="mapOptions"
+                option-value="id"
+                option-label="desc"
+                type="checkbox"
+                :rules="[val => !!val || 'Field is required']"
+              />
+            </template>
+          </co-field>
+          <co-field class="col-12 col-sm-6" form-label="optionsGroup2" borderless :value="selectModels">
+            <template v-slot:control>
+              <co-option-group
+                v-model="selectModels"
+                :inline="true"
+                :disable="dialogFormReadonly"
+                :options="mapOptions"
+                option-value="id"
+                option-label="desc"
+                type="toggle"
+                :rules="[val => !!val || 'Field is required']"
+              />
+            </template>
+          </co-field>
           <co-date-select
             v-model="selectDate"
             form-label="selectDate1 LEFT"
@@ -575,33 +555,44 @@
             class="col-12 col-sm-6" no-ellipsis mask="####-##-##" placeholder="####-##-##" :disable="dialogFormReadonly"
           />
 
-          <co-form-item class="col-12 col-sm-6" form-label="formField">
-            <co-field borderless>
-              <template v-slot:control>
-                <div class="self-center full-width no-outline" tabindex="0">语句用于基于不同条件执行不同动作</div>
-              </template>
-            </co-field>
-          </co-form-item>
-          <co-form-item class="col-12 col-sm-6" form-label="formField">
-            <q-field borderless>
-              <template v-slot:control>
-                <div class="self-center full-width no-outline" tabindex="0">作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作</div>
-              </template>
-            </q-field>
-          </co-form-item>
-          <co-form-item dense class="col-12 col-sm-6" form-label="formtext">
-            <div class="q-pt-xs">语句用于基于不同条件执行不同动作</div>
-          </co-form-item>
-          <co-form-item class="col-12 col-sm-6" form-label="formtext">
-            <div class="q-pt-xs">
-            语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
-            </div>
-          </co-form-item>
+          <co-date-select
+            v-model="selectDate3"
+            form-label="selectDate3"
+            hide-dropdown-icon
+            :default-time="['00:00:00']"
+            :dense="false"
+            clearable
+            class="col-12 col-sm-6" no-ellipsis placeholder="####-##-##" :disable="dialogFormReadonly"
+          />
 
-          <co-field dense class="col-12 col-sm-6" form-label="text field1" readonly>
+          <co-date-select
+            v-model="selectDate3"
+            form-label="selectDate4"
+            hide-dropdown-icon
+            edit-time
+            with-seconds
+            :default-time="['00:00:00']"
+            :dense="false"
+            clearable
+            class="col-12 col-sm-6" no-ellipsis placeholder="####-##-##" :disable="dialogFormReadonly"
+          />
+
+          <co-field class="col-12 col-sm-6" form-label="文本1" borderless>
+            <template v-slot:control>
+              语句用于基于不同条件执行不同动作
+            </template>
+          </co-field>
+
+          <co-field class="col-12 col-sm-6" form-label="文本2" >
+            <template v-slot:control>
+              作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作语句用于基于不同条件执行不同动作
+            </template>
+          </co-field>
+
+          <co-field class="col-12 col-sm-6" form-label="text field1" readonly>
             <template v-slot:control>readonly语句用于基于不同条件执行不同动作</template>
           </co-field>
-          <co-field dense class="col-12 col-sm-6" form-label="text field2" disable>
+          <co-field class="col-12 col-sm-6" form-label="text field2" disable>
             <template v-slot:control>disable语句用于基于不同条件执行不同动作</template>
           </co-field>
 
@@ -644,6 +635,30 @@
             form-label="DateRange2"
             dense
             v-model="dialogForm.date2"
+            range
+            :disable="dialogFormReadonly"
+            :rules="[val => !!val || 'Field is required']"
+          >
+          </co-date-select>
+
+          <co-date-select
+            class="col-12 col-sm-6"
+            form-label="DateRange3"
+            :default-time="['00:00:00', '23:59:59']"
+            v-model="dialogForm.date4"
+            range
+            :disable="dialogFormReadonly"
+            :rules="[val => !!val || 'Field is required']"
+            clearable
+          >
+          </co-date-select>
+          <co-date-select
+            class="col-12 col-sm-6"
+            form-label="DateRange4"
+            :default-time="['00:00:00', '23:59:59']"
+            edit-time
+            with-seconds
+            v-model="dialogForm.date4"
             range
             :disable="dialogFormReadonly"
             :rules="[val => !!val || 'Field is required']"
@@ -811,7 +826,7 @@
             <co-btn-dropdown auto-close color="grey-3" text-color="dark" class="btn-dropdown-hide-droparrow" icon="apps">
               <div class="row no-wrap q-pa-sm">
                 <div class="column">
-                  <co-btn flat label="清空搜索" icon="replay" @click="loading = !loading"/>
+                  <co-btn flat label="清空搜索" icon="replay"/>
                   <co-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>
                   <q-separator/>
                   <co-toggle v-model="visibleColumns" v-for="item in columns" :key="item.name" :val="item.name" :label="item.label" />
@@ -909,7 +924,7 @@ export default {
       selectModel: undefined,
       selectModels: [],
       selectDate: '',
-      selectDateRange: { from: '2020-11-14', to: '2020-11-22' },
+      selectDate3: '',
       listOptions: ['facebook', 'twitter', 'google', '阿里巴巴', '腾讯'],
       mapOptions: [
         {

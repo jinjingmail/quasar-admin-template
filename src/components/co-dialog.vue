@@ -32,7 +32,7 @@
     v-on="$listeners"
     @before-show="_beforeShow"
   >
-    <co-card ref="card" :style="computedCardStyle" :class="computedCardClass" :id="uuid"
+    <q-card ref="card" :style="computedCardStyle" :class="computedCardClass" :id="uuid"
       :loading="loading" :loading-spinner="loadingSpinner" :loading-delay="loadingDelay">
       <q-card-section v-if="!noHeader" class="no-padding">
         <q-toolbar>
@@ -72,7 +72,7 @@
 
       <slot  v-if="!minimize"/>
 
-    </co-card>
+    </q-card>
   </q-dialog>
 </template>
 

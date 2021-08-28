@@ -56,8 +56,8 @@
         :navigation-max-year-month="navigationMaxYearMonth"
         @input="___inputDate"
       >
-        <div class="row q-gutter-xl" v-if="editTime && range">
-          <q-field dense class="col" label="开始时间" :value="times[0]">
+        <div class="row q-gutter-xl" v-if="editTime">
+          <q-field dense class="col" label="开始时间" :value="times[0]" v-if="times[0]">
             <template v-slot:control>{{times[0]}}</template>
             <q-popup-proxy transition-show="scale" transition-hide="scale">
               <q-time
@@ -72,7 +72,7 @@
               </q-time>
             </q-popup-proxy>
           </q-field>
-          <q-field dense class="col" label="结束时间" :value="times[1]">
+          <q-field dense class="col" label="结束时间" :value="times[1]" v-if="times[1]">
             <template v-slot:control>{{times[1]}}</template>
             <q-popup-proxy transition-show="scale" transition-hide="scale">
               <q-time
@@ -139,7 +139,10 @@ export default {
       default: ' '
     },
     dateTodayBtn: Boolean,
-    dateMask: String,
+    dateMask: {
+      type: String,
+      default: 'YYYY-MM-DD'
+    },
     dateMinimal: Boolean,
     dateOptions: [Array, Function],
     dateClass: String,
@@ -167,13 +170,20 @@ export default {
         this.times[1] = this.defaultTime[1]
       }
     }
-    this.date = this.$attrs.value
   },
   watch: {
-    '$attrs.value' (val, old) {
-      if (!val) {
-        this.date = ''
-      }
+    '$attrs.value': {
+      handler (val, old) {
+        if (!val) {
+          this.date = ''
+        } else if (typeof val === 'string') {
+          this.date = val.substr(0, this.dateMask.length)
+        } else {
+          // 范围的处理
+          this.date = { from: val[0].substr(0, this.dateMask.length), to: val[1].substr(0, this.dateMask.length) }
+        }
+      },
+      immediate: true
     }
   },
   computed: {
@@ -205,7 +215,7 @@ export default {
         if (!newVal) {
           input = undefined
         } else {
-          input = newVal
+          input = newVal + (this.editTime ? (this.dateTimeJoin + this.times[0]) : '')
         }
       }
       /*if (this.disable) {
