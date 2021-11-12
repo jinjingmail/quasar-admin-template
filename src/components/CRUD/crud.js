@@ -733,7 +733,7 @@ function presenter(crud) {
       parseTime,
       formatTime
     },
-    created() {
+    beforeMount() {
       for (const k in this.$crud) {
         if (this.$crud[k].queryOnPresenterCreated) {
           this.$crud[k].toQuery()
