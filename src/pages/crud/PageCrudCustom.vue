@@ -57,7 +57,6 @@
       :selected-rows-label="numOfRows => '选了 ' + numOfRows"
       @row-click="(evt, row, index) => crud.selections = [row]"
       @row-dblclick="(evt, row, index) => crud.toView(row)"
-      v-touch-swipe.mouse="touchSwipe"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
@@ -171,9 +170,6 @@ import crudDemo from '@/api/demo.js'
 import depts from '@/data/depts.js'
 import { columns, visibleColumns, defaultForm } from '@/data/test.js'
 
-import { scroll, event } from 'quasar'
-const { setScrollPosition, setHorizontalScrollPosition } = scroll
-
 export default {
   name: 'PageCrudCustom',
   components: { CrudOperation, CrudMore, CrudPagination, CrudRow },
@@ -234,19 +230,6 @@ export default {
     },
     doExport() {
       this.showExportDialog = true
-    },
-    touchSwipe({ evt, ...info }) {
-      if (info.mouse) {
-        if (info.direction === 'left') {
-          setHorizontalScrollPosition(event.targetElement(evt), 50)
-        } else if (info.direction === 'right') {
-          setHorizontalScrollPosition(event.targetElement(evt), -50)
-        } else if (info.direction === 'up') {
-          setScrollPosition(event.targetElement(evt), 50)
-        } else if (info.direction === 'down') {
-          setScrollPosition(event.targetElement(evt), -50)
-        }
-      }
     }
   }
 }
