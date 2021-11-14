@@ -14,10 +14,8 @@
       <co-form ref="form"
         label-width="small"
         label-align="center"
-        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
-            <div class="q-mt-sm">{{form.id}}</div>
-          </co-form-item>
+        class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
+          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" />
           <co-input dense class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
@@ -30,7 +28,7 @@
               ]"/>
           <co-input dense class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
       </co-form>
-      <q-card-actions class="q-pa-md" align="right">
+      <q-card-actions class="q-px-lg q-pt-lg q-pb-md" align="right">
         <q-btn label="取消" flat v-close-popup/>
         <q-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
@@ -50,6 +48,7 @@
       selection="multiple"
       :selected.sync="crud.selections"
       @row-click="(evt, row, index) => crud.selections = [row]"
+      @row-dblclick="(evt, row, index) => crud.toView(row)"
     >
       <template v-slot:top-right="props">
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>

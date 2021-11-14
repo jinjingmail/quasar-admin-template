@@ -14,12 +14,11 @@
       <co-form ref="form"
         label-width="small"
         label-align="center"
-        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-form-item class="col-12" form-label="ID" v-if="form.id">
-            <div class="q-mt-xs">{{form.id}}</div>
-          </co-form-item>
+        class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
+          <co-field class="col-12" form-label="ID" :value="form.id" v-if="form.id" borderless readonly />
           <co-input class="col-12 col-sm-6" form-label="name" autofocus v-model="form.name" :disable="!!crud.status.view" :rules="[
-              val => (val && val.length >= 3) || '请输入3个以上字符'
+              val => required(val) || '必填',
+              val => minLength(val, 3) || '请输入3个以上字符'
               ]">
             <template v-slot:append>
               <q-icon name="title" />
@@ -27,7 +26,7 @@
           </co-input>
           <co-input class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
-      <q-card-actions class="q-pa-md" align="right">
+      <q-card-actions class="q-px-lg q-pt-lg q-pb-md" align="right">
         <co-btn label="取消" flat v-close-popup/>
         <co-btn label="保存" color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
@@ -49,7 +48,7 @@
           <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
                 input-class="text-center" @clear="crud.resetQuery()">
             <template v-slot:before>
-              <crud-operation :permission="permission" />
+              <crud-operation :permission="permission" no-label/>
             </template>
             <template v-slot:after>
               <co-btn color="primary" icon="search" @click="crud.toQuery"/>
@@ -100,6 +99,7 @@
 </template>
 
 <script>
+import { required, integer, between, minLength } from '@/utils/vuelidate'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
 import CrudOperation from '@crud/crud-operation'
 import CrudPagination from '@crud/crud-pagination'
@@ -145,6 +145,12 @@ export default {
       set (val) {
       }
     }
+  },
+  methods: {
+    required,
+    integer,
+    between,
+    minLength
   }
 }
 </script>

@@ -7,6 +7,12 @@
       <q-input placeholder="在当前页查找" dense outlined v-model="filterTable" clearable class="q-ml-sm q-mr-sm q-mt-none q-mb-sm"/>
     </co-dialog>
 
+    <q-dialog title="导出" v-model="showExportDialog">
+      <q-card style="width:400px; height: 200px; max-width:95vw;">
+        <p>导出</p>
+      </q-card>
+    </q-dialog>
+
     <co-dialog
       ref="formDialog"
       :value="crud.status.cu > 0"
@@ -18,10 +24,8 @@
       <co-form ref="form"
         label-width="small"
         label-align="center"
-        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-form-item dense class="col-12" form-label="ID" v-if="form.id">
-            <div class="q-mt-xs">{{form.id}}</div>
-          </co-form-item>
+        class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
+          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" readonly borderless/>
           <co-input dense outlined class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
@@ -31,7 +35,7 @@
           </co-input>
           <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="form.fat" :disable="!!crud.status.view" />
       </co-form>
-      <q-card-actions class="q-pa-md" align="right">
+      <q-card-actions class="q-px-lg q-pt-lg q-pb-md" align="right">
         <co-btn label="取消" flat v-close-popup/>
         <co-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
@@ -52,6 +56,8 @@
       :filter="filterTable"
       :selected-rows-label="numOfRows => '选了 ' + numOfRows"
       @row-click="(evt, row, index) => crud.selections = [row]"
+      @row-dblclick="(evt, row, index) => crud.toView(row)"
+      v-touch-swipe.mouse="touchSwipe"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
@@ -61,7 +67,7 @@
             no-edit
             >
             <template v-slot:end>
-              <co-btn label="导出" />
+              <co-btn label="导出" @click="doExport"/>
             </template>
           </crud-operation>
           <co-input class="col" @click="$refs.searchPopup.show()" v-model="queryModel" clearable placeholder="查询"
@@ -165,6 +171,9 @@ import crudDemo from '@/api/demo.js'
 import depts from '@/data/depts.js'
 import { columns, visibleColumns, defaultForm } from '@/data/test.js'
 
+import { scroll, event } from 'quasar'
+const { setScrollPosition, setHorizontalScrollPosition } = scroll
+
 export default {
   name: 'PageCrudCustom',
   components: { CrudOperation, CrudMore, CrudPagination, CrudRow },
@@ -183,13 +192,14 @@ export default {
       filterTable: '',
       querysLabel: '',
       queryTickedLabels: null,
-      treeData: depts.content
+      treeData: depts.content,
+      showExportDialog: false
     }
   },
   created () {
     // 动态初始化参数初始化（比如通过URL携带来的参数）
-    // 提示：必须使用 $set() 赋值，不能这样 this.query.name='Demo'
-    this.$set(this.query, 'name', 'Demo')
+    //this.$set(this.query, 'name', 'Demo')
+    this.query.name = 'Demo'
   },
   mounted () {
     this.$refs.searchPopup.show()
@@ -221,6 +231,22 @@ export default {
   methods: {
     clickExport() {
       console.log('clicked export')
+    },
+    doExport() {
+      this.showExportDialog = true
+    },
+    touchSwipe({ evt, ...info }) {
+      if (info.mouse) {
+        if (info.direction === 'left') {
+          setHorizontalScrollPosition(event.targetElement(evt), 50)
+        } else if (info.direction === 'right') {
+          setHorizontalScrollPosition(event.targetElement(evt), -50)
+        } else if (info.direction === 'up') {
+          setScrollPosition(event.targetElement(evt), 50)
+        } else if (info.direction === 'down') {
+          setScrollPosition(event.targetElement(evt), -50)
+        }
+      }
     }
   }
 }

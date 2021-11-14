@@ -22,7 +22,7 @@
       card-style="width:900px; max-width:95vw;"
     >
       <co-form ref="dialogForm"
-        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
+        class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
 
           <co-input class="col-12 col-sm-6" label-slot label="输入框第一个" v-model="dialogForm.calcium" >
             <template v-slot:label>
@@ -144,7 +144,7 @@
         :label-align="labelAlign"
         :label-width="labelWidth"
         :form-label-style="labelStyle"
-        class="q-pa-md row q-col-gutter-x-xl q-col-gutter-y-md">
+        class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
           <co-input dense class="col-12 col-sm-6" form-label="ID" v-model="dialogForm.id" disable
             >
           </co-input>
