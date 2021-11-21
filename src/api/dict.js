@@ -13,7 +13,7 @@ export function add(data) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
-    }, 700)
+    }, 300)
   })
 }
 
@@ -27,7 +27,7 @@ export function del(ids) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
-    }, 700)
+    }, 300)
   })
 }
 
@@ -41,7 +41,7 @@ export function edit(data) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({})
-    }, 700)
+    }, 300)
   })
 }
 
