@@ -384,7 +384,7 @@ function CRUD(options) {
     /**
      * 通用导出
      */
-    doExport() {
+    doDownload() {
       crud.downloadLoading = true
       download(crud.url + '/download', crud.getQueryParams()).then(result => {
         downloadFile(result, crud.title + '数据', 'xlsx')

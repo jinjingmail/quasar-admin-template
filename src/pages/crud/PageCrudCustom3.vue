@@ -37,7 +37,7 @@
       row-key="id"
       class="q-pa-sm"
       flat
-      sticky-last-column
+      sticky-last
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
@@ -136,9 +136,9 @@
               hide-dropdown-icon
             />
           </template>
-          <co-btn label="查询" color="primary" @click="crud.toQuery" />
-          <co-btn label="重置" flat @click="crud.resetQuery()" />
           <co-btn :label="crud.props.queryMore?'«更少':'更多»'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
+          <co-btn label="重置" flat @click="crud.resetQuery()" />
+          <co-btn label="查询" color="primary" @click="crud.toQuery" />
         </co-form>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>

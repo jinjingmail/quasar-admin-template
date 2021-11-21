@@ -34,7 +34,6 @@ Quasar相比ElementUI，胜在可定制性上比较强，每个组件保留了�
 ```bash
 TODO co-dialog
   - TODO 可移动的dialog的标题栏图标显示移动鼠标光标
-  - 标题栏添加可以折叠对话框内容的按钮
   - TODO dialog里面内容滚动时，可以不滚动标题栏、底部工具栏
 TODO 页面增加字段选择的存储
 TODO 页面增加表格大小选择（存储）

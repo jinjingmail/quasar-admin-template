@@ -37,7 +37,7 @@
       row-key="id"
       class="q-pt-none"
       flat
-      sticky-last-column
+      sticky-last
       :title="crud.status.title"
       :data="crud.data"
       :columns="crud.columns"

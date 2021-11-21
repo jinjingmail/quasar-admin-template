@@ -104,7 +104,24 @@ module.exports = function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        // proxy all requests starting with /api to jsonplaceholder
+        '/api': {
+          target: process.env.VUE_APP_BASE_API,
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api': ''
+          }
+        },
+        '/auth': {
+          target: process.env.VUE_APP_BASE_API,
+          changeOrigin: true,
+          pathRewrite: {
+            '^/auth': 'auth'
+          }
+        }
+      }
     },
     plugins: [
 
@@ -130,7 +147,7 @@ module.exports = function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'Dialog', 'LocalStorage', 'AppFullscreen', 'LoadingBar']
+      plugins: ['Notify', 'Dialog', 'LocalStorage', 'AppFullscreen']
     },
 
     // animations: 'all', // --- includes all animations

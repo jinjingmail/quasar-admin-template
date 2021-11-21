@@ -70,13 +70,14 @@
       row-key="id"
       class=""
       dense
-      sticky-last-column
+      sticky-last
       :data="crud.data"
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
       :loading="crud.loading"
-      selection="multiple"
       :selected.sync="crud.selections"
+      @row-click="(evt, row, index) => crud.selections = [row]"
+      @row-dblclick="(evt, row, index) => crud.toView(row)"
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>

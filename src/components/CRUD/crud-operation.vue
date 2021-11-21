@@ -25,6 +25,7 @@
     msg-del
     no-icon
     no-label
+    has-download / color-download / icon-download / label-download
 -->
 <template>
   <div class="q-gutter-sm no-wrap">
@@ -47,6 +48,9 @@
       :color="colorView" :icon="computedIconView" :label="computedLabelView"
       :disable="crud.selections.length!==1"
       v-if="!noView" @click="crud.toView(crud.selections[0])"/>
+    <co-btn :dense="_dense()" :size="size" :padding="padding" :flat="flat" :rounded="rounded" :round="round" :outline="outline" :push="push" :unelevated="unelevated" :glossy="glossy"
+      :color="colorDownload" :icon="computedIconDownload" :label="computedLabelDownload" v-if="hasDownload" @click="crud.doDownload"
+      :loading="crud.downloadLoading"/>
     <!--右侧插槽-->
     <slot name="end" />
     <co-dialog ref="dialogDelete" no-max :title="labelDel" card-style="width:250px; max-width:95vw;" card-class="bg-deep-orange">
@@ -84,7 +88,10 @@ export default {
     noView: Boolean,
     noEdit: Boolean,
     noDel: Boolean,
-    noDownload: Boolean,
+    hasDownload: {
+      type: Boolean,
+      default: false
+    },
 
     flat: {
       type: Boolean,
@@ -125,11 +132,11 @@ export default {
 
     colorView: {
       type: String,
-      default: 'blue-grey-5'
+      default: 'info'
     },
     colorAdd: {
       type: String,
-      default: 'secondary'
+      default: 'positive'
     },
     colorEdit: {
       type: String,
@@ -138,6 +145,10 @@ export default {
     colorDel: {
       type: String,
       default: 'negative'
+    },
+    colorDownload: {
+      type: String,
+      default: 'warning'
     },
     iconView: {
       type: String,
@@ -155,6 +166,10 @@ export default {
       type: String,
       default: 'delete'
     },
+    iconDownload: {
+      type: String,
+      default: 'vertical_align_bottom'
+    },
     labelView: {
       type: String,
       default: '查看'
@@ -170,6 +185,10 @@ export default {
     labelDel: {
       type: String,
       default: '删除'
+    },
+    labelDownload: {
+      type: String,
+      default: '导出'
     },
     msgDel: String,
     noIcon: Boolean,
@@ -204,6 +223,13 @@ export default {
         return undefined
       }
     },
+    computedLabelDownload () {
+      if (this.labelDownload && !this.noLabel) {
+        return this.labelDownload
+      } else {
+        return undefined
+      }
+    },
     computedIconView () {
       if (this.iconView && !this.noIcon) {
         return this.iconView
@@ -221,6 +247,13 @@ export default {
     computedIconEdit () {
       if (this.iconEdit && !this.noIcon) {
         return this.iconEdit
+      } else {
+        return undefined
+      }
+    },
+    computedIconDownload () {
+      if (this.iconDownload && !this.noIcon) {
+        return this.iconDownload
       } else {
         return undefined
       }

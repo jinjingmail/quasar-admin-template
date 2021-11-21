@@ -347,6 +347,12 @@ input:-ms-input-placeholder {
   .q-table__bottom {
     padding: 14px 18px;
   }
+
+  .q-table > tbody > tr.selected {
+    background-color: var(--q-color-primary);
+    color: white;
+  }
+
 }
 
 .q-dialog {

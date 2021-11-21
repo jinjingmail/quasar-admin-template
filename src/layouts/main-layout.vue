@@ -419,6 +419,10 @@
         <q-page-scroller position="bottom" :scroll-offset="150" :offset="fabPos" style="z-index:6;">
           <q-btn fab-mini icon="keyboard_arrow_up" color="primary" v-touch-pan.capture="moveFab" v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab"/>
         </q-page-scroller>
+
+        <div class="text-body2" style="text-align:center" v-show="settingShowFooter">
+          {{settingFooterTxt}} {{settingCaseNumber}}
+        </div>
       </q-page>
     </q-page-container>
 
@@ -475,6 +479,15 @@ export default {
     }
   },
   computed: {
+    settingShowFooter() {
+      return Setting.showFooter
+    },
+    settingFooterTxt() {
+      return Setting.footerTxt
+    },
+    settingCaseNumber() {
+      return Setting.caseNumber
+    },
     settingPageClass () {
       if (this.$q.screen.gt.xs) {
         return Setting.pageClass

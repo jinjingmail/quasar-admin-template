@@ -45,7 +45,7 @@
     <co-table
       ref="table"
       row-key="id"
-      sticky-last-column
+      sticky-last
       sticky-header
       :data="crud.data"
       :columns="crud.columns"

@@ -29,8 +29,8 @@
     title-class
 
     sticky-header
-    sticky-first-column
-    sticky-last-column
+    sticky-first
+    sticky-last
 
     loading
     loading-delay       多少ms后开始显示 loading 状态
@@ -75,7 +75,10 @@
     </template>
 
     <template v-if="treeTable" v-slot:body="props">
-      <q-tr :props="props" @click="evt => _treeTableRowClick(evt, props)" :class="$listeners['row-click']?'cursor-pointer':''">
+      <q-tr :props="props"
+          @click="evt => _treeTableRowClick(evt, props)"
+          @dblclick="evt => _treeTableRowDblClick(evt, props)"
+          :class="$listeners['row-click']?'cursor-pointer':''">
         <q-td v-if="$attrs.selection">
           <q-checkbox :dense="props.dense" v-model="props.selected"/>
         </q-td>
@@ -152,7 +155,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'primary'
+      default: 'secondary'
     },
     dense: {
       type: Boolean,
@@ -174,8 +177,8 @@ export default {
       default: (numberOfRows) => numberOfRows + ' 已选'
     },
     stickyHeader: Boolean,
-    stickyFirstColumn: Boolean,
-    stickyLastColumn: Boolean,
+    stickyFirst: Boolean,
+    stickyLast: Boolean,
 
     loading: Boolean,
     loadingSpinner: {
@@ -291,19 +294,19 @@ export default {
     },
     computedClass () {
       let cls = this.settingTableClass
-      if (this.stickyHeader && this.stickyFirstColumn && this.stickyLastColumn) {
+      if (this.stickyHeader && this.stickyFirst && this.stickyLast) {
         cls += ' co-table-sticky-header-and-first-last-column'
-      } else if (this.stickyHeader && this.stickyFirstColumn) {
+      } else if (this.stickyHeader && this.stickyFirst) {
         cls += ' co-table-sticky-header-and-first-column'
-      } else if (this.stickyHeader && this.stickyLastColumn) {
+      } else if (this.stickyHeader && this.stickyLast) {
         cls += ' co-table-sticky-header-and-last-column'
-      } else if (this.stickyFirstColumn && this.stickyLastColumn) {
+      } else if (this.stickyFirst && this.stickyLast) {
         cls += ' co-table-sticky-first-and-last-column'
       } else if (this.stickyHeader) {
         cls += ' co-table-sticky-header'
-      } else if (this.stickyFirstColumn) {
+      } else if (this.stickyFirst) {
         cls += ' co-table-sticky-first-column'
-      } else if (this.stickyLastColumn) {
+      } else if (this.stickyLast) {
         cls += ' co-table-sticky-last-column'
       }
       return cls
@@ -494,6 +497,11 @@ export default {
     _treeTableRowClick (evt, props) {
       if (this.$listeners['row-click']) {
         this.$emit('row-click', evt, props.row, props.rowIndex)
+      }
+    },
+    _treeTableRowDblClick (evt, props) {
+      if (this.$listeners['row-dblclick']) {
+        this.$emit('row-dblclick', evt, props.row, props.rowIndex)
       }
     },
 
