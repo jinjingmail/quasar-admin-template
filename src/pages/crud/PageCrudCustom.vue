@@ -137,14 +137,14 @@
             no-add
             no-icon
             :action-start="[
-              {permission: ['admin', 'user:add'], label:'导出', click: clickExport},
+              {permission: ['admin', 'user:add'], label:'导出', color:'accent', click: clickExport},
               {permission: ['admin', 'user:add'], label:'导出2', click: clickExport}
             ]"
             action-end-menu
             action-end-menu-label='更多'
-            action-end-menu-color='yellow'
+            action-end-menu-color='warning'
             :action-end="[
-              {permission: ['admin', 'user:add'], label:'导出3', click: clickExport},
+              {permission: ['admin', 'user:add'], label:'导出3', color:'accent', click: clickExport},
               {permission: ['admin', 'user:add'], label:'导出4', click: clickExport}
             ]"
             tooltip/>

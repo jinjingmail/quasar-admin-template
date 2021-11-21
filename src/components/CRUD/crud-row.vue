@@ -137,7 +137,7 @@
         <q-menu :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
           <q-list>
             <template v-for="(item, i) in actionStart">
-              <q-item clickable :key="item.label+i+item.icon" v-permission="item.permission" :disable="item.disable" :dense="computedDenseMenu" @click="item.click">
+              <q-item clickable :key="item.label+i+item.icon" v-permission="item.permission" :disable="item.disable" :dense="computedDenseMenu" :class="!!item.color ? 'text-' + item.color : ''" @click="item.click">
                 <q-item-section avatar v-if="item.icon">
                   <q-icon :name="item.icon" />
                 </q-item-section>
@@ -187,9 +187,9 @@
         <q-menu :content-class="$q.dark.isActive?'bg-grey-9':''" anchor="bottom end" self="top end" @show="menuShow=true" @hide="menuShow=false">
           <q-list>
             <template v-for="(item, i) in actionEnd">
-              <q-item clickable :key="item.label+i+item.icon" v-permission="item.permission" :disable="item.disable" :dense="computedDenseMenu" @click="item.click">
+              <q-item clickable :key="item.label+i+item.icon" v-permission="item.permission" :disable="item.disable" :dense="computedDenseMenu" :class="!!item.color ? 'text-' + item.color : ''" @click="item.click">
                 <q-item-section avatar v-if="item.icon">
-                  <q-icon :name="item.icon" />
+                  <q-icon :name="item.icon"/>
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>{{item.label}}</q-item-label>

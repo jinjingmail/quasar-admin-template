@@ -81,7 +81,7 @@
     >
       <template v-slot:top="props">
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
-          <crud-operation dense :permission="permission" no-label/>
+          <crud-operation dense :permission="permission" has-download no-label/>
           <div class="col-auto">
             <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />
