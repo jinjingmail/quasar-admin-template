@@ -51,7 +51,8 @@
       :columns="crud.columns"
       :visible-columns="crud.visibleColumns"
       :loading="crud.loading"
-      selection="multiple"
+      selection="single"
+      tree-table
       :selected.sync="crud.selections"
       :filter="filterTable"
       :selected-rows-label="numOfRows => '选了 ' + numOfRows"

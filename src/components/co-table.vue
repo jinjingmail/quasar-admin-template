@@ -65,6 +65,7 @@
     :selected-rows-label="selectedRowsLabel"
     :separator="computedSeparator"
     :expanded.sync="treeExpandedKeys"
+    :selection="selection"
   >
 
     <template v-for="slotName in Object.keys($slots)" v-slot:[slotName]>
@@ -77,10 +78,9 @@
     <template v-if="treeTable" v-slot:body="props">
       <q-tr :props="props"
           @click="evt => _treeTableRowClick(evt, props)"
-          @dblclick="evt => _treeTableRowDblClick(evt, props)"
-          :class="$listeners['row-click']?'cursor-pointer':''">
-        <q-td v-if="$attrs.selection">
-          <q-checkbox :dense="props.dense" v-model="props.selected"/>
+          @dblclick="evt => _treeTableRowDblClick(evt, props)">
+        <q-td v-if="selection !== 'none'">
+          <q-checkbox :color="props.color" :dense="props.dense" v-model="props.selected"/>
         </q-td>
 
         <template v-for="col in props.cols">
@@ -217,7 +217,11 @@ export default {
       default: 'keyboard_arrow_down'
     },
     expandWithoutLabel: Boolean,
-    expanded: Array
+    expanded: Array,
+    selection: {
+      type: String,
+      default: 'none'
+    }
   },
   data () {
     return {
