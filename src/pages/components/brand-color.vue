@@ -6,8 +6,6 @@
       @click="setBrand('brown')" size="7px"/>
     <q-btn round style="background-color:teal"
       @click="setBrand('teal')" size="7px"/>
-    <q-btn round style="background-color:#2b2b2b"
-      @click="setBrand('#2b2b2b')" size="7px"/>
     <q-btn round style="background-color:rgb(212,0,212)"
       @click="setBrand('rgb(212,0,212)')" size="7px"/>
     <q-btn round style="background-color:#ff6a00"

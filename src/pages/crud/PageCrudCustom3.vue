@@ -15,7 +15,7 @@
         label-width="small"
         label-align="center"
         class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" />
+          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" borderless/>
           <co-input dense outlined class="col-12 col-sm-6" form-label="name" v-model="form.name" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
@@ -75,8 +75,7 @@
           :label-width="labelWidth"
           :form-label-style="labelStyle"
         >
-          <co-input class=""
-            form-label="ID" placeholder="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
+          <co-input form-label="ID" placeholder="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
           <co-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
           <co-date-select
             content-style="width:200px"

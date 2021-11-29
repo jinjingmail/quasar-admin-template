@@ -14,7 +14,7 @@
         <div class="text-body2">本对话框用于预览颜色设置效果</div>
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn dense label="关闭" flat v-close-popup />
+        <co-btn label="关闭" flat v-close-popup />
       </q-card-actions>
     </co-dialog>
     <q-header :reveal="!fixedHeader" :reveal-offset="60" :elevated="elevatedHeader" :bordered="!elevatedHeader" class="co-header" :style="headerStyles">
@@ -52,7 +52,7 @@
         <q-space/>
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <co-btn dense flat icon="notifications">
+          <co-btn flat icon="notifications">
             <q-badge color="red" text-color="white" floating>
               {{itemsMenu.length}}
             </q-badge>

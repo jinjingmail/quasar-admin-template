@@ -18,7 +18,7 @@
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>
           <q-space />
 
-          <co-input dense class="col" ref="searchInput" v-model="queryModel" outlined clearable placeholder="查询" input-class="text-center">
+          <co-input class="col" ref="searchInput" v-model="queryModel" outlined clearable placeholder="查询" input-class="text-center">
             <q-popup-proxy breakpoint="500" ref="searchPopup">
               <co-card style="width:550px; max-width:95vw;" class="co-popup">
                 <q-card-section>
@@ -71,7 +71,7 @@
                           <q-icon name="add" />
                         </template>
                       </co-input>
-                      <co-input dense outlined class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
+                      <co-input outlined class="col-12 col-sm-6" form-label="fat" v-model="query.fat" lazy-rules :rules="[
                           val => !!val || '不能空',
                           val => val.length === 11 || '请输入11个字符'
                           ]"
@@ -131,8 +131,8 @@
                       >
                         <template v-slot:control>
                           <div class="q-gutter-sm">
-                            <q-radio dense name="shape" v-model="query.selectCompany" val="facebook" label="Facebook" />
-                            <q-radio dense name="shape" v-model="query.selectCompany" val="腾讯" label="腾讯控股" />
+                            <co-radio name="shape" v-model="query.selectCompany" val="facebook" label="Facebook" />
+                            <co-radio name="shape" v-model="query.selectCompany" val="腾讯" label="腾讯控股" />
                           </div>
                         </template>
                       </co-field>
@@ -180,17 +180,17 @@
 
                 </q-card-section>
                 <q-card-actions align="center">
-                  <q-btn label="关闭" flat v-close-popup />
-                  <q-btn label="清空" flat v-close-popup />
-                  <q-btn label="查询" type="submit" color="primary" icon="search" @click="doQuery">
-                  </q-btn>
+                  <co-btn label="关闭" flat v-close-popup />
+                  <co-btn label="清空" flat v-close-popup />
+                  <co-btn label="查询" type="submit" color="primary" icon="search" @click="doQuery">
+                  </co-btn>
                 </q-card-actions>
 
               </co-card>
             </q-popup-proxy>
             <template v-slot:after>
-              <q-btn dense  color="primary" icon="search" @click="doQuery"/>
-              <q-btn-dropdown dense auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
+              <q-btn  color="primary" icon="search" @click="doQuery"/>
+              <q-btn-dropdown auto-close color="primary" class="btn-dropdown-hide-droparrow" icon="apps">
                 <div class="row no-wrap q-pa-sm">
                   <div class="column">
                     <q-btn flat label="全屏" :icon="props.inFullscreen?'fullscreen_exit':'fullscreen'" @click.native="toggleTableFullscreen(props)"/>

@@ -15,7 +15,7 @@
         label-width="small"
         label-align="center"
         class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
-          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" />
+          <co-field dense class="col-12" form-label="ID" :value="form.id" v-if="form.id" borderless/>
           <co-input dense class="col-12" form-label="标签" v-model="form.label" :disable="!!crud.status.view" :rules="[
               val => (val && val.length >= 3) || '请输入3个以上字符'
               ]">
@@ -29,8 +29,8 @@
           <co-input dense class="col-12" form-label="sort" v-model="form.sort" :disable="!!crud.status.view" />
       </co-form>
       <q-card-actions class="q-px-lg q-pt-lg q-pb-md" align="right">
-        <q-btn label="取消" flat v-close-popup/>
-        <q-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
+        <co-btn label="取消" flat v-close-popup/>
+        <co-btn label="保存"  color="primary" v-if="!crud.status.view" @click="crud.submitCU"
           :loading="crud.status.cu === crud.STATUS_PROCESSING" :disable="crud.status.cu === crud.STATUS_PROCESSING"/>
       </q-card-actions>
     </co-dialog>
@@ -54,14 +54,14 @@
         <div class='row q-col-gutter-x-sm q-col-gutter-y-xs q-px-sm q-py-sm full-width'>
           <co-input class='col-auto' placeholder="标签、值" v-model="query.blurry" content-style="width:140px" dense clearable @keyup.enter.native="crud.toQuery"/>
           <div class='col-auto'>
-            <q-btn dense color="primary" icon="search" @click="crud.toQuery" />
+            <co-btn color="primary" icon="search" @click="crud.toQuery" />
           </div>
           <q-space/>
-          <crud-operation dense :permission="permission" :no-add="!dictId" no-view no-edit no-label/>
+          <crud-operation :permission="permission" :no-add="!dictId" no-view no-edit no-label/>
           <div class="col-auto">
-            <q-btn-dropdown dense color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
+            <co-btn-dropdown color="primary" class="btn-dropdown-hide-droparrow" icon="apps" auto-close>
               <crud-more :tableSlotTopProps="props" />
-            </q-btn-dropdown>
+            </co-btn-dropdown>
           </div>
         </div>
       </template>
