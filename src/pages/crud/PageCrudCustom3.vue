@@ -75,12 +75,12 @@
           :label-width="labelWidth"
           :form-label-style="labelStyle"
         >
-          <co-input form-label="ID" placeholder="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
-          <co-input form-label="名称" placeholder="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
+          <co-input form-label="ID" label="ID" v-model="query.id" content-style="width:200px" dense outlined clearable no-clear-focus/>
+          <co-input form-label="名称" label="名称" v-model="query.name" content-style="width:200px" dense outlined clearable/>
           <co-date-select
             content-style="width:200px"
             form-label="日期范围"
-            placeholder="日期范围"
+            label="日期范围"
             v-model="query.dateRange"
             clearable
             range
@@ -131,13 +131,13 @@
               :options="listOptions"
               clearable
               placeholder="选择巨头"
-              content-style="width:200px"
+              content-style="width:100px"
               hide-dropdown-icon
             />
           </template>
           <co-btn :label="crud.props.queryMore?'«更少':'更多»'" flat @click="crud.props.queryMore = !crud.props.queryMore"/>
           <co-btn label="重置" flat @click="crud.resetQuery()" />
-          <co-btn label="查询" color="primary" @click="crud.toQuery" />
+          <co-btn icon="search" color="primary" @click="crud.toQuery" />
         </co-form>
 
         <div class='row q-col-gutter-x-md q-col-gutter-y-xs full-width'>

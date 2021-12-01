@@ -25,6 +25,7 @@
   <co-field
     :value="inputModel"
     ref="input"
+    class="co-date-select"
     v-on="listeners"
     v-bind="$attrs"
     :disable="disable"

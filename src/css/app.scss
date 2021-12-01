@@ -74,6 +74,14 @@ input:-ms-input-placeholder {
 .q-field--disabled .q-field__control > div {
   opacity: 0.7 !important;
 }
+.co-select.q-select--single div.q-field__native,
+.co-date-select div.q-field__native {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.q-field__control > .q-field__append {
+  align-self: center;
+}
 
 .co-select.q-select--with-input.q-select--with-chips input.q-field__input.fit {
   height: 24px !important;

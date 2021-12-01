@@ -19,7 +19,7 @@
       ref="formDialog2"
       title="表单演示2"
       no-backdrop-dismiss
-      card-style="width:900px; max-width:95vw;"
+      card-style="width:800px; max-width:95vw;"
     >
       <co-form ref="dialogForm"
         class="q-px-lg q-my-none row q-col-gutter-x-xl q-col-gutter-y-md">
@@ -111,7 +111,7 @@
       ref="formDialog"
       title="表单演示"
       no-backdrop-dismiss
-      card-style="width:1200px; max-width:95vw;"
+      card-style="width:1000px; max-width:95vw;"
     >
       <div class="q-ma-md">
         <div class="row q-gutter-sm">
